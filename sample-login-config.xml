@@ -1,0 +1,13 @@
+  <application-policy name="production"> 
+    <authentication> 
+        <login-module code="org.jboss.security.auth.spi.DatabaseServerLoginModule" flag="required"> 
+            <module-option name="dsJndiName">java:/authenticationDS</module-option> 
+            <module-option name="principalsQuery"> 
+                select password from User where user=? 
+            </module-option> 
+            <module-option name="rolesQuery"> 
+                select role,'Roles' from Role where user_user=? 
+            </module-option> 
+        </login-module> 
+    </authentication> 
+  </application-policy> 

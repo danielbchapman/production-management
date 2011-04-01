@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence persistence_2_0.xsd">
+	<persistence-unit name="authentication" transaction-type="RESOURCE_LOCAL">
+		<!-- 
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		 -->
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<non-jta-data-source>java:/authenticationDS</non-jta-data-source>
+		<class>com.duastechnologies.jboss.login.User</class>
+		<class>com.duastechnologies.jboss.login.Role</class>
+
+		<properties>
+			<property name="eclipselink.target-server" value="JBoss"/> 
+			<property name="eclipselink.ddl-generation" value="create-tables"/>
+			<property name="eclipselink.ddl-generation.output-mode" value="database"/>
+			<property name="eclipselink.target-database" value="org.eclipse.persistence.platform.database.H2Platform"/>
+			<property name="eclipselink.weaving" value="false" />
+            <property name="eclipselink.logging.level" value="INFO"/>
+			<property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
+			<property name="eclipselink.session.customizer" value="com.danielbchapman.jboss.haxx.JPAEclipseLinkSessionCustomizer" />   
+		</properties>		
+	</persistence-unit>
+</persistence>
