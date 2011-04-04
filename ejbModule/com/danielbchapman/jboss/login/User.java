@@ -1,4 +1,4 @@
-package com.duastechnologies.jboss.login;
+package com.danielbchapman.jboss.login;
 
 import java.io.Serializable;
 import java.util.List;

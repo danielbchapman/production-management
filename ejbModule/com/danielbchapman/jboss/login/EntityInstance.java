@@ -1,7 +1,4 @@
-package com.duastechnologies.jboss.login;
-
-import java.sql.Connection;
-import java.sql.SQLException;
+package com.danielbchapman.jboss.login;
 
 import javax.persistence.EntityManager;
 import javax.persistence.FlushModeType;

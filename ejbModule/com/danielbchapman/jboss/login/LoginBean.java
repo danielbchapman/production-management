@@ -1,11 +1,10 @@
-package com.duastechnologies.jboss.login;
+package com.danielbchapman.jboss.login;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
