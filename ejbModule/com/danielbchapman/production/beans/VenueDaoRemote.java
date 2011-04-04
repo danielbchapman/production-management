@@ -12,13 +12,10 @@ import com.danielbchapman.production.entity.VenueLog;
 /**
  * A bean for accessing venue information. This includes methods for accessing files
  * from the disk as well as information about the venue. This allows tracking per production.
- *
  ***************************************************************************
  * @author Daniel B. Chapman 
- * <br /><i><b>Light Assistant</b></i> copyright Daniel B. Chapman
  * @since Jan 1, 2011 2011
- * @version 2 Development
- * @link http://www.lightassistant.com
+ * @link http://www.theactingcompany.org
  ***************************************************************************
  */
 @Remote

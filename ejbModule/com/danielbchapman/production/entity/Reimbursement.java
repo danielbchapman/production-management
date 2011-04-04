@@ -3,13 +3,10 @@ package com.danielbchapman.production.entity;
 /**
  * A reimbursement links to an BudgetEntry so that it can be tied to a department
  * but at the same time easily reported based on who needs Reimbursement.
- *
  ***************************************************************************
  * @author Daniel B. Chapman 
- * <br /><i><b>Light Assistant</b></i> copyright Daniel B. Chapman
  * @since Feb 4, 2011 2011
- * @version 2 Development
- * @link http://www.lightassistant.com
+ * @link http://www.theactingcompany.org
  ***************************************************************************
  */
 public class Reimbursement extends BaseEntity

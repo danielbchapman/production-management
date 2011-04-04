@@ -11,13 +11,10 @@ import com.danielbchapman.production.entity.Reimbursement;
 /**
  * A simple access object to work with Reimbursements. It essentially uses
  * the BudgetEntryDao and keeps a log of itself.
- *
  ***************************************************************************
  * @author Daniel B. Chapman 
- * <br /><i><b>Light Assistant</b></i> copyright Daniel B. Chapman
  * @since Feb 4, 2011 2011
- * @version 2 Development
- * @link http://www.lightassistant.com
+ * @link http://www.theactingcompany.org
  ***************************************************************************
  */
 @Remote

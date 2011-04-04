@@ -26,10 +26,8 @@ import com.danielbchapman.production.entity.Week;
  * are initializations for the manager.
  ***************************************************************************
  * @author Daniel B. Chapman 
- * <br /><i><b>Light Assistant</b></i> copyright Daniel B. Chapman
  * @since Oct 1, 2009 2009
- * @version 2 Development
- * @link http://www.lightassistant.com
+ * @link http://www.theactingcompany.org
  ***************************************************************************
  */
 @Stateless

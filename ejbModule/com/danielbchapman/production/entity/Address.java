@@ -8,13 +8,10 @@ import javax.persistence.Embeddable;
 /**
  * A simple embeddable unit that is an address. Be sure to return a new address on 
  * the getter or you can run into UI issues with JSF/Bean frameworks.
- *
  ***************************************************************************
  * @author Daniel B. Chapman 
- * <br /><i><b>Light Assistant</b></i> copyright Daniel B. Chapman
- * @since Jan 22, 2011 2011
- * @version 2 Development
- * @link http://www.lightassistant.com
+ * @since Jan 22, 2011
+ * @link http://www.theactingcompany.org
  ***************************************************************************
  */
 @Embeddable

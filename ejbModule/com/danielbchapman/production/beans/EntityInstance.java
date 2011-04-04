@@ -1,8 +1,6 @@
 package com.danielbchapman.production.beans;
 
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Wrapper;
 
 import javax.persistence.EntityManager;
 import javax.persistence.FlushModeType;
@@ -12,7 +10,6 @@ import com.danielbchapman.production.entity.BaseEntity;
 
 public class EntityInstance
 {
-  private final static String CONNECTION_STRING = "jdbc:h2:tcp://localhost/C:\\Database\\Data\\live;";
 	private static EntityManager manager;
 	
   /**
