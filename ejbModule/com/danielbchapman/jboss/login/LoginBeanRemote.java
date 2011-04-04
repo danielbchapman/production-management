@@ -1,20 +1,18 @@
-package com.duastechnologies.jboss.login;
+package com.danielbchapman.jboss.login;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.ejb.Remote;
 
+
 /**
  * A set of methods to allow the manipulation logins to the database. This 
  * is complete with static strings as suggested queries for SQL based access.
- *
  ***************************************************************************
  * @author Daniel B. Chapman 
- * <br /><i><b>Light Assistant</b></i> copyright Daniel B. Chapman
- * @since Jan 7, 2011 2011
- * @version 2 Development
- * @link http://www.lightassistant.com
+ * @since Apr 4, 2011 2011
+ * @link http://www.theactingcompany.org
  ***************************************************************************
  */
 @Remote

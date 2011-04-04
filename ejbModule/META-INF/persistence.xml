@@ -6,8 +6,8 @@
 		 -->
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<non-jta-data-source>java:/authenticationDS</non-jta-data-source>
-		<class>com.duastechnologies.jboss.login.User</class>
-		<class>com.duastechnologies.jboss.login.Role</class>
+		<class>com.danielbchapman.jboss.login.Role</class>
+		<class>com.danielbchapman.jboss.login.User</class>
 
 		<properties>
 			<property name="eclipselink.target-server" value="JBoss"/> 

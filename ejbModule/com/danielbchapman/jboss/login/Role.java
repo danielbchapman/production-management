@@ -1,8 +1,7 @@
-package com.duastechnologies.jboss.login;
+package com.danielbchapman.jboss.login;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,10 +18,8 @@ import com.sun.istack.internal.NotNull;
  * but has entity aspects which allow updates via a simple EJB layer without native SQL.
  ***************************************************************************
  * @author Daniel B. Chapman 
- * <br /><i><b>Light Assistant</b></i> copyright Daniel B. Chapman
  * @since Jan 7, 2011 2011
- * @version 2 Development
- * @link http://www.lightassistant.com
+ * @link http://www.theactingcompany.org
  ***************************************************************************
  */
 @Entity
