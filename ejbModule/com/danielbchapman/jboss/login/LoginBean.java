@@ -23,7 +23,7 @@ public class LoginBean implements LoginBeanRemote
   }
 
   /* (non-Javadoc)
-   * @see com.duastechnologies.jboss.login.LoginBeanRemote#validateLogin(java.lang.String, java.lang.String)
+   * @see com.danielbchapman.jboss.login.LoginBeanRemote#validateLogin(java.lang.String, java.lang.String)
    */
   @Override
   public User validateLogin(String username, String password)
@@ -43,7 +43,7 @@ public class LoginBean implements LoginBeanRemote
   }
 
   /* (non-Javadoc)
-   * @see com.duastechnologies.jboss.login.LoginBeanRemote#getRolesForUser(java.lang.String)
+   * @see com.danielbchapman.jboss.login.LoginBeanRemote#getRolesForUser(java.lang.String)
    */
   @Override
   public ArrayList<Role> getRolesForUser(String userId)
@@ -59,7 +59,7 @@ public class LoginBean implements LoginBeanRemote
   }
 
   /* (non-Javadoc)
-   * @see com.duastechnologies.jboss.login.LoginBeanRemote#addUser(java.lang.String, java.lang.String, java.util.Collection)
+   * @see com.danielbchapman.jboss.login.LoginBeanRemote#addUser(java.lang.String, java.lang.String, java.util.Collection)
    */
   @Override
   public void addUser(String username, String password, Collection<String> roles)
@@ -81,7 +81,7 @@ public class LoginBean implements LoginBeanRemote
   }
 
   /* (non-Javadoc)
-   * @see com.duastechnologies.jboss.login.LoginBeanRemote#getUsers()
+   * @see com.danielbchapman.jboss.login.LoginBeanRemote#getUsers()
    */
   @SuppressWarnings("unchecked")
   @Override
