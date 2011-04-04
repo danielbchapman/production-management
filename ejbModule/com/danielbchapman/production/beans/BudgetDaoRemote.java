@@ -15,10 +15,8 @@ import com.danielbchapman.production.entity.Production;
  * A simple local interface for the BudgetDaoRemote
  ***************************************************************************
  * @author Daniel B. Chapman 
- * <br /><i><b>Light Assistant</b></i> copyright Daniel B. Chapman
- * @since Oct 1, 2009
- * @version 2 Development
- * @link http://www.lightassistant.com
+ * @since Oct 1, 2009 2009
+ * @link http://www.theactingcompany.org
  ***************************************************************************
  */
 @Remote

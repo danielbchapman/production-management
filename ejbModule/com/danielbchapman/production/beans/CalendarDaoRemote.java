@@ -13,13 +13,6 @@ import com.danielbchapman.production.entity.Week;
 
 /**
  * A simple remote interface defining the CalendarDao
- ***************************************************************************
- * @author Daniel B. Chapman 
- * <br /><i><b>Light Assistant</b></i> copyright Daniel B. Chapman
- * @since Oct 1, 2009
- * @version 2 Development
- * @link http://www.lightassistant.com
- ***************************************************************************
  */
 @Remote
 public interface CalendarDaoRemote

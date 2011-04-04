@@ -14,15 +14,13 @@ import javax.persistence.ManyToOne;
  * A simple table to track a set of budget entries. These are assigned to a 
  * specific budget at entry, but are tracked on a single list until "reconciled" at
  * which point the budget entries are confirmed and the petty cash records are cleared.
- * 
  ***************************************************************************
  * @author Daniel B. Chapman 
- * <br /><i><b>Light Assistant</b></i> copyright Daniel B. Chapman
  * @since Oct 1, 2009
- * @version 2 Development
- * @link http://www.lightassistant.com
+ * @link http://www.theactingcompany.org
  ***************************************************************************
  */
+//FIXME Java Doc Needed
 @Entity
 public class PettyCashEntry implements Serializable
 {

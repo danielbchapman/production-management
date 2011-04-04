@@ -2,13 +2,10 @@ package com.danielbchapman.production.entity;
 
 /**
  * A placeholder class that clearly represents an employee.
- *
  ***************************************************************************
  * @author Daniel B. Chapman 
- * <br /><i><b>Light Assistant</b></i> copyright Daniel B. Chapman
  * @since Feb 4, 2011 2011
- * @version 2 Development
- * @link http://www.lightassistant.com
+ * @link http://www.theactingcompany.org
  ***************************************************************************
  */
 public class Employee extends BaseEntity

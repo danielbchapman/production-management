@@ -15,12 +15,11 @@ import javax.persistence.OneToMany;
 
 /**
  * The main top level entity for a set of PettyCashEntry entity.
- *************************************************************************** 
- * @author Daniel B. Chapman <br />
- *         <i><b>Light Assistant</b></i> copyright Daniel B. Chapman
+ ***************************************************************************
+ * @author Daniel B. Chapman 
  * @since Oct 1, 2009
- * @version 2 Development
- * @link http://www.lightassistant.com
+ * @link http://www.theactingcompany.org
+ ***************************************************************************
  */
 @Entity
 public class PettyCash implements Serializable
