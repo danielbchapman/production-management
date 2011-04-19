@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Lob;
 
 /**
  * A simple embedded piece of contact information as a workaround for the
@@ -14,7 +15,6 @@ import javax.persistence.Embeddable;
  * @link http://www.theactingcompany.org
  ***************************************************************************
  */
-//FIXME Java Doc Needed
 @Embeddable
 public class EmbeddableContactInformation implements Serializable
 {
@@ -29,7 +29,7 @@ public class EmbeddableContactInformation implements Serializable
   private String cell;
   @Column(length = 128)
   private String email;
-  @Column(length = 128)
+  @Lob
   private String contactNotes;
   public String getContactName()
   {

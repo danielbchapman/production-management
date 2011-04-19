@@ -15,7 +15,9 @@ import javax.persistence.TemporalType;
 @Entity
 public class Venue extends BaseEntity
 {
-	private VenueStatistics venueStatistics;
+  private static final long serialVersionUID = 1L;
+  
+  private VenueStatistics venueStatistics;
 	@ManyToOne(targetEntity=Company.class)
 	private Company company;
 	@Column(length = 40)

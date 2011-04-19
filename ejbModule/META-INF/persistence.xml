@@ -10,6 +10,7 @@
 		<class>com.danielbchapman.production.entity.VenueStatistics</class>
 		<class>com.danielbchapman.production.entity.VenueLog</class>
 		<class>com.danielbchapman.production.entity.Venue</class>
+		<class>com.danielbchapman.production.entity.Vendor</class>
 		<class>com.danielbchapman.production.entity.TodoStatusUpdate</class>
 		<class>com.danielbchapman.production.entity.TodoList</class>
 		<class>com.danielbchapman.production.entity.ProductionDocument</class>
