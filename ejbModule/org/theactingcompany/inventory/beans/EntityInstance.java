@@ -6,7 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.FlushModeType;
 import javax.persistence.Persistence;
 
-import org.theactingcompany.inventory.entity.BaseEntity;
+import org.theactingcompany.inventory.entity.Indentifiable;
 
 public class EntityInstance
 {
@@ -37,7 +37,7 @@ public class EntityInstance
    * A simple wrapper to deal with container vs. local management
    * for the system. This only works with the BaseEntity object.
    */
-  public static void saveObject(BaseEntity obj)
+  public static void saveObject(Indentifiable obj)
   {      
       if(!Config.CONTAINER_MANAGED)
         getEm().getTransaction().begin();
@@ -55,7 +55,7 @@ public class EntityInstance
    * for the system. This only works with the BaseEntity object.
    * @param obj removes this object from the ORM.
    */
-  public static void deleteObject(BaseEntity obj)
+  public static void deleteObject(Indentifiable obj)
   {
     if(obj.getId() == null)
       throw new IllegalArgumentException("Can not remove an object without ID, it doesn't exist in the Object Relational Mapping");
@@ -68,4 +68,5 @@ public class EntityInstance
     if(!Config.CONTAINER_MANAGED)
       getEm().getTransaction().commit();    
   }
+ 
 }

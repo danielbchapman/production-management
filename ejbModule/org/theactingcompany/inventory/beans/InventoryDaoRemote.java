@@ -1,11 +1,13 @@
 package org.theactingcompany.inventory.beans;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import javax.ejb.Remote;
 
 import org.theactingcompany.inventory.entity.InventoryElement;
 import org.theactingcompany.inventory.entity.InventoryProblem;
+import org.theactingcompany.inventory.entity.WardrobeElement;
 
 /**
  * A bean that uses a class pattern to determine information and 
@@ -97,5 +99,63 @@ public interface InventoryDaoRemote
    * @return a list of results ordered by relevance, type, description of unique results  
    * 
    */
-  public ArrayList<? extends InventoryElement> searchElement(String searchString, Class<? extends InventoryElement> clazz); 
+  public ArrayList<? extends InventoryElement> searchElement(String searchString, Class<? extends InventoryElement> clazz);
+  
+  /** 
+   * Suggest possible matches for whatever the user types.
+   * @param clazz the element to search for
+   * @param value the string to search for
+   * @return a list of productions that are stored in these elements  
+   */
+  public HashSet<String> suggestProduction(Class<? extends InventoryElement> clazz, String value);
+  
+  /**
+   * Suggest possible matches for whatever the user types against period (Wardrobe only)
+   * @param clazz the class of the element to search for (Valid only for Wardrobe right now, this is a type lock)
+   * @param value the value to compare
+   * @return a list of possible matches 
+   * 
+   */
+  public HashSet<String> suggestPeriod(Class<WardrobeElement> clazz, String value);
+  
+  /**
+   * Suggest possible places of storage for this item (localized to the class)
+   * @param clazz the class of the element to search for 
+   * @param value the value to compare
+   * @return a list of possible matches  
+   * 
+   */
+  
+  public HashSet<String> suggestLocation(Class<? extends InventoryElement> clazz, String value);
+  
+  /**
+   * Suggest possible condition descriptions for this class (helps with searches)
+   * @param clazz the class of the element to search for 
+   * @param value the value to compare
+   * @return a list of possible matches 
+   * 
+   */
+  
+  public HashSet<String> suggestCondition(Class<? extends InventoryElement> clazz, String value);
+  
+  /**
+   * Suggest Possible types for this class (helps with searches)
+   * @param clazz the class of the element to search for 
+   * @param value the value to compare
+   * @return a list of possible matches 
+   * 
+   */
+  public HashSet<String> suggestType(Class<? extends InventoryElement> clazz, String value);
+  
+  /**
+   * Assigns a unique code to this element (across all departments)
+   * @param element The InventoryElement to attach a bar code to  
+   * 
+   */
+  public void assignBarCodeToEntity(InventoryElement element);
+  
+  /**
+   * Initialize the tables on the native database to support searching.  
+   */
+  public void initializeFullTextSearches();
 }

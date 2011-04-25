@@ -6,18 +6,18 @@
 		 -->
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<non-jta-data-source>java:/InventoryDS</non-jta-data-source>
-		<class>org.theactingcompany.inventory.entity.BaseEntity</class>
-		<class>org.theactingcompany.inventory.entity.GeneralElement</class>
-		<class>org.theactingcompany.inventory.entity.InventoryProblem</class>
-		<class>org.theactingcompany.inventory.entity.LightingElement</class>
-		<class>org.theactingcompany.inventory.entity.ScenicElement</class>
-		<class>org.theactingcompany.inventory.entity.SoundElement</class>
-		<class>org.theactingcompany.inventory.entity.StageManagementElement</class>
 		<class>org.theactingcompany.inventory.entity.WardrobeElement</class>
-		<class>org.theactingcompany.inventory.entity.EmbeddableImage</class>
+		<class>org.theactingcompany.inventory.entity.StageManagementElement</class>
+		<class>org.theactingcompany.inventory.entity.SoundElement</class>
+		<class>org.theactingcompany.inventory.entity.ScenicElement</class>
 		<class>org.theactingcompany.inventory.entity.PropsElement</class>
+		<class>org.theactingcompany.inventory.entity.LightingElement</class>
+		<class>org.theactingcompany.inventory.entity.InventoryProblem</class>
 		<class>org.theactingcompany.inventory.entity.InventoryElement</class>
-		<class>org.theactingcompany.inventory.entity.InventoryProduction</class>
+		<class>org.theactingcompany.inventory.entity.GeneralElement</class>
+		<class>org.theactingcompany.inventory.entity.EmbeddableImage</class>
+		<class>org.theactingcompany.inventory.entity.BaseEntity</class>
+		<class>org.theactingcompany.inventory.entity.BarCode</class>
 		<!-- 
 		<jta-data-source>java:/ProductionDS</jta-data-source>
 		 -->

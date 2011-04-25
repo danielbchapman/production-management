@@ -1,6 +1,9 @@
 package org.theactingcompany.inventory.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Lob;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToOne;
 
 /**
  * A simple base type for elements that contains a general amount of information 
@@ -14,29 +17,38 @@ import javax.persistence.MappedSuperclass;
  */
 @MappedSuperclass
 public abstract class InventoryElement extends BaseEntity
-{
+{  
   private static final long serialVersionUID = 1L;
-  
+  @OneToOne
+  private BarCode barCode;
+  @Column(length=200)
   private String colors;
+  @Column(length=128)
   private String condition;
+  @Lob
   private String description;
   private String location;
+  @Lob
   private String notes;
   private EmbeddableImage photo;
-  private InventoryProduction production;
+  @Column(length=128)
+  private String production;
+  @Column(length=200)
   private String serialNumberOrId;
+  @Column(length=64)
   private String type;
+  @Lob
   private String userNotes;
   private Double weight;
-  
+
+  public BarCode getBarCode()
+  {
+    return barCode;
+  }
+
   public String getColors()
   {
     return colors;
-  }
-
-  public void setColors(String colors)
-  {
-    this.colors = colors;
   }
 
   public String getCondition()
@@ -44,19 +56,9 @@ public abstract class InventoryElement extends BaseEntity
     return condition;
   }
 
-  public void setCondition(String condition)
-  {
-    this.condition = condition;
-  }
-
   public String getDescription()
   {
     return description;
-  }
-
-  public void setDescription(String description)
-  {
-    this.description = description;
   }
 
   public String getLocation()
@@ -64,69 +66,9 @@ public abstract class InventoryElement extends BaseEntity
     return location;
   }
 
-  public void setLocation(String location)
-  {
-    this.location = location;
-  }
-
   public String getNotes()
   {
     return notes;
-  }
-
-  public void setNotes(String notes)
-  {
-    this.notes = notes;
-  }
-
-  public InventoryProduction getProduction()
-  {
-    return production;
-  }
-
-  public void setProduction(InventoryProduction production)
-  {
-    this.production = production;
-  }
-
-  public String getSerialNumberOrId()
-  {
-    return serialNumberOrId;
-  }
-
-  public void setSerialNumberOrId(String serialNumberOrId)
-  {
-    this.serialNumberOrId = serialNumberOrId;
-  }
-
-  public String getType()
-  {
-    return type;
-  }
-
-  public void setType(String type)
-  {
-    this.type = type;
-  }
-
-  public String getUserNotes()
-  {
-    return userNotes;
-  }
-
-  public void setUserNotes(String userNotes)
-  {
-    this.userNotes = userNotes;
-  }
-
-  public Double getWeight()
-  {
-    return weight;
-  }
-
-  public void setWeight(Double weight)
-  {
-    this.weight = weight;
   }
 
   public EmbeddableImage getPhoto()
@@ -136,12 +78,66 @@ public abstract class InventoryElement extends BaseEntity
 
     return photo;
   }
-  
-  public final String getTableName()
+
+  public String getProduction()
   {
-    return getClass().getSimpleName();
+    return production;
   }
-  
+
+  public String getSerialNumberOrId()
+  {
+    return serialNumberOrId;
+  }
+
+  public String getType()
+  {
+    return type;
+  }
+
+  public String getUserNotes()
+  {
+    return userNotes;
+  }
+
+  public Double getWeight()
+  {
+    return weight;
+  }
+
+  public void setBarCode(BarCode barCode)
+  {
+    this.barCode = barCode;
+  }
+
+  public void setColors(String colors)
+  {
+    this.colors = colors;
+  }
+
+  public void setCondition(String condition)
+  {
+    if(condition != null)
+      condition = condition.replaceAll("'", "");
+    this.condition = condition;
+  }
+
+  public void setDescription(String description)
+  {
+    this.description = description;
+  }
+
+  public void setLocation(String location)
+  {
+    if(location != null)
+      location = location.replaceAll("'", "");
+    this.location = location;
+  }
+
+  public void setNotes(String notes)
+  {
+    this.notes = notes;
+  }
+
   public void setPhoto(EmbeddableImage photo)
   {
     if(photo == null)
@@ -151,6 +147,35 @@ public abstract class InventoryElement extends BaseEntity
     }
 
     this.photo = photo;
+  }
+
+  public void setProduction(String production)
+  {
+    if(production != null)
+      production = production.replaceAll("'", "");
+    this.production = production;
+  }
+
+  public void setSerialNumberOrId(String serialNumberOrId)
+  {
+    this.serialNumberOrId = serialNumberOrId;
+  }
+
+  public void setType(String type)
+  {
+    if(type != null)
+      type = type.replaceAll("'", "");
+    this.type = type;
+  }
+  
+  public void setUserNotes(String userNotes)
+  {    
+    this.userNotes = userNotes;
+  }
+  
+  public void setWeight(Double weight)
+  {
+    this.weight = weight;
   }
 
   public String toString()
