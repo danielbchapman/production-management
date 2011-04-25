@@ -17,19 +17,19 @@ import javax.persistence.MappedSuperclass;
  *************************************************************************** 
  */
 @MappedSuperclass
-public abstract class BaseEntity implements Serializable
+public abstract class BaseEntity implements Serializable, Indentifiable
 {
   private static final long serialVersionUID = 1L;
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
-  public final Long getId()
+  public Long getId()
   {
     return id;
   }
 
-  public final void setId(Long id)
+  public void setId(Long id)
   {
     this.id = id;
   }

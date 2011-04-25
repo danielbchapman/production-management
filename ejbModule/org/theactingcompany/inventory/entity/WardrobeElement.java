@@ -25,6 +25,8 @@ public class WardrobeElement extends InventoryElement
   }
   public void setPeriod(String period)
   {
+    if(period != null)
+      period = period.replaceAll("'", "");
     this.period = period;
   }
   public void setSex(String sex)

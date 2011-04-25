@@ -1,6 +1,7 @@
 package org.theactingcompany.inventory.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.IdClass;
 import javax.persistence.Table;
 
 /**
