@@ -29,22 +29,45 @@ public class InventoryDao implements InventoryDaoRemote
   {
   }
 
-  /* (non-Javadoc)
-   * @see org.theactingcompany.inventory.beans.InventoryBeanRemote#getElement(java.lang.Long, java.lang.Class)
-   */
   @Override
-  public InventoryElement getElement(Long id, Class<? extends InventoryElement> clazz)
+  public void assignBarCodeToEntity(InventoryElement element)
   {
-    return em.find(clazz, id);
+    BarCode code = new BarCode();
+    element.setBarCode(code);
+    EntityInstance.saveObject(code);
+    EntityInstance.saveObject(element);
   }
 
   /* (non-Javadoc)
-   * @see org.theactingcompany.inventory.beans.InventoryBeanRemote#removeElement(org.theactingcompany.inventory.entity.InventoryElement)
+   * @see org.theactingcompany.inventory.beans.InventoryDaoRemote#deactivate(org.theactingcompany.inventory.entity.InventoryElement)
    */
   @Override
-  public void removeElement(InventoryElement element)
+  public void deactivate(InventoryElement element)
+  {
+    element.setInactive(true);
+    EntityInstance.saveObject(element);
+  }
+
+  /* (non-Javadoc)
+   * @see org.theactingcompany.inventory.beans.InventoryDaoRemote#deleteElement(org.theactingcompany.inventory.entity.InventoryElement)
+   */
+  @Override
+  public void deleteElement(InventoryElement element)
   {
     EntityInstance.deleteObject(element);
+  }
+
+  private String escape(String input)
+  {
+    if(input == null)
+      return null;
+    return input
+    .replaceAll(" ", "%")
+    .replaceAll("'", "")
+    .replaceAll(",", "")
+    .replaceAll(";", "")
+    .replaceAll(".", "")
+    .replaceAll("\"", "");
   }
 
   /* (non-Javadoc)
@@ -55,21 +78,9 @@ public class InventoryDao implements InventoryDaoRemote
   public ArrayList<InventoryElement> getAllElements(Class<? extends InventoryElement> clazz)
   {
     ArrayList<InventoryElement> ret = new ArrayList<InventoryElement>();
-    InventoryElement instance = null;
-    try
-    {
-      instance = clazz.newInstance();
-    }
-    catch (InstantiationException e)
-    {
-      throw new RuntimeException("Could not instantiate class: " + clazz, e);
-    }
-    catch (IllegalAccessException e)
-    {
-      throw new RuntimeException("Could not instantiate class: " + clazz, e);
-    }
 
-    Query q = em.createQuery("SELECT i FROM " + clazz.getSimpleName() + " i ORDER BY i.production, i.type, i.description");
+    Query q = em.createQuery("SELECT i FROM " + clazz.getSimpleName() + " i WHERE (i.inactive IS NULL OR i.inactive = ?1) ORDER BY i.production, i.type, i.description");
+    q.setParameter(1, Boolean.FALSE);
     List<InventoryElement> results = (List<InventoryElement>)q.getResultList();
 
     if(results != null)
@@ -79,6 +90,147 @@ public class InventoryDao implements InventoryDaoRemote
     return ret;
   }
 
+  /* (non-Javadoc)
+   * @see org.theactingcompany.inventory.beans.InventoryDaoRemote#getAllInactiveElements(java.lang.Class)
+   */
+  @SuppressWarnings("unchecked")
+  @Override
+  public ArrayList<? extends InventoryElement> getAllInactiveElements(Class<? extends InventoryElement> clazz)
+  {
+    ArrayList<InventoryElement> ret = new ArrayList<InventoryElement>();
+
+    Query q = em.createQuery("SELECT i FROM " + clazz.getSimpleName() + " i WHERE i.inactive = true ORDER BY i.production, i.type, i.description");
+    List<InventoryElement> results = (List<InventoryElement>)q.getResultList();
+
+    if(results != null)
+      for(InventoryElement e : results)
+        ret.add(e);
+
+    return ret;
+  }
+
+  /* (non-Javadoc)
+   * @see org.theactingcompany.inventory.beans.InventoryDaoRemote#getAllProblems()
+   */
+  @SuppressWarnings("unchecked")
+  @Override
+  public ArrayList<InventoryProblem> getAllProblems()
+  {
+    Query q = em.createQuery("SELECT p FROM InventoryProblem p WHERE p.resolved = ?1");
+    q.setParameter(1, false);
+    
+    List<InventoryProblem> problems = (List<InventoryProblem>)q.getResultList();
+    ArrayList<InventoryProblem> ret = new ArrayList<InventoryProblem>();
+    if(problems != null)
+      for(InventoryProblem p : problems)
+        ret.add(p);
+    
+    return ret;
+  }
+
+  /* (non-Javadoc)
+   * @see org.theactingcompany.inventory.beans.InventoryBeanRemote#getElement(java.lang.Long, java.lang.Class)
+   */
+  @Override
+  public InventoryElement getElement(Long id, Class<? extends InventoryElement> clazz)
+  {
+    return em.find(clazz, id);
+  }
+
+  /* (non-Javadoc)
+   * @see org.theactingcompany.inventory.beans.InventoryDaoRemote#getProblem(java.lang.Long)
+   */
+  @Override
+  public InventoryProblem getProblem(Long id)
+  {
+    return em.find(InventoryProblem.class, id);
+  }
+
+  /* (non-Javadoc)
+   * @see org.theactingcompany.inventory.beans.InventoryDaoRemote#getProblemsForClass(java.lang.Class)
+   */
+  @SuppressWarnings("unchecked")
+  @Override
+  public ArrayList<InventoryProblem> getProblemsForClass(Class<? extends InventoryProblem> clazz)
+  {
+    Query q = em.createQuery("SELECT p FROM InventoryProblem p WHERE p.resolved = ?1 AND p.entityClass = ?2");
+    q.setParameter(1, false);
+    q.setParameter(2, clazz.getName());
+    
+    List<InventoryProblem> problems = (List<InventoryProblem>)q.getResultList();
+    ArrayList<InventoryProblem> ret = new ArrayList<InventoryProblem>();
+    
+    if(problems != null)
+      for(InventoryProblem p : problems)
+        ret.add(p);
+    
+    return ret;
+  }
+
+  @Override
+  public void initializeFullTextSearches()
+  {
+    em.getTransaction().begin();
+    try
+    {
+      String createIndex = 
+        "//CALL FT_DROP_ALL();" + "\r\n" +
+        "CREATE ALIAS IF NOT EXISTS FT_INIT FOR \"org.h2.fulltext.FullText.init\";" + "\r\n" +
+        "CALL FT_INIT();" + "\r\n" +
+        "CALL FT_CREATE_INDEX('PUBLIC', 'WARDROBEELEMENT', 'ID, BARCODE_ID, SEX, WEIGHT, CONDITION, LOCATION, COLORS, USERNOTES, PERIOD, TYPE, PRODUCTION, SERIALNUMBERORID, DESCRIPTION, NOTES, FILENAME, MIMETYPE');"+ "\r\n" +
+        "CALL FT_CREATE_INDEX('PUBLIC', 'STAGEMANAGEMENTELEMENT', 'ID, BARCODE_ID, WEIGHT, CONDITION, LOCATION, COLORS, USERNOTES, TYPE, PRODUCTION, SERIALNUMBERORID, DESCRIPTION, NOTES, FILENAME, MIMETYPE');"+ "\r\n" +
+        "CALL FT_CREATE_INDEX('PUBLIC', 'LIGHTINGELEMENT', 'ID, BARCODE_ID, WEIGHT, CONDITION, LOCATION, COLORS, USERNOTES, TYPE, PRODUCTION, SERIALNUMBERORID, DESCRIPTION, NOTES, FILENAME, MIMETYPE');" + "\r\n" +
+        "CALL FT_CREATE_INDEX('PUBLIC', 'GENERALELEMENT', 'ID, BARCODE_ID, WEIGHT, CONDITION, LOCATION, COLORS, USERNOTES, TYPE, PRODUCTION, SERIALNUMBERORID, DESCRIPTION, NOTES, FILENAME, MIMETYPE');" + "\r\n" +
+        "CALL FT_CREATE_INDEX('PUBLIC', 'SOUNDELEMENT', 'ID, BARCODE_ID, WEIGHT, CONDITION, LOCATION, COLORS, USERNOTES, TYPE, PRODUCTION, SERIALNUMBERORID, DESCRIPTION, NOTES, FILENAME, MIMETYPE');" + "\r\n" +
+        "CALL FT_CREATE_INDEX('PUBLIC', 'PROPSELEMENT', 'ID, BARCODE_ID, WEIGHT, CONDITION, LOCATION, COLORS, USERNOTES, TYPE, PRODUCTION, SERIALNUMBERORID, DESCRIPTION, NOTES, FILENAME, MIMETYPE');" + "\r\n" +
+        "CALL FT_CREATE_INDEX('PUBLIC', 'SCENICELEMENT', 'ID, BARCODE_ID, WEIGHT, CONDITION, LOCATION, COLORS, USERNOTES, TYPE, PRODUCTION, SERIALNUMBERORID, DESCRIPTION, NOTES, FILENAME, MIMETYPE');" + "\r\n"
+        ;
+
+      em.createNativeQuery(createIndex).executeUpdate();
+    }
+    catch(Exception e)
+    {
+      e.printStackTrace();
+    }
+    finally
+    {
+      em.getTransaction().commit();
+    }
+  }
+
+  @Override
+  public void reactivate(InventoryElement element)
+  {
+    element.setInactive(false);
+    EntityInstance.saveObject(element);
+  }
+
+  /* (non-Javadoc)
+   * @see org.theactingcompany.inventory.beans.InventoryDaoRemote#reportElementProblem(org.theactingcompany.inventory.entity.InventoryElement, org.theactingcompany.inventory.entity.InventoryProblem)
+   */
+  @Override
+  public void reportElementProblem(InventoryElement element, InventoryProblem problem)
+  {
+    problem.setEntityClass(element.getClass().getName());
+    problem.setEntityId(element.getId());
+    problem.setResolved(false);
+    
+    EntityInstance.saveObject(problem);
+  }
+
+  /* (non-Javadoc)
+   * @see org.theactingcompany.inventory.beans.InventoryDaoRemote#resolveProblem(org.theactingcompany.inventory.entity.InventoryProblem)
+   */
+  @Override
+  public void resolveProblem(InventoryProblem problem)
+  {
+    problem.setResolved(true);
+    EntityInstance.saveObject(problem);
+  }
+
+  /* (non-Javadoc)
+   * @see org.theactingcompany.inventory.beans.InventoryDaoRemote#saveElement(org.theactingcompany.inventory.entity.InventoryElement)
+   */
   @Override
   public void saveElement(InventoryElement element)
   {
@@ -88,34 +240,14 @@ public class InventoryDao implements InventoryDaoRemote
       EntityInstance.saveObject(element);
   }
 
+  /* (non-Javadoc)
+   * @see org.theactingcompany.inventory.beans.InventoryDaoRemote#searchElement(java.lang.String, java.lang.Class)
+   * 
+   */
   @Override
-  public void reportElementProblem(InventoryElement element, InventoryProblem problem)
+  public ArrayList<InventoryElement> searchElement(String searchString, Class<? extends InventoryElement> clazz)
   {
-    //FIXME Implement
-    throw new RuntimeException("NOT IMPLEMENTED...");
-
-  }
-
-  @Override
-  public void resolveProblem(InventoryProblem problem)
-  {
-    //FIXME Implement
-    throw new RuntimeException("NOT IMPLEMENTED...");
-
-  }
-
-  @Override
-  public ArrayList<InventoryProblem> getAllProblems()
-  {
-    //FIXME Implement
-    throw new RuntimeException("NOT IMPLEMENTED...");
-  }
-
-  @Override
-  public ArrayList<InventoryProblem> getProblemsForClass(Class<? extends InventoryProblem> clazz)
-  {
-    //FIXME Implement
-    throw new RuntimeException("NOT IMPLEMENTED...");
+    return searchElement(new String[]{searchString}, clazz); 
   }
 
   /* (non-Javadoc)
@@ -139,6 +271,7 @@ public class InventoryDao implements InventoryDaoRemote
       query.append(", 0, 0) ftsearch \n\tINNER JOIN ");
       query.append(tableName);
       query.append(" element\n\t\t ON \n\t\t ftsearch.KEYS[0] = element.ID");
+      
       if(i+1 < searchString.length)
         query.append("\nUNION ALL\n");
     }
@@ -171,49 +304,34 @@ public class InventoryDao implements InventoryDaoRemote
     Collections.sort(sort);
     
     for(RankedElement rank : sort)
-      ret.add(getElement(rank.element, clazz));
-    
+    {
+      InventoryElement el = getElement(rank.element, clazz);
+      if(el != null && !(el.getInactive() == null? false : el.getInactive()));
+        ret.add(el);
+    }
+      
     return ret;
   }
 
   /* (non-Javadoc)
-   * @see org.theactingcompany.inventory.beans.InventoryDaoRemote#searchElement(java.lang.String, java.lang.Class)
-   * 
+   * @see org.theactingcompany.inventory.beans.InventoryBeanRemote#removeElement(org.theactingcompany.inventory.entity.InventoryElement)
    */
   @Override
-  public ArrayList<InventoryElement> searchElement(String searchString, Class<? extends InventoryElement> clazz)
+  public void setInactive(InventoryElement element)
   {
-    return searchElement(new String[]{searchString}, clazz); 
+    element.setInactive(true);
+    EntityInstance.saveObject(element);
   }
-
+  
   /* (non-Javadoc)
-   * @see org.theactingcompany.inventory.beans.InventoryDaoRemote#suggestProduction(java.lang.Class, java.lang.String)
+   * @see org.theactingcompany.inventory.beans.InventoryDaoRemote#suggestCondition(java.lang.Class, java.lang.String)
    */
   @SuppressWarnings("unchecked")
   @Override
-  public HashSet<String> suggestProduction(Class<? extends InventoryElement> clazz, String value)
+  public HashSet<String> suggestCondition(Class<? extends InventoryElement> clazz, String value)
   {
     value = escape(value);
-    Query q = em.createNativeQuery("SELECT production FROM " + clazz.getSimpleName() + " WHERE production LIKE '%" + value + "%'");
-    List<String> values = (List<String>)q.getResultList();
-    HashSet<String> ret = new HashSet<String>();
-
-    if(values != null)
-      for(String s : values)
-        ret.add(s);
-
-    return ret;
-  }
-
-  /* (non-Javadoc)
-   * @see org.theactingcompany.inventory.beans.InventoryDaoRemote#suggestPeriod(java.lang.Class, java.lang.String)
-   */
-  @SuppressWarnings("unchecked")
-  @Override
-  public HashSet<String> suggestPeriod(Class<WardrobeElement> clazz, String value)
-  {
-    value = value.replaceAll("'", "");
-    Query q = em.createNativeQuery("SELECT period FROM " + clazz.getSimpleName() + " WHERE period LIKE '%" + value + "%'");
+    Query q = em.createNativeQuery("SELECT condition FROM " + clazz.getSimpleName() + " WHERE condition LIKE '%" + value + "%'");
     List<String> values = (List<String>)q.getResultList();
     HashSet<String> ret = new HashSet<String>();
 
@@ -244,14 +362,33 @@ public class InventoryDao implements InventoryDaoRemote
   }
 
   /* (non-Javadoc)
-   * @see org.theactingcompany.inventory.beans.InventoryDaoRemote#suggestCondition(java.lang.Class, java.lang.String)
+   * @see org.theactingcompany.inventory.beans.InventoryDaoRemote#suggestPeriod(java.lang.Class, java.lang.String)
    */
   @SuppressWarnings("unchecked")
   @Override
-  public HashSet<String> suggestCondition(Class<? extends InventoryElement> clazz, String value)
+  public HashSet<String> suggestPeriod(Class<WardrobeElement> clazz, String value)
+  {
+    value = value.replaceAll("'", "");
+    Query q = em.createNativeQuery("SELECT period FROM " + clazz.getSimpleName() + " WHERE period LIKE '%" + value + "%'");
+    List<String> values = (List<String>)q.getResultList();
+    HashSet<String> ret = new HashSet<String>();
+
+    if(values != null)
+      for(String s : values)
+        ret.add(s);
+
+    return ret;
+  }
+
+  /* (non-Javadoc)
+   * @see org.theactingcompany.inventory.beans.InventoryDaoRemote#suggestProduction(java.lang.Class, java.lang.String)
+   */
+  @SuppressWarnings("unchecked")
+  @Override
+  public HashSet<String> suggestProduction(Class<? extends InventoryElement> clazz, String value)
   {
     value = escape(value);
-    Query q = em.createNativeQuery("SELECT condition FROM " + clazz.getSimpleName() + " WHERE condition LIKE '%" + value + "%'");
+    Query q = em.createNativeQuery("SELECT production FROM " + clazz.getSimpleName() + " WHERE production LIKE '%" + value + "%'");
     List<String> values = (List<String>)q.getResultList();
     HashSet<String> ret = new HashSet<String>();
 
@@ -281,64 +418,17 @@ public class InventoryDao implements InventoryDaoRemote
     return ret;
   }
 
-  private String escape(String input)
-  {
-    if(input == null)
-      return null;
-    return input
-    .replaceAll(" ", "%")
-    .replaceAll("'", "")
-    .replaceAll(",", "")
-    .replaceAll(";", "")
-    .replaceAll(".", "")
-    .replaceAll("\"", "");
-  }
-
-  @Override
-  public void assignBarCodeToEntity(InventoryElement element)
-  {
-    BarCode code = new BarCode();
-    element.setBarCode(code);
-    EntityInstance.saveObject(code);
-    EntityInstance.saveObject(element);
-  }
-
-  @Override
-  public void initializeFullTextSearches()
-  {
-    em.getTransaction().begin();
-    try
-    {
-      String createIndex = 
-        "CALL FT_DROP_ALL();" + "\r\n" +
-        "CREATE ALIAS IF NOT EXISTS FT_INIT FOR \"org.h2.fulltext.FullText.init\";" + "\r\n" +
-        "CALL FT_INIT();" + "\r\n" +
-        "CALL FT_CREATE_INDEX('PUBLIC', 'WARDROBEELEMENT', 'ID, BARCODE_ID, SEX, WEIGHT, CONDITION, LOCATION, COLORS, USERNOTES, PERIOD, TYPE, PRODUCTION, SERIALNUMBERORID, DESCRIPTION, NOTES, FILENAME, MIMETYPE');"+ "\r\n" +
-        "CALL FT_CREATE_INDEX('PUBLIC', 'STAGEMANAGEMENTELEMENT', 'ID, BARCODE_ID, WEIGHT, CONDITION, LOCATION, COLORS, USERNOTES, TYPE, PRODUCTION, SERIALNUMBERORID, DESCRIPTION, NOTES, FILENAME, MIMETYPE');"+ "\r\n" +
-        "CALL FT_CREATE_INDEX('PUBLIC', 'LIGHTINGELEMENT', 'ID, BARCODE_ID, WEIGHT, CONDITION, LOCATION, COLORS, USERNOTES, TYPE, PRODUCTION, SERIALNUMBERORID, DESCRIPTION, NOTES, FILENAME, MIMETYPE');" + "\r\n" +
-        "CALL FT_CREATE_INDEX('PUBLIC', 'GENERALELEMENT', 'ID, BARCODE_ID, WEIGHT, CONDITION, LOCATION, COLORS, USERNOTES, TYPE, PRODUCTION, SERIALNUMBERORID, DESCRIPTION, NOTES, FILENAME, MIMETYPE');" + "\r\n" +
-        "CALL FT_CREATE_INDEX('PUBLIC', 'SOUNDELEMENT', 'ID, BARCODE_ID, WEIGHT, CONDITION, LOCATION, COLORS, USERNOTES, TYPE, PRODUCTION, SERIALNUMBERORID, DESCRIPTION, NOTES, FILENAME, MIMETYPE');" + "\r\n" +
-        "CALL FT_CREATE_INDEX('PUBLIC', 'PROPSELEMENT', 'ID, BARCODE_ID, WEIGHT, CONDITION, LOCATION, COLORS, USERNOTES, TYPE, PRODUCTION, SERIALNUMBERORID, DESCRIPTION, NOTES, FILENAME, MIMETYPE');" + "\r\n" +
-        "CALL FT_CREATE_INDEX('PUBLIC', 'SCENICELEMENT', 'ID, BARCODE_ID, WEIGHT, CONDITION, LOCATION, COLORS, USERNOTES, TYPE, PRODUCTION, SERIALNUMBERORID, DESCRIPTION, NOTES, FILENAME, MIMETYPE');" + "\r\n"
-        ;
-
-      em.createNativeQuery(createIndex).executeUpdate();
-    }
-    catch(Exception e)
-    {
-      e.printStackTrace();
-    }
-    finally
-    {
-      em.getTransaction().commit();
-    }
-  }
-  
   @SuppressWarnings("rawtypes")
   public class RankedElement implements Comparable
   {
-    Long element;
     Integer count;
+    Long element;
+    
+    RankedElement(Long element, Integer count)
+    {
+      this.element = element;
+      this.count = count;
+    }
     
     @Override
     public int compareTo(Object obj)
@@ -355,12 +445,6 @@ public class InventoryDao implements InventoryDaoRemote
         return -1;
       
       return 1;
-    }
-    
-    RankedElement(Long element, Integer count)
-    {
-      this.element = element;
-      this.count = count;
     }
     
   }
