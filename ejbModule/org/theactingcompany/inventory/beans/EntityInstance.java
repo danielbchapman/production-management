@@ -63,7 +63,8 @@ public class EntityInstance
     if(!Config.CONTAINER_MANAGED)
       getEm().getTransaction().begin();
     
-    getEm().remove(obj);
+    Object ref = getEm().find(obj.getClass(), obj.getId());
+    getEm().remove(ref);
     
     if(!Config.CONTAINER_MANAGED)
       getEm().getTransaction().commit();    

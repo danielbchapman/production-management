@@ -37,8 +37,28 @@ public interface InventoryDaoRemote
    * @param element the element to remove
    * 
    */
-  public void removeElement(InventoryElement element);
+  public void setInactive(InventoryElement element);
   
+  /**
+   * Set an item back to active status (undelete)
+   * @param element the element to activate  
+   * 
+   */
+  public void reactivate(InventoryElement element);
+
+  /**
+   * Deactivate an element (delete with option to undelete)
+   * @param element the element to deactivate
+   * 
+   */
+  public void deactivate(InventoryElement element);
+  
+  /**
+   * Purge the object from the system (administrator only)
+   * @param element The element to delete
+   * 
+   */
+  public void deleteElement(InventoryElement element);
   /**
    * @param clazz the class to list
    * @return a sorted list (by type/description) for the entire inventory
@@ -46,6 +66,14 @@ public interface InventoryDaoRemote
    * 
    */
   public ArrayList<? extends InventoryElement> getAllElements(Class<? extends InventoryElement> clazz);
+  
+  /**
+   * @param clazz the class to list
+   * @return a sorted list (by type/description) for the entire inventory
+   * section.  
+   * 
+   */
+  public ArrayList<? extends InventoryElement> getAllInactiveElements(Class<? extends InventoryElement> clazz);
   /**
    * Save an element to the database
    * @param element the element to save  
@@ -74,6 +102,13 @@ public interface InventoryDaoRemote
    */
   public ArrayList<InventoryProblem> getAllProblems();
   
+  /**
+   * Return the selected problem
+   * @param id the id of the problem
+   * @return The reference to the problem.
+   * 
+   */
+  public InventoryProblem getProblem(Long id);
   /**
    * 
    * @param clazz the entity class to search for

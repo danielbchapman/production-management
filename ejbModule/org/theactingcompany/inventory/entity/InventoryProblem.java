@@ -27,62 +27,72 @@ public class InventoryProblem extends BaseEntity
   private String description;
   @Column(length=80)
   private String emailContact;
-  @Column(length=20)
+  @Column(length=40)
   private String phoneContact;
+  @Column(length=50)
+  private String name;
   private boolean contactMe;
   private boolean resolved;
-
-  public Long getEntityId()
-  {
-    return entityId;
-  }
-  public void setEntityId(Long entityId)
-  {
-    this.entityId = entityId;
-  }
-  public String getEntityClass()
-  {
-    return entityClass;
-  }
-  public void setEntityClass(String entityClass)
-  {
-    this.entityClass = entityClass;
-  }
   public String getDescription()
   {
     return description;
-  }
-  public void setDescription(String description)
-  {
-    this.description = description;
   }
   public String getEmailContact()
   {
     return emailContact;
   }
-  public void setEmailContact(String emailContact)
+
+  public String getEntityClass()
   {
-    this.emailContact = emailContact;
+    return entityClass;
+  }
+  public Long getEntityId()
+  {
+    return entityId;
+  }
+  public String getName()
+  {
+    return name;
   }
   public String getPhoneContact()
   {
     return phoneContact;
   }
-  public void setPhoneContact(String phoneContact)
-  {
-    this.phoneContact = phoneContact;
-  }
   public boolean isContactMe()
   {
     return contactMe;
+  }
+  public boolean isResolved()
+  {
+    return resolved;
   }
   public void setContactMe(boolean contactMe)
   {
     this.contactMe = contactMe;
   }
-  public boolean isResolved()
+  public void setDescription(String description)
   {
-    return resolved;
+    this.description = description;
+  }
+  public void setEmailContact(String emailContact)
+  {
+    this.emailContact = emailContact;
+  }
+  public void setEntityClass(String entityClass)
+  {
+    this.entityClass = entityClass;
+  }
+  public void setEntityId(Long entityId)
+  {
+    this.entityId = entityId;
+  }
+  public void setName(String name)
+  {
+    this.name = name;
+  }
+  public void setPhoneContact(String phoneContact)
+  {
+    this.phoneContact = phoneContact;
   }
   public void setResolved(boolean resolved)
   {

@@ -19,14 +19,18 @@ import javax.persistence.OneToOne;
 public abstract class InventoryElement extends BaseEntity
 {  
   private static final long serialVersionUID = 1L;
+
   @OneToOne
   private BarCode barCode;
+
   @Column(length=200)
   private String colors;
+
   @Column(length=128)
   private String condition;
   @Lob
   private String description;
+  private Boolean inactive;
   private String location;
   @Lob
   private String notes;
@@ -40,12 +44,10 @@ public abstract class InventoryElement extends BaseEntity
   @Lob
   private String userNotes;
   private Double weight;
-
   public BarCode getBarCode()
   {
     return barCode;
   }
-
   public String getColors()
   {
     return colors;
@@ -59,6 +61,11 @@ public abstract class InventoryElement extends BaseEntity
   public String getDescription()
   {
     return description;
+  }
+
+  public Boolean getInactive()
+  {
+    return inactive;
   }
 
   public String getLocation()
@@ -124,6 +131,11 @@ public abstract class InventoryElement extends BaseEntity
   public void setDescription(String description)
   {
     this.description = description;
+  }
+
+  public void setInactive(Boolean inactive)
+  {
+    this.inactive = inactive;
   }
 
   public void setLocation(String location)
