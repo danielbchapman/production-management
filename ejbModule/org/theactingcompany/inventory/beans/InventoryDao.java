@@ -12,6 +12,7 @@ import javax.persistence.Query;
 
 import org.theactingcompany.inventory.entity.BarCode;
 import org.theactingcompany.inventory.entity.InventoryElement;
+import org.theactingcompany.inventory.entity.InventoryImage;
 import org.theactingcompany.inventory.entity.InventoryProblem;
 import org.theactingcompany.inventory.entity.WardrobeElement;
 
@@ -27,15 +28,6 @@ public class InventoryDao implements InventoryDaoRemote
    */
   public InventoryDao()
   {
-  }
-
-  @Override
-  public void assignBarCodeToEntity(InventoryElement element)
-  {
-    BarCode code = new BarCode();
-    element.setBarCode(code);
-    EntityInstance.saveObject(code);
-    EntityInstance.saveObject(element);
   }
 
   /* (non-Javadoc)
@@ -57,18 +49,12 @@ public class InventoryDao implements InventoryDaoRemote
     EntityInstance.deleteObject(element);
   }
 
-  private String escape(String input)
-  {
-    if(input == null)
-      return null;
-    return input
-    .replaceAll(" ", "%")
-    .replaceAll("'", "")
-    .replaceAll(",", "")
-    .replaceAll(";", "")
-    .replaceAll(".", "")
-    .replaceAll("\"", "");
-  }
+  @Override
+	public void deleteInventoryImage(InventoryImage id)
+	{
+		EntityInstance.deleteObject(id);
+		
+	}
 
   /* (non-Javadoc)
    * @see org.theactingcompany.inventory.beans.InventoryBeanRemote#getAllElements(java.lang.Class)
@@ -137,6 +123,13 @@ public class InventoryDao implements InventoryDaoRemote
     return em.find(clazz, id);
   }
 
+  @Override
+	public InventoryImage getInventoryImage(Long id)
+	{
+		return em.find(InventoryImage.class, id);
+		
+	}
+
   /* (non-Javadoc)
    * @see org.theactingcompany.inventory.beans.InventoryDaoRemote#getProblem(java.lang.Long)
    */
@@ -173,18 +166,31 @@ public class InventoryDao implements InventoryDaoRemote
     em.getTransaction().begin();
     try
     {
+    	//This is by column
+//      String createIndex = 
+//        "//CALL FT_DROP_ALL();" + "\r\n" +
+//        "CREATE ALIAS IF NOT EXISTS FT_INIT FOR \"org.h2.fulltext.FullText.init\";" + "\r\n" +
+//        "CALL FT_INIT();" + "\r\n" +
+//        "CALL FT_CREATE_INDEX('PUBLIC', 'WARDROBEELEMENT', 'ID, BARCODE_ID, SEX, WEIGHT, CONDITION, LOCATION, COLORS, USERNOTES, PERIOD, TYPE, PRODUCTION, SERIALNUMBERORID, DESCRIPTION, NOTES, FILENAME, MIMETYPE');"+ "\r\n" +
+//        "CALL FT_CREATE_INDEX('PUBLIC', 'STAGEMANAGEMENTELEMENT', 'ID, BARCODE_ID, WEIGHT, CONDITION, LOCATION, COLORS, USERNOTES, TYPE, PRODUCTION, SERIALNUMBERORID, DESCRIPTION, NOTES, FILENAME, MIMETYPE');"+ "\r\n" +
+//        "CALL FT_CREATE_INDEX('PUBLIC', 'LIGHTINGELEMENT', 'ID, BARCODE_ID, WEIGHT, CONDITION, LOCATION, COLORS, USERNOTES, TYPE, PRODUCTION, SERIALNUMBERORID, DESCRIPTION, NOTES, FILENAME, MIMETYPE');" + "\r\n" +
+//        "CALL FT_CREATE_INDEX('PUBLIC', 'GENERALELEMENT', 'ID, BARCODE_ID, WEIGHT, CONDITION, LOCATION, COLORS, USERNOTES, TYPE, PRODUCTION, SERIALNUMBERORID, DESCRIPTION, NOTES, FILENAME, MIMETYPE');" + "\r\n" +
+//        "CALL FT_CREATE_INDEX('PUBLIC', 'SOUNDELEMENT', 'ID, BARCODE_ID, WEIGHT, CONDITION, LOCATION, COLORS, USERNOTES, TYPE, PRODUCTION, SERIALNUMBERORID, DESCRIPTION, NOTES, FILENAME, MIMETYPE');" + "\r\n" +
+//        "CALL FT_CREATE_INDEX('PUBLIC', 'PROPSELEMENT', 'ID, BARCODE_ID, WEIGHT, CONDITION, LOCATION, COLORS, USERNOTES, TYPE, PRODUCTION, SERIALNUMBERORID, DESCRIPTION, NOTES, FILENAME, MIMETYPE');" + "\r\n" +
+//        "CALL FT_CREATE_INDEX('PUBLIC', 'SCENICELEMENT', 'ID, BARCODE_ID, WEIGHT, CONDITION, LOCATION, COLORS, USERNOTES, TYPE, PRODUCTION, SERIALNUMBERORID, DESCRIPTION, NOTES, FILENAME, MIMETYPE');" + "\r\n"
+//        ;
+    	//These tables have no Blobs so they can be "Blanket" indexed
       String createIndex = 
-        "//CALL FT_DROP_ALL();" + "\r\n" +
-        "CREATE ALIAS IF NOT EXISTS FT_INIT FOR \"org.h2.fulltext.FullText.init\";" + "\r\n" +
-        "CALL FT_INIT();" + "\r\n" +
-        "CALL FT_CREATE_INDEX('PUBLIC', 'WARDROBEELEMENT', 'ID, BARCODE_ID, SEX, WEIGHT, CONDITION, LOCATION, COLORS, USERNOTES, PERIOD, TYPE, PRODUCTION, SERIALNUMBERORID, DESCRIPTION, NOTES, FILENAME, MIMETYPE');"+ "\r\n" +
-        "CALL FT_CREATE_INDEX('PUBLIC', 'STAGEMANAGEMENTELEMENT', 'ID, BARCODE_ID, WEIGHT, CONDITION, LOCATION, COLORS, USERNOTES, TYPE, PRODUCTION, SERIALNUMBERORID, DESCRIPTION, NOTES, FILENAME, MIMETYPE');"+ "\r\n" +
-        "CALL FT_CREATE_INDEX('PUBLIC', 'LIGHTINGELEMENT', 'ID, BARCODE_ID, WEIGHT, CONDITION, LOCATION, COLORS, USERNOTES, TYPE, PRODUCTION, SERIALNUMBERORID, DESCRIPTION, NOTES, FILENAME, MIMETYPE');" + "\r\n" +
-        "CALL FT_CREATE_INDEX('PUBLIC', 'GENERALELEMENT', 'ID, BARCODE_ID, WEIGHT, CONDITION, LOCATION, COLORS, USERNOTES, TYPE, PRODUCTION, SERIALNUMBERORID, DESCRIPTION, NOTES, FILENAME, MIMETYPE');" + "\r\n" +
-        "CALL FT_CREATE_INDEX('PUBLIC', 'SOUNDELEMENT', 'ID, BARCODE_ID, WEIGHT, CONDITION, LOCATION, COLORS, USERNOTES, TYPE, PRODUCTION, SERIALNUMBERORID, DESCRIPTION, NOTES, FILENAME, MIMETYPE');" + "\r\n" +
-        "CALL FT_CREATE_INDEX('PUBLIC', 'PROPSELEMENT', 'ID, BARCODE_ID, WEIGHT, CONDITION, LOCATION, COLORS, USERNOTES, TYPE, PRODUCTION, SERIALNUMBERORID, DESCRIPTION, NOTES, FILENAME, MIMETYPE');" + "\r\n" +
-        "CALL FT_CREATE_INDEX('PUBLIC', 'SCENICELEMENT', 'ID, BARCODE_ID, WEIGHT, CONDITION, LOCATION, COLORS, USERNOTES, TYPE, PRODUCTION, SERIALNUMBERORID, DESCRIPTION, NOTES, FILENAME, MIMETYPE');" + "\r\n"
-        ;
+      	"CREATE ALIAS IF NOT EXISTS FT_INIT FOR \"org.h2.fulltext.FullText.init\";" + "\r\n" +
+      	"CALL FT_DROP_ALL();" + "\r\n" +
+      	"CALL FT_INIT();" + "\r\n" +
+      	"CALL FT_CREATE_INDEX('PUBLIC', 'WARDROBEELEMENT', NULL);" + "\r\n" +
+      	"CALL FT_CREATE_INDEX('PUBLIC', 'STAGEMANAGEMENTELEMENT', NULL);" + "\r\n" +
+      	"CALL FT_CREATE_INDEX('PUBLIC', 'LIGHTINGELEMENT', NULL);" + "\r\n" +
+      	"CALL FT_CREATE_INDEX('PUBLIC', 'GENERALELEMENT', NULL);" + "\r\n" +
+      	"CALL FT_CREATE_INDEX('PUBLIC', 'SOUNDELEMENT', NULL);" + "\r\n" +
+      	"CALL FT_CREATE_INDEX('PUBLIC', 'PROPSELEMENT', NULL);" + "\r\n" +
+      	"CALL FT_CREATE_INDEX('PUBLIC', 'SCENICELEMENT', NULL);" + "\r\n";
 
       em.createNativeQuery(createIndex).executeUpdate();
     }
@@ -234,10 +240,21 @@ public class InventoryDao implements InventoryDaoRemote
   @Override
   public void saveElement(InventoryElement element)
   {
-    if(element.getBarCode() == null)
-      assignBarCodeToEntity(element);
-    else
-      EntityInstance.saveObject(element);
+  	if(element.getBarCode() == null)
+  	{
+      BarCode code = new BarCode();
+      element.setBarCode(code);
+      EntityInstance.saveObject(code);  		
+  	}
+
+    if(element.getLocalImage() != null && element.getImage() == null)
+    {
+    	InventoryImage image = new InventoryImage();
+    	image.setImage(element.getLocalImage());
+    	EntityInstance.saveObject(image);
+    	element.setImage(image.getId());
+    }
+    EntityInstance.saveObject(element);
   }
 
   /* (non-Javadoc)
@@ -312,7 +329,7 @@ public class InventoryDao implements InventoryDaoRemote
       
     return ret;
   }
-
+  
   /* (non-Javadoc)
    * @see org.theactingcompany.inventory.beans.InventoryBeanRemote#removeElement(org.theactingcompany.inventory.entity.InventoryElement)
    */
@@ -322,7 +339,7 @@ public class InventoryDao implements InventoryDaoRemote
     element.setInactive(true);
     EntityInstance.saveObject(element);
   }
-  
+
   /* (non-Javadoc)
    * @see org.theactingcompany.inventory.beans.InventoryDaoRemote#suggestCondition(java.lang.Class, java.lang.String)
    */
@@ -418,7 +435,20 @@ public class InventoryDao implements InventoryDaoRemote
     return ret;
   }
 
-  @SuppressWarnings("rawtypes")
+	private String escape(String input)
+  {
+    if(input == null)
+      return null;
+    return input
+    .replaceAll(" ", "%")
+    .replaceAll("'", "")
+    .replaceAll(",", "")
+    .replaceAll(";", "")
+    .replaceAll(".", "")
+    .replaceAll("\"", "");
+  }
+
+	@SuppressWarnings("rawtypes")
   public class RankedElement implements Comparable
   {
     Integer count;
@@ -448,4 +478,5 @@ public class InventoryDao implements InventoryDaoRemote
     }
     
   }
+
 }

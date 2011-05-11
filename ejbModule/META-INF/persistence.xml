@@ -18,6 +18,7 @@
 		<class>org.theactingcompany.inventory.entity.EmbeddableImage</class>
 		<class>org.theactingcompany.inventory.entity.BaseEntity</class>
 		<class>org.theactingcompany.inventory.entity.BarCode</class>
+		<class>org.theactingcompany.inventory.entity.InventoryImage</class>
 		<!-- 
 		<jta-data-source>java:/ProductionDS</jta-data-source>
 		 -->
