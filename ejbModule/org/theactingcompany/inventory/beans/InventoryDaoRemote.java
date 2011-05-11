@@ -6,6 +6,7 @@ import java.util.HashSet;
 import javax.ejb.Remote;
 
 import org.theactingcompany.inventory.entity.InventoryElement;
+import org.theactingcompany.inventory.entity.InventoryImage;
 import org.theactingcompany.inventory.entity.InventoryProblem;
 import org.theactingcompany.inventory.entity.WardrobeElement;
 
@@ -26,7 +27,7 @@ public interface InventoryDaoRemote
   /**
    * Return a specific element based on an ID and a class
    * @param id the element to search for
-   * @param clazz the element class (i.e. PropsElement.class
+   * @param clazz the element class (i.e. PropsElement.class)
    * @return the element with the specified ID, null if not found
    * 
    */
@@ -97,6 +98,17 @@ public interface InventoryDaoRemote
   public void resolveProblem(InventoryProblem problem);
   
   /**
+   * 
+   * @param id the image to get  
+   * 
+   */
+  public InventoryImage getInventoryImage(Long id);
+  /**
+   * @param id removes an image from the inventory  
+   * 
+   */
+  public void deleteInventoryImage(InventoryImage id);
+  /**
    * @return a list of all inventory problems  
    * 
    */
@@ -138,7 +150,7 @@ public interface InventoryDaoRemote
   
   /** 
    * Suggest possible matches for whatever the user types.
-   * @param clazz the element to search for
+   * @param clazz the element to search
    * @param value the string to search for
    * @return a list of productions that are stored in these elements  
    */
@@ -181,13 +193,6 @@ public interface InventoryDaoRemote
    * 
    */
   public HashSet<String> suggestType(Class<? extends InventoryElement> clazz, String value);
-  
-  /**
-   * Assigns a unique code to this element (across all departments)
-   * @param element The InventoryElement to attach a bar code to  
-   * 
-   */
-  public void assignBarCodeToEntity(InventoryElement element);
   
   /**
    * Initialize the tables on the native database to support searching.  
