@@ -57,6 +57,16 @@ public class Production implements Serializable
 	 */
 	public String toString()
 	{
+		return name == null ? "none" : name.trim();
+	}
+	
+	/**
+	 * A more descriptive toString() if needed;
+	 * @return a complex description.
+	 * 
+	 */
+	public String debugToString()
+	{
 	  StringBuilder out = new StringBuilder();
 	  out.append(super.toString());
 	  out.append(" ");
@@ -67,7 +77,7 @@ public class Production implements Serializable
 	  out.append("' Description='");
 	  out.append(desriptionMarkup);
 	  out.append("'");
-	  return out.toString();
+	  return out.toString();		
 	}
 }
 

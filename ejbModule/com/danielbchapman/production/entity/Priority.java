@@ -8,11 +8,9 @@ import java.io.Serializable;
  */
 public enum Priority implements Serializable
 {
-	REMINDER("Reminder"),
-	STANDARD("Standard"),
-	BY_DATE("By Date"),
-	URGENT("Urgent"),
-	HIGH("High");
+	NONE("None"),
+	E_MAIL("Electronic Mail"),
+	URGENT("Urgent, All Notifications ");
 	
 	String s;
 	Priority(String s)
@@ -24,16 +22,20 @@ public enum Priority implements Serializable
 	 * @param s the string to search
 	 * @return the associated Priority, REMINDER if unknown
 	 */
-	public Priority parseValue(String s)
+	public static Priority parseValue(String s)
 	{
 		if(s == null)
-			return REMINDER;
+			return NONE;
 		
-		for(Priority p : values())
+		for(Priority p : values()) //Catch Names
 			if(p.toString().equals(s))
 				return p;
 		
-		return REMINDER;
+		for(Priority p : values()) //Catch Ordinal
+			if(Integer.toString(p.ordinal()).equals(s))
+				return p;
+		
+		return NONE;
 	}
 	
 	/* (non-Javadoc)

@@ -14,7 +14,9 @@ import javax.persistence.TemporalType;
 @Entity
 public class VenueLog extends BaseEntity
 {
-  Venue venue;
+	private static final long serialVersionUID = 1L;
+	
+	Venue venue;
   @Temporal(TemporalType.TIMESTAMP)
   Date date;
   @Column(length=4096)
