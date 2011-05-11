@@ -1,9 +1,12 @@
 package com.danielbchapman.production.entity;
 
-import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Lob;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * A production document is specific to a Venue and represents something specific
