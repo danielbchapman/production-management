@@ -1,10 +1,10 @@
 package com.danielbchapman.production.entity;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,15 +13,27 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.CascadeType;
 
 
 /**
- * A simple todo list that stores completed and
- * incomplete items in a format that is easily viewed by 
- * the end user. This allows for simple tracking locally
- * and should be usable as a web service.
+* <p>
+ * A task is a collection of records that model something someone needs to do 
+ * either on a daily, event or one time basis. This can be a simple checklist or
+ * something more complex like a series of long jobs. Each task has a log for comments
+ * history.
+ * </p>
  * 
+ * <p>
+ * Tasks are recursive tree structures (many to one) in a reversed singly linked list
+ * and thus can easily be attached to other tasks.
+ * <p>
+ * 
+ * @see {@link TaskStatusUpdate}
+ ***************************************************************************
+ * @author Daniel B. Chapman 
+ * @since May 12, 2011
+ * @link http://www.theactingcompany.org
+ ***************************************************************************
  */
 @Entity
 public class Task extends BaseEntity
@@ -29,8 +41,13 @@ public class Task extends BaseEntity
 
 	private static final long serialVersionUID = 1L;
 
-	private TaskUser assignedTo;
-	private Boolean complete;
+	/**
+	 * Look to (GenericLoginEJB) this is a copy of that field.
+	 * @see {@link com.danielbchapman.jboss.login.User#user}
+	 */
+	@Column(length=80)
+	private String assignedTo;
+	private boolean complete;
 	@Column(length=50)
 	private String department;
 	@Lob
@@ -55,7 +72,7 @@ public class Task extends BaseEntity
 		super();
 	}
   
-	public TaskUser getAssignedTo()
+	public String getAssignedTo()
 	{
 		return assignedTo;
 	}
@@ -117,7 +134,7 @@ public class Task extends BaseEntity
 		return updates;
 	}
 	
-	public void setAssignedTo(TaskUser assignedTo)
+	public void setAssignedTo(String assignedTo)
 	{
 		this.assignedTo = assignedTo;
 	}

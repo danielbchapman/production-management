@@ -71,14 +71,14 @@ public class BudgetDao implements BudgetDaoRemote
   /* (non-Javadoc)
    * @see com.danielbchapman.production.beans.BudgetDaoRemote#saveEntry(java.lang.Double, com.danielbchapman.production.entity.Budget, java.lang.String, com.danielbchapman.production.entity.EntryType)
    */
-  public void saveEntry(Double amount, Budget budget, String note, EntryType type)
+  public void saveEntry(Double amount, Budget budget, String note, boolean estimated)
   {
   	BudgetEntry entry = new BudgetEntry();
   	entry.setAmountInitial(amount);
   	entry.setDate(new Date());
   	entry.setNote(note);
   	entry.setBudget(budget);
-  	entry.setEntryType(type);
+  	entry.setEstimated(estimated);
   	
   	saveEntry(entry);
   }
@@ -162,4 +162,10 @@ public class BudgetDao implements BudgetDaoRemote
   	
   	return budgets;  	
   }
+
+	@Override
+	public void deleteBudget(Budget b)
+	{
+		throw new RuntimeException("Deletion not implemented...do we need it?");
+	}
 }

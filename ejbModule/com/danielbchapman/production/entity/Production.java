@@ -1,7 +1,8 @@
 package com.danielbchapman.production.entity;
 
-import java.io.Serializable;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Lob;
 
 /**
  * A simple entity to describe a production. This 
@@ -9,7 +10,7 @@ import javax.persistence.*;
  * 
  */
 @Entity
-public class Production implements Serializable
+public class Production extends BaseEntity
 {
 
 	private static final long serialVersionUID = 1L;
@@ -19,22 +20,12 @@ public class Production implements Serializable
 		super();
 	}
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long id;
 	@Column(length=256,unique=true)
 	private String name;
-	@Column(length=2048)
-	private String desriptionMarkup;
 	
-	public Long getId()
-	{
-		return id;
-	}
-	public void setId(Long id)
-	{
-		this.id = id;
-	}
+	@Lob
+	private String desriptionMarkup;
+
 	public String getName()
 	{
 		return name;
@@ -71,7 +62,7 @@ public class Production implements Serializable
 	  out.append(super.toString());
 	  out.append(" ");
 	  out.append("Id='");
-	  out.append(id);
+	  out.append(getId());
 	  out.append("' Name='");
 	  out.append(name);
 	  out.append("' Description='");

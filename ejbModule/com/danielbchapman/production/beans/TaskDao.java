@@ -5,14 +5,15 @@ import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import com.danielbchapman.production.entity.Department;
+import com.danielbchapman.jboss.login.LoginBeanRemote;
 import com.danielbchapman.production.entity.Production;
 import com.danielbchapman.production.entity.Task;
 import com.danielbchapman.production.entity.TaskStatusUpdate;
-import com.danielbchapman.production.entity.TaskUser;
 
 /**
  * A managed bean that handles interaction with TodoBeans and provides
@@ -43,7 +44,7 @@ public class TaskDao implements TaskDaoRemote
 		TaskStatusUpdate update = new TaskStatusUpdate();
 		update.setLastUpdated(new Date());
 		update.setNotes(notes);
-		update.setReminder(listItem);
+		update.setTask(listItem);
 		
 		EntityInstance.saveObject(update);
 		listItem.setLastUpdatedBy(user);
@@ -85,10 +86,9 @@ public class TaskDao implements TaskDaoRemote
 		if(production == null)
 			return items;
 		
-		Query q = em.createQuery("SELECT t FROM Task t WHERE t.production = ?1 AND AND t.parentTask = ?1 t.isComplete = ?3 ORDER BY t.priority");
+		Query q = em.createQuery("SELECT t FROM Task t WHERE t.production = ?1 AND t.parentTask IS NULL AND t.complete = ?2 ORDER BY t.priority");
 		q.setParameter(1, production);
-		q.setParameter(2, null);
-		q.setParameter(3, false);
+		q.setParameter(2, false);
 		
 		List<Task> results = (List<Task>)q.getResultList();
 		
@@ -110,10 +110,9 @@ public class TaskDao implements TaskDaoRemote
 		if(production == null)
 			return items;
 		
-		Query q = em.createQuery("SELECT t FROM Task t WHERE t.production = ?1 AND AND t.parentTask = ?1 t.isComplete = ?3 ORDER BY t.priority");
+		Query q = em.createQuery("SELECT t FROM Task t WHERE t.production = ?1 AND t.parentTask IS NOT NULL AND t.complete = ?2 ORDER BY t.priority");
 		q.setParameter(1, production);
-		q.setParameter(2, null);
-		q.setParameter(3, true);
+		q.setParameter(2, true);
 		
 		List<Task> results = (List<Task>)q.getResultList();
 		
@@ -132,7 +131,7 @@ public class TaskDao implements TaskDaoRemote
 	{
 		 ArrayList<TaskStatusUpdate> ret =  new ArrayList<TaskStatusUpdate>();
 		 
-		 Query q = em.createQuery("SELECT t FROM TaskStatusUpdate t WHERE t.reminder = ?1 ORDER BY t.lastUpdated");
+		 Query q = em.createQuery("SELECT t FROM TaskStatusUpdate t WHERE t.task = ?1 ORDER BY t.lastUpdated");
 		 q.setParameter(1, list);
 		 
 		 List<TaskStatusUpdate> results = (List<TaskStatusUpdate>) q.getResultList();
@@ -159,7 +158,7 @@ public class TaskDao implements TaskDaoRemote
 	{
 		ArrayList<Task> items = new ArrayList<Task>();
 		
-		Query q = em.createQuery("SELECT t FROM Task t WHERE t.isComplete = ?1 AND t.priority = ?2 ORDER BY t.priority");
+		Query q = em.createQuery("SELECT t FROM Task t WHERE t.complete = ?1 AND t.priority = ?2 ORDER BY t.priority");
 		q.setParameter(1, false);
 		q.setParameter(2, com.danielbchapman.production.entity.Priority.NONE);
 		
@@ -178,7 +177,7 @@ public class TaskDao implements TaskDaoRemote
 	{
 		ArrayList<Task> items = new ArrayList<Task>();
 		
-		Query q = em.createQuery("SELECT t FROM Task t WHERE t.isComplete = ?1 AND t.priority = ?2 ORDER BY t.priority");
+		Query q = em.createQuery("SELECT t FROM Task t WHERE t.complete = ?1 AND t.priority = ?2 ORDER BY t.priority");
 		q.setParameter(1, false);
 		q.setParameter(2, com.danielbchapman.production.entity.Priority.E_MAIL);
 		
@@ -197,7 +196,7 @@ public class TaskDao implements TaskDaoRemote
 	{
 		ArrayList<Task> items = new ArrayList<Task>();
 		
-		Query q = em.createQuery("SELECT t FROM Task t WHERE t.isComplete = ?1 AND t.priority = ?2 ORDER BY t.priority");
+		Query q = em.createQuery("SELECT t FROM Task t WHERE t.complete = ?1 AND t.priority = ?2 ORDER BY t.priority");
 		q.setParameter(1, false);
 		q.setParameter(2, com.danielbchapman.production.entity.Priority.URGENT);
 		
@@ -210,36 +209,24 @@ public class TaskDao implements TaskDaoRemote
 		return items;
 	}
 
-	@SuppressWarnings("unchecked")
+	/* (non-Javadoc)
+	 * @see com.danielbchapman.production.beans.TaskDaoRemote#getAllUsers()
+	 */
 	@Override
-	public ArrayList<TaskUser> getAllTaskUsers()
+	public ArrayList<String> getAllUsers()
 	{
-		ArrayList<TaskUser> items = new ArrayList<TaskUser>();
-		
-		Query q = em.createQuery("SELECT t FROM TaskUser ORDER BY t.name");
-		q.setParameter(1, false);
-		q.setParameter(2, com.danielbchapman.production.entity.Priority.URGENT);
-		
-		List<TaskUser> results = (List<TaskUser>)q.getResultList();
-		
-		if(results != null)
-			for(TaskUser list : results)
-				items.add(list);
-
-		return items;
+		try
+		{
+			return ((LoginBeanRemote)new InitialContext().lookup("LoginBean/remote")).getUsers();
+		}
+		catch (NamingException e)
+		{
+			throw new RuntimeException(e.getMessage(), e);
+		}
 	}
 
 	@Override
-	public void addTaskUser(String name, String position)
-	{
-		TaskUser user = new TaskUser();
-		user.setName(name);
-		user.setPosition(position);
-		EntityInstance.saveObject(user);
-	}
-
-	@Override
-	public void removeTaskUser(TaskUser user, TaskUser reassign)
+	public void reassignTask(String user, String reassign)
 	{
 		if(reassign == null)
 		{
@@ -253,7 +240,26 @@ public class TaskDao implements TaskDaoRemote
 			q.setParameter(1, reassign);
 			q.setParameter(2, user);
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see com.danielbchapman.production.beans.TaskDaoRemote#getItemsForTask(com.danielbchapman.production.entity.Task)
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public ArrayList<Task> getSubTasks(Task task)
+	{
+		ArrayList<Task> items = new ArrayList<Task>();
 		
-		EntityInstance.deleteObject(user);
+		Query q = em.createQuery("SELECT t FROM Task t WHERE t.parentTask = ?1 ORDER BY t.priority, t.id");
+		q.setParameter(1, task);
+		
+		List<Task> results = (List<Task>)q.getResultList();
+		
+		if(results != null)
+			for(Task list : results)
+				items.add(list);
+
+		return items;
 	}
 }
