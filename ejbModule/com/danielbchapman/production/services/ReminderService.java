@@ -26,7 +26,7 @@ public class ReminderService implements Schedulable
 		
 	  try
     {
-	  	TaskDaoRemote reminderDaoObj = (TaskDaoRemote) new InitialContext().lookup("ReminderDao/remote");
+	  	TaskDaoRemote reminderDaoObj = (TaskDaoRemote) new InitialContext().lookup("TaskDao/remote");
 	  	Logger log = Logger.getLogger(getClass());
 	  	log.info("--SCHEDULER SERVICE RUNNING--[" + date + " , " + repetition + "]");
 	  	ArrayList<Task> none = reminderDaoObj.getTaskReminderNone();

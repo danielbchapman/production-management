@@ -28,11 +28,7 @@ public class ProductionDao implements ProductionDaoRemote
    */
 	public void saveProduction(Production source)
 	{
-		if(source.getId() != null)
-			em.merge(source);
-		else
-			em.persist(source);
-		
+		EntityInstance.saveObject(source);
 	}
 	
 	/* (non-Javadoc)
@@ -87,13 +83,6 @@ public class ProductionDao implements ProductionDaoRemote
    */
 	public void removeProduction(Production p)
 	{
-	  if(!Config.CONTAINER_MANAGED)
-	    em.getTransaction().begin();
-	  
-		if(p != null)
-			em.remove(p);
-		
-		if(!Config.CONTAINER_MANAGED)
-		  em.getTransaction().commit();
+		EntityInstance.deleteObject(p);
 	}
 }

@@ -29,31 +29,12 @@ public class BudgetEntry implements Serializable
 	private Date date;
 	@Column(length = 125)
 	private String note;
-	private EntryType entryType;
+	private boolean estimated;
+	private boolean confirmed;
 
 	public BudgetEntry()
 	{
 		super();
-	}
-
-	public Long getId()
-	{
-		return id;
-	}
-
-	public void setId(Long id)
-	{
-		this.id = id;
-	}
-
-	public Budget getBudget()
-	{
-		return budget;
-	}
-
-	public void setBudget(Budget budget)
-	{
-		this.budget = budget;
 	}
 
 	public Collection<BudgetAdjustingEntry> getAdjustments()
@@ -61,41 +42,16 @@ public class BudgetEntry implements Serializable
 		return adjustments;
 	}
 
-	public void setAdjustments(Collection<BudgetAdjustingEntry> adjustments)
-	{
-		this.adjustments = adjustments;
-	}
-
 	public Double getAmountInitial()
 	{
 		return amountInitial;
 	}
 
-	public void setAmountInitial(Double amountInitial)
+	public Budget getBudget()
 	{
-		this.amountInitial = amountInitial;
+		return budget;
 	}
 
-	public Date getDate()
-	{
-		return date;
-	}
-
-	public void setDate(Date date)
-	{
-		this.date = date;
-	}
-
-	public String getNote()
-	{
-		return note;
-	}
-
-	public void setNote(String note)
-	{
-		this.note = note;
-	}
-	
 	/**
 	 * Return an amount of the budget including all adjusting entries
 	 * related to this entry.
@@ -116,14 +72,69 @@ public class BudgetEntry implements Serializable
 		return amountInitial;
 	}
 
-	public EntryType getEntryType()
+	public Date getDate()
 	{
-		return entryType;
+		return date;
 	}
 
-	public void setEntryType(EntryType entryType)
+	public Long getId()
 	{
-		this.entryType = entryType;
+		return id;
+	}
+
+	public String getNote()
+	{
+		return note;
+	}
+
+	public boolean isConfirmed()
+	{
+		return confirmed;
+	}
+
+	public boolean isEstimated()
+	{
+		return estimated;
+	}
+
+	public void setAdjustments(Collection<BudgetAdjustingEntry> adjustments)
+	{
+		this.adjustments = adjustments;
+	}
+
+	public void setAmountInitial(Double amountInitial)
+	{
+		this.amountInitial = amountInitial;
+	}
+
+	public void setBudget(Budget budget)
+	{
+		this.budget = budget;
+	}
+
+	public void setConfirmed(boolean confirmed)
+	{
+		this.confirmed = confirmed;
+	}
+
+	public void setDate(Date date)
+	{
+		this.date = date;
+	}
+
+	public void setEstimated(boolean estimated)
+	{
+		this.estimated = estimated;
+	}
+
+	public void setId(Long id)
+	{
+		this.id = id;
+	}
+
+	public void setNote(String note)
+	{
+		this.note = note;
 	}
 
 	/* (non-Javadoc)
@@ -144,8 +155,8 @@ public class BudgetEntry implements Serializable
 	  b.append(date);
 	  b.append("' Note:'");
 	  b.append(note);
-	  b.append("' EntryType:'");
-	  b.append(entryType)
+	  b.append("' Estimate:'");
+	  b.append(estimated)
 	  ;
 	  return b.toString();
 	}

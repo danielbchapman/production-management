@@ -46,6 +46,7 @@ public class EntityInstance
         getEm().persist(obj);
       else
         getEm().merge(obj);
+      
       if(!Config.CONTAINER_MANAGED)
         getEm().getTransaction().commit();
   }
@@ -63,7 +64,7 @@ public class EntityInstance
     if(!Config.CONTAINER_MANAGED)
       getEm().getTransaction().begin();
     
-    getEm().remove(obj);
+    getEm().remove(getEm().find(obj.getClass(), obj.getId())); //This makes sure the entity is managed
     
     if(!Config.CONTAINER_MANAGED)
       getEm().getTransaction().commit();    

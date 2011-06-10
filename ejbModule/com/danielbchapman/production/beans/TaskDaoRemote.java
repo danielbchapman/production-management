@@ -5,12 +5,23 @@ import java.util.ArrayList;
 
 import javax.ejb.Remote;
 
-import com.danielbchapman.production.entity.Department;
 import com.danielbchapman.production.entity.Production;
 import com.danielbchapman.production.entity.Task;
 import com.danielbchapman.production.entity.TaskStatusUpdate;
-import com.danielbchapman.production.entity.TaskUser;
 
+/**
+ * <p>
+ * This is the primary interface for the TaskDao. All methods here relate
+ * to managing tasks and history of tasks.
+ * </p>
+ * @see {@link com.danielbchapman.production.entity.Task}
+ * @see EJB3
+ ***************************************************************************
+ * @author Daniel B. Chapman 
+ * @since May 12, 2011
+ * @link http://www.theactingcompany.org
+ ***************************************************************************
+ */
 @Remote
 public interface TaskDaoRemote
 {
@@ -74,23 +85,21 @@ public interface TaskDaoRemote
   public abstract ArrayList<Task> getTaskReminderUrget();  
   
   /**
+   * Get all items that have a pointer to this task in the database
+   * @param task the task to search
+   * @return a list of tasks ordered by priority and then creation date
+   */
+  public abstract ArrayList<Task> getSubTasks(Task task);
+  /**
    * @return all the users (ordered by name) that can be assigned tasks  
    */
-  public abstract ArrayList<TaskUser> getAllTaskUsers();
+  public abstract ArrayList<String> getAllUsers();
   
   /**
-   * @param name the name of the individual
-   * @param position the position of this individual 
-   * 
-   */
-  public abstract void addTaskUser(String name, String position);
-  
-  /**
-   * Removes a user from the database--this throws an exception if the user has 
-   * @param user
+   * Removes a user from the database 
    * @param user the user to remove  
    * @param reassign the user to reassign tasks to (null deletes the tasks). 
    */
-  public abstract void removeTaskUser(TaskUser user, TaskUser reassign);
+  public abstract void reassignTask(String user, String reassign);
 
 }

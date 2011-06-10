@@ -44,10 +44,12 @@ public interface BudgetDaoRemote
    * @param amount the amount to add
    * @param budget the budget to add an entry to
    * @param note the notes for this entry (logs)
-   * @return the new entry as persisted
+   * @param estimated <b>true</b> if this is an estimate, otherwise <b>false</b>
+   * 
    */
+  //FIXME Java Doc Needed
   public abstract void saveEntry(Double amount, Budget budget, String note,
-      EntryType type);
+      boolean estimated);
 
   /**
    * Saves an entry to the database.
@@ -82,4 +84,11 @@ public interface BudgetDaoRemote
    */
   public abstract ArrayList<Budget> getAllBudgets(Production production);
 
+  /**
+   * Deletes the budget from the database--this is for error correct, it is highly
+   * recommended that this be avoided.
+   * @param b the budget to delete. 
+   * 
+   */
+  public void deleteBudget(Budget b);
 }

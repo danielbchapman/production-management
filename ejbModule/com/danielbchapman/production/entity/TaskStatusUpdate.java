@@ -10,8 +10,21 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- * Entity implementation class for Entity: TodoStatusUpdate
- * 
+ * <p>
+ * The TaskStatusUpdate is basically a log to be attached to a Task showing
+ * the current status of the task. It is essentially a piece of markup that
+ * allows a use to leave useful information. 
+ * </p>
+ * <p>
+ * And example of this would be to leave something like: <i>"I took a phone call and
+ * am waiting for a response from the Scenic Designer".</i>
+ * </p>
+ *
+ ***************************************************************************
+ * @author Daniel B. Chapman 
+ * @since May 12, 2011
+ * @link http://www.theactingcompany.org
+ ***************************************************************************
  */
 @Entity
 public class TaskStatusUpdate extends BaseEntity
@@ -56,9 +69,9 @@ public class TaskStatusUpdate extends BaseEntity
 		this.notes = notes;
 	}
 
-	public void setReminder(Task reminder)
+	public void setTask(Task task)
 	{
-		this.task = reminder;
+		this.task = task;
 	}
 
 }

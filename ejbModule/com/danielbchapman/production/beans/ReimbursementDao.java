@@ -41,7 +41,6 @@ public class ReimbursementDao implements ReimbursementDaoRemote
     
     BudgetEntry entry = new BudgetEntry();
     entry.setDate(new Date());
-    entry.setEntryType(EntryType.PENDING);
     entry.setAmountInitial(amount);
     
     reimbursement.setEmployee(employee);

@@ -10,29 +10,16 @@ import javax.persistence.*;
  */
 @Entity
 @Table(uniqueConstraints=@UniqueConstraint(columnNames={"name"}))
-public class Department implements Serializable
+public class Department extends BaseEntity
 {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long id;
 	@Column(length=50)
 	private String name;
 	
 	public Department()
 	{
 		super();
-	}
-
-	public Long getId()
-	{
-		return id;
-	}
-
-	public void setId(Long id)
-	{
-		this.id = id;
 	}
 
 	public String getName()

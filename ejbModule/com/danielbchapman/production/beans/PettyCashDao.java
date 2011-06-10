@@ -61,7 +61,7 @@ public class PettyCashDao implements PettyCashDaoRemote
     entry.setBudget(budget);
     entry.setAmountInitial(amount);
     entry.setDate(new Date());
-    entry.setEntryType(EntryType.PENDING);
+    entry.setEstimated(false);
     entry.setNote(adjustedMemo);
     
     PettyCashEntry petty = new PettyCashEntry();

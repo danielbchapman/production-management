@@ -20,24 +20,7 @@ public class DepartmentDao implements DepartmentDaoRemote
    */
 	public void saveDepartment(Department department)
 	{
-		try
-		{
-		  if(!Config.CONTAINER_MANAGED)
-		    em.getTransaction().begin();
-			
-			if(department.getId() == null)
-				em.persist(department);
-			else
-				em.merge(department);
-			
-			if(!Config.CONTAINER_MANAGED)
-			  em.getTransaction().commit();			
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();//For debugging
-			return;
-		}
+		EntityInstance.saveObject(department);
 	}
 	
 	/* (non-Javadoc)
@@ -45,14 +28,7 @@ public class DepartmentDao implements DepartmentDaoRemote
    */
 	public void removeDepartment(Department department)
 	{
-	  if(!Config.CONTAINER_MANAGED)
-	    em.getTransaction().begin();
-	  
-		if(department != null)
-			em.remove(department);
-		
-		if(!Config.CONTAINER_MANAGED)
-		  em.getTransaction().commit();
+		EntityInstance.deleteObject(department);
 	}
 	
 	/* (non-Javadoc)
