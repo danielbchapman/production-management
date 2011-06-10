@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
 
 /**
@@ -87,7 +88,7 @@ public class LoginBean implements LoginBeanRemote
   @Override
   public ArrayList<String> getUsers()
   {
-    Query q = EntityInstance.getEm().createQuery("SELECT u FROM User ORDER BY u.name");
+    Query q = EntityInstance.getEm().createQuery("SELECT u.user FROM User u ORDER BY u.user");
     ArrayList<String> users = new ArrayList<String>();
     
     List<String> results = q.getResultList();
@@ -99,5 +100,22 @@ public class LoginBean implements LoginBeanRemote
     return users;
     
   }
+
+	@Override
+	public User getUser(String userName)
+	{
+    Query q = EntityInstance.getEm().createQuery("SELECT u FROM User u WHERE user.u = ?1");
+    q.setParameter(1, userName);
+    
+    try
+    {
+    	return (User) q.getSingleResult();
+    }
+    catch(NonUniqueResultException e)
+    {
+    	return null;
+    }
+
+	}
 
 }

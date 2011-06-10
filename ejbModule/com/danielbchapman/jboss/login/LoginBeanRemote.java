@@ -49,4 +49,6 @@ public interface LoginBeanRemote
    * 
    */
   public ArrayList<String> getUsers();
+  
+  public User getUser(String userName);
 }
