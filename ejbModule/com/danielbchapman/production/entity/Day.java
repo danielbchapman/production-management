@@ -1,6 +1,7 @@
 package com.danielbchapman.production.entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -9,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -31,8 +33,8 @@ public class Day implements Serializable
 	private Long id;
 	@Temporal(value = TemporalType.DATE)
 	private Date date;
-//	@OneToMany(mappedBy = "day", targetEntity = Event.class)
-//	private Collection<Event> events;
+	@OneToMany(mappedBy = "day", targetEntity = Event.class)
+	private Collection<Event> events;
 	@Column(length = 75)
 	private String label;
 	@Column(length = 256)
@@ -84,22 +86,22 @@ public class Day implements Serializable
 		this.date = date;
 	}
 
-//	/**
-//	 * @return the events
-//	 */
-//	public Collection<Event> getEvents()
-//	{
-//		return events;
-//	}
-//
-//	/**
-//	 * @param events
-//	 *          the events to set
-//	 */
-//	public void setEvents(Collection<Event> events)
-//	{
-//		this.events = events;
-//	}
+	/**
+	 * @return the events
+	 */
+	public Collection<Event> getEvents()
+	{
+		return events;
+	}
+
+	/**
+	 * @param events
+	 *          the events to set
+	 */
+	public void setEvents(Collection<Event> events)
+	{
+		this.events = events;
+	}
 
 	/**
 	 * @return the label

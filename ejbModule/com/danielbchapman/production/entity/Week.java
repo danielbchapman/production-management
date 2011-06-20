@@ -1,6 +1,7 @@
 package com.danielbchapman.production.entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -8,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -30,8 +32,8 @@ public class Week implements Serializable
   @Temporal(value = TemporalType.DATE)
   private Date date;
   
-//  @OneToMany(mappedBy = "week", targetEntity = Day.class)
-//  private Collection<Day> days;
+  @OneToMany(mappedBy = "week", targetEntity = Day.class)
+  private Collection<Day> days;
   
   @Temporal(value = TemporalType.TIMESTAMP)
   private Date lastUpdated;
@@ -43,23 +45,23 @@ public class Week implements Serializable
   {
     super();
   }
-//  
-//  /**
-//   * @return the days
-//   */
-//  public Collection<Day> getDays()
-//  {
-//    return days;
-//  }
-//
-//  /**
-//   * @param days
-//   *          the days to set
-//   */
-//  public void setDays(Collection<Day> days)
-//  {
-//    this.days = days;
-//  }
+  
+  /**
+   * @return the days
+   */
+  public Collection<Day> getDays()
+  {
+    return days;
+  }
+
+  /**
+   * @param days
+   *          the days to set
+   */
+  public void setDays(Collection<Day> days)
+  {
+    this.days = days;
+  }
 
   /**
    * @return the lastUpdated
