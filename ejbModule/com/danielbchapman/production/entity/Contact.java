@@ -11,14 +11,10 @@ import javax.persistence.*;
  * 
  */
 @Entity
-public class Contact implements Serializable
+public class Contact extends BaseEntity
 {
 
   private static final long serialVersionUID = 1L;
-
-  @Id
-  @GeneratedValue(strategy=GenerationType.AUTO)
-  private Long id;
   private String name;
   @ManyToOne(targetEntity = ContactGroup.class)
   private ContactGroup group;
@@ -32,26 +28,6 @@ public class Contact implements Serializable
   
   @ManyToOne(targetEntity=Production.class, optional=false, fetch=FetchType.LAZY)
   private Production production;
-  
-  public Contact()
-  {
-  }
-
-  /**
-   * @return the id
-   */
-  public Long getId()
-  {
-    return id;
-  }
-
-  /**
-   * @param id the id to set
-   */
-  public void setId(Long id)
-  {
-    this.id = id;
-  }
 
   /**
    * @return the name

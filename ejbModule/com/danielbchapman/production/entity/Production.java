@@ -15,42 +15,16 @@ public class Production extends BaseEntity
 
 	private static final long serialVersionUID = 1L;
 
+	@Lob
+	private String desriptionMarkup;
+	@Column(length=256,unique=true)
+	private String name;
+	
 	public Production()
 	{
 		super();
 	}
 
-	@Column(length=256,unique=true)
-	private String name;
-	
-	@Lob
-	private String desriptionMarkup;
-
-	public String getName()
-	{
-		return name;
-	}
-	public void setName(String name)
-	{
-		this.name = name;
-	}
-	public String getDesriptionMarkup()
-	{
-		return desriptionMarkup;
-	}
-	public void setDesriptionMarkup(String desriptionMarkup)
-	{
-		this.desriptionMarkup = desriptionMarkup;
-	}
-	
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	public String toString()
-	{
-		return name == null ? "none" : name.trim();
-	}
-	
 	/**
 	 * A more descriptive toString() if needed;
 	 * @return a complex description.
@@ -69,6 +43,31 @@ public class Production extends BaseEntity
 	  out.append(desriptionMarkup);
 	  out.append("'");
 	  return out.toString();		
+	}
+	public String getDesriptionMarkup()
+	{
+		return desriptionMarkup;
+	}
+	public String getName()
+	{
+		return name;
+	}
+	public void setDesriptionMarkup(String desriptionMarkup)
+	{
+		this.desriptionMarkup = desriptionMarkup;
+	}
+	
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	public String toString()
+	{
+		return name == null ? "none" : name.trim();
 	}
 }
 
