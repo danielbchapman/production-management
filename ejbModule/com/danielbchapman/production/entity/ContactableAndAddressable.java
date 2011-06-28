@@ -2,6 +2,7 @@ package com.danielbchapman.production.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Lob;
+import javax.persistence.MappedSuperclass;
 
 /**
  * This is a mutant base entity that provides embedded contact and address information.
@@ -20,127 +21,153 @@ import javax.persistence.Lob;
  * @link http://www.theactingcompany.org
  ***************************************************************************
  */
-public class ContactableAndAddressable
+@MappedSuperclass
+public abstract class ContactableAndAddressable extends BaseEntity
 {
+	private static final long serialVersionUID = 1L;
+	
 	@Column(length = 128)
+  private String cell;
+  @Column(length = 40)
+  private String city;
+  @Column(length = 128)
+  private String contact;
+  @Column(length = 128)
+  private String contactName;
+  @Lob
+  private String contactNotes;
+  @Column(length = 128)
+  private String email;
+  @Column(length = 128)
+  private String fax;
+  @Column(length = 128)
   private String lineOne;
   @Column(length = 128)
   private String lineTwo;
   @Column(length = 128)
-  private String contact;
-  @Column(length = 20)
-  private String zip;
-  @Column(length = 40)
-  private String city;
+  private String phone;
   @Column(length = 60)
   private String state;
-  public String getLineOne()
+  @Column(length = 20)
+  private String zip;
+  
+  public String getCell()
   {
-    return lineOne;
+    return cell;
   }
-  public void setLineOne(String lineOne)
-  {
-    this.lineOne = lineOne;
-  }
-  public String getLineTwo()
-  {
-    return lineTwo;
-  }
-  public void setLineTwo(String lineTwo)
-  {
-    this.lineTwo = lineTwo;
-  }
-  public String getContact()
-  {
-    return contact;
-  }
-  public void setContact(String contact)
-  {
-    this.contact = contact;
-  }
-  public String getZip()
-  {
-    return zip;
-  }
-  public void setZip(String zip)
-  {
-    this.zip = zip;
-  }
+  
   public String getCity()
   {
     return city;
   }
-  public void setCity(String city)
+  
+  public String getContact()
   {
-    this.city = city;
+    return contact;
   }
+  
+  public String getContactName()
+  {
+    return contactName;
+  }
+  
+  public String getContactNotes()
+  {
+    return contactNotes;
+  }
+  
+  public String getEmail()
+  {
+    return email;
+  }
+  
+  public String getFax()
+  {
+    return fax;
+  }
+  
+  public String getLineOne()
+  {
+    return lineOne;
+  }
+  
+  public String getLineTwo()
+  {
+    return lineTwo;
+  }
+  
+  public String getPhone()
+  {
+    return phone;
+  }
+  
   public String getState()
   {
     return state;
   }
+  
+  public String getZip()
+  {
+    return zip;
+  }
+  
+  public void setCell(String cell)
+  {
+    this.cell = cell;
+  }
+  
+  public void setCity(String city)
+  {
+    this.city = city;
+  }
+  
+  public void setContact(String contact)
+  {
+    this.contact = contact;
+  }
+  
+  public void setContactName(String contactName)
+  {
+    this.contactName = contactName;
+  }
+  
+  public void setContactNotes(String contactNotes)
+  {
+    this.contactNotes = contactNotes;
+  }
+  
+  public void setEmail(String email)
+  {
+    this.email = email;
+  }
+  
+  public void setFax(String fax)
+  {
+    this.fax = fax;
+  }
+  
+  public void setLineOne(String lineOne)
+  {
+    this.lineOne = lineOne;
+  }
+  
+  public void setLineTwo(String lineTwo)
+  {
+    this.lineTwo = lineTwo;
+  }
+  
+  public void setPhone(String phone)
+  {
+    this.phone = phone;
+  }
+  
   public void setState(String state)
   {
     this.state = state;
   }
   
-  @Column(length = 128)
-  private String contactName;
-  @Column(length = 128)
-  private String phone;
-  @Column(length = 128)
-  private String fax;
-  @Column(length = 128)
-  private String cell;
-  @Column(length = 128)
-  private String email;
-  @Lob
-  private String contactNotes;
-  public String getContactName()
+  public void setZip(String zip)
   {
-    return contactName;
-  }
-  public void setContactName(String contactName)
-  {
-    this.contactName = contactName;
-  }
-  public String getPhone()
-  {
-    return phone;
-  }
-  public void setPhone(String phone)
-  {
-    this.phone = phone;
-  }
-  public String getFax()
-  {
-    return fax;
-  }
-  public void setFax(String fax)
-  {
-    this.fax = fax;
-  }
-  public String getCell()
-  {
-    return cell;
-  }
-  public void setCell(String cell)
-  {
-    this.cell = cell;
-  }
-  public String getEmail()
-  {
-    return email;
-  }
-  public void setEmail(String email)
-  {
-    this.email = email;
-  }
-  public String getContactNotes()
-  {
-    return contactNotes;
-  }
-  public void setContactNotes(String contactNotes)
-  {
-    this.contactNotes = contactNotes;
+    this.zip = zip;
   }
 }
