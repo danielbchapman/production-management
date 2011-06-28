@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import javax.ejb.Remote;
 
-import com.danielbchapman.production.entity.Company;
 import com.danielbchapman.production.entity.Contact;
 import com.danielbchapman.production.entity.ContactGroup;
 import com.danielbchapman.production.entity.ContactInformation;
@@ -48,16 +47,5 @@ public interface ContactDaoRemote
    * @param info
    */
   public abstract void saveContactInformation(ContactInformation info);
-
-  /**
-   * @return a list of the companies ordered by their names
-   */
-  public abstract ArrayList<Company> getCompanies();
-
-  /**
-   * Saves a company to the database.
-   * @param entity
-   */
-  public abstract void save(Company entity);
 
 }

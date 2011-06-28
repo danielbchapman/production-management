@@ -7,7 +7,6 @@
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<non-jta-data-source>java:/ProductionDS</non-jta-data-source>
 		<class>com.danielbchapman.production.entity.Week</class>
-		<class>com.danielbchapman.production.entity.VenueStatistics</class>
 		<class>com.danielbchapman.production.entity.VenueLog</class>
 		<class>com.danielbchapman.production.entity.Venue</class>
 		<class>com.danielbchapman.production.entity.Vendor</class>
@@ -17,19 +16,28 @@
 		<class>com.danielbchapman.production.entity.Production</class>
 		<class>com.danielbchapman.production.entity.PettyCashEntry</class>
 		<class>com.danielbchapman.production.entity.PettyCash</class>
+		<class>com.danielbchapman.production.entity.PerformanceSchedule</class>
+		<class>com.danielbchapman.production.entity.PerformanceAdvance</class>
+		<class>com.danielbchapman.production.entity.Performance</class>
 		<class>com.danielbchapman.production.entity.Options</class>
+		<class>com.danielbchapman.production.entity.Hotel</class>
+		<class>com.danielbchapman.production.entity.Hospital</class>
+		<class>com.danielbchapman.production.entity.EventMapping</class>
 		<class>com.danielbchapman.production.entity.Event</class>
 		<class>com.danielbchapman.production.entity.EmbeddableContactInformation</class>
 		<class>com.danielbchapman.production.entity.Department</class>
 		<class>com.danielbchapman.production.entity.Day</class>
+		<class>com.danielbchapman.production.entity.ContactableAndAddressable</class>
+		<class>com.danielbchapman.production.entity.Contactable</class>
 		<class>com.danielbchapman.production.entity.ContactInformation</class>
 		<class>com.danielbchapman.production.entity.ContactGroup</class>
 		<class>com.danielbchapman.production.entity.Contact</class>
-		<class>com.danielbchapman.production.entity.Company</class>
+		<class>com.danielbchapman.production.entity.City</class>
 		<class>com.danielbchapman.production.entity.BudgetEntry</class>
 		<class>com.danielbchapman.production.entity.BudgetAdjustingEntry</class>
 		<class>com.danielbchapman.production.entity.Budget</class>
 		<class>com.danielbchapman.production.entity.BaseEntity</class>
+		<class>com.danielbchapman.production.entity.Addressable</class>
 		<class>com.danielbchapman.production.entity.Address</class>
 		<!-- 
 		<jta-data-source>java:/ProductionDS</jta-data-source>
