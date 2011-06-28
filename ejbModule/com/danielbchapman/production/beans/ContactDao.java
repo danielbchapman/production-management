@@ -7,7 +7,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import com.danielbchapman.production.entity.Company;
 import com.danielbchapman.production.entity.Contact;
 import com.danielbchapman.production.entity.ContactGroup;
 import com.danielbchapman.production.entity.ContactInformation;
@@ -123,40 +122,6 @@ public class ContactDao implements ContactDaoRemote
   		em.persist(info);
   	else
   		em.merge(info);
-  	
-  	if(!Config.CONTAINER_MANAGED)
-  	  em.getTransaction().commit();
-  }
-  
-  /* (non-Javadoc)
-   * @see com.danielbchapman.production.beans.ContactDaoRemote#getCompanies()
-   */
-  @SuppressWarnings("unchecked")
-	public ArrayList<Company> getCompanies()
-  {
-  	ArrayList<Company> ret = new ArrayList<Company>();
-  	Query q = em.createQuery("SELECT c FROM Company c ORDER BY c.name");
-  	List<Company> results = (List<Company>)q.getResultList();
-  	
-  	if(results != null)
-  		for(Company c : results)
-  			ret.add(c);
-  	
-  	return ret;
-  }
-  
-  /* (non-Javadoc)
-   * @see com.danielbchapman.production.beans.ContactDaoRemote#save(com.danielbchapman.production.entity.Company)
-   */
-  public void save(Company entity)
-  {
-    if(!Config.CONTAINER_MANAGED)
-      em.getTransaction().begin();
-    
-  	if(entity.getId() == null)
-  		em.persist(entity);
-  	else
-  		em.merge(entity);
   	
   	if(!Config.CONTAINER_MANAGED)
   	  em.getTransaction().commit();

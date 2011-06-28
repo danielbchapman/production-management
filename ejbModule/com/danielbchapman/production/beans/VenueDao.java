@@ -63,7 +63,7 @@ public class VenueDao implements VenueDaoRemote
   @Override
   public ArrayList<Venue> getAllVenues()
   {
-    Query q = em.createQuery("SELECT v FROM Venue v ORDER BY v.productionDate");
+    Query q = em.createQuery("SELECT v FROM Venue v ORDER BY v.name");
     List<Venue> results = (List<Venue>)q.getResultList();
     ArrayList<Venue> ret = new ArrayList<Venue>();
     if(results != null)

@@ -41,15 +41,13 @@ public class CompanyManagementDao implements CompanyManagementDaoRemote
 	@Override
 	public ArrayList<City> getCities()
 	{
-		//TODO Auto Generated Sub
-		return null;
+		return EntityInstance.getResultList("SELECT c FROM City c ORDER BY c.stateOrTerritory, c.name", City.class);
 	}
 
 	@Override
 	public ArrayList<Hotel> getHotelsForCity(City city)
 	{
-		//TODO Auto Generated Sub
-		return null;
+		return EntityInstance.getResultList("SELECT h FROM Hotel h WHERE h.city = ?1 ORDER BY h.name", Hotel.class, city);
 	}
 
 	@Override
@@ -76,8 +74,7 @@ public class CompanyManagementDao implements CompanyManagementDaoRemote
 	@Override
 	public City getCity(Long id)
 	{
-		//TODO Auto Generated Sub
-		return null;
+		return EntityInstance.getEm().find(City.class, id);
 	}
 
 	@Override

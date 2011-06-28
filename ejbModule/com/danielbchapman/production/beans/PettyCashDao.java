@@ -10,7 +10,6 @@ import javax.persistence.Query;
 
 import com.danielbchapman.production.entity.Budget;
 import com.danielbchapman.production.entity.BudgetEntry;
-import com.danielbchapman.production.entity.EntryType;
 import com.danielbchapman.production.entity.PettyCash;
 import com.danielbchapman.production.entity.PettyCashEntry;
 

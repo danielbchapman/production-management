@@ -9,11 +9,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 /**
@@ -25,7 +27,6 @@ import javax.persistence.UniqueConstraint;
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "date", "week" }))
 public class Day implements Serializable
 {
-
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -37,23 +38,21 @@ public class Day implements Serializable
 	private Collection<Event> events;
 	@Column(length = 75)
 	private String label;
-	@Column(length = 256)
+	@Lob
 	private String notes;
 	@Column(length = 20)
 	private String castTravel;
 	@Column(length = 20)
 	private String crewTravel;
 	@Column(length = 120)
-	private String castLocation;
-	@Column(length = 120)
-	private String crewLocation;
-	@Column(length = 120)
 	private String theaterInformation;
 	@Column(length = 120)
 	private String milageInformation;
 	@ManyToOne
 	private Week week;
-
+	private City castLocation;
+	private City crewLocation;
+	
 	public Day()
 	{
 		super();
@@ -164,22 +163,22 @@ public class Day implements Serializable
 		this.castTravel = castTravel;
 	}
 
-	public String getCastLocation()
+	public City getCastLocation()
 	{
 		return castLocation;
 	}
 
-	public void setCastLocation(String castLocation)
+	public void setCastLocation(City castLocation)
 	{
 		this.castLocation = castLocation;
 	}
 
-	public String getCrewLocation()
+	public City getCrewLocation()
 	{
 		return crewLocation;
 	}
 
-	public void setCrewLocation(String crewLocation)
+	public void setCrewLocation(City crewLocation)
 	{
 		this.crewLocation = crewLocation;
 	}
@@ -214,4 +213,17 @@ public class Day implements Serializable
 		this.milageInformation = milageInformation;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	public String toString()
+	{
+		StringBuilder buf = new StringBuilder();
+		
+		buf.append(super.toString());
+		buf.append("Date ");
+		buf.append(date);
+		
+		return buf.toString();
+	}
 }

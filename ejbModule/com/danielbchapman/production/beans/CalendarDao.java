@@ -3,6 +3,7 @@ package com.danielbchapman.production.beans;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -12,8 +13,14 @@ import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
 
+import org.jboss.logging.Logger;
+
 import com.danielbchapman.production.entity.Day;
 import com.danielbchapman.production.entity.Event;
+import com.danielbchapman.production.entity.EventMapping;
+import com.danielbchapman.production.entity.Performance;
+import com.danielbchapman.production.entity.PerformanceAdvance;
+import com.danielbchapman.production.entity.PerformanceSchedule;
 import com.danielbchapman.production.entity.Production;
 import com.danielbchapman.production.entity.Week;
 
@@ -33,7 +40,8 @@ import com.danielbchapman.production.entity.Week;
 @Stateless
 public class CalendarDao implements CalendarDaoRemote
 {
-public static Date findMonday(Date date)
+	Logger log = Logger.getLogger(CalendarDao.class);
+	public static Date findMonday(Date date)
   {
     Calendar cal = Calendar.getInstance();
     cal.setTime(date);
@@ -120,7 +128,7 @@ public static Date findMonday(Date date)
   @SuppressWarnings("unchecked")
 	public ArrayList<Event> getEvents(Day day)
   {
-  	Query q = em.createQuery("SELECT e FROM Event e WHERE e.day = ?1 ORDER BY e.time");
+  	Query q = em.createQuery("SELECT e FROM Event e WHERE e.day = ?1 ORDER BY e.start");
   	q.setParameter(1, day);
   	
   	ArrayList<Event> ret = new ArrayList<Event>();
@@ -255,34 +263,6 @@ public static Date findMonday(Date date)
   }
 
   /* (non-Javadoc)
-   * @see com.danielbchapman.production.beans.CalendarDaoRemote#patchEventEndTimeTwoHours()
-   */
-  @SuppressWarnings("unchecked")
-  @Deprecated
-  public void patchEventEndTimeTwoHours()
-  {
-    Query q = em.createQuery("SELECT e FROM Event e");
-    List<Event> events = (List<Event>)q.getResultList();
-    System.out.println(events.size() + " events to patch");
-    for(Event e : events)
-      if(e != null && e.getEnd() == null)
-      {
-        System.out.println("PATCHING EVENT " + e);
-        Calendar c = Calendar.getInstance();
-        c.setTime(e.getStart());
-        c.add(Calendar.HOUR, 2);
-        e.setEnd(c.getTime());
-        if(!Config.CONTAINER_MANAGED)
-          em.getTransaction().begin();
-        
-        em.merge(e);
-        
-        if(!Config.CONTAINER_MANAGED)
-          em.getTransaction().commit();  
-      }
-  }
-
-  /* (non-Javadoc)
    * @see com.danielbchapman.production.beans.CalendarDaoRemote#removeItem(java.lang.Object)
    */
   public void removeItem(Object obj)
@@ -299,10 +279,16 @@ public static Date findMonday(Date date)
     else if(obj instanceof Day)
     {
       Day day = (Day) obj;
-      Query q;
+      Query q; 
+      
+      q = em.createQuery("DELETE FROM Performance p WHERE p.day.id = ?1");
+      q.setParameter(1, day.getId());
+      q.executeUpdate();
+      
       q = em.createQuery("DELETE FROM Event e WHERE e.day.id = ?1");
       q.setParameter(1, day.getId());
       q.executeUpdate();
+      
       q = em.createQuery("DELETE FROM Day d WHERE d.id = ?1");
       q.setParameter(1, day.getId());
       q.executeUpdate();      
@@ -339,7 +325,7 @@ public static Date findMonday(Date date)
   /* (non-Javadoc)
    * @see com.danielbchapman.production.beans.CalendarDaoRemote#saveEvent(com.danielbchapman.production.entity.Event)
    */
-  public void saveEvent(Event source)
+  public void saveEvent(EventMapping source)
   {
     if(!Config.CONTAINER_MANAGED)
       em.getTransaction().begin();
@@ -354,6 +340,13 @@ public static Date findMonday(Date date)
   }
 
   /* (non-Javadoc)
+   * @see com.danielbchapman.production.beans.CalendarDaoRemote#savePerformance(com.danielbchapman.production.entity.Performance)
+   */
+  public void savePerformance(Performance performance)
+  {
+  	saveEvent(performance);
+  }
+  /* (non-Javadoc)
    * @see com.danielbchapman.production.beans.CalendarDaoRemote#saveWeek(com.danielbchapman.production.entity.Week)
    */
   public void saveWeek(Week source)
@@ -367,4 +360,91 @@ public static Date findMonday(Date date)
     if(!Config.CONTAINER_MANAGED)
       em.getTransaction().commit();
   }
+  
+	/* (non-Javadoc)
+	 * @see com.danielbchapman.production.beans.CalendarDaoRemote#getPerformances(com.danielbchapman.production.entity.Day)
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public ArrayList<Performance> getPerformances(Day day)
+	{
+		return (ArrayList<Performance>) EntityInstance.getResultList("SELECT p FROM Performance p WHERE p.day = ?1 ORDER BY p.start", new Object[]{day}, Performance.class);
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.danielbchapman.production.beans.CalendarDaoRemote#getPerformances(com.danielbchapman.production.entity.Production)
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public ArrayList<Performance> getPerformances(Production p)
+	{
+		return (ArrayList<Performance>) EntityInstance.getResultList("SELECT p FROM Performance p WHERE p.production = ?1 ORDER BY p.start", new Object[]{p}, Performance.class);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.danielbchapman.production.beans.CalendarDaoRemote#getEventsAndPerformancesForDay(com.danielbchapman.production.entity.Day)
+	 */
+	@Override
+	public ArrayList<EventMapping> getEventsAndPerformancesForDay(Day day)
+	{
+		log.debug("getEventsAndPerformancesForDay(); " + day);
+		ArrayList<Event> events = getEvents(day);
+		ArrayList<Performance> performances = getPerformances(day);
+		
+		ArrayList<EventMapping> ret = new ArrayList<EventMapping>();
+		for(Event e : events)
+			ret.add(e);
+		
+		log.debug("Event Count" + events.size());
+		log.debug("Performance Count" + performances.size());
+		
+		for(Performance p : performances)
+			ret.add(p);
+		
+		Collections.sort(events);
+		
+		return ret; 
+	}
+	
+	@Override
+	public void savePerformanceSchedule(PerformanceSchedule schedule)
+	{
+		EntityInstance.saveObject(schedule);
+	}
+	
+	@Override
+	public PerformanceSchedule getPerformanceSchedule(Long id)
+	{
+		return em.find(PerformanceSchedule.class, id);
+	}
+	
+	@Override
+	public ArrayList<PerformanceSchedule> getAllPerformanceSchedules()
+	{
+		return EntityInstance.getResultList("SELECT p FROM PerformanceSchedule p ORDER BY p.production, p.name", PerformanceSchedule.class);
+	}
+	
+	@Override
+	public ArrayList<PerformanceSchedule> getPerformanceSchedulesForProduction(Production production)
+	{
+		return EntityInstance.getResultList("SELECT p FROM PerformanceSchedule p WHERE p.production = ?1 ORDER BY p.name", PerformanceSchedule.class, production);
+	}
+	
+	@Override
+	public void savePerformanceAdvance(PerformanceAdvance advance)
+	{
+		EntityInstance.saveObject(advance);
+	}
+	
+	@Override
+	public PerformanceAdvance getPerformanceAdvance(Long id)
+	{
+		return em.find(PerformanceAdvance.class, id);
+	}
+	
+	@Override
+	public ArrayList<PerformanceAdvance> getPerformanceAdvance(Day d)
+	{
+		return EntityInstance.getResultList("SELECT p FROM PerformanceAdvance p WHERE p.day = ?1", PerformanceAdvance.class, d);
+	}
 }
