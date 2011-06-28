@@ -38,26 +38,32 @@ public abstract class Addressable extends BaseEntity
   private String city;
   @Column(length = 60)
   private String state;
+  
   public String getLineOne()
   {
     return lineOne;
   }
+  
   public void setLineOne(String lineOne)
   {
     this.lineOne = lineOne;
   }
+  
   public String getLineTwo()
   {
     return lineTwo;
   }
+  
   public void setLineTwo(String lineTwo)
   {
     this.lineTwo = lineTwo;
   }
+  
   public String getContact()
   {
     return contact;
   }
+  
   public void setContact(String contact)
   {
     this.contact = contact;
