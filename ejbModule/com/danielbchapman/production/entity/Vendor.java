@@ -18,13 +18,12 @@ import javax.persistence.Lob;
  ***************************************************************************
  */
 @Entity
-public class Vendor extends BaseEntity
+public class Vendor extends Contactable
 {
   private static final long serialVersionUID = 1L;
   
   @Column(length=128)
   private String companyName;
-  private EmbeddableContactInformation contactInfo;
   @Column(length=128)
   private String department;
   @Lob
@@ -33,14 +32,6 @@ public class Vendor extends BaseEntity
   public String getCompanyName()
   {
     return companyName;
-  }
-  
-  public EmbeddableContactInformation getContactInfo()
-  {
-    if(contactInfo == null)
-      contactInfo = new EmbeddableContactInformation();
-    
-    return contactInfo;
   }
   
   public String getDepartment()
@@ -56,14 +47,6 @@ public class Vendor extends BaseEntity
   public void setCompanyName(String companyName)
   {
     this.companyName = companyName;
-  }
-  
-  public void setContactInfo(EmbeddableContactInformation contactInfo)
-  {
-    if(contactInfo == null)
-      contactInfo = new EmbeddableContactInformation();
-    
-    this.contactInfo = contactInfo;
   }
   
   public void setDepartment(String department)

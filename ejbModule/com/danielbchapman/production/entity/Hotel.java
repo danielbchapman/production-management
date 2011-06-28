@@ -1,5 +1,7 @@
 package com.danielbchapman.production.entity;
 
+import javax.persistence.Entity;
+
 /**
  * A hotel is simply as it states. A hotel somewhere.
  *
@@ -9,6 +11,7 @@ package com.danielbchapman.production.entity;
  * @link http://www.theactingcompany.org
  ***************************************************************************
  */
+@Entity
 public class Hotel extends BaseEntity
 {
 	private static final long serialVersionUID = 1L;
