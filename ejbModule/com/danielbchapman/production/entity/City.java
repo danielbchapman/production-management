@@ -28,22 +28,22 @@ public class City extends BaseEntity
 	@OneToMany(cascade={CascadeType.ALL},targetEntity=Hotel.class, fetch=FetchType.EAGER)
 	private Collection<Hotel> hotels;
 	private String name;
+	private Hospital selectedHospital;
 	private Hotel selectedHotel;
 	private String stateOrTerritory;
 	private String taxiServiceAddress;
 	private String taxiServiceName;
 	private String taxiServicePhone;
-
+	
 	public String getCountry()
 	{
 		return country;
 	}
-	
 	public Collection<Hospital> getHospitals()
 	{
 		return hospitals;
 	}
-	
+
 	public Collection<Hotel> getHotels()
 	{
 		return hotels;
@@ -52,6 +52,11 @@ public class City extends BaseEntity
 	public String getName()
 	{
 		return name;
+	}
+	
+	public Hospital getSelectedHospital()
+	{
+		return selectedHospital;
 	}
 	
 	public Hotel getSelectedHotel()
@@ -97,6 +102,11 @@ public class City extends BaseEntity
 	public void setName(String name)
 	{
 		this.name = name;
+	}
+	
+	public void setSelectedHospital(Hospital selectedHospital)
+	{
+		this.selectedHospital = selectedHospital;
 	}
 	
 	public void setSelectedHotel(Hotel selectedHotel)

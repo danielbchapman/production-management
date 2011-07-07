@@ -12,44 +12,37 @@ import javax.persistence.Entity;
  ***************************************************************************
  */
 @Entity
-public class Hotel extends BaseEntity
+public class Hotel extends ContactableAndAddressable
 {
 	private static final long serialVersionUID = 1L;
 
+	private City city;
+	private String name;
+	private String notes;
+	
+	public City getCity()
+	{
+		return city;
+	}
 	public String getName()
 	{
 		return name;
 	}
-	public void setName(String name)
-	{
-		this.name = name;
-	}
-	public Address getAddress()
-	{
-		return address;
-	}
-	public void setAddress(Address address)
-	{
-		this.address = address;
-	}
+	
 	public String getNotes()
 	{
 		return notes;
-	}
-	public void setNotes(String notes)
-	{
-		this.notes = notes;
-	}
-	public City getCity()
-	{
-		return city;
 	}
 	public void setCity(City city)
 	{
 		this.city = city;
 	}
-	private String name;
-	private Address address;
-	private String notes;
-	private City city;
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+	public void setNotes(String notes)
+	{
+		this.notes = notes;
+	}
 }

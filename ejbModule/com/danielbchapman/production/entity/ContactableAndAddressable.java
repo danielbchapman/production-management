@@ -29,12 +29,14 @@ public abstract class ContactableAndAddressable extends BaseEntity
 	@Column(length = 128)
   private String cell;
   @Column(length = 40)
-  private String city;
+  private String addressCity;
   @Column(length = 128)
   private String contact;
-  @Column(length = 128)
+
+	@Column(length = 128)
   private String contactName;
-  @Lob
+
+	@Lob
   private String contactNotes;
   @Column(length = 128)
   private String email;
@@ -50,15 +52,13 @@ public abstract class ContactableAndAddressable extends BaseEntity
   private String state;
   @Column(length = 20)
   private String zip;
-  
+  public String getAddressCity()
+	{
+		return addressCity;
+	}
   public String getCell()
   {
     return cell;
-  }
-  
-  public String getCity()
-  {
-    return city;
   }
   
   public String getContact()
@@ -111,14 +111,14 @@ public abstract class ContactableAndAddressable extends BaseEntity
     return zip;
   }
   
+  public void setAddressCity(String addressCity)
+	{
+		this.addressCity = addressCity;
+	}
+  
   public void setCell(String cell)
   {
     this.cell = cell;
-  }
-  
-  public void setCity(String city)
-  {
-    this.city = city;
   }
   
   public void setContact(String contact)
