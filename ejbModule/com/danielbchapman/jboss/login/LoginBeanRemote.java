@@ -41,7 +41,7 @@ public interface LoginBeanRemote
    * @param roles A collection of the roles this user should have.  
    * 
    */
-  public void addUser(String username, String password, Collection<String> roles);
+  public void addUser(String username, String password, Collection<Roles> roles);
   
   /**
    *

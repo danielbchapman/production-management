@@ -3,6 +3,7 @@ package com.danielbchapman.jboss.login;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,7 +35,7 @@ public class Role implements Serializable
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
   @NotNull
-  @ManyToOne(targetEntity=User.class)
+  @ManyToOne(targetEntity=User.class, fetch=FetchType.LAZY)
   private User user;
   @NotNull
   private String role;

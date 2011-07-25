@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
@@ -17,7 +18,7 @@ public class User implements Serializable
   private String user;
   @Column(length=80, name="password")
   private String password;
-  @OneToMany(targetEntity=Role.class)
+  @OneToMany(targetEntity=Role.class, fetch=FetchType.LAZY)
   private List<Role> roles;
   
   public String getUser()
