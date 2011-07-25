@@ -3,21 +3,31 @@
 	<persistence-unit name="authentication" transaction-type="RESOURCE_LOCAL">
 		<!-- 
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		 -->
+		-->
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-		<non-jta-data-source>java:/authenticationDS</non-jta-data-source>
+		
+		<non-jta-data-source>java:/AuthenticationDS</non-jta-data-source>
+		 
 		<class>com.danielbchapman.jboss.login.Role</class>
 		<class>com.danielbchapman.jboss.login.User</class>
 
 		<properties>
+			<!--		
+			<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
+      <property name="hibernate.hbm2ddl.auto" value="create"/>
+      -->		
+			<property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
+			<property name="javax.persistence.jdbc.user" value="sa"/>
+			<property name="javax.persistence.jdbc.password" value="***REMOVED***"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/C:\Database\Data\authentication;"/>		
+		  
 			<property name="eclipselink.target-server" value="JBoss"/> 
 			<property name="eclipselink.ddl-generation" value="create-tables"/>
 			<property name="eclipselink.ddl-generation.output-mode" value="database"/>
 			<property name="eclipselink.target-database" value="org.eclipse.persistence.platform.database.H2Platform"/>
 			<property name="eclipselink.weaving" value="false" />
-            <property name="eclipselink.logging.level" value="INFO"/>
-			<property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
-			<property name="eclipselink.session.customizer" value="com.danielbchapman.jboss.haxx.JPAEclipseLinkSessionCustomizer" />   
+      <property name="eclipselink.logging.level" value="INFO"/>
+			<property name="eclipselink.session.customizer" value="com.danielbchapman.jboss.haxx.JPAEclipseLinkSessionCustomizer" />
 		</properties>		
 	</persistence-unit>
 </persistence>

@@ -63,21 +63,24 @@ public class LoginBean implements LoginBeanRemote
    * @see com.danielbchapman.jboss.login.LoginBeanRemote#addUser(java.lang.String, java.lang.String, java.util.Collection)
    */
   @Override
-  public void addUser(String username, String password, Collection<String> roles)
+  public void addUser(String username, String password, Collection<Roles> roles)
   {
     User u = new User();
     u.setUser(username);
     u.setPassword(password);
     
     EntityInstance.getEm().getTransaction().begin();
+    
     EntityInstance.getEm().persist(u);
-    for(String s : roles)
+    
+    for(Roles r : roles)
     {
       Role tmp = new Role();
-      tmp.setRole(s);
+      tmp.setRole(r.getRoleValue());
       tmp.setUser(u);
       EntityInstance.getEm().persist(tmp);
     }
+    
     EntityInstance.getEm().getTransaction().commit();
   }
 
