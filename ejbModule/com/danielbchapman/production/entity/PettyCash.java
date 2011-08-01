@@ -24,12 +24,12 @@ public class PettyCash implements Serializable
 {
   private static final long serialVersionUID = 1L;
 
+  private Double amount;
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
   @Column(length = 50)
   private String name;
-  private Double amount;
   @OneToMany(fetch = FetchType.EAGER, mappedBy = "pettyCash")
   private Collection<PettyCashEntry> pettyCashEntries;
   private Boolean reconciled = false;
@@ -37,6 +37,18 @@ public class PettyCash implements Serializable
   public Double getAmount()
   {
     return amount;
+  }
+
+  public Double getCalculatedAmount()
+  {
+    double ret = amount == null ? 0.00 : amount.doubleValue();
+    if (pettyCashEntries == null)
+      return amount == null ? 0.00 : amount.doubleValue();
+
+    for (PettyCashEntry e : pettyCashEntries)
+      ret += e.getBudgetEntry().getCalculatedAmount();// large calculation
+
+    return ret;
   }
 
   public Long getId()
@@ -52,6 +64,11 @@ public class PettyCash implements Serializable
   public Collection<PettyCashEntry> getPettyCashEntries()
   {
     return pettyCashEntries;
+  }
+
+  public Boolean getReconciled()
+  {
+    return reconciled;
   }
 
   public void setAmount(Double amount)
@@ -72,23 +89,6 @@ public class PettyCash implements Serializable
   public void setPettyCashEntries(Collection<PettyCashEntry> pettyCashEntries)
   {
     this.pettyCashEntries = pettyCashEntries;
-  }
-
-  public Double getCalculatedAmount()
-  {
-    double ret = amount == null ? 0.00 : amount.doubleValue();
-    if (pettyCashEntries == null)
-      return amount == null ? 0.00 : amount.doubleValue();
-
-    for (PettyCashEntry e : pettyCashEntries)
-      ret += e.getBudgetEntry().getCalculatedAmount();// large calculation
-
-    return ret;
-  }
-
-  public Boolean getReconciled()
-  {
-    return reconciled;
   }
 
   public void setReconciled(Boolean reconciled)

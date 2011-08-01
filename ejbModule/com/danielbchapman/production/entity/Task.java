@@ -58,14 +58,14 @@ public class Task extends BaseEntity
   private Date lastUpdated;
 	@Column(length=50)
   private String lastUpdatedBy;
+	private Task parentTask;
 	private Priority priority;
-	@ManyToOne(targetEntity=Production.class, optional=false, fetch=FetchType.LAZY)
-  private Production production;
+	@ManyToOne(targetEntity=Season.class, optional=false, fetch=FetchType.LAZY)
+  private Season season;
 	@Temporal(value = TemporalType.DATE)
   private Date targetDate;
 	@OneToMany(cascade=CascadeType.REMOVE,fetch=FetchType.EAGER, targetEntity=TaskStatusUpdate.class, mappedBy="task")
   private Collection<TaskStatusUpdate> updates;
-	private Task parentTask;
 	
   public Task()
 	{
@@ -117,23 +117,23 @@ public class Task extends BaseEntity
 		return priority;
 	}
 	
-	public Production getProduction()
+	public Season getSeason()
 	{
-		return production;
+		return season;
 	}
 	
 	public Date getTargetDate()
 	{
 		return targetDate;
 	}
-	
+
 	public Collection<TaskStatusUpdate> getUpdates()
 	{
 		if(updates == null)
 			return new ArrayList<TaskStatusUpdate>();
 		return updates;
 	}
-	
+
 	public void setAssignedTo(String assignedTo)
 	{
 		this.assignedTo = assignedTo;
@@ -179,9 +179,9 @@ public class Task extends BaseEntity
 		this.priority = priority;
 	}
 	
-	public void setProduction(Production production)
+	public void setSeason(Season season)
 	{
-		this.production = production;
+		this.season = season;
 	}
 	
 	public void setTargetDate(Date targetDate)
@@ -217,7 +217,7 @@ public class Task extends BaseEntity
 		buf.append("] ");
 		
 		buf.append("Production [");
-		buf.append(production);
+		buf.append(season);
 		buf.append("] ");
 		
 		buf.append("Target [");

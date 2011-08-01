@@ -15,51 +15,19 @@ public class Contact extends BaseEntity
 {
 
   private static final long serialVersionUID = 1L;
-  private String name;
+  private Long company;
+  @OneToMany(mappedBy="contact",targetEntity=ContactInformation.class)
+  private Collection<ContactInformation> contactInformation;
   @ManyToOne(targetEntity = ContactGroup.class)
   private ContactGroup group;
-  private Long company;
   
   @Temporal(value = TemporalType.TIMESTAMP)
   private Date lastUpdated;
   
-  @OneToMany(mappedBy="contact",targetEntity=ContactInformation.class)
-  private Collection<ContactInformation> contactInformation;
+  private String name;
   
-  @ManyToOne(targetEntity=Production.class, optional=false, fetch=FetchType.LAZY)
-  private Production production;
-
-  /**
-   * @return the name
-   */
-  public String getName()
-  {
-    return name;
-  }
-
-  /**
-   * @param name the name to set
-   */
-  public void setName(String name)
-  {
-    this.name = name;
-  }
-
-  /**
-   * @return the group
-   */
-  public ContactGroup getGroup()
-  {
-    return group;
-  }
-
-  /**
-   * @param group the group to set
-   */
-  public void setGroup(ContactGroup group)
-  {
-    this.group = group;
-  }
+  @ManyToOne(targetEntity=Season.class, optional=false, fetch=FetchType.LAZY)
+  private Season season;
 
   /**
    * @return the company
@@ -69,12 +37,20 @@ public class Contact extends BaseEntity
     return company;
   }
 
-  /**
-   * @param company the company to set
+	/**
+   * @return the contactInformation
    */
-  public void setCompany(Long company)
+  public Collection<ContactInformation> getContactInformation()
   {
-    this.company = company;
+    return contactInformation;
+  }
+
+	/**
+   * @return the group
+   */
+  public ContactGroup getGroup()
+  {
+    return group;
   }
 
   /**
@@ -86,19 +62,24 @@ public class Contact extends BaseEntity
   }
 
   /**
-   * @param lastUpdated the lastUpdated to set
+   * @return the name
    */
-  public void setLastUpdated(Date lastUpdated)
+  public String getName()
   {
-    this.lastUpdated = lastUpdated;
+    return name;
   }
 
+  public Season getSeason()
+	{
+		return season;
+	}
+
   /**
-   * @return the contactInformation
+   * @param company the company to set
    */
-  public Collection<ContactInformation> getContactInformation()
+  public void setCompany(Long company)
   {
-    return contactInformation;
+    this.company = company;
   }
 
   /**
@@ -110,14 +91,33 @@ public class Contact extends BaseEntity
     this.contactInformation = contactInformation;
   }
 
-	public Production getProduction()
-	{
-		return production;
-	}
+  /**
+   * @param group the group to set
+   */
+  public void setGroup(ContactGroup group)
+  {
+    this.group = group;
+  }
 
-	public void setProduction(Production production)
+  /**
+   * @param lastUpdated the lastUpdated to set
+   */
+  public void setLastUpdated(Date lastUpdated)
+  {
+    this.lastUpdated = lastUpdated;
+  }
+
+  /**
+   * @param name the name to set
+   */
+  public void setName(String name)
+  {
+    this.name = name;
+  }
+
+  public void setSeason(Season season)
 	{
-		this.production = production;
+		this.season = season;
 	}
 
 }

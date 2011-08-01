@@ -9,7 +9,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import com.danielbchapman.production.entity.Production;
+import com.danielbchapman.production.entity.Season;
 import com.danielbchapman.production.entity.Venue;
 import com.danielbchapman.production.entity.VenueLog;
 
@@ -41,7 +41,7 @@ public class VenueDao implements VenueDaoRemote
     return null;
   }
   @Override
-  public ArrayList<Venue> getVenues(Production production)
+  public ArrayList<Venue> getVenues(Season production)
   {
     //TODO Auto Generated Sub
     return null;

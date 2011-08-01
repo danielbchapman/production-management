@@ -42,8 +42,8 @@ public class Week implements Serializable
   @Temporal(value = TemporalType.TIMESTAMP)
   private Date lastUpdated;
   
-  @ManyToOne(targetEntity=Production.class, optional=false)
-  private Production production;
+  @ManyToOne(targetEntity=Season.class, optional=false)
+  private Season production;
 
   public Week()
   {
@@ -84,12 +84,12 @@ public class Week implements Serializable
     this.lastUpdated = lastUpdated;
   }
 
-	public Production getProduction()
+	public Season getProduction()
 	{
 		return production;
 	}
 
-	public void setProduction(Production production)
+	public void setProduction(Season production)
 	{
 		this.production = production;
 	}

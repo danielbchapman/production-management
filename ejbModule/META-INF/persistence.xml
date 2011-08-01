@@ -8,8 +8,6 @@
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		 
 		<non-jta-data-source>java:/ProductionDS</non-jta-data-source>
-		
-		<class>com.danielbchapman.production.entity.Production</class> 
 		<class>com.danielbchapman.production.entity.Week</class>
 		<class>com.danielbchapman.production.entity.VenueLog</class>
 		<class>com.danielbchapman.production.entity.Venue</class>
@@ -41,6 +39,7 @@
 		<class>com.danielbchapman.production.entity.BaseEntity</class>
 		<class>com.danielbchapman.production.entity.Addressable</class>
 		<class>com.danielbchapman.production.entity.Address</class>
+		<class>com.danielbchapman.production.entity.Season</class>
 
 		<properties>
 			<!-- 

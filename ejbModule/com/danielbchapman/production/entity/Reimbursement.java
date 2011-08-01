@@ -12,17 +12,13 @@ package com.danielbchapman.production.entity;
 public class Reimbursement extends BaseEntity
 {
   private static final long serialVersionUID = 1L;
+  private Employee employee;
   private BudgetEntry entry;
   private Boolean reported;
   public Employee getEmployee()
   {
     return employee;
   }
-  public void setEmployee(Employee employee)
-  {
-    this.employee = employee;
-  }
-  private Employee employee;
   public BudgetEntry getEntry()
   {
     return entry;
@@ -30,6 +26,10 @@ public class Reimbursement extends BaseEntity
   public Boolean getReported()
   {
     return reported;
+  }
+  public void setEmployee(Employee employee)
+  {
+    this.employee = employee;
   }
   public void setEntry(BudgetEntry entry)
   {

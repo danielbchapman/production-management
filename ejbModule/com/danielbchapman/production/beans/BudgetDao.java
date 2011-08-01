@@ -12,7 +12,7 @@ import com.danielbchapman.production.entity.Budget;
 import com.danielbchapman.production.entity.BudgetAdjustingEntry;
 import com.danielbchapman.production.entity.BudgetEntry;
 import com.danielbchapman.production.entity.EntryType;
-import com.danielbchapman.production.entity.Production;
+import com.danielbchapman.production.entity.Season;
 
 @Stateless
 public class BudgetDao implements BudgetDaoRemote
@@ -152,7 +152,7 @@ public class BudgetDao implements BudgetDaoRemote
    * @see com.danielbchapman.production.beans.BudgetDaoRemote#getAllBudgets(com.danielbchapman.production.entity.Production)
    */
   @SuppressWarnings("unchecked")
-	public ArrayList<Budget> getAllBudgets(Production production)
+	public ArrayList<Budget> getAllBudgets(Season production)
   {
   	ArrayList<Budget> budgets = new ArrayList<Budget>();
   	Query q = em.createQuery("SELECT b FROM Budget b WHERE b.production = ?1 ORDER BY b.name");

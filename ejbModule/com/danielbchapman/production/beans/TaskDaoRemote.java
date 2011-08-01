@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import javax.ejb.Remote;
 
-import com.danielbchapman.production.entity.Production;
+import com.danielbchapman.production.entity.Season;
 import com.danielbchapman.production.entity.Task;
 import com.danielbchapman.production.entity.TaskStatusUpdate;
 
@@ -46,17 +46,17 @@ public interface TaskDaoRemote extends Serializable
   /**
    * @return a list of all items
    */
-  public abstract ArrayList<Task> getItems(Production production);
+  public abstract ArrayList<Task> getItems(Season production);
 
   /**
    * @return a list of all items that are not children
    */
-  public abstract ArrayList<Task> getActiveTopLevelItems(Production production);
+  public abstract ArrayList<Task> getActiveTopLevelItems(Season production);
 
   /**
    * @return a list of all items that are not children
    */
-  public abstract ArrayList<Task> getClosedTopLevelItems(Production production);
+  public abstract ArrayList<Task> getClosedTopLevelItems(Season production);
 
   /**
    * @param list

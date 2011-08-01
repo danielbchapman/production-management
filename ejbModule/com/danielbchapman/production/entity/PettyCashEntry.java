@@ -24,12 +24,12 @@ import javax.persistence.ManyToOne;
 public class PettyCashEntry implements Serializable
 {
   private static final long serialVersionUID = 1L;
+  private BudgetEntry budgetEntry;
   @Id
   @GeneratedValue(strategy=GenerationType.AUTO)
   private Long id;
   @ManyToOne(fetch = FetchType.EAGER, optional = false)
   private PettyCash pettyCash;
-  private BudgetEntry budgetEntry;
   
   public BudgetEntry getBudgetEntry() 
   {

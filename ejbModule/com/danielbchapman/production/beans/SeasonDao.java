@@ -7,27 +7,27 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import com.danielbchapman.production.entity.Production;
+import com.danielbchapman.production.entity.Season;
 
 /**
  * A simple class for dealing with IO for productions.
  *
  */
 @Stateless
-public class ProductionDao implements ProductionDaoRemote
+public class SeasonDao implements SeasonDaoRemote
 {
 	private static final long serialVersionUID = 1L;
 	//  @PersistenceContext
 	EntityManager em = EntityInstance.getEm();
 	
-  public ProductionDao()
+  public SeasonDao()
   {
     
   }
 	/* (non-Javadoc)
    * @see com.danielbchapman.production.beans.ProductionDaoRemote#saveProduction(com.danielbchapman.production.entity.Production)
    */
-	public void saveProduction(Production source)
+	public void saveSeason(Season source)
 	{
 		EntityInstance.saveObject(source);
 	}
@@ -36,14 +36,14 @@ public class ProductionDao implements ProductionDaoRemote
    * @see com.danielbchapman.production.beans.ProductionDaoRemote#getProductions()
    */
 	@SuppressWarnings("unchecked")
-	public ArrayList<Production> getProductions()
+	public ArrayList<Season> getSeasons()
 	{
-		Query q = em.createQuery("SELECT p FROM Production p ORDER BY p.name");
-		ArrayList<Production> ret = new ArrayList<Production>();
-		List<Production> results = (List<Production>)q.getResultList();
+		Query q = em.createQuery("SELECT s FROM Season s ORDER BY s.name");
+		ArrayList<Season> ret = new ArrayList<Season>();
+		List<Season> results = (List<Season>)q.getResultList();
 		
 		if(results != null)
-			for(Production p : results)
+			for(Season p : results)
 				ret.add(p);
 		
 		return ret;
@@ -52,9 +52,9 @@ public class ProductionDao implements ProductionDaoRemote
 	/* (non-Javadoc)
    * @see com.danielbchapman.production.beans.ProductionDaoRemote#getProductionCount()
    */
-	public long getProductionCount()
+	public long getSeasonCount()
 	{
-		Query q = em.createNativeQuery("SELECT Count(*) FROM Production");
+		Query q = em.createNativeQuery("SELECT Count(*) FROM Season");
 		Long i = (Long) q.getSingleResult();
 		if(i == null)
 			return -1;
@@ -65,24 +65,24 @@ public class ProductionDao implements ProductionDaoRemote
 	/* (non-Javadoc)
    * @see com.danielbchapman.production.beans.ProductionDaoRemote#getProduction(java.lang.Long)
    */
-	public Production getProduction(Long id)
+	public Season getSeason(Long id)
 	{
-		return em.find(Production.class, id);
+		return em.find(Season.class, id);
 	}
 	
 	/* (non-Javadoc)
    * @see com.danielbchapman.production.beans.ProductionDaoRemote#getProduction(java.lang.String)
    */
-	public Production getProduction(String name)
+	public Season getSeason(String name)
 	{
-		Query q = em.createQuery("SELECT p FROM Production p WHERE p.name = ?!");
+		Query q = em.createQuery("SELECT s FROM Season s WHERE s.name = ?!");
 		q.setParameter(1, name);
-		return (Production) q.getSingleResult();
+		return (Season) q.getSingleResult();
 	}
 	/* (non-Javadoc)
    * @see com.danielbchapman.production.beans.ProductionDaoRemote#removeProduction(com.danielbchapman.production.entity.Production)
    */
-	public void removeProduction(Production p)
+	public void removeSeason(Season p)
 	{
 		EntityInstance.deleteObject(p);
 	}
