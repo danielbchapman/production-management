@@ -135,4 +135,9 @@ public class EntityInstance
   	
   	return ret;
   }
+	
+	public static void main(String[] args)
+	{
+		getEm();
+	}
 }
