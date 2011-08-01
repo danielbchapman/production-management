@@ -1,14 +1,10 @@
 package org.theactingcompany.inventory.entity;
 
 import javax.persistence.Column;
-import javax.persistence.FetchType;
 import javax.persistence.Lob;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 /**
  * A simple base type for elements that contains a general amount of information 
