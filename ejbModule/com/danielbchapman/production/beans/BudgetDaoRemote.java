@@ -84,7 +84,7 @@ public interface BudgetDaoRemote extends Serializable
   /**
    * @return a list of all the budgets
    */
-  public abstract ArrayList<Budget> getAllBudgets(Season production);
+  public abstract ArrayList<Budget> getAllBudgets(Season season);
 
   /**
    * Deletes the budget from the database--this is for error correct, it is highly

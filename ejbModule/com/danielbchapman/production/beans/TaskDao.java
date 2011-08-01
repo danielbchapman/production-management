@@ -57,15 +57,15 @@ public class TaskDao implements TaskDaoRemote
    * @see com.danielbchapman.production.beans.TodoDaoRemote#getItems(com.danielbchapman.production.entity.Production)
    */
 	@SuppressWarnings("unchecked")
-	public ArrayList<Task> getItems(Season production)
+	public ArrayList<Task> getItems(Season season)
 	{
 		ArrayList<Task> items = new ArrayList<Task>();
 		
-		if(production == null)
+		if(season == null)
 			return items;
 		
-		Query q = em.createQuery("SELECT t FROM Reminder t WHERE t.production = ?1 ORDER BY t.priority");
-		q.setParameter(1, production);
+		Query q = em.createQuery("SELECT t FROM Reminder t WHERE t.season = ?1 ORDER BY t.priority");
+		q.setParameter(1, season);
 		
 		List<Task> results = (List<Task>)q.getResultList();
 		
@@ -80,15 +80,15 @@ public class TaskDao implements TaskDaoRemote
    * @see com.danielbchapman.production.beans.TodoDaoRemote#getActiveItems(com.danielbchapman.production.entity.Production)
    */
 	@SuppressWarnings("unchecked")
-	public ArrayList<Task> getActiveTopLevelItems(Season production)
+	public ArrayList<Task> getActiveTopLevelItems(Season season)
 	{
 		ArrayList<Task> items = new ArrayList<Task>();
 		
-		if(production == null)
+		if(season == null)
 			return items;
 		
-		Query q = em.createQuery("SELECT t FROM Task t WHERE t.production = ?1 AND t.parentTask IS NULL AND t.complete = ?2 ORDER BY t.priority");
-		q.setParameter(1, production);
+		Query q = em.createQuery("SELECT t FROM Task t WHERE t.season = ?1 AND t.parentTask IS NULL AND t.complete = ?2 ORDER BY t.priority");
+		q.setParameter(1, season);
 		q.setParameter(2, false);
 		
 		List<Task> results = (List<Task>)q.getResultList();
@@ -104,15 +104,15 @@ public class TaskDao implements TaskDaoRemote
    * @see com.danielbchapman.production.beans.TodoDaoRemote#getClosedItems(com.danielbchapman.production.entity.Production)
    */
 	@SuppressWarnings("unchecked")
-	public ArrayList<Task> getClosedTopLevelItems(Season production)
+	public ArrayList<Task> getClosedTopLevelItems(Season season)
 	{
 		ArrayList<Task> items = new ArrayList<Task>();
 		
-		if(production == null)
+		if(season == null)
 			return items;
 		
-		Query q = em.createQuery("SELECT t FROM Task t WHERE t.production = ?1 AND t.parentTask IS NOT NULL AND t.complete = ?2 ORDER BY t.priority");
-		q.setParameter(1, production);
+		Query q = em.createQuery("SELECT t FROM Task t WHERE t.season = ?1 AND t.parentTask IS NOT NULL AND t.complete = ?2 ORDER BY t.priority");
+		q.setParameter(1, season);
 		q.setParameter(2, true);
 		
 		List<Task> results = (List<Task>)q.getResultList();
