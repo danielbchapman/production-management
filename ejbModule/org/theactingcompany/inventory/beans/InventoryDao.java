@@ -165,7 +165,19 @@ public class InventoryDao implements InventoryDaoRemote
   {
     em.getTransaction().begin();
     try
-    {
+    {//FIXME -> This never works: fix it
+    	/*
+CREATE ALIAS IF NOT EXISTS FT_INIT FOR "org.h2.fulltext.FullText.init";
+CALL FT_DROP_ALL();
+CALL FT_INIT();
+CALL FT_CREATE_INDEX('PUBLIC', 'WARDROBEELEMENT', NULL);
+CALL FT_CREATE_INDEX('PUBLIC', 'STAGEMANAGEMENTELEMENT', NULL);
+CALL FT_CREATE_INDEX('PUBLIC', 'LIGHTINGELEMENT', NULL);
+CALL FT_CREATE_INDEX('PUBLIC', 'GENERALELEMENT', NULL);
+CALL FT_CREATE_INDEX('PUBLIC', 'SOUNDELEMENT', NULL);
+CALL FT_CREATE_INDEX('PUBLIC', 'PROPSELEMENT', NULL);
+CALL FT_CREATE_INDEX('PUBLIC', 'SCENICELEMENT', NULL);
+    	 */
     	//This is by column
 //      String createIndex = 
 //        "//CALL FT_DROP_ALL();" + "\r\n" +
