@@ -14,7 +14,7 @@ import org.eclipse.persistence.sessions.server.ServerSession;
  * See http://wiki.eclipse.org/Customizing_the_EclipseLink_Application_(ELUG) Use for clients that would like to use a
  * JTA SE pu instead of a RESOURCE_LOCAL SE pu.
  */
-public class JPAEclipseLinkSessionCustomizer implements SessionCustomizer
+public class JPAEclipseLinkSessionCustomizer //implements SessionCustomizer
 {
 
   /**
@@ -40,7 +40,7 @@ public class JPAEclipseLinkSessionCustomizer implements SessionCustomizer
         // Or, if you are specifying both JTA and non-JTA in your persistence.xml then set both connectors to be safe
         JNDIConnector writeConnector = (JNDIConnector) session.getLogin().getConnector();
         writeConnector.setLookupType(JNDIConnector.STRING_LOOKUP);
-        JNDIConnector readConnector = (JNDIConnector) ((DatabaseLogin) ((ServerSession) session).getReadConnectionPool().getLogin()).getConnector();
+        JNDIConnector readConnector = (JNDIConnector) ((DatabaseLogin)((ServerSession) session).getReadConnectionPool().getLogin()).getConnector();//((DatabaseLogin) ((ServerSession) session).getReadConnectionPool().getLogin()).getConnector();
         readConnector.setLookupType(JNDIConnector.STRING_LOOKUP);
 
         System.out.println("_JPAEclipseLinkSessionCustomizer: configured " + connector.getName());

@@ -1,5 +1,6 @@
 package com.danielbchapman.production.beans;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.ejb.Remote;
@@ -22,8 +23,9 @@ import com.danielbchapman.production.entity.Venue;
  ***************************************************************************
  */
 @Remote
-public interface CompanyManagementDaoRemote
+public interface CompanyManagementDaoRemote extends Serializable
 {
+	static final long serialVersionUID = 1L;
 	/**
 	 * Save a hotel to the database
 	 * @param hotel the hotel to persists  

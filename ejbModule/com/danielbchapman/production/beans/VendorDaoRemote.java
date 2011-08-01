@@ -1,4 +1,5 @@
 package com.danielbchapman.production.beans;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.ejb.Remote;
@@ -17,8 +18,9 @@ import com.danielbchapman.production.entity.Vendor;
  */
 
 @Remote
-public interface VendorDaoRemote
+public interface VendorDaoRemote extends Serializable
 {
+	static final long serialVersionUID = 1L;
   /**
    * 
    * @param id the unique id of the entity

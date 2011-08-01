@@ -13,7 +13,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
 
-import org.jboss.logging.Logger;
+import org.apache.log4j.Logger;
 
 import com.danielbchapman.production.entity.Day;
 import com.danielbchapman.production.entity.Event;
@@ -40,6 +40,10 @@ import com.danielbchapman.production.entity.Week;
 @Stateless
 public class CalendarDao implements CalendarDaoRemote
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	Logger log = Logger.getLogger(CalendarDao.class);
 	public static Date findMonday(Date date)
   {
@@ -173,8 +177,9 @@ public class CalendarDao implements CalendarDaoRemote
   @SuppressWarnings("unchecked")
   public Day getOrCreateDay(Date date, Week week)
   {
-  	Query q = em.createQuery("SELECT d FROM Day d WHERE d.date = ?1 ORDER BY d.id");
+  	Query q = em.createQuery("SELECT d FROM Day d WHERE d.date = ?1 AND d.week = ?2 ORDER BY d.id");
   	q.setParameter(1, date);
+  	q.setParameter(2, week);
   	ArrayList<Day> toRemove = new ArrayList<Day>();
   	Day day = null;
   	try
@@ -364,7 +369,6 @@ public class CalendarDao implements CalendarDaoRemote
 	/* (non-Javadoc)
 	 * @see com.danielbchapman.production.beans.CalendarDaoRemote#getPerformances(com.danielbchapman.production.entity.Day)
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<Performance> getPerformances(Day day)
 	{
@@ -374,7 +378,6 @@ public class CalendarDao implements CalendarDaoRemote
 	/* (non-Javadoc)
 	 * @see com.danielbchapman.production.beans.CalendarDaoRemote#getPerformances(com.danielbchapman.production.entity.Production)
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<Performance> getPerformances(Production p)
 	{

@@ -1,6 +1,7 @@
 package com.danielbchapman.production.beans;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -19,8 +20,9 @@ import com.danielbchapman.production.entity.Week;
  * A simple remote interface defining the CalendarDao
  */
 @Remote
-public interface CalendarDaoRemote
+public interface CalendarDaoRemote extends Serializable
 {
+	static final long serialVersionUID = 1L;
 
   /**
    * @param id

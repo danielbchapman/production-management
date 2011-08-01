@@ -16,7 +16,8 @@ import com.danielbchapman.production.entity.Production;
 @Stateless
 public class ProductionDao implements ProductionDaoRemote
 {
-//  @PersistenceContext
+	private static final long serialVersionUID = 1L;
+	//  @PersistenceContext
 	EntityManager em = EntityInstance.getEm();
 	
   public ProductionDao()

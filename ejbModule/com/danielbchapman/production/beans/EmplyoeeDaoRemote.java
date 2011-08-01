@@ -1,5 +1,6 @@
 package com.danielbchapman.production.beans;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.ejb.Remote;
@@ -15,8 +16,9 @@ import com.danielbchapman.production.entity.Employee;
  ***************************************************************************
  */
 @Remote
-public interface EmplyoeeDaoRemote
+public interface EmplyoeeDaoRemote extends Serializable
 {
+	static final long serialVersionUID = 1L;
   public void addEmployee(String name);
   public ArrayList<Employee> getEmployees();
 }

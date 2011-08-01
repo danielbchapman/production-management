@@ -205,14 +205,19 @@ public class EventMapping extends BaseEntity implements Comparable<EventMapping>
     return composite.getTime();
   }
   
+	/** 
+	 * Sort in reverse time lines should be null, low, high.
+	 * 
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
 	@Override
 	public int compareTo(EventMapping o)
 	{
 		if(o == null)
-			return 1;
+			return -1;
 		
 		if(o.getStart() == null)
-			return 1;
+			return -1;
 		
 		if(getStart() == null)
 			return -1;
@@ -221,8 +226,8 @@ public class EventMapping extends BaseEntity implements Comparable<EventMapping>
 			return 0;
 		
 		if(getStart().after(o.getStart()))
-			return -1;
+			return 1;
 		
-		return 1;
+		return -1;
 	}
 }

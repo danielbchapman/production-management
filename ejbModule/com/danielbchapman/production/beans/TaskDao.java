@@ -22,7 +22,8 @@ import com.danielbchapman.production.entity.TaskStatusUpdate;
 @Stateless
 public class TaskDao implements TaskDaoRemote
 {
-//  @PersistenceContext
+	private static final long serialVersionUID = 1L;
+	//  @PersistenceContext
 	EntityManager em = EntityInstance.getEm();
 	
 	/* (non-Javadoc)

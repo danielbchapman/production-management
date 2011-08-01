@@ -1,6 +1,7 @@
 package com.danielbchapman.production.beans;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.ejb.Remote;
@@ -20,8 +21,9 @@ import com.danielbchapman.production.entity.Production;
  ***************************************************************************
  */
 @Remote
-public interface BudgetDaoRemote
+public interface BudgetDaoRemote extends Serializable
 {
+	static final long serialVersionUID = 1L;
 
   /**
    * Saves a new budget to the system.

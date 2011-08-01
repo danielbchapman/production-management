@@ -20,7 +20,8 @@ import com.danielbchapman.production.entity.Reimbursement;
 @Stateless
 public class ReimbursementDao implements ReimbursementDaoRemote
 {
-  EntityManager em = EntityInstance.getEm();
+	private static final long serialVersionUID = 1L;
+	EntityManager em = EntityInstance.getEm();
   /**
    * Default constructor.
    */

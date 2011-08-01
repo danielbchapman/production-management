@@ -12,7 +12,8 @@ import com.danielbchapman.production.entity.Department;
 @Stateless
 public class DepartmentDao implements DepartmentDaoRemote
 {
-//  @PersistenceContext
+	private static final long serialVersionUID = 1L;
+	//  @PersistenceContext
 	EntityManager em = EntityInstance.getEm();
 	
 	/* (non-Javadoc)

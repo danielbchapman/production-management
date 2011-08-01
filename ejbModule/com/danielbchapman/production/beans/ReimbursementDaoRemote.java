@@ -1,5 +1,6 @@
 package com.danielbchapman.production.beans;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.ejb.Remote;
@@ -18,8 +19,9 @@ import com.danielbchapman.production.entity.Reimbursement;
  ***************************************************************************
  */
 @Remote
-public interface ReimbursementDaoRemote
+public interface ReimbursementDaoRemote extends Serializable
 {
+	static final long serialVersionUID = 1L;
   /**
    * Add a new reimbursement to the system
    * @param amount

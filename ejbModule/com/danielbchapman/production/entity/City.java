@@ -1,4 +1,4 @@
-package com.danielbchapman.production.entity;
+ package com.danielbchapman.production.entity;
 
 import java.util.Collection;
 
