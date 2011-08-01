@@ -1,5 +1,8 @@
 package com.danielbchapman.jboss.login;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -29,13 +32,23 @@ public class LoginBean implements LoginBeanRemote
   @Override
   public User validateLogin(String username, String password)
   {
-    Query q = EntityInstance.getEm().createQuery("SELECT u FROM User WHERE u.user = ?1 AND u.password = ?2");
+//    
+  	Query q = EntityInstance.getEm().createNativeQuery("SELECT u.id FROM User u WHERE u.user = ?1 AND u.password = HASH('SHA256', STRINGTOUTF8(?2), 1000)");
     q.setParameter(1, username);
     q.setParameter(2, password);
     
     try
     {
-      return (User)q.getSingleResult();
+    	Long id = (Long) q.getSingleResult();
+    	if(id != null)
+    	{
+    		Query sub = EntityInstance.getEm().createQuery("SELECT u FROM User WHERE u.id = ?1");
+    		sub.setParameter(1, id);
+    		
+    		return (User) sub.getSingleResult();
+    	}
+    	else
+    		return null;
     }
     catch(NoResultException e)
     {
@@ -65,14 +78,25 @@ public class LoginBean implements LoginBeanRemote
   @Override
   public void addUser(String username, String password, Collection<Roles> roles)
   {
-    User u = new User();
-    u.setUser(username);
-    u.setPassword(password);
-    
+
     EntityInstance.getEm().getTransaction().begin();
     
-    EntityInstance.getEm().persist(u);
+    Query q = EntityInstance.getEm().createNativeQuery(
+    		"SELECT TOP 1 " + 
+    		"HASH('SHA256', StringToUtf8(Concat(?1,?2)), 1000) AS \"Hash\" " +
+    		"FROM SEQUENCE"
+    		);
     
+    q.setParameter(1, password);
+    q.setParameter(2, username);
+    
+    byte[] hash = (byte[]) q.getSingleResult();
+		
+    User u = new User();
+    u.setUser(username);
+    u.setPassword(hash);
+    
+    EntityInstance.getEm().persist(u);
     for(Roles r : roles)
     {
       Role tmp = new Role();
@@ -107,7 +131,7 @@ public class LoginBean implements LoginBeanRemote
 	@Override
 	public User getUser(String userName)
 	{
-    Query q = EntityInstance.getEm().createQuery("SELECT u FROM User u WHERE user.u = ?1");
+    Query q = EntityInstance.getEm().createQuery("SELECT u FROM User u WHERE u.user = ?1");
     q.setParameter(1, userName);
     
     try
