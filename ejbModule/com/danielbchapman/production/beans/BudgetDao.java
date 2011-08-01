@@ -152,11 +152,11 @@ public class BudgetDao implements BudgetDaoRemote
    * @see com.danielbchapman.production.beans.BudgetDaoRemote#getAllBudgets(com.danielbchapman.production.entity.Production)
    */
   @SuppressWarnings("unchecked")
-	public ArrayList<Budget> getAllBudgets(Season production)
+	public ArrayList<Budget> getAllBudgets(Season season)
   {
   	ArrayList<Budget> budgets = new ArrayList<Budget>();
-  	Query q = em.createQuery("SELECT b FROM Budget b WHERE b.production = ?1 ORDER BY b.name");
-  	q.setParameter(1, production);
+  	Query q = em.createQuery("SELECT b FROM Budget b WHERE b.season = ?1 ORDER BY b.name");
+  	q.setParameter(1, season);
   	
   	List<Budget> results = (List<Budget>)q.getResultList();
   	
