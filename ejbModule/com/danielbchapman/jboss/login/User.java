@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -16,8 +17,9 @@ public class User implements Serializable
   @Id
   @Column(length=80, name="user")
   private String user;
-  @Column(length=80, name="password")
-  private String password;
+  @Column(name="password")
+  @Lob
+  private byte[] password;
   @OneToMany(targetEntity=Role.class, fetch=FetchType.LAZY)
   private List<Role> roles;
   
@@ -29,11 +31,11 @@ public class User implements Serializable
   {
     this.user = user;
   }
-  public String getPassword()
+  public byte[] getPassword()
   {
     return password;
   }
-  public void setPassword(String password)
+  public void setPassword(byte[] password)
   {
     this.password = password;
   }
