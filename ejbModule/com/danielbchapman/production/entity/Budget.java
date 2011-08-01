@@ -16,20 +16,20 @@ public class Budget implements Serializable
 
 	private static final long serialVersionUID = 1L;
 
+	@Temporal(value = TemporalType.TIMESTAMP)
+	private Date date;
+	@ManyToOne(targetEntity = Department.class)
+	private Department department;
+	@OneToMany(targetEntity=BudgetEntry.class, mappedBy="budget")
+	private Collection<BudgetEntry> entries;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	@ManyToOne(targetEntity = Production.class)
-	private Production production;
-	@ManyToOne(targetEntity = Department.class)
-	private Department department;
-	@Temporal(value = TemporalType.TIMESTAMP)
-	private Date date;
-	private Double startingBudget;
-	@OneToMany(targetEntity=BudgetEntry.class, mappedBy="budget")
-	private Collection<BudgetEntry> entries;
 	@Column(length=50)
 	private String name;
+	@ManyToOne(targetEntity = Season.class)
+	private Season season;
+	private Double startingBudget;
 
 	public Budget()
 	{
@@ -37,24 +37,9 @@ public class Budget implements Serializable
 	}
 
 	
-	public Long getId()
+	public Date getDate()
 	{
-		return id;
-	}
-
-	public void setId(Long id)
-	{
-		this.id = id;
-	}
-
-	public Production getProduction()
-	{
-		return production;
-	}
-
-	public void setProduction(Production production)
-	{
-		this.production = production;
+		return date;
 	}
 
 	public Department getDepartment()
@@ -62,19 +47,19 @@ public class Budget implements Serializable
 		return department;
 	}
 
-	public void setDepartment(Department department)
+	public Collection<BudgetEntry> getEntries()
 	{
-		this.department = department;
+		return entries;
 	}
 
-	public Date getDate()
+	public Long getId()
 	{
-		return date;
+		return id;
 	}
 
-	public void setDate(Date date)
+	public String getName()
 	{
-		this.date = date;
+		return name;
 	}
 
 	public Double getStartingBudget()
@@ -82,14 +67,14 @@ public class Budget implements Serializable
 		return startingBudget;
 	}
 
-	public void setStartingBudget(Double startingBudget)
+	public void setDate(Date date)
 	{
-		this.startingBudget = startingBudget;
+		this.date = date;
 	}
 
-	public Collection<BudgetEntry> getEntries()
+	public void setDepartment(Department department)
 	{
-		return entries;
+		this.department = department;
 	}
 
 	public void setEntries(Collection<BudgetEntry> entries)
@@ -97,16 +82,21 @@ public class Budget implements Serializable
 		this.entries = entries;
 	}
 
-
-	public String getName()
+	public void setId(Long id)
 	{
-		return name;
+		this.id = id;
 	}
 
 
 	public void setName(String name)
 	{
 		this.name = name;
+	}
+
+
+	public void setStartingBudget(Double startingBudget)
+	{
+		this.startingBudget = startingBudget;
 	}
 	
 	/* (non-Javadoc)

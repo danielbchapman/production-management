@@ -10,7 +10,7 @@ import javax.persistence.Lob;
  * 
  */
 @Entity
-public class Production extends BaseEntity
+public class Season extends BaseEntity
 {
 
 	private static final long serialVersionUID = 1L;
@@ -20,7 +20,7 @@ public class Production extends BaseEntity
 	@Column(length=256,unique=true)
 	private String name;
 	
-	public Production()
+	public Season()
 	{
 		super();
 	}

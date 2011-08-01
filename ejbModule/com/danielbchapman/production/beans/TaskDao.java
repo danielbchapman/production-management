@@ -11,7 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import com.danielbchapman.jboss.login.LoginBeanRemote;
-import com.danielbchapman.production.entity.Production;
+import com.danielbchapman.production.entity.Season;
 import com.danielbchapman.production.entity.Task;
 import com.danielbchapman.production.entity.TaskStatusUpdate;
 
@@ -57,7 +57,7 @@ public class TaskDao implements TaskDaoRemote
    * @see com.danielbchapman.production.beans.TodoDaoRemote#getItems(com.danielbchapman.production.entity.Production)
    */
 	@SuppressWarnings("unchecked")
-	public ArrayList<Task> getItems(Production production)
+	public ArrayList<Task> getItems(Season production)
 	{
 		ArrayList<Task> items = new ArrayList<Task>();
 		
@@ -80,7 +80,7 @@ public class TaskDao implements TaskDaoRemote
    * @see com.danielbchapman.production.beans.TodoDaoRemote#getActiveItems(com.danielbchapman.production.entity.Production)
    */
 	@SuppressWarnings("unchecked")
-	public ArrayList<Task> getActiveTopLevelItems(Production production)
+	public ArrayList<Task> getActiveTopLevelItems(Season production)
 	{
 		ArrayList<Task> items = new ArrayList<Task>();
 		
@@ -104,7 +104,7 @@ public class TaskDao implements TaskDaoRemote
    * @see com.danielbchapman.production.beans.TodoDaoRemote#getClosedItems(com.danielbchapman.production.entity.Production)
    */
 	@SuppressWarnings("unchecked")
-	public ArrayList<Task> getClosedTopLevelItems(Production production)
+	public ArrayList<Task> getClosedTopLevelItems(Season production)
 	{
 		ArrayList<Task> items = new ArrayList<Task>();
 		

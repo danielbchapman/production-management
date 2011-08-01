@@ -10,7 +10,7 @@ import com.danielbchapman.production.entity.Budget;
 import com.danielbchapman.production.entity.BudgetAdjustingEntry;
 import com.danielbchapman.production.entity.BudgetEntry;
 import com.danielbchapman.production.entity.EntryType;
-import com.danielbchapman.production.entity.Production;
+import com.danielbchapman.production.entity.Season;
 
 /**
  * A simple local interface for the BudgetDaoRemote
@@ -84,7 +84,7 @@ public interface BudgetDaoRemote extends Serializable
   /**
    * @return a list of all the budgets
    */
-  public abstract ArrayList<Budget> getAllBudgets(Production production);
+  public abstract ArrayList<Budget> getAllBudgets(Season production);
 
   /**
    * Deletes the budget from the database--this is for error correct, it is highly

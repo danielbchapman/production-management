@@ -21,7 +21,7 @@ import com.danielbchapman.production.entity.EventMapping;
 import com.danielbchapman.production.entity.Performance;
 import com.danielbchapman.production.entity.PerformanceAdvance;
 import com.danielbchapman.production.entity.PerformanceSchedule;
-import com.danielbchapman.production.entity.Production;
+import com.danielbchapman.production.entity.Season;
 import com.danielbchapman.production.entity.Week;
 
 /**
@@ -40,9 +40,6 @@ import com.danielbchapman.production.entity.Week;
 @Stateless
 public class CalendarDao implements CalendarDaoRemote
 {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	Logger log = Logger.getLogger(CalendarDao.class);
 	public static Date findMonday(Date date)
@@ -60,14 +57,14 @@ public class CalendarDao implements CalendarDaoRemote
   EntityManager em = EntityInstance.getEm();
   
   @Override
-  public boolean dayExists(Date date, Production production)
+  public boolean dayExists(Date date, Season season)
   {
     if(date == null)
       return false;
     
-    Query q = em.createQuery("SELECT d FROM Day d WHERE d.date = ?1 AND d.week.production = ?2");
+    Query q = em.createQuery("SELECT d FROM Day d WHERE d.date = ?1 AND d.week.season = ?2");
     q.setParameter(1, date);
-    q.setParameter(2, production);
+    q.setParameter(2, season);
     
     Day day = null;
     try
@@ -107,15 +104,15 @@ public class CalendarDao implements CalendarDaoRemote
    * @see com.danielbchapman.production.beans.CalendarDaoRemote#getAllWeeks(com.danielbchapman.production.entity.Production)
    */
   @SuppressWarnings("unchecked")
-  public ArrayList<Week> getAllWeeks(Production production)
+  public ArrayList<Week> getAllWeeks(Season season)
   {
   	ArrayList<Week> ret = new ArrayList<Week>();
   	
-  	if(production == null)
+  	if(season == null)
   		return ret;
   	
-    Query q = em.createQuery("SELECT w FROM Week w WHERE w.production = ?1 ORDER BY w.id");
-    q.setParameter(1, production);
+    Query q = em.createQuery("SELECT w FROM Week w WHERE w.season = ?1 ORDER BY w.id");
+    q.setParameter(1, season);
     
     List<Week> weeks = (List<Week>)q.getResultList();
     
@@ -164,7 +161,7 @@ public class CalendarDao implements CalendarDaoRemote
    * @see com.danielbchapman.production.beans.CalendarDaoRemote#getOrCreateDay(java.util.Date, com.danielbchapman.production.entity.Production)
    */
   @Override
-  public Day getOrCreateDay(Date date, Production production)
+  public Day getOrCreateDay(Date date, Season production)
   {
     Week weekRef= getOrCreateWeek(date, production);//Haha week reference? Get it?!
     Day day = getOrCreateDay(date, weekRef);
@@ -226,16 +223,16 @@ public class CalendarDao implements CalendarDaoRemote
   /* (non-Javadoc)
    * @see com.danielbchapman.production.beans.CalendarDaoRemote#getOrCreateWeek(java.util.Date, com.danielbchapman.production.entity.Production)
    */
-  public Week getOrCreateWeek(Date dayInWeek, Production production)
+  public Week getOrCreateWeek(Date dayInWeek, Season season)
   {
     if(dayInWeek == null)
       return null;
     
     dayInWeek = findMonday(dayInWeek);
     
-    Query q = em.createQuery("SELECT w FROM Week w WHERE w.date = ?1 AND w.production = ?2");
+    Query q = em.createQuery("SELECT w FROM Week w WHERE w.date = ?1 AND w.season = ?2");
     q.setParameter(1, dayInWeek);
-    q.setParameter(2, production);
+    q.setParameter(2, season);
     Week ret = null;
     try
     {
@@ -249,7 +246,7 @@ public class CalendarDao implements CalendarDaoRemote
     if(ret == null)
     {
     	ret = new Week();
-    	ret.setProduction(production);
+    	ret.setProduction(season);
     	ret.setDate(dayInWeek);
     	
     	saveWeek(ret);
@@ -379,9 +376,9 @@ public class CalendarDao implements CalendarDaoRemote
 	 * @see com.danielbchapman.production.beans.CalendarDaoRemote#getPerformances(com.danielbchapman.production.entity.Production)
 	 */
 	@Override
-	public ArrayList<Performance> getPerformances(Production p)
+	public ArrayList<Performance> getPerformances(Season s)
 	{
-		return (ArrayList<Performance>) EntityInstance.getResultList("SELECT p FROM Performance p WHERE p.production = ?1 ORDER BY p.start", new Object[]{p}, Performance.class);
+		return (ArrayList<Performance>) EntityInstance.getResultList("SELECT p FROM Performance p WHERE p.season = ?1 ORDER BY p.start", new Object[]{s}, Performance.class);
 	}
 
 	/* (non-Javadoc)
@@ -424,13 +421,13 @@ public class CalendarDao implements CalendarDaoRemote
 	@Override
 	public ArrayList<PerformanceSchedule> getAllPerformanceSchedules()
 	{
-		return EntityInstance.getResultList("SELECT p FROM PerformanceSchedule p ORDER BY p.production, p.name", PerformanceSchedule.class);
+		return EntityInstance.getResultList("SELECT p FROM PerformanceSchedule p ORDER BY p.season, p.name", PerformanceSchedule.class);
 	}
 	
 	@Override
-	public ArrayList<PerformanceSchedule> getPerformanceSchedulesForProduction(Production production)
+	public ArrayList<PerformanceSchedule> getPerformanceSchedulesForSeason(Season season)
 	{
-		return EntityInstance.getResultList("SELECT p FROM PerformanceSchedule p WHERE p.production = ?1 ORDER BY p.name", PerformanceSchedule.class, production);
+		return EntityInstance.getResultList("SELECT p FROM PerformanceSchedule p WHERE p.season = ?1 ORDER BY p.name", PerformanceSchedule.class, season);
 	}
 	
 	@Override

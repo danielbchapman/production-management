@@ -13,7 +13,7 @@ import com.danielbchapman.production.entity.EventMapping;
 import com.danielbchapman.production.entity.Performance;
 import com.danielbchapman.production.entity.PerformanceAdvance;
 import com.danielbchapman.production.entity.PerformanceSchedule;
-import com.danielbchapman.production.entity.Production;
+import com.danielbchapman.production.entity.Season;
 import com.danielbchapman.production.entity.Week;
 
 /**
@@ -47,14 +47,14 @@ public interface CalendarDaoRemote extends Serializable
    * @param p the production to look for
    * @return a list of all performances for this production
    */
-  public abstract ArrayList<Performance> getPerformances(Production p);
+  public abstract ArrayList<Performance> getPerformances(Season p);
 
   /**
    * @param dayInWeek
    * @param production
    * @return a week by the date
    */
-  public abstract Week getOrCreateWeek(Date dayInWeek, Production production);
+  public abstract Week getOrCreateWeek(Date dayInWeek, Season production);
 
   /**
    * Creates a Day object for a date and a week
@@ -71,11 +71,11 @@ public interface CalendarDaoRemote extends Serializable
    * @return a Day created for the Production.   
    * 
    */
-  public abstract Day getOrCreateDay(Date date, Production production);
+  public abstract Day getOrCreateDay(Date date, Season production);
   /**
    * @return a list of all weeks, ordered
    */
-  public abstract ArrayList<Week> getAllWeeks(Production production);
+  public abstract ArrayList<Week> getAllWeeks(Season production);
 
   /**
    *  saves a week
@@ -126,7 +126,7 @@ public interface CalendarDaoRemote extends Serializable
    * @return a list of known performance schedules for the selected production  
    * 
    */
-  public abstract ArrayList<PerformanceSchedule> getPerformanceSchedulesForProduction(Production production);
+  public abstract ArrayList<PerformanceSchedule> getPerformanceSchedulesForSeason(Season production);
   
   
   /**
@@ -179,6 +179,6 @@ public interface CalendarDaoRemote extends Serializable
    * @return true if it is in the database, false otherwise.
    * 
    */
-  public boolean dayExists(Date date, Production production);
+  public boolean dayExists(Date date, Season production);
 
 }
