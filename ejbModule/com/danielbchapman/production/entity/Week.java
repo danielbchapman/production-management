@@ -24,7 +24,7 @@ import javax.persistence.UniqueConstraint;
  * 
  */
 @Entity
-@Table(uniqueConstraints=@UniqueConstraint(columnNames={"date", "production"}))
+@Table(uniqueConstraints=@UniqueConstraint(columnNames={"date", "season"}))
 public class Week implements Serializable
 {
   private static final long serialVersionUID = 1L;

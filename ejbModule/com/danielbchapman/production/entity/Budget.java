@@ -36,7 +36,6 @@ public class Budget implements Serializable
 		super();
 	}
 
-	
 	public Date getDate()
 	{
 		return date;
@@ -47,6 +46,7 @@ public class Budget implements Serializable
 		return department;
 	}
 
+	
 	public Collection<BudgetEntry> getEntries()
 	{
 		return entries;
@@ -60,6 +60,11 @@ public class Budget implements Serializable
 	public String getName()
 	{
 		return name;
+	}
+
+	public Season getSeason()
+	{
+		return season;
 	}
 
 	public Double getStartingBudget()
@@ -87,10 +92,15 @@ public class Budget implements Serializable
 		this.id = id;
 	}
 
-
 	public void setName(String name)
 	{
 		this.name = name;
+	}
+
+
+	public void setSeason(Season season)
+	{
+		this.season = season;
 	}
 
 
