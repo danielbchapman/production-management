@@ -20,7 +20,7 @@ public class EntityInstance
 	{
 		if (manager == null || !manager.isOpen())
 		{
-			manager = Persistence.createEntityManagerFactory("production").createEntityManager();
+			manager = Persistence.createEntityManagerFactory("authentication").createEntityManager();
 			manager.setFlushMode(FlushModeType.COMMIT);
 		}
 
