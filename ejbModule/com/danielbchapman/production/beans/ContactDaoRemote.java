@@ -1,6 +1,7 @@
 package com.danielbchapman.production.beans;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.ejb.Remote;
@@ -10,8 +11,9 @@ import com.danielbchapman.production.entity.ContactGroup;
 import com.danielbchapman.production.entity.ContactInformation;
 
 @Remote
-public interface ContactDaoRemote
+public interface ContactDaoRemote extends Serializable
 {
+	static final long serialVersionUID = 1L;
 
   /**
    * @return a list of contact groups from the DB ordered by name

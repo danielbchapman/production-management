@@ -1,6 +1,7 @@
 package com.danielbchapman.production.beans;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.ejb.Remote;
@@ -9,8 +10,9 @@ import com.danielbchapman.production.entity.Budget;
 import com.danielbchapman.production.entity.PettyCash;
 import com.danielbchapman.production.entity.PettyCashEntry;
 @Remote
-public interface PettyCashDaoRemote
+public interface PettyCashDaoRemote extends Serializable
 {
+	static final long serialVersionUID = 1L;
 
   /**
    * Reconcile a petty cash issuance by closing it so it can not be further modified 

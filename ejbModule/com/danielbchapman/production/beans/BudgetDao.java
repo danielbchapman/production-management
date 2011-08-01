@@ -17,7 +17,11 @@ import com.danielbchapman.production.entity.Production;
 @Stateless
 public class BudgetDao implements BudgetDaoRemote
 {
-//  @PersistenceContext
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	//  @PersistenceContext
   EntityManager em = EntityInstance.getEm();
   
   /* (non-Javadoc)

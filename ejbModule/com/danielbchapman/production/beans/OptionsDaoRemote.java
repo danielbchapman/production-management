@@ -1,4 +1,6 @@
 package com.danielbchapman.production.beans;
+import java.io.Serializable;
+
 import javax.ejb.Remote;
 import javax.persistence.EntityManager;
 
@@ -13,8 +15,10 @@ import com.danielbchapman.production.entity.Options;
  ***************************************************************************
  */
 @Remote
-public interface OptionsDaoRemote
+public interface OptionsDaoRemote extends Serializable
 {
+	static final long serialVersionUID = 1L;
+	
   public Options getOptions();
   public EntityManager getEntityManager();
   public void setConnectionString(String connectionString);

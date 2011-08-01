@@ -1,6 +1,7 @@
 package com.danielbchapman.production.beans;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.ejb.Remote;
@@ -19,8 +20,9 @@ import com.danielbchapman.production.entity.VenueLog;
  ***************************************************************************
  */
 @Remote
-public interface VenueDaoRemote
+public interface VenueDaoRemote extends Serializable
 {
+	static final long serialVersionUID = 1L;
   public final static String ELECTRICS_DOCUMENTS = "electrics";
   public final static String SCENIC_DOCUMENTS = "scenery";
   public final static String GENERAL_DOCUMENTS = "general";

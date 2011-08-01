@@ -24,7 +24,11 @@ import com.danielbchapman.production.entity.ContactInformation;
 @Stateless
 public class ContactDao implements ContactDaoRemote
 {
-//  @PersistenceContext
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	//  @PersistenceContext
   EntityManager em = EntityInstance.getEm();
   
   /* (non-Javadoc)

@@ -1,11 +1,14 @@
 package com.danielbchapman.production.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,8 +37,10 @@ public class Day implements Serializable
 	private Long id;
 	@Temporal(value = TemporalType.DATE)
 	private Date date;
-	@OneToMany(mappedBy = "day", targetEntity = Event.class)
+	@OneToMany(mappedBy = "day", targetEntity = Event.class, fetch=FetchType.EAGER)
 	private Collection<Event> events;
+	@OneToMany(mappedBy = "day", targetEntity = Performance.class, fetch=FetchType.EAGER)
+	private Collection<Performance> performances;
 	@Column(length = 75)
 	private String label;
 	@Lob
@@ -52,12 +57,63 @@ public class Day implements Serializable
 	private Week week;
 	private City castLocation;
 	private City crewLocation;
-	
 	public Day()
 	{
 		super();
 	}
+	public City getCastLocation()
+	{
+		return castLocation;
+	}
+	
+	public String getCastTravel()
+	{
+		return castTravel;
+	}
 
+	public City getCrewLocation()
+	{
+		return crewLocation;
+	}
+
+	public String getCrewTravel()
+	{
+		return crewTravel;
+	}
+
+	public Date getDate()
+	{
+		return date;
+	}
+
+	/**
+	 * @return the events
+	 */
+	public Collection<Event> getEvents()
+	{
+		return events;
+	}
+
+	/**
+	 * A java based hack for JasperReports. The time lines are easier
+	 * to display as collections.
+	 * 
+	 * @return a list of EventMappings (Events/PerformanceEvents) for this day ordered by time.
+	 * @see Performance#getEventSequence()
+	 * 
+	 */
+	@Transient
+	public ArrayList<EventMapping> getTimeline()
+	{
+		ArrayList<EventMapping> ret = new ArrayList<EventMapping>();
+		ret.addAll(getEvents());
+		
+		for(Performance p : getPerformances())
+			ret.addAll(p.getEventSequence());
+		
+		Collections.sort(ret);
+		return ret;
+	}
 	/**
 	 * @return the id
 	 */
@@ -67,30 +123,67 @@ public class Day implements Serializable
 	}
 
 	/**
-	 * @param id
-	 *          the id to set
+	 * @return the label
 	 */
-	public void setId(Long id)
+	public String getLabel()
 	{
-		this.id = id;
+		return label;
 	}
 
-	public Date getDate()
+	public String getMilageInformation()
 	{
-		return date;
+		return milageInformation;
+	}
+
+	/**
+	 * @return the notes
+	 */
+	public String getNotes()
+	{
+		return notes;
+	}
+
+	public Collection<Performance> getPerformances()
+	{
+		return performances;
+	}
+
+	public String getTheaterInformation()
+	{
+		return theaterInformation;
+	}
+
+	/**
+	 * @return the week
+	 */
+	public Week getWeek()
+	{
+		return week;
+	}
+
+	public void setCastLocation(City castLocation)
+	{
+		this.castLocation = castLocation;
+	}
+
+	public void setCastTravel(String castTravel)
+	{
+		this.castTravel = castTravel;
+	}
+
+	public void setCrewLocation(City crewLocation)
+	{
+		this.crewLocation = crewLocation;
+	}
+
+	public void setCrewTravel(String crewTravel)
+	{
+		this.crewTravel = crewTravel;
 	}
 
 	public void setDate(Date date)
 	{
 		this.date = date;
-	}
-
-	/**
-	 * @return the events
-	 */
-	public Collection<Event> getEvents()
-	{
-		return events;
 	}
 
 	/**
@@ -103,11 +196,12 @@ public class Day implements Serializable
 	}
 
 	/**
-	 * @return the label
+	 * @param id
+	 *          the id to set
 	 */
-	public String getLabel()
+	public void setId(Long id)
 	{
-		return label;
+		this.id = id;
 	}
 
 	/**
@@ -119,12 +213,9 @@ public class Day implements Serializable
 		this.label = label;
 	}
 
-	/**
-	 * @return the notes
-	 */
-	public String getNotes()
+	public void setMilageInformation(String milageInformation)
 	{
-		return notes;
+		this.milageInformation = milageInformation;
 	}
 
 	/**
@@ -136,12 +227,14 @@ public class Day implements Serializable
 		this.notes = notes;
 	}
 
-	/**
-	 * @return the week
-	 */
-	public Week getWeek()
+	public void setPerformances(Collection<Performance> performances)
 	{
-		return week;
+		this.performances = performances;
+	}
+
+	public void setTheaterInformation(String theaterInformation)
+	{
+		this.theaterInformation = theaterInformation;
 	}
 
 	/**
@@ -151,66 +244,6 @@ public class Day implements Serializable
 	public void setWeek(Week week)
 	{
 		this.week = week;
-	}
-
-	public String getCastTravel()
-	{
-		return castTravel;
-	}
-
-	public void setCastTravel(String castTravel)
-	{
-		this.castTravel = castTravel;
-	}
-
-	public City getCastLocation()
-	{
-		return castLocation;
-	}
-
-	public void setCastLocation(City castLocation)
-	{
-		this.castLocation = castLocation;
-	}
-
-	public City getCrewLocation()
-	{
-		return crewLocation;
-	}
-
-	public void setCrewLocation(City crewLocation)
-	{
-		this.crewLocation = crewLocation;
-	}
-
-	public String getCrewTravel()
-	{
-		return crewTravel;
-	}
-
-	public void setCrewTravel(String crewTravel)
-	{
-		this.crewTravel = crewTravel;
-	}
-
-	public String getTheaterInformation()
-	{
-		return theaterInformation;
-	}
-
-	public void setTheaterInformation(String theaterInformation)
-	{
-		this.theaterInformation = theaterInformation;
-	}
-
-	public String getMilageInformation()
-	{
-		return milageInformation;
-	}
-
-	public void setMilageInformation(String milageInformation)
-	{
-		this.milageInformation = milageInformation;
 	}
 
 	/* (non-Javadoc)

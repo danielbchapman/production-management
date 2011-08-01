@@ -7,6 +7,7 @@ import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
@@ -216,6 +217,15 @@ public class Performance extends EventMapping
 			setEnd(end);
 			setCast(cast);
 			setCrew(crew);
+		}
+		
+		/* (non-Javadoc)
+		 * @see com.danielbchapman.production.entity.EventMapping#isPerformance()
+		 */
+		@Override
+		public boolean isPerformance()
+		{
+			return true; //This is part of performance, not event  
 		}
   }
 }

@@ -15,7 +15,9 @@ import com.danielbchapman.production.entity.Vendor;
 @Stateless
 public class VendorDao implements VendorDaoRemote
 {
-  EntityManager em = EntityInstance.getEm();
+
+	private static final long serialVersionUID = 1L;
+	EntityManager em = EntityInstance.getEm();
   /**
    * Default constructor.
    */

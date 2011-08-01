@@ -11,7 +11,11 @@ import com.danielbchapman.production.entity.Options;
 @Stateless
 public class OptionsDao implements OptionsDaoRemote
 {
-//@PersistenceContext
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	//@PersistenceContext
   EntityManager em = EntityInstance.getEm();
   /**
    * Default constructor.

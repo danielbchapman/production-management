@@ -19,7 +19,8 @@ import com.danielbchapman.production.entity.VenueLog;
 @Stateless
 public class VenueDao implements VenueDaoRemote
 {
-//@PersistenceContext
+	private static final long serialVersionUID = 1L;
+	//@PersistenceContext
   EntityManager em = EntityInstance.getEm();
   /**
    * Default constructor.

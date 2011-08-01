@@ -15,7 +15,11 @@ import com.danielbchapman.production.entity.Employee;
 @Stateless
 public class EmplyoeeDao implements EmplyoeeDaoRemote
 {
-  EntityManager em = EntityInstance.getEm();
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	EntityManager em = EntityInstance.getEm();
   /**
    * Default constructor.
    */

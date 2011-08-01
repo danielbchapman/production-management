@@ -1,14 +1,16 @@
 package com.danielbchapman.production.beans;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.ejb.Remote;
 
 import com.danielbchapman.production.entity.Production;
 @Remote
-public interface ProductionDaoRemote
+public interface ProductionDaoRemote extends Serializable
 {
+	static final long serialVersionUID = 1L;
 
   /**
    * @param source Saves a production ^^

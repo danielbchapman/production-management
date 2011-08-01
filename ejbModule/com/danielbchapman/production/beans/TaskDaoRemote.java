@@ -1,6 +1,7 @@
 package com.danielbchapman.production.beans;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.ejb.Remote;
@@ -23,8 +24,9 @@ import com.danielbchapman.production.entity.TaskStatusUpdate;
  ***************************************************************************
  */
 @Remote
-public interface TaskDaoRemote
+public interface TaskDaoRemote extends Serializable
 {
+	static final long serialVersionUID = 1L;
 
   /**
    * Saves or updates an item.

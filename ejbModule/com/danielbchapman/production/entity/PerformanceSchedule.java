@@ -34,7 +34,6 @@ public class PerformanceSchedule extends BaseEntity
 	private int houseCall;
 	private String name;
 	private int performanceLength;
-	private Production production;
 	private int strikeLength;
 
 	/**
@@ -91,11 +90,6 @@ public class PerformanceSchedule extends BaseEntity
 		return performanceLength;
 	}
 	
-	public Production getProduction()
-	{
-		return production;
-	}
-	
 	public int getStrikeLength()
 	{
 		return strikeLength;
@@ -129,11 +123,6 @@ public class PerformanceSchedule extends BaseEntity
 	public void setPerformanceLength(int performanceLength)
 	{
 		this.performanceLength = performanceLength;
-	}
-
-	public void setProduction(Production production)
-	{
-		this.production = production;
 	}
 
 	public void setStrikeLength(int strikeLength)

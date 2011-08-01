@@ -24,7 +24,8 @@ import com.danielbchapman.production.entity.PettyCashEntry;
 @Stateless
 public class PettyCashDao implements PettyCashDaoRemote
 {
-//  @PersistenceContext
+	private static final long serialVersionUID = 1L;
+	//  @PersistenceContext
   EntityManager em = EntityInstance.getEm();
   
   public PettyCashDao()

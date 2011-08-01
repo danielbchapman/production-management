@@ -16,6 +16,11 @@ import com.danielbchapman.production.entity.Venue;
 public class CompanyManagementDao implements CompanyManagementDaoRemote
 {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public CompanyManagementDao()
 	{
 	}
