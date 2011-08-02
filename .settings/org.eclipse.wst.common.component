@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="ProductionEE5">
+        <wb-resource deploy-path="/" source-path="/EarContent"/>
+        <dependent-module archiveName="GenericLoginEJB.jar" deploy-path="/" handle="module:/resource/GenericLoginEJB/GenericLoginEJB">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ProductionEJB.jar" deploy-path="/" handle="module:/resource/ProductionEJB/ProductionEJB">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="InventoryEJB.jar" deploy-path="/" handle="module:/resource/InventoryEJB/InventoryEJB">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ProductionSchedule.war" deploy-path="/" handle="module:/resource/ProductionSchedule/ProductionSchedule">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+    </wb-module>
+</project-modules>
