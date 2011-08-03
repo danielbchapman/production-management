@@ -3,6 +3,7 @@
 	<name>GenericLoginEJB</name>
 	<comment></comment>
 	<projects>
+		<project>CustomJaasRealm</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

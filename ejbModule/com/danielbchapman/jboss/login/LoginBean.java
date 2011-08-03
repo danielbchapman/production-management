@@ -1,14 +1,10 @@
 package com.danielbchapman.jboss.login;
 
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import javax.ejb.Stateless;
-import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
 
@@ -33,27 +29,28 @@ public class LoginBean implements LoginBeanRemote
   public User validateLogin(String username, String password)
   {
 //    
-  	Query q = EntityInstance.getEm().createNativeQuery("SELECT u.id FROM User u WHERE u.user = ?1 AND u.password = HASH('SHA256', STRINGTOUTF8(?2), 1000)");
+  	Query q = EntityInstance.getEm().createNativeQuery("SELECT u.id FROM User u WHERE u.user = ?1 AND u.password = ?2");
     q.setParameter(1, username);
-    q.setParameter(2, password);
-    
-    try
-    {
-    	Long id = (Long) q.getSingleResult();
-    	if(id != null)
-    	{
-    		Query sub = EntityInstance.getEm().createQuery("SELECT u FROM User WHERE u.id = ?1");
-    		sub.setParameter(1, id);
-    		
-    		return (User) sub.getSingleResult();
-    	}
-    	else
-    		return null;
-    }
-    catch(NoResultException e)
-    {
-      return null;
-    }
+//    q.setParameter(2, Hex.sha256(password));
+    throw new RuntimeException("Implementation was unused, please refer to the login query to fix");
+//    
+//    try
+//    {
+//    	Long id = (Long) q.getSingleResult();
+//    	if(id != null)
+//    	{
+//    		Query sub = EntityInstance.getEm().createQuery("SELECT u FROM User WHERE u.id = ?1");
+//    		sub.setParameter(1, id);
+//    		
+//    		return (User) sub.getSingleResult();
+//    	}
+//    	else
+//    		return null;
+//    }
+//    catch(NoResultException e)
+//    {
+//      return null;
+//    }
   }
 
   /* (non-Javadoc)
@@ -81,20 +78,19 @@ public class LoginBean implements LoginBeanRemote
 
     EntityInstance.getEm().getTransaction().begin();
     
+    /* Removed, moving security to straight JAVA via DatabaseServerLoginModuleExtension */
     Query q = EntityInstance.getEm().createNativeQuery(
-    		"SELECT TOP 1 " + 
-    		"HASH('SHA256', StringToUtf8(Concat(?1,?2)), 1000) AS \"Hash\" " +
-    		"FROM SEQUENCE"
+    		"Call Encrypt('AES', StringToUtf8(?1), StringToUtf8(?2))"
     		);
     
-    q.setParameter(1, password);
-    q.setParameter(2, username);
+    q.setParameter(1, username);
+    q.setParameter(2, password);
     
-    byte[] hash = (byte[]) q.getSingleResult();
+    byte[] encrypt = (byte[]) q.getSingleResult();
 		
     User u = new User();
     u.setUser(username);
-    u.setPassword(hash);
+    u.setPassword(encrypt);
     
     EntityInstance.getEm().persist(u);
     for(Roles r : roles)
@@ -142,7 +138,5 @@ public class LoginBean implements LoginBeanRemote
     {
     	return null;
     }
-
 	}
-
 }
