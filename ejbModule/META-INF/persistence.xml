@@ -7,7 +7,7 @@
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		
 		<non-jta-data-source>java:/AuthenticationDS</non-jta-data-source>
-		 
+
 		<class>com.danielbchapman.jboss.login.Role</class>
 		<class>com.danielbchapman.jboss.login.User</class>
 
@@ -20,14 +20,16 @@
 			<property name="javax.persistence.jdbc.user" value="sa"/>
 			<property name="javax.persistence.jdbc.password" value="acting_co"/>
 			<property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/C:\Database\Data\authentication;"/>		
-		  
+
 			<property name="eclipselink.target-server" value="JBoss"/> 
 			<property name="eclipselink.ddl-generation" value="create-tables"/>
 			<property name="eclipselink.ddl-generation.output-mode" value="database"/>
 			<property name="eclipselink.target-database" value="org.eclipse.persistence.platform.database.H2Platform"/>
 			<property name="eclipselink.weaving" value="false" />
-      <property name="eclipselink.logging.level" value="INFO"/>
-			<property name="eclipselink.session.customizer" value="com.danielbchapman.jboss.haxx.JPAEclipseLinkSessionCustomizer" />
-		</properties>		
+			<property name="eclipselink.logging.level" value="INFO"/>
+			 
+		  <property name="eclipselink.session.customizer" value="com.danielbchapman.jboss.haxx.JPAEclipseLinkSessionCustomizer" />
+		   
+			</properties>		
 	</persistence-unit>
 </persistence>
