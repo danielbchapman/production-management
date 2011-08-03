@@ -16,4 +16,7 @@
   <module>
     <ejb>GenericLoginEJB.jar</ejb>
   </module>
+  <module>
+    <ejb>BugsEJB.jar</ejb>
+  </module>
 </application>

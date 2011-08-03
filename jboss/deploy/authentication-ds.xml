@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- The Authentication Datasource  (we really should hash this...) -->
+<datasources>
+   <no-tx-datasource>
+      <jndi-name>AuthenticationDS</jndi-name>
+      <connection-url>jdbc:h2:tcp://localhost/C:\Database\Data\authentication;</connection-url>
+
+      <!-- The driver class -->
+      <driver-class>org.h2.Driver</driver-class>
+
+      <!-- The login and password -->
+      <user-name>sa</user-name>
+      <password>acting_co</password>
+   </no-tx-datasource>
+</datasources>
