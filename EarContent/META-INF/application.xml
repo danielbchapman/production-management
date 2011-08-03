@@ -2,9 +2,6 @@
 <application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:application="http://java.sun.com/xml/ns/javaee/application_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/application_5.xsd" version="5">
   <display-name>ProductionEE5</display-name>
   <module>
-    <ejb>GenericLoginEJB.jar</ejb>
-  </module>
-  <module>
     <ejb>ProductionEJB.jar</ejb>
   </module>
   <module>
@@ -15,5 +12,8 @@
       <web-uri>ProductionSchedule.war</web-uri>
       <context-root>production</context-root>
     </web>
+  </module>
+  <module>
+    <ejb>GenericLoginEJB.jar</ejb>
   </module>
 </application>
