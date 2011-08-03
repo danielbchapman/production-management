@@ -155,7 +155,6 @@ public class DatabaseServerLoginModuleExtension extends DatabaseServerLoginModul
 			log.debug("Login Attempt:");
 			log.debug("\tu " + getUsername());
 			log.debug("\tp " + rawPassword);
-			log.debug("\td " + decryptedPass);
 			log.debug("\tq " + rolesQuery);			
 		}
 
