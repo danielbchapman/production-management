@@ -161,9 +161,9 @@ public class CalendarDao implements CalendarDaoRemote
    * @see com.danielbchapman.production.beans.CalendarDaoRemote#getOrCreateDay(java.util.Date, com.danielbchapman.production.entity.Production)
    */
   @Override
-  public Day getOrCreateDay(Date date, Season production)
+  public Day getOrCreateDay(Date date, Season season)
   {
-    Week weekRef= getOrCreateWeek(date, production);//Haha week reference? Get it?!
+    Week weekRef= getOrCreateWeek(date, season);//Haha week reference? Get it?!
     Day day = getOrCreateDay(date, weekRef);
     return day;
   }
@@ -246,11 +246,11 @@ public class CalendarDao implements CalendarDaoRemote
     if(ret == null)
     {
     	ret = new Week();
-    	ret.setProduction(season);
+    	ret.setSeason(season);
     	ret.setDate(dayInWeek);
     	
     	saveWeek(ret);
-    	ret = getOrCreateWeek(ret.getDate(), ret.getProduction());
+    	ret = getOrCreateWeek(ret.getDate(), ret.getSeason());
     }
     
     return ret;
