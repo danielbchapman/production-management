@@ -29,40 +29,51 @@ public abstract class InventoryElement extends BaseEntity
 
   @Column(length=32)
   private String condition;
+  private Integer count;
   @Lob
   private String description;
   private Long image;
   private Boolean inactive;
+  @Transient
+  private EmbeddableImage localImage;
   @Column(length=64)
   private String location;
-  @Lob
+	@Lob
   private String notes;
-  @Column(length=128)
+	@Column(length=128)
   private String production;
-	@Column(length=200)
+  @Column(length=200)
   private String serialNumberOrId;
-	@Column(length=64)
+  @Column(length=64)
   private String type;
   @Lob
   private String userNotes;
+  
   private Double weight;
-  
-  @Transient
-  private EmbeddableImage localImage; 
-  
-  public BarCode getBarCode()
+	public BarCode getBarCode()
   {
     return barCode;
   }
+
 	public String getColors()
   {
     return colors;
-  }
-	public String getCondition()
+  } 
+  
+  public String getCondition()
   {
     return condition;
   }
-  public String getDescription()
+	/**
+	 * @return the number of units, one if null  
+	 */
+	public Integer getCount()
+	{
+		if(count == null)
+			count = 1;
+		return count;
+	}
+	public String getDescription()
   {
     return description;
   }
@@ -74,7 +85,6 @@ public abstract class InventoryElement extends BaseEntity
   {
     return inactive;
   }
-
   public EmbeddableImage getLocalImage()
 	{
 		return localImage;
@@ -131,6 +141,11 @@ public abstract class InventoryElement extends BaseEntity
       condition = condition.replaceAll("'", "");
     this.condition = condition;
   }
+
+  public void setCount(Integer count)
+	{
+		this.count = count;
+	}
 
   public void setDescription(String description)
   {

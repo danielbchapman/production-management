@@ -14,15 +14,20 @@ public class WardrobeElement extends InventoryElement
 
   private String period;
   private String sex;
+  private String size;
 
   public String getPeriod()
   {
     return period;
   }
-  public String getSex()
+	public String getSex()
   {
     return sex;
   }
+	public String getSize()
+	{
+		return size;
+	}
   public void setPeriod(String period)
   {
     if(period != null)
@@ -33,6 +38,10 @@ public class WardrobeElement extends InventoryElement
   {
     this.sex = sex;
   }
+  public void setSize(String size)
+	{
+		this.size = size;
+	}
   /* (non-Javadoc)
    * @see org.theactingcompany.inventory.entity.BaseEntity#toString()
    */
