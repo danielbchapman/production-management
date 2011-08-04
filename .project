@@ -8,6 +8,7 @@
 		<project>ProductionEJB</project>
 		<project>ProductionSchedule</project>
 		<project>BugsEJB</project>
+		<project>HelpEJB</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
