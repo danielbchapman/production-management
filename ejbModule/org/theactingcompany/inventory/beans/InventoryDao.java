@@ -194,6 +194,7 @@ CALL FT_CREATE_INDEX('PUBLIC', 'SCENICELEMENT', NULL);
     	//These tables have no Blobs so they can be "Blanket" indexed
       String createIndex = 
       	"CREATE ALIAS IF NOT EXISTS FT_INIT FOR \"org.h2.fulltext.FullText.init\";" + "\r\n" +
+      	"CALL FT_INIT();" + "\r\n" +
       	"CALL FT_DROP_ALL();" + "\r\n" +
       	"CALL FT_INIT();" + "\r\n" +
       	"CALL FT_CREATE_INDEX('PUBLIC', 'WARDROBEELEMENT', NULL);" + "\r\n" +
