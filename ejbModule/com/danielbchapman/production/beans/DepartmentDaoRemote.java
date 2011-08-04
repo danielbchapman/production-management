@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import javax.ejb.Remote;
 
 import com.danielbchapman.production.entity.Department;
+import com.danielbchapman.production.entity.Season;
 @Remote
 public interface DepartmentDaoRemote extends Serializable
 {
@@ -15,7 +16,7 @@ public interface DepartmentDaoRemote extends Serializable
   /**
    * @param department saves a department, <b>exceptions suppressed.</b>
    */
-  public abstract void saveDepartment(Department department);
+  public abstract void saveDepartment(Department department, Season season);
 
   public abstract void removeDepartment(Department department);
 
@@ -28,6 +29,6 @@ public interface DepartmentDaoRemote extends Serializable
   /**
    * @return a list of all departments
    */
-  public abstract ArrayList<Department> getDepartments();
+  public abstract ArrayList<Department> getDepartments(Season season);
 
 }

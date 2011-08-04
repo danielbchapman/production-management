@@ -1,7 +1,9 @@
 package com.danielbchapman.production.entity;
 
-import java.io.Serializable;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
  * A simple representation of a department such
@@ -13,9 +15,9 @@ import javax.persistence.*;
 public class Department extends BaseEntity
 {
 	private static final long serialVersionUID = 1L;
-
 	@Column(length=50)
 	private String name;
+	private Season season;
 	
 	public Department()
 	{
@@ -27,9 +29,19 @@ public class Department extends BaseEntity
 		return name;
 	}
 
+	public Season getSeason()
+	{
+		return season;
+	}
+
 	public void setName(String name)
 	{
 		this.name = name;
+	}
+
+	public void setSeason(Season season)
+	{
+		this.season = season;
 	}
 
 	
