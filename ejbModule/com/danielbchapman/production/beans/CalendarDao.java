@@ -421,13 +421,13 @@ public class CalendarDao implements CalendarDaoRemote
 	@Override
 	public ArrayList<PerformanceSchedule> getAllPerformanceSchedules()
 	{
-		return EntityInstance.getResultList("SELECT p FROM PerformanceSchedule p ORDER BY p.season, p.name", PerformanceSchedule.class);
+		return EntityInstance.getResultList("SELECT p FROM PerformanceSchedule p ORDER BY p.name", PerformanceSchedule.class);
 	}
 	
 	@Override
 	public ArrayList<PerformanceSchedule> getPerformanceSchedulesForSeason(Season season)
 	{
-		return EntityInstance.getResultList("SELECT p FROM PerformanceSchedule p WHERE p.season = ?1 ORDER BY p.name", PerformanceSchedule.class, season);
+		return EntityInstance.getResultList("SELECT p FROM PerformanceSchedule p ORDER BY p.name", PerformanceSchedule.class);
 	}
 	
 	@Override
