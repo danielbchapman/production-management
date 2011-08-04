@@ -29,43 +29,54 @@ public class Week implements Serializable
 {
   private static final long serialVersionUID = 1L;
 
-  @Id
-  @GeneratedValue(strategy=GenerationType.AUTO)
-  private Long id;
-  
   @Temporal(value = TemporalType.DATE)
   private Date date;
   
   @OneToMany(mappedBy = "week", targetEntity = Day.class, fetch=FetchType.EAGER)
   private Collection<Day> days;
   
+  @Id
+  @GeneratedValue(strategy=GenerationType.AUTO)
+  private Long id;
+  
   @Temporal(value = TemporalType.TIMESTAMP)
   private Date lastUpdated;
   
   @ManyToOne(targetEntity=Season.class, optional=false)
-  private Season production;
+  private Season season;
 
   public Week()
   {
     super();
   }
-  
-  /**
+
+	public Date getDate()
+	{
+		return date;
+	}
+
+	/**
    * @return the days
    */
   public Collection<Day> getDays()
   {
     return days;
   }
-
+  
   /**
-   * @param days
-   *          the days to set
-   */
-  public void setDays(Collection<Day> days)
-  {
-    this.days = days;
-  }
+	 * @return the associated Friday of this week. Null if not found  
+	 * 
+	 */
+	@Transient
+	public Day getFriday()
+	{
+		return getDay(Calendar.FRIDAY);
+	}
+
+  public Long getId()
+	{
+		return id;
+	}
 
   /**
    * @return the lastUpdated
@@ -76,45 +87,6 @@ public class Week implements Serializable
   }
 
   /**
-   * @param lastUpdated
-   *          the lastUpdated to set
-   */
-  public void setLastUpdated(Date lastUpdated)
-  {
-    this.lastUpdated = lastUpdated;
-  }
-
-	public Season getProduction()
-	{
-		return production;
-	}
-
-	public void setProduction(Season production)
-	{
-		this.production = production;
-	}
-
-	public Long getId()
-	{
-		return id;
-	}
-
-	public void setId(Long id)
-	{
-		this.id = id;
-	}
-
-	public Date getDate()
-	{
-		return date;
-	}
-
-	public void setDate(Date date)
-	{
-		this.date = date;
-	}
-	
-	/**
 	 * @return the associated Monday of this week. Null if not found  
 	 * 
 	 */
@@ -123,6 +95,42 @@ public class Week implements Serializable
 	{
 		return getDay(Calendar.MONDAY);
 	}
+
+	/**
+	 * @return the associated Saturday of this week. Null if not found  
+	 * 
+	 */
+	@Transient
+	public Day getSaturday()
+	{
+		return getDay(Calendar.SATURDAY);
+	}
+
+	public Season getSeason()
+	{
+		return season;
+	}
+
+	/**
+	 * @return the associated Sunday of this week. Null if not found  
+	 * 
+	 */
+	@Transient
+	public Day getSunday()
+	{
+		return getDay(Calendar.SUNDAY);
+	}
+
+	/**
+	 * @return the associated Thursday of this week. Null if not found  
+	 * 
+	 */
+	@Transient
+	public Day getThursday()
+	{
+		return getDay(Calendar.THURSDAY);
+	}
+	
 	/**
 	 * @return the associated Tuesday of this week. Null if not found  
 	 * 
@@ -141,41 +149,33 @@ public class Week implements Serializable
 	{
 		return getDay(Calendar.WEDNESDAY);
 	}
-	/**
-	 * @return the associated Thursday of this week. Null if not found  
-	 * 
-	 */
-	@Transient
-	public Day getThursday()
+	public void setDate(Date date)
 	{
-		return getDay(Calendar.THURSDAY);
+		this.date = date;
 	}
 	/**
-	 * @return the associated Friday of this week. Null if not found  
-	 * 
-	 */
-	@Transient
-	public Day getFriday()
+   * @param days
+   *          the days to set
+   */
+  public void setDays(Collection<Day> days)
+  {
+    this.days = days;
+  }
+	public void setId(Long id)
 	{
-		return getDay(Calendar.FRIDAY);
+		this.id = id;
 	}
 	/**
-	 * @return the associated Saturday of this week. Null if not found  
-	 * 
-	 */
-	@Transient
-	public Day getSaturday()
+   * @param lastUpdated
+   *          the lastUpdated to set
+   */
+  public void setLastUpdated(Date lastUpdated)
+  {
+    this.lastUpdated = lastUpdated;
+  }
+	public void setSeason(Season season)
 	{
-		return getDay(Calendar.SATURDAY);
-	}
-	/**
-	 * @return the associated Sunday of this week. Null if not found  
-	 * 
-	 */
-	@Transient
-	public Day getSunday()
-	{
-		return getDay(Calendar.SUNDAY);
+		this.season = season;
 	}
 	
 	@Transient
