@@ -24,43 +24,43 @@ public class PerformanceAdvance extends BaseEntity
 {
 	private static final long serialVersionUID = 1L;
 
-	private boolean wardrobeIroningBoard;
-	private boolean wardrobeLaundry;
-	private boolean wardrobeSteamer;
 	private boolean complete;
-	
 	@Lob
 	private String contactInformation;
+	private Day day;
+	@Column(length=96)
+	private String gaffTape;
+
+	@Column(length=96)
+	private String groundPlan;
 	@Lob
 	private String hospitality;
 	@Lob
 	private String lightingNotes;
+	@Column(length=96)
+	private String lightPlot;
 	@Lob
 	private String loadingDock;
 	@Lob
 	private String maskingNotes;
-	@Lob
-	private String wardrobeNotes;
-	@Lob
-	private String scenicNotes;
-	@Lob
-	private String soundNotes;
-	
+	private Performance performance;
 	@Column(length=96)
 	private String rigging;
-	@Column(length=96)
-	private String gaffTape;
-	@Column(length=96)
-	private String groundPlan;
+	
+	@Lob
+	private String scenicNotes;
 	@Column(length=96)
 	private String section;
 	@Column(length=96)
 	private String shorePower;
-	@Column(length=96)
-	private String lightPlot;
+	@Lob
+	private String soundNotes;
+	private boolean wardrobeIroningBoard;
+	private boolean wardrobeLaundry;
 	
-	private Day day;
-	private Venue venue;
+	@Lob
+	private String wardrobeNotes;
+	private boolean wardrobeSteamer;
 	
 	public String getContactInformation()
 	{
@@ -107,6 +107,11 @@ public class PerformanceAdvance extends BaseEntity
 		return maskingNotes;
 	}
 	
+	public Performance getPerformance()
+	{
+		return performance;
+	}
+	
 	public String getRigging()
 	{
 		return rigging;
@@ -132,11 +137,6 @@ public class PerformanceAdvance extends BaseEntity
 		return soundNotes;
 	}
 	
-	public Venue getVenue()
-	{
-		return venue;
-	}
-	
 	public String getWardrobeNotes()
 	{
 		return wardrobeNotes;
@@ -151,11 +151,11 @@ public class PerformanceAdvance extends BaseEntity
 	{
 		return wardrobeIroningBoard;
 	}
-	
 	public boolean isWardrobeLaundry()
 	{
 		return wardrobeLaundry;
 	}
+	
 	public boolean isWardrobeSteamer()
 	{
 		return wardrobeSteamer;
@@ -179,12 +179,12 @@ public class PerformanceAdvance extends BaseEntity
 	public void setGaffTape(String gaffTape)
 	{
 		this.gaffTape = gaffTape;
-	}
-	
+	} 
 	public void setGroundPlan(String groundPlan)
 	{
 		this.groundPlan = groundPlan;
-	} 
+	}
+	
 	public void setHospitality(String hospitality)
 	{
 		this.hospitality = hospitality;
@@ -210,6 +210,11 @@ public class PerformanceAdvance extends BaseEntity
 		this.maskingNotes = maskingNotes;
 	}
 	
+	public void setPerformance(Performance performance)
+	{
+		this.performance = performance;
+	}
+	
 	public void setRigging(String rigging)
 	{
 		this.rigging = rigging;
@@ -225,6 +230,7 @@ public class PerformanceAdvance extends BaseEntity
 		this.section = section;
 	}
 	
+	
 	public void setShorePower(String shorePower)
 	{
 		this.shorePower = shorePower;
@@ -233,11 +239,6 @@ public class PerformanceAdvance extends BaseEntity
 	public void setSoundNotes(String soundNotes)
 	{
 		this.soundNotes = soundNotes;
-	}
-	
-	public void setVenue(Venue venue)
-	{
-		this.venue = venue;
 	}
 	
 	public void setWardrobeIroningBoard(boolean wardrobeIroningBoard)
@@ -249,12 +250,12 @@ public class PerformanceAdvance extends BaseEntity
 	{
 		this.wardrobeLaundry = wardrobeLaundry;
 	}
-	
+
 	public void setWardrobeNotes(String wardrobeNotes)
 	{
 		this.wardrobeNotes = wardrobeNotes;
 	}
-	
+
 	public void setWardrobeSteamer(boolean wardrobeSteamer)
 	{
 		this.wardrobeSteamer = wardrobeSteamer;

@@ -9,6 +9,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import com.danielbchapman.production.entity.City;
 import com.danielbchapman.production.entity.Season;
 import com.danielbchapman.production.entity.Venue;
 import com.danielbchapman.production.entity.VenueLog;
@@ -55,6 +56,9 @@ public class VenueDao implements VenueDaoRemote
   @Override
   public Venue getVenue(Long id)
   {
+  	if(id == null || id < 1)
+  		return null;
+  	
     Query q = em.createQuery("SELECT v FROM Venue v WHERE v.id = ?1");
     q.setParameter(1, id);
     
@@ -99,5 +103,14 @@ public class VenueDao implements VenueDaoRemote
     return ret;
     
   }
+  
+	/* (non-Javadoc)
+	 * @see com.danielbchapman.production.beans.VenueDaoRemote#getVenuesForCity(com.danielbchapman.production.entity.City)
+	 */
+	@Override
+	public ArrayList<Venue> getVenuesForCity(City city)
+	{
+		return EntityInstance.getResultList("SELECT v FROM Venue v WHERE v.city = ?1", Venue.class, city);
+	}
 
 }
