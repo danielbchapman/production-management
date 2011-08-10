@@ -302,6 +302,14 @@ public class CalendarDao implements CalendarDaoRemote
       q.setParameter(1, event.getId());
       q.executeUpdate();
     }
+    else if(obj instanceof Performance)
+    {
+    	log.info("Removing performance, there may be attached values that need to be dereferenced");
+      Event event = (Event) obj;
+      Query q = em.createQuery("DELETE FROM Performance p WHERE p.id = ?1");
+      q.setParameter(1, event.getId());
+      q.executeUpdate();
+    }    
     else //Will likely throw an Illegal Argument Exception--beware of detached values
       em.remove(obj);
   	

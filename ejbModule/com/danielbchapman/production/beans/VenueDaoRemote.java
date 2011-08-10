@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import javax.ejb.Remote;
 
+import com.danielbchapman.production.entity.City;
 import com.danielbchapman.production.entity.Season;
 import com.danielbchapman.production.entity.Venue;
 import com.danielbchapman.production.entity.VenueLog;
@@ -51,7 +52,13 @@ public interface VenueDaoRemote extends Serializable
   public ArrayList<Venue> getVenues(Season production);
 
   /**
-   * @return a list of all venues ordered by performace date  
+   * @param city the city to search
+   * @return all venues associated with this city, an empty list if none.
+   * 
+   */
+  public ArrayList<Venue> getVenuesForCity(City city);
+  /**
+   * @return a list of all venues ordered by performance date  
    * 
    */
   public ArrayList<Venue> getAllVenues();
