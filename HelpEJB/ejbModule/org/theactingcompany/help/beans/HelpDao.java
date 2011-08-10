@@ -29,7 +29,7 @@ public class HelpDao implements HelpDaoRemote
 	public HelpPage getOrCreateHelpPage(String lookupString)
 	{
 		ArrayList<HelpPage> results = getHelpPageHistory(lookupString);
-		
+
 		HelpPage ret;
 		if(results.size() == 0)
 		{
@@ -64,6 +64,7 @@ public class HelpDao implements HelpDaoRemote
 		newPage.setHelpPage(page.getHelpPage());
 		newPage.setLastUpdated(new Date());
 		newPage.setLastUpdatedBy(userPrinciple);
+		newPage.setLookupString(page.getLookupString());
 		EntityInstance.saveObject(newPage);
 	}
 
