@@ -22,46 +22,48 @@ public class City extends BaseEntity
 {
 	private static final long serialVersionUID = 1L;
 
+	private Hotel castHotel;
 	private String country;
+	private Hotel crewHotel;
 	@OneToMany(cascade={CascadeType.ALL},targetEntity=Hospital.class, fetch=FetchType.EAGER)
 	private Collection<Hospital> hospitals;
 	@OneToMany(cascade={CascadeType.ALL},targetEntity=Hotel.class, fetch=FetchType.EAGER)
 	private Collection<Hotel> hotels;
 	private String name;
 	private Hospital selectedHospital;
-	private Hotel selectedHotel;
 	private String stateOrTerritory;
 	private String taxiServiceAddress;
 	private String taxiServiceName;
 	private String taxiServicePhone;
-	
+	public Hotel getCastHotel()
+	{
+		return castHotel;
+	}
 	public String getCountry()
 	{
 		return country;
+	}
+	public Hotel getCrewHotel()
+	{
+		return crewHotel;
 	}
 	public Collection<Hospital> getHospitals()
 	{
 		return hospitals;
 	}
-
+	
 	public Collection<Hotel> getHotels()
 	{
 		return hotels;
 	}
-	
 	public String getName()
 	{
 		return name;
 	}
-	
+
 	public Hospital getSelectedHospital()
 	{
 		return selectedHospital;
-	}
-	
-	public Hotel getSelectedHotel()
-	{
-		return selectedHotel;
 	}
 	
 	public String getStateOrTerritory()
@@ -84,9 +86,19 @@ public class City extends BaseEntity
 		return taxiServicePhone;
 	}
 	
+	public void setCastHotel(Hotel castHotel)
+	{
+		this.castHotel = castHotel;
+	}
+	
 	public void setCountry(String country)
 	{
 		this.country = country;
+	}
+	
+	public void setCrewHotel(Hotel crewHotel)
+	{
+		this.crewHotel = crewHotel;
 	}
 	
 	public void setHospitals(Collection<Hospital> hospitals)
@@ -107,11 +119,6 @@ public class City extends BaseEntity
 	public void setSelectedHospital(Hospital selectedHospital)
 	{
 		this.selectedHospital = selectedHospital;
-	}
-	
-	public void setSelectedHotel(Hotel selectedHotel)
-	{
-		this.selectedHotel = selectedHotel;
 	}
 	
 	public void setStateOrTerritory(String stateOrTerritory)

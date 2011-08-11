@@ -19,6 +19,11 @@ public class Hotel extends ContactableAndAddressable
 	private City city;
 	private String name;
 	private String notes;
+	private Double rateDouble;
+	private Double rateSingle;
+	private Double taxAdditional;
+	private Double taxRate;
+	private String website;
 	
 	public City getCity()
 	{
@@ -28,10 +33,38 @@ public class Hotel extends ContactableAndAddressable
 	{
 		return name;
 	}
-	
 	public String getNotes()
 	{
 		return notes;
+	}
+	public Double getRateDouble()
+	{
+		if(rateDouble == null)
+			rateDouble = 0D;
+		
+		return rateDouble;
+	}
+	public Double getRateSingle()
+	{
+		if(rateSingle == null)
+			rateSingle = 0D;
+		return rateSingle;
+	}
+	public Double getTaxAdditional()
+	{
+		if(taxAdditional == null)
+			taxAdditional = 0D;
+		return taxAdditional;
+	}
+	public Double getTaxRate()
+	{
+		if(taxRate == null)
+			taxRate = 0D;
+		return taxRate;
+	}
+	public String getWebsite()
+	{
+		return website;
 	}
 	public void setCity(City city)
 	{
@@ -41,8 +74,30 @@ public class Hotel extends ContactableAndAddressable
 	{
 		this.name = name;
 	}
+	
 	public void setNotes(String notes)
 	{
 		this.notes = notes;
+	}
+	public void setRateDouble(Double rateDouble)
+	{
+		this.rateDouble = rateDouble;
+	}
+	
+	public void setRateSingle(Double rateSingle)
+	{
+		this.rateSingle = rateSingle;
+	}
+	public void setTaxAdditional(Double taxAdditional)
+	{
+		this.taxAdditional = taxAdditional;
+	}
+	public void setTaxRate(Double taxRate)
+	{
+		this.taxRate = taxRate;
+	}
+	public void setWebsite(String website)
+	{
+		this.website = website;
 	}
 }

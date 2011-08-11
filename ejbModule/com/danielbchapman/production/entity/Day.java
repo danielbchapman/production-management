@@ -32,50 +32,60 @@ public class Day implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private Hotel castHotel;
+	private City castLocation;
+	@Column(length = 20)
+	private String castTravel;
+	private Hotel crewHotel;
+	private City crewLocation;
+	@Column(length = 20)
+	private String crewTravel;
 	@Temporal(value = TemporalType.DATE)
 	private Date date;
 	@OneToMany(mappedBy = "day", targetEntity = Event.class, fetch=FetchType.EAGER)
 	private Collection<Event> events;
-	@OneToMany(mappedBy = "day", targetEntity = Performance.class, fetch=FetchType.EAGER)
-	private Collection<Performance> performances;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 	@Column(length = 75)
 	private String label;
-	@Lob
-	private String notes;
-	@Column(length = 20)
-	private String castTravel;
-	@Column(length = 20)
-	private String crewTravel;
-	@Column(length = 120)
-	private String theaterInformation;
 	@Column(length = 120)
 	private String milageInformation;
+	@Lob
+	private String notes;
+	@OneToMany(mappedBy = "day", targetEntity = Performance.class, fetch=FetchType.EAGER)
+	private Collection<Performance> performances;
+	@Column(length = 120)
+	private String theaterInformation;
 	@ManyToOne
 	private Week week;
-	private City castLocation;
-	private City crewLocation;
+	
 	public Day()
 	{
 		super();
 	}
+	public Hotel getCastHotel()
+	{
+		return castHotel;
+	}
+
 	public City getCastLocation()
 	{
 		return castLocation;
 	}
-	
 	public String getCastTravel()
 	{
 		return castTravel;
 	}
-
+	public Hotel getCrewHotel()
+	{
+		return crewHotel;
+	}
 	public City getCrewLocation()
 	{
 		return crewLocation;
 	}
-
+	
 	public String getCrewTravel()
 	{
 		return crewTravel;
@@ -92,6 +102,44 @@ public class Day implements Serializable
 	public Collection<Event> getEvents()
 	{
 		return events;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public Long getId()
+	{
+		return id;
+	}
+
+	/**
+	 * @return the label
+	 */
+	public String getLabel()
+	{
+		return label;
+	}
+
+	public String getMilageInformation()
+	{
+		return milageInformation;
+	}
+	/**
+	 * @return the notes
+	 */
+	public String getNotes()
+	{
+		return notes;
+	}
+
+	public Collection<Performance> getPerformances()
+	{
+		return performances;
+	}
+
+	public String getTheaterInformation()
+	{
+		return theaterInformation;
 	}
 
 	/**
@@ -114,44 +162,6 @@ public class Day implements Serializable
 		Collections.sort(ret);
 		return ret;
 	}
-	/**
-	 * @return the id
-	 */
-	public Long getId()
-	{
-		return id;
-	}
-
-	/**
-	 * @return the label
-	 */
-	public String getLabel()
-	{
-		return label;
-	}
-
-	public String getMilageInformation()
-	{
-		return milageInformation;
-	}
-
-	/**
-	 * @return the notes
-	 */
-	public String getNotes()
-	{
-		return notes;
-	}
-
-	public Collection<Performance> getPerformances()
-	{
-		return performances;
-	}
-
-	public String getTheaterInformation()
-	{
-		return theaterInformation;
-	}
 
 	/**
 	 * @return the week
@@ -159,6 +169,11 @@ public class Day implements Serializable
 	public Week getWeek()
 	{
 		return week;
+	}
+
+	public void setCastHotel(Hotel castHotel)
+	{
+		this.castHotel = castHotel;
 	}
 
 	public void setCastLocation(City castLocation)
@@ -169,6 +184,11 @@ public class Day implements Serializable
 	public void setCastTravel(String castTravel)
 	{
 		this.castTravel = castTravel;
+	}
+
+	public void setCrewHotel(Hotel crewHotel)
+	{
+		this.crewHotel = crewHotel;
 	}
 
 	public void setCrewLocation(City crewLocation)

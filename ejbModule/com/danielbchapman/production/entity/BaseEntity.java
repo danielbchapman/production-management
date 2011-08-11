@@ -40,4 +40,22 @@ public abstract class BaseEntity implements Indentifiable, Serializable
   {
     return this.getClass() + " ID:'" + id + "' " + super.toString(); 
   }
+  
+  /* (non-Javadoc)
+   * @see java.lang.Object#equals(java.lang.Object)
+   */
+  @Override
+  public boolean equals(Object obj)
+  {
+  	if(obj == null)
+  		return false;
+  	
+  	if(!getClass().equals(obj.getClass()))
+  		return false;
+  	
+  	if(getId().equals(((BaseEntity)obj).getId()))
+  	  return true;
+  	
+  	return false;
+  }
 }
