@@ -15,6 +15,12 @@ public class Venue extends ContactableAndAddressable
 	
 	@Column(length=256)
 	private String apronWidth;
+	@Column(length=256)
+	private String boxOffice;
+
+	@Column(length=256)
+	private String boxOfficeContact;
+
 	private City city;
 
 	@Column(length=256)
@@ -37,18 +43,16 @@ public class Venue extends ContactableAndAddressable
 
 	@Column(length=256)
 	private String prosceniumToApron;
-
+	
 	@Column(length=256)
 	private String prosceniumToBackWall;
-
+	
 	@Column(length=256)
 	private String prosceniumWidth;
 	
 	private String showersForCrew;
-	
 	@Column(length=256)
 	private String steamerIron;
-	
 	@Column(length=256)
 	private String washerDryer;
 
@@ -62,6 +66,15 @@ public class Venue extends ContactableAndAddressable
 		return apronWidth;
 	}
 
+	public String getBoxOffice()
+	{
+		return boxOffice;
+	}
+
+	public String getBoxOfficeContact()
+	{
+		return boxOfficeContact;
+	}
 	public City getCity()
 	{
 		return city;
@@ -130,6 +143,16 @@ public class Venue extends ContactableAndAddressable
 	public void setApronWidth(String apronWidth)
 	{
 		this.apronWidth = apronWidth;
+	}
+
+	public void setBoxOffice(String boxOffice)
+	{
+		this.boxOffice = boxOffice;
+	}
+
+	public void setBoxOfficeContact(String boxOfficeContact)
+	{
+		this.boxOfficeContact = boxOfficeContact;
 	}
 	public void setCity(City city)
 	{

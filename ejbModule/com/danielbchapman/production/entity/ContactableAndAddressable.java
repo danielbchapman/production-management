@@ -3,6 +3,7 @@ package com.danielbchapman.production.entity;
 import javax.persistence.Column;
 import javax.persistence.Lob;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 
 /**
  * This is a mutant base entity that provides embedded contact and address information.
@@ -169,5 +170,49 @@ public abstract class ContactableAndAddressable extends BaseEntity
   public void setZip(String zip)
   {
     this.zip = zip;
+  }
+  
+  @Transient
+  public String getFullAddressNewLines()
+  {
+  	StringBuilder builder = new StringBuilder();
+  	builder.append(lineOne);
+  	builder.append('\n');
+  	
+  	if(lineTwo != null && lineTwo.length() > 0)
+  	{
+    	builder.append(lineTwo);
+    	builder.append('\n');  		
+  	}
+
+  	builder.append(addressCity);
+  	builder.append(' ');
+  	builder.append(state);
+  	builder.append(' ' );
+  	builder.append(zip);
+  	
+  	return builder.toString();
+  }
+  
+  @Transient
+  public String getFullAddressSpaced()
+  {
+  	StringBuilder builder = new StringBuilder();
+  	builder.append(lineOne);
+  	builder.append(' ');
+  	
+  	if(lineTwo != null && lineTwo.length() > 0)
+  	{
+    	builder.append(lineTwo);
+    	builder.append(' ');  		
+  	}
+
+  	builder.append(addressCity);
+  	builder.append(' ');
+  	builder.append(state);
+  	builder.append(' ' );
+  	builder.append(zip);
+  	
+  	return builder.toString();
   }
 }

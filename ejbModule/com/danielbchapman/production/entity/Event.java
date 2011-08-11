@@ -1,15 +1,6 @@
 package com.danielbchapman.production.entity;
 
-import java.util.Calendar;
-import java.util.Date;
-
 import javax.persistence.Entity;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 /**
  * An event is the core item of the Calendar. This provides something that exists
