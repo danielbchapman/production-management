@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence persistence_2_0.xsd">
+	<persistence-unit name="production" transaction-type="RESOURCE_LOCAL">
+ 
+ 		<!-- 
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		 --> 
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		 
+		<non-jta-data-source>java:/ProductionDS</non-jta-data-source>
+		<class>com.danielbchapman.production.entity.Week</class>
+		<class>com.danielbchapman.production.entity.VenueLog</class>
+		<class>com.danielbchapman.production.entity.Venue</class>
+		<class>com.danielbchapman.production.entity.Vendor</class>
+		<class>com.danielbchapman.production.entity.TaskStatusUpdate</class>
+		<class>com.danielbchapman.production.entity.Task</class>
+		<class>com.danielbchapman.production.entity.PettyCashEntry</class>
+		<class>com.danielbchapman.production.entity.PettyCash</class>
+		<class>com.danielbchapman.production.entity.PerformanceSchedule</class>
+		<class>com.danielbchapman.production.entity.PerformanceAdvance</class>
+		<class>com.danielbchapman.production.entity.Performance</class>
+		<class>com.danielbchapman.production.entity.Options</class>
+		<class>com.danielbchapman.production.entity.Hotel</class>
+		<class>com.danielbchapman.production.entity.Hospital</class>
+		<class>com.danielbchapman.production.entity.EventMapping</class>
+		<class>com.danielbchapman.production.entity.Event</class>
+		<class>com.danielbchapman.production.entity.EmbeddableContactInformation</class>
+		<class>com.danielbchapman.production.entity.Department</class>
+		<class>com.danielbchapman.production.entity.Day</class>
+		<class>com.danielbchapman.production.entity.ContactableAndAddressable</class>
+		<class>com.danielbchapman.production.entity.Contactable</class>
+		<class>com.danielbchapman.production.entity.ContactInformation</class>
+		<class>com.danielbchapman.production.entity.ContactGroup</class>
+		<class>com.danielbchapman.production.entity.Contact</class>
+		<class>com.danielbchapman.production.entity.City</class>
+		<class>com.danielbchapman.production.entity.BudgetEntry</class>
+		<class>com.danielbchapman.production.entity.BudgetAdjustingEntry</class>
+		<class>com.danielbchapman.production.entity.Budget</class>
+		<class>com.danielbchapman.production.entity.BaseEntity</class>
+		<class>com.danielbchapman.production.entity.Addressable</class>
+		<class>com.danielbchapman.production.entity.Address</class>
+		<class>com.danielbchapman.production.entity.Season</class>
+
+		<properties>
+			<!-- 
+			<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
+      <property name="hibernate.hbm2ddl.auto" value="create"/>
+      -->		
+			<property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
+			<property name="javax.persistence.jdbc.user" value="sa"/>
+			<property name="javax.persistence.jdbc.password" value="***REMOVED***"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/C:\Database\Data\production;"/>      
+			
+			<property name="eclipselink.target-server" value="JBoss"/> 
+			<property name="eclipselink.ddl-generation" value="create-tables"/>
+			<property name="eclipselink.ddl-generation.output-mode" value="database"/>
+			<property name="eclipselink.target-database" value="org.eclipse.persistence.platform.database.H2Platform"/>
+			<property name="eclipselink.weaving" value="false" />
+			<property name="eclipselink.logging.level" value="INFO"/>
+			<property name="eclipselink.session.customizer" value="com.danielbchapman.jboss.haxx.JPAEclipseLinkSessionCustomizer" />			
+			
+		</properties>		
+	</persistence-unit>
+</persistence>
