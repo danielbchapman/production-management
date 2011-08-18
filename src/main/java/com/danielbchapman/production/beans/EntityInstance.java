@@ -68,7 +68,7 @@ public class EntityInstance
 	 * @return
 	 * @see org.theactingcompany.persistence.AbstractEntityInstance#getResultList(java.lang.String, java.lang.Object[], java.lang.Class)
 	 */
-	public <T> ArrayList<T> getResultList(String query, Object[] parameters, Class<T> clazz)
+	public static <T> ArrayList<T> getResultList(String query, Object[] parameters, Class<T> clazz)
 	{
 		return getDelegate().getResultList(query, parameters, clazz);
 	}
