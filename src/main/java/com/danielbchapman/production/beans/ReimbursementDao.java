@@ -11,6 +11,7 @@ import javax.persistence.Query;
 import com.danielbchapman.production.entity.BudgetEntry;
 import com.danielbchapman.production.entity.Department;
 import com.danielbchapman.production.entity.Employee;
+import com.danielbchapman.production.entity.EntityInstance;
 import com.danielbchapman.production.entity.EntryType;
 import com.danielbchapman.production.entity.Reimbursement;
 

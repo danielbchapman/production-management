@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import com.danielbchapman.production.entity.Employee;
+import com.danielbchapman.production.entity.EntityInstance;
 
 /**
  * Session Bean implementation class EmplyoeeDao

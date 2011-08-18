@@ -1,11 +1,10 @@
-package com.danielbchapman.production.beans;
+package com.danielbchapman.production.entity;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 
 import javax.persistence.EntityManager;
 
-import org.theactingcompany.persistence.AbstractEntityInstance;
 
 public class EntityInstance
 {

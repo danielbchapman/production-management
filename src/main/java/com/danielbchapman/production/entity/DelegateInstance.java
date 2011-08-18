@@ -1,4 +1,4 @@
-package com.danielbchapman.production.beans;
+package com.danielbchapman.production.entity;
 
 import org.theactingcompany.persistence.AbstractEntityInstance;
 

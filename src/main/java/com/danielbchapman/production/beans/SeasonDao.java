@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import com.danielbchapman.production.entity.EntityInstance;
 import com.danielbchapman.production.entity.Season;
 
 /**
