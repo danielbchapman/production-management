@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import org.theactingcompany.persistence.Indentifiable;
+
 /**
  * A simple base object to be extended that handles the ID etc...
  *
