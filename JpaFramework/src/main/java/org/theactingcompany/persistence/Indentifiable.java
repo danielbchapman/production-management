@@ -1,5 +1,7 @@
 package org.theactingcompany.persistence;
 
+import java.io.Serializable;
+
 /**
  * A simple interface used by the persistence shortcuts.
  *
@@ -9,7 +11,7 @@ package org.theactingcompany.persistence;
  * @link http://www.theactingcompany.org
  ***************************************************************************
  */
-public interface Indentifiable
+public interface Indentifiable extends Serializable
 {
   public Long getId();
   public void setId(Long id);
