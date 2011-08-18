@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 
+import com.danielbchapman.production.entity.EntityInstance;
+
 /**
  * This bean is a giant security hole. It will only be allowed
  * by those authenticated as administrator

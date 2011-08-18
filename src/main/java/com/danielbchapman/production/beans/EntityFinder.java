@@ -2,6 +2,8 @@ package com.danielbchapman.production.beans;
 
 import javax.ejb.Stateless;
 
+import com.danielbchapman.production.entity.EntityInstance;
+
 /**
  * A simple bean that tries to locate an entity by the 
  * Long id and its class.

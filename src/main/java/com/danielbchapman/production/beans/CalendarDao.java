@@ -16,6 +16,7 @@ import javax.persistence.Query;
 import org.apache.log4j.Logger;
 
 import com.danielbchapman.production.entity.Day;
+import com.danielbchapman.production.entity.EntityInstance;
 import com.danielbchapman.production.entity.Event;
 import com.danielbchapman.production.entity.EventMapping;
 import com.danielbchapman.production.entity.Performance;

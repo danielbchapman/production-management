@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.ejb.Stateless;
 
 import com.danielbchapman.production.entity.City;
+import com.danielbchapman.production.entity.EntityInstance;
 import com.danielbchapman.production.entity.Hospital;
 import com.danielbchapman.production.entity.Hotel;
 import com.danielbchapman.production.entity.Venue;

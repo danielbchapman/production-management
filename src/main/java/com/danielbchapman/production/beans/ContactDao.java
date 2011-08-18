@@ -10,6 +10,7 @@ import javax.persistence.Query;
 import com.danielbchapman.production.entity.Contact;
 import com.danielbchapman.production.entity.ContactGroup;
 import com.danielbchapman.production.entity.ContactInformation;
+import com.danielbchapman.production.entity.EntityInstance;
 
 /**
  * A simple Data Access Object that provides simple methods
