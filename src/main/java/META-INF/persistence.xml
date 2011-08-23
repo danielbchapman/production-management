@@ -29,7 +29,6 @@
 		<class>com.danielbchapman.production.entity.Day</class>
 		<class>com.danielbchapman.production.entity.ContactableAndAddressable</class>
 		<class>com.danielbchapman.production.entity.Contactable</class>
-		<class>com.danielbchapman.production.entity.ContactInformation</class>
 		<class>com.danielbchapman.production.entity.ContactGroup</class>
 		<class>com.danielbchapman.production.entity.Contact</class>
 		<class>com.danielbchapman.production.entity.City</class>

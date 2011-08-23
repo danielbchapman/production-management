@@ -1,7 +1,7 @@
 package com.danielbchapman.production.entity;
 
-import java.io.Serializable;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 
 /**
  * A simple entity that represents a group of
@@ -9,13 +9,9 @@ import javax.persistence.*;
  * 
  */
 @Entity
-public class ContactGroup implements Serializable
+public class ContactGroup extends BaseEntity
 {
-
 	private static final long serialVersionUID = 1L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
 	@Column(length = 40)
 	private String name;
 	@Column(length = 512)
@@ -24,16 +20,6 @@ public class ContactGroup implements Serializable
 	public ContactGroup()
 	{
 		super();
-	}
-
-	public Long getId()
-	{
-		return id;
-	}
-
-	public void setId(Long id)
-	{
-		this.id = id;
 	}
 
 	public String getName()
