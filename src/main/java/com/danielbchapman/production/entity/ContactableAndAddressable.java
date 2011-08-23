@@ -33,10 +33,8 @@ public abstract class ContactableAndAddressable extends BaseEntity
   private String addressCity;
   @Column(length = 128)
   private String contact;
-
 	@Column(length = 128)
   private String contactName;
-
 	@Lob
   private String contactNotes;
   @Column(length = 128)
@@ -213,6 +211,16 @@ public abstract class ContactableAndAddressable extends BaseEntity
   	builder.append(' ' );
   	builder.append(zip);
   	
+  	return builder.toString();
+  }
+  
+  @Transient
+  public String getAsHtml()
+  {
+  	StringBuilder builder = new StringBuilder();
+  	builder.append("<div>");
+  	builder.append("Not implemented");
+  	builder.append("</div>");
   	return builder.toString();
   }
 }
