@@ -1,5 +1,7 @@
 package com.danielbchapman.production.entity;
 
+import javax.persistence.Entity;
+
 
 /**
  * The SeasonContacts provides a link between a season and a contact. This
@@ -10,6 +12,7 @@ package com.danielbchapman.production.entity;
  * @since Aug 23, 2011
  * @copyright The Acting Company Aug 23, 2011 @link www.theactingcompany.org
  */
+@Entity
 public class SeasonContact extends BaseEntity
 {
 	private static final long serialVersionUID = 1L;
