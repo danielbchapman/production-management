@@ -150,7 +150,7 @@ public abstract class AbstractEntityInstance
    * A simple wrapper to deal with container vs. local management
    * for the system. This only works with the BaseEntity object.
    */
-  public void saveObject(Indentifiable obj)
+  public <T extends Indentifiable> T saveObject(T obj)
   {      
       if(!isContainerManaged())
         getEm().getTransaction().begin();
@@ -162,6 +162,8 @@ public abstract class AbstractEntityInstance
       
       if(!isContainerManaged())
         getEm().getTransaction().commit();
+      
+      return obj;
   }
 	
 }
