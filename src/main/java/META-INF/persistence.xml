@@ -14,6 +14,8 @@
 		<class>com.danielbchapman.production.entity.Vendor</class>
 		<class>com.danielbchapman.production.entity.TaskStatusUpdate</class>
 		<class>com.danielbchapman.production.entity.Task</class>
+		<class>com.danielbchapman.production.entity.SeasonContact</class>
+		<class>com.danielbchapman.production.entity.Season</class>
 		<class>com.danielbchapman.production.entity.PettyCashEntry</class>
 		<class>com.danielbchapman.production.entity.PettyCash</class>
 		<class>com.danielbchapman.production.entity.PerformanceSchedule</class>
@@ -37,8 +39,7 @@
 		<class>com.danielbchapman.production.entity.Budget</class>
 		<class>com.danielbchapman.production.entity.BaseEntity</class>
 		<class>com.danielbchapman.production.entity.Addressable</class>
-		<class>com.danielbchapman.production.entity.Address</class>
-		<class>com.danielbchapman.production.entity.Season</class>
+		<class>com.danielbchapman.production.entity.ContactAddress</class>
 
 		<properties>
 			<!-- 
