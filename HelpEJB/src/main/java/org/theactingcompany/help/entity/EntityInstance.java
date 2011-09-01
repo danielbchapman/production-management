@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import javax.persistence.EntityManager;
 
+import org.theactingcompany.persistence.Indentifiable;
+
 
 public class EntityInstance
 {
@@ -76,9 +78,9 @@ public class EntityInstance
 	 * @param obj
 	 * @see org.theactingcompany.persistence.AbstractEntityInstance#saveObject(org.theactingcompany.persistence.Indentifiable)
 	 */
-	public static void saveObject(org.theactingcompany.persistence.Indentifiable obj)
+	public static <T extends Indentifiable> T saveObject(T obj)
 	{
-		getDelegate().saveObject(obj);
+		return getDelegate().saveObject(obj);
 	}
 
 	public static DelegateInstance getDelegate()
