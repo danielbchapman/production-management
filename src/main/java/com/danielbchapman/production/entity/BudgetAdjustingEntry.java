@@ -1,33 +1,28 @@
 package com.danielbchapman.production.entity;
 
-import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- * An entry that ties to an initial budget entry and posts 
- * adjusting entries. This allows for a dynamic calculated field.
+ * An entry that ties to an initial budget entry and posts adjusting entries. This allows for a
+ * dynamic calculated field.
  * 
  */
 @Entity
-public class BudgetAdjustingEntry implements Serializable
+public class BudgetAdjustingEntry extends BaseEntity
 {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-	@ManyToOne(targetEntity = BudgetEntry.class, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = BudgetEntry.class, fetch = FetchType.EAGER, cascade = {
+			CascadeType.REFRESH, CascadeType.MERGE })
 	private BudgetEntry budgetEntry;
 	private Double amount;
 	@Temporal(value = TemporalType.TIMESTAMP)
@@ -41,14 +36,9 @@ public class BudgetAdjustingEntry implements Serializable
 		super();
 	}
 
-	public Long getId()
+	public Double getAmount()
 	{
-		return id;
-	}
-
-	public void setId(Long id)
-	{
-		this.id = id;
+		return amount;
 	}
 
 	public BudgetEntry getBudgetEntry()
@@ -56,39 +46,9 @@ public class BudgetAdjustingEntry implements Serializable
 		return budgetEntry;
 	}
 
-	public void setBudgetEntry(BudgetEntry budget)
-	{
-		this.budgetEntry = budget;
-	}
-
-	public Double getAmount()
-	{
-		return amount;
-	}
-
-	public void setAmount(Double amount)
-	{
-		this.amount = amount;
-	}
-
 	public Date getDate()
 	{
 		return date;
-	}
-
-	public void setDate(Date date)
-	{
-		this.date = date;
-	}
-
-	public String getNote()
-	{
-		return note;
-	}
-
-	public void setNote(String note)
-	{
-		this.note = note;
 	}
 
 	public EntryType getEntryType()
@@ -96,9 +56,9 @@ public class BudgetAdjustingEntry implements Serializable
 		return entryType;
 	}
 
-	public void setEntryType(EntryType entryType)
+	public String getNote()
 	{
-		this.entryType = entryType;
+		return note;
 	}
 
 	/**
@@ -109,5 +69,30 @@ public class BudgetAdjustingEntry implements Serializable
 		if(EntryType.CONFIRMED.equals(entryType))
 			return true;
 		return false;
+	}
+
+	public void setAmount(Double amount)
+	{
+		this.amount = amount;
+	}
+
+	public void setBudgetEntry(BudgetEntry budget)
+	{
+		this.budgetEntry = budget;
+	}
+
+	public void setDate(Date date)
+	{
+		this.date = date;
+	}
+
+	public void setEntryType(EntryType entryType)
+	{
+		this.entryType = entryType;
+	}
+
+	public void setNote(String note)
+	{
+		this.note = note;
 	}
 }
