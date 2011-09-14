@@ -2,8 +2,6 @@ package com.danielbchapman.production.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 
 /**
  * A simple datastructure to represent a contact sheet so that Jasper Reports can actually do some
@@ -15,35 +13,50 @@ import java.util.HashMap;
  */
 public class ContactReportStructure implements Serializable, Comparable<ContactReportStructure>
 {
-	
+
 	private static final long serialVersionUID = 1L;
-	
-	private ArrayList<Contact> contacts;
+
+	private ArrayList<IContact> contacts;
 	private ContactGroup group;
 
 	/**
-	 * Default Constructor 
+	 * Default Constructor
 	 */
 	public ContactReportStructure()
 	{
 		this.group = null;
-		this.contacts = new ArrayList<Contact>();
+		this.contacts = new ArrayList<IContact>();
 	}
-	
-	public ContactReportStructure(ContactGroup group, ArrayList<Contact> contacts)
+
+	public ContactReportStructure(ContactGroup group, ArrayList<IContact> contacts)
 	{
 		this.group = group;
 		this.contacts = contacts;
 	}
 
-	public void addContact(Contact contact)
+	public void addContact(IContact contact)
 	{
 		contacts.add(contact);
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	@Override
+	public int compareTo(ContactReportStructure obj)
+	{
+		if(obj == null)
+			return 1;
+
+		return group.getName().compareTo(obj.getGroup().getName());
+	}
+
 	/**
 	 * @return the contacts
 	 */
-	public ArrayList<Contact> getContacts()
+	public ArrayList<IContact> getContacts()
 	{
 		return contacts;
 	}
@@ -60,7 +73,7 @@ public class ContactReportStructure implements Serializable, Comparable<ContactR
 	 * @param contacts
 	 *          the contacts to set
 	 */
-	public void setContacts(ArrayList<Contact> contacts)
+	public void setContacts(ArrayList<IContact> contacts)
 	{
 		this.contacts = contacts;
 	}
@@ -72,17 +85,5 @@ public class ContactReportStructure implements Serializable, Comparable<ContactR
 	public void setGroup(ContactGroup group)
 	{
 		this.group = group;
-	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Comparable#compareTo(java.lang.Object)
-	 */
-	@Override
-	public int compareTo(ContactReportStructure obj)
-	{
-		if(obj == null)
-			return 1;
-		
-		return group.getName().compareTo(obj.getGroup().getName());
 	}
 }

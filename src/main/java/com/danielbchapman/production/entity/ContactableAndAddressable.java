@@ -22,14 +22,25 @@ import javax.persistence.Transient;
  *************************************************************************** 
  */
 @MappedSuperclass
-public abstract class ContactableAndAddressable extends BaseEntity
+public abstract class ContactableAndAddressable extends BaseEntity implements IContactable,
+		IAddressable
 {
 	private static final long serialVersionUID = 1L;
 
 	@Column(length = 40)
 	private String addressCity;
 	@Column(length = 128)
+	private String addressLineOne;
+	@Column(length = 128)
+	private String addressLineTwo;
+	@Column(length = 60)
+	private String addressState;
+	@Column(length = 20)
+	private String addressZip;
+	@Column(length = 128)
 	private String cell;
+	@Column(length = 128)
+	private String contact;
 	@Column(length = 128)
 	private String contactName;
 	@Lob
@@ -41,19 +52,51 @@ public abstract class ContactableAndAddressable extends BaseEntity
 	@Column(length = 128)
 	private String fax;
 	@Column(length = 128)
-	private String lineOne;
-	@Column(length = 128)
-	private String lineTwo;
-	@Column(length = 128)
 	private String phone;
-	@Column(length = 60)
-	private String state;
-	@Column(length = 20)
-	private String zip;
 
+	/**
+	 * @return the addressCity
+	 */
+	@Override
 	public String getAddressCity()
 	{
 		return addressCity;
+	}
+
+	/**
+	 * @return the addressLineOne
+	 */
+	@Override
+	public String getAddressLineOne()
+	{
+		return addressLineOne;
+	}
+
+	/**
+	 * @return the addressLineTwo
+	 */
+	@Override
+	public String getAddressLineTwo()
+	{
+		return addressLineTwo;
+	}
+
+	/**
+	 * @return the addressState
+	 */
+	@Override
+	public String getAddressState()
+	{
+		return addressState;
+	}
+
+	/**
+	 * @return the addressZip
+	 */
+	@Override
+	public String getAddressZip()
+	{
+		return addressZip;
 	}
 
 	@Transient
@@ -66,16 +109,37 @@ public abstract class ContactableAndAddressable extends BaseEntity
 		return builder.toString();
 	}
 
+	/**
+	 * @return the cell
+	 */
+	@Override
 	public String getCell()
 	{
 		return cell;
 	}
 
+	/**
+	 * @return the contact
+	 */
+	@Override
+	public String getContact()
+	{
+		return contact;
+	}
+
+	/**
+	 * @return the contactName
+	 */
+	@Override
 	public String getContactName()
 	{
 		return contactName;
 	}
 
+	/**
+	 * @return the contactNotes
+	 */
+	@Override
 	public String getContactNotes()
 	{
 		return contactNotes;
@@ -84,16 +148,25 @@ public abstract class ContactableAndAddressable extends BaseEntity
 	/**
 	 * @return the contactPosition
 	 */
+	@Override
 	public String getContactPosition()
 	{
 		return contactPosition;
 	}
 
+	/**
+	 * @return the email
+	 */
+	@Override
 	public String getEmail()
 	{
 		return email;
 	}
 
+	/**
+	 * @return the fax
+	 */
+	@Override
 	public String getFax()
 	{
 		return fax;
@@ -103,20 +176,20 @@ public abstract class ContactableAndAddressable extends BaseEntity
 	public String getFullAddressNewLines()
 	{
 		StringBuilder builder = new StringBuilder();
-		builder.append(lineOne);
+		builder.append(addressLineOne);
 		builder.append('\n');
 
-		if(lineTwo != null && lineTwo.length() > 0)
+		if(addressLineTwo != null && addressLineTwo.length() > 0)
 		{
-			builder.append(lineTwo);
+			builder.append(addressLineTwo);
 			builder.append('\n');
 		}
 
 		builder.append(addressCity);
 		builder.append(' ');
-		builder.append(state);
+		builder.append(addressState);
 		builder.append(' ');
-		builder.append(zip);
+		builder.append(addressZip);
 
 		return builder.toString();
 	}
@@ -125,64 +198,118 @@ public abstract class ContactableAndAddressable extends BaseEntity
 	public String getFullAddressSpaced()
 	{
 		StringBuilder builder = new StringBuilder();
-		builder.append(lineOne);
+		builder.append(addressLineOne);
 		builder.append(' ');
 
-		if(lineTwo != null && lineTwo.length() > 0)
+		if(addressLineTwo != null && addressLineTwo.length() > 0)
 		{
-			builder.append(lineTwo);
+			builder.append(addressLineTwo);
 			builder.append(' ');
 		}
 
 		builder.append(addressCity);
 		builder.append(' ');
-		builder.append(state);
+		builder.append(addressState);
 		builder.append(' ');
-		builder.append(zip);
+		builder.append(addressZip);
 
 		return builder.toString();
 	}
 
-	public String getLineOne()
-	{
-		return lineOne;
-	}
-
-	public String getLineTwo()
-	{
-		return lineTwo;
-	}
-
+	/**
+	 * @return the phone
+	 */
+	@Override
 	public String getPhone()
 	{
 		return phone;
 	}
 
-	public String getState()
-	{
-		return state;
-	}
-
-	public String getZip()
-	{
-		return zip;
-	}
-
+	/**
+	 * @param addressCity
+	 *          the addressCity to set
+	 */
+	@Override
 	public void setAddressCity(String addressCity)
 	{
 		this.addressCity = addressCity;
 	}
 
+	/**
+	 * @param addressLineOne
+	 *          the addressLineOne to set
+	 */
+	@Override
+	public void setAddressLineOne(String addressLineOne)
+	{
+		this.addressLineOne = addressLineOne;
+	}
+
+	/**
+	 * @param addressLineTwo
+	 *          the addressLineTwo to set
+	 */
+	@Override
+	public void setAddressLineTwo(String addressLineTwo)
+	{
+		this.addressLineTwo = addressLineTwo;
+	}
+
+	/**
+	 * @param addressState
+	 *          the addressState to set
+	 */
+	@Override
+	public void setAddressState(String addressState)
+	{
+		this.addressState = addressState;
+	}
+
+	/**
+	 * @param addressZip
+	 *          the addressZip to set
+	 */
+	@Override
+	public void setAddressZip(String addressZip)
+	{
+		this.addressZip = addressZip;
+	}
+
+	/**
+	 * @param cell
+	 *          the cell to set
+	 */
+	@Override
 	public void setCell(String cell)
 	{
 		this.cell = cell;
 	}
 
+	/**
+	 * @param contact
+	 *          the contact to set
+	 */
+	@Override
+	public void setContact(String contact)
+	{
+		this.contact = contact;
+	}
+
+	/**
+	 * @param contactName
+	 *          the contactName to set
+	 */
+	@Override
 	public void setContactName(String contactName)
 	{
 		this.contactName = contactName;
 	}
 
+	/**
+	 * @param contactNotes
+	 *          the contactNotes to set
+	 */
+	@Override
 	public void setContactNotes(String contactNotes)
 	{
 		this.contactNotes = contactNotes;
@@ -192,43 +319,40 @@ public abstract class ContactableAndAddressable extends BaseEntity
 	 * @param contactPosition
 	 *          the contactPosition to set
 	 */
+	@Override
 	public void setContactPosition(String contactPosition)
 	{
 		this.contactPosition = contactPosition;
 	}
 
+	/**
+	 * @param email
+	 *          the email to set
+	 */
+	@Override
 	public void setEmail(String email)
 	{
 		this.email = email;
 	}
 
+	/**
+	 * @param fax
+	 *          the fax to set
+	 */
+	@Override
 	public void setFax(String fax)
 	{
 		this.fax = fax;
 	}
 
-	public void setLineOne(String lineOne)
-	{
-		this.lineOne = lineOne;
-	}
-
-	public void setLineTwo(String lineTwo)
-	{
-		this.lineTwo = lineTwo;
-	}
-
+	/**
+	 * @param phone
+	 *          the phone to set
+	 */
+	@Override
 	public void setPhone(String phone)
 	{
 		this.phone = phone;
 	}
 
-	public void setState(String state)
-	{
-		this.state = state;
-	}
-
-	public void setZip(String zip)
-	{
-		this.zip = zip;
-	}
 }
