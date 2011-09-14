@@ -32,6 +32,7 @@
 		<class>com.danielbchapman.production.entity.ContactableAndAddressable</class>
 		<class>com.danielbchapman.production.entity.Contactable</class>
 		<class>com.danielbchapman.production.entity.ContactGroup</class>
+		<class>com.danielbchapman.production.entity.ContactAddress</class>
 		<class>com.danielbchapman.production.entity.Contact</class>
 		<class>com.danielbchapman.production.entity.City</class>
 		<class>com.danielbchapman.production.entity.BudgetEntry</class>
@@ -39,7 +40,8 @@
 		<class>com.danielbchapman.production.entity.Budget</class>
 		<class>com.danielbchapman.production.entity.BaseEntity</class>
 		<class>com.danielbchapman.production.entity.Addressable</class>
-		<class>com.danielbchapman.production.entity.ContactAddress</class>
+		<class>com.danielbchapman.production.entity.LinkedContact</class>
+		<class>com.danielbchapman.production.entity.AbstractContact</class>
 
 		<properties>
 			<!-- 

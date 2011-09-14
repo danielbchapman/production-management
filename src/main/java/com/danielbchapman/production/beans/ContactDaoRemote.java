@@ -9,6 +9,8 @@ import com.danielbchapman.production.entity.Contact;
 import com.danielbchapman.production.entity.ContactAddress;
 import com.danielbchapman.production.entity.ContactGroup;
 import com.danielbchapman.production.entity.ContactReportStructure;
+import com.danielbchapman.production.entity.IContact;
+import com.danielbchapman.production.entity.LinkedContact;
 import com.danielbchapman.production.entity.Season;
 import com.danielbchapman.production.entity.SeasonContact;
 
@@ -26,6 +28,40 @@ public interface ContactDaoRemote extends Serializable
 	public abstract void addContactAddress(ContactAddress address, Contact contact);
 
 	/**
+	 * Create a LinkedContact for this person. This allows you to override the group and position
+	 * title without changing other references.
+	 * 
+	 * @param position
+	 *          the contact position name
+	 * @param group
+	 *          the contact group to assign this to
+	 * @param subGroup
+	 *          the sub group (category) for this link
+	 * @param contact
+	 *          the contact to link to
+	 * @return
+	 */
+	public abstract LinkedContact addLinkedContact(String position, ContactGroup group,
+			String subGroup, Contact contact);
+
+	/**
+	 * Create a LinkedContact for this person. This allows you to override the group and position
+	 * title without changing other references.
+	 * 
+	 * @param position
+	 *          the contact position name
+	 * @param groupId
+	 *          the contact group to assign this to (via ID)
+	 * @param subGroup
+	 *          the sub group (category) for this link
+	 * @param contact
+	 *          the contact to link to
+	 * @return
+	 */
+	public abstract LinkedContact addLinkedContact(String position, Long groupId, String subGroup,
+			Contact contact);
+
+	/**
 	 * Assign this contact to a particular season.
 	 * 
 	 * @param contcat
@@ -33,7 +69,14 @@ public interface ContactDaoRemote extends Serializable
 	 * @param season
 	 *          the season to be assigned to
 	 */
-	public abstract void assignContactToSeason(Contact contcat, Season season);
+	public abstract void assignContactToSeason(IContact contcat, Season season);
+
+	/**
+	 * Remove all linked contacts for this contact and clear the season contacts.
+	 * 
+	 * @param contact
+	 */
+	public abstract void clearLinks(Contact contact);
 
 	/**
 	 * Remove a contact from the database
@@ -91,7 +134,7 @@ public interface ContactDaoRemote extends Serializable
 	 *          the season to search.
 	 * @return a list of all the contacts assigned to this season.
 	 */
-	public abstract ArrayList<Contact> getContactsForSeason(Season season);
+	public abstract ArrayList<IContact> getContactsForSeason(Season season);
 
 	/**
 	 * @return the structure for a contact sheet
@@ -110,7 +153,7 @@ public interface ContactDaoRemote extends Serializable
 	 *          the season to search
 	 * @return the inverse of getContactsForSeason
 	 */
-	public abstract ArrayList<Contact> getContactsNotInSeason(Season season);
+	public abstract ArrayList<IContact> getContactsNotInSeason(Season season);
 
 	/**
 	 * @return a list of distinct subgroups
@@ -121,6 +164,20 @@ public interface ContactDaoRemote extends Serializable
 	 * @return a list of contact groups from the DB ordered by name
 	 */
 	public abstract ArrayList<ContactGroup> getGroups();
+
+	/**
+	 * @param id
+	 *          the Id to find
+	 * @return the LinkedContact associated with this id.
+	 */
+	public abstract LinkedContact getLinkedContact(Long id);
+
+	/**
+	 * @param contact
+	 *          the contact to search
+	 * @return a list of the LinkedContacts for this contact
+	 */
+	public abstract ArrayList<LinkedContact> getLinkedContacts(Contact contact);
 
 	/**
 	 * @param id
@@ -145,7 +202,7 @@ public interface ContactDaoRemote extends Serializable
 	 * @param season
 	 *          the season to remove from
 	 */
-	public abstract void removeContactFromSeason(Contact contact, Season season);
+	public abstract void removeContactFromSeason(IContact contact, Season season);
 
 	/**
 	 * Remove a contact from a particular season.
@@ -154,6 +211,14 @@ public interface ContactDaoRemote extends Serializable
 	 *          the season contact to remove
 	 */
 	public abstract void removeContactFromSeason(SeasonContact seasonContact);
+
+	/**
+	 * Remove this linked contact from the database
+	 * 
+	 * @param contact
+	 *          the LinkedContact to remove
+	 */
+	public abstract void removeLinkedContact(LinkedContact contact);
 
 	/**
 	 * Save a contact to the database

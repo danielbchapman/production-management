@@ -1,6 +1,7 @@
 package com.danielbchapman.production.beans;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -12,6 +13,8 @@ import com.danielbchapman.production.entity.ContactAddress;
 import com.danielbchapman.production.entity.ContactGroup;
 import com.danielbchapman.production.entity.ContactReportStructure;
 import com.danielbchapman.production.entity.EntityInstance;
+import com.danielbchapman.production.entity.IContact;
+import com.danielbchapman.production.entity.LinkedContact;
 import com.danielbchapman.production.entity.Season;
 import com.danielbchapman.production.entity.SeasonContact;
 
@@ -56,17 +59,67 @@ public class ContactDao implements ContactDaoRemote
 	/*
 	 * (non-Javadoc)
 	 * 
+	 * @see com.danielbchapman.production.beans.ContactDaoRemote#addLinkedContact(java.lang.String,
+	 * com.danielbchapman.production.entity.ContactGroup,
+	 * com.danielbchapman.production.entity.Contact)
+	 */
+	@Override
+	public LinkedContact addLinkedContact(String position, ContactGroup group, String subGroup,
+			Contact contact)
+	{
+		LinkedContact link = new LinkedContact();
+
+		link.setPosition(position);
+		link.setContactGroup(group);
+		link.setContact(contact);
+		link = EntityInstance.saveObject(link);
+
+		return link;
+	}
+
+	@Override
+	public LinkedContact addLinkedContact(String position, Long groupId, String subGroup,
+			Contact contact)
+	{
+		return addLinkedContact(position, getContactGroup(groupId), subGroup, contact);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see
 	 * com.danielbchapman.production.beans.ContactDaoRemote#assignContactToSeason(com.danielbchapman
 	 * .production.entity.Contact, com.danielbchapman.production.entity.Season)
 	 */
 	@Override
-	public void assignContactToSeason(Contact contact, Season season)
+	public void assignContactToSeason(IContact contact, Season season)
 	{
 		SeasonContact sc = new SeasonContact();
-		sc.setContact(contact);
+		if(contact instanceof Contact)
+			sc.setBaseContact((Contact) contact);
+		else
+			sc.setLinkedContact((LinkedContact) contact);
+		// else classCast which would be re-thrown...so...
+
 		sc.setSeason(season);
 		EntityInstance.saveObject(sc);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.danielbchapman.production.beans.ContactDaoRemote#clearLinks(com.danielbchapman.production
+	 * .entity.Contact)
+	 */
+	@Override
+	public void clearLinks(Contact contact)
+	{
+		ArrayList<LinkedContact> links = EntityInstance.getResultList(
+				"SELECT l FROM LinkedContact l WHERE l.contact.id = ?1", LinkedContact.class, contact);
+
+		for(LinkedContact l : links)
+			removeLinkedContact(l);
 	}
 
 	/*
@@ -83,6 +136,7 @@ public class ContactDao implements ContactDaoRemote
 		for(int i = 0; i < addresses.size(); i++)
 			deleteContactAddress(addresses.get(i));
 
+		clearLinks(contact);
 		EntityInstance.deleteObject(contact);
 	}
 
@@ -145,7 +199,8 @@ public class ContactDao implements ContactDaoRemote
 	@Override
 	public ArrayList<Contact> getAllContacts()
 	{
-		return EntityInstance.getResultList("SELECT c FROM Contact c ORDER BY c.name", Contact.class);
+		return EntityInstance.getResultList("SELECT c FROM Contact c ORDER BY c.lastName, c.firstName",
+				Contact.class);
 	}
 
 	/*
@@ -181,7 +236,8 @@ public class ContactDao implements ContactDaoRemote
 	public ArrayList<Contact> getContactsForGroup(ContactGroup group)
 	{
 		return EntityInstance.getResultList(
-				"SELECT c FROM Contact c WHERE c.contactGroup = ?1 ORDER BY c.name", Contact.class, group);
+				"SELECT c FROM Contact c WHERE c.contactGroup = ?1 ORDER BY  c.lastName, c.firstName",
+				Contact.class, group);
 	}
 
 	/*
@@ -191,12 +247,76 @@ public class ContactDao implements ContactDaoRemote
 	 * com.danielbchapman.production.beans.ContactDaoRemote#getContactsForSeason(com.danielbchapman
 	 * .production.entity.Season)
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
-	public ArrayList<Contact> getContactsForSeason(Season season)
+	public ArrayList<IContact> getContactsForSeason(Season season)
 	{
-		return EntityInstance.getResultList("SELECT s.contact FROM SeasonContact s "
-				+ "WHERE s.season = ?1 AND s.contact IS NOT NULL "
-				+ " ORDER BY s.contact.contactGroup.name, s.contact.name", Contact.class, season);
+		/* @formatter:off*/
+		String sql = 
+						"SELECT \"id\" FROM (SELECT " +
+						"  sc.id AS \"id\", " +
+						"  g.name AS \"name\", " +
+						"  c.subGroup AS \"subGroup\", " +
+						"  c.lastName AS \"lastName\", " +
+						"  c.firstName AS \"firstName\" " +
+						"FROM  " +
+						"  SeasonContact sc  " +
+						"  INNER JOIN Contact c  " +
+						"    ON  " +
+						"      sc.baseContact_id = c.id " +
+						"  INNER JOIN ContactGroup g " +
+						"    ON  " +
+						"      c.contactGroup_id = g.id " +
+						"  WHERE " +
+						"        sc.baseContact_id IS NOT NULL " +
+						"    AND sc.season_id = ?1 " +
+						"     " +
+						"UNION ALL " +
+						" " +
+						"SELECT " +
+						"  sc.id AS \"id\", " +
+						"  g.name AS \"name\", " +
+						"  l.subGroup AS \"subGroup\", " +
+						"  c.lastName AS \"lastName\", " +
+						"  c.firstName AS \"firstName\" " +
+						"FROM  " +
+						"  SeasonContact sc  " +
+						"  INNER JOIN LinkedContact l " +
+						"    ON " +
+						"      sc.linkedContact_id = l.id " +
+						"  INNER JOIN Contact c " +
+						"    ON  " +
+						"      l.contact_id = c.id " +
+						"  INNER JOIN ContactGroup g " +
+						"    ON  " +
+						"      l.contactGroup_id = g.id " +
+						"  WHERE " +
+						"        sc.linkedContact_id IS NOT NULL " +
+						"    AND sc.season_id = ?1  " +
+						"ORDER BY  " +
+						"  \"name\", " +
+						"  \"subGroup\", " +
+						"  \"lastName\", " +
+						"  \"firstName\" " +
+						"  ) " ;	
+		/*@formatter:on*/
+
+		List<Long> ids = null;
+
+		Query q = EntityInstance.getEm().createNativeQuery(sql);
+		q.setParameter(1, season.getId());
+		ids = (List<Long>) q.getResultList();
+
+		ArrayList<IContact> seasonResults = new ArrayList<IContact>();
+
+		for(Long id : ids)
+		{
+			SeasonContact sc = getSeasonContacts(id);
+			if(sc != null)
+				seasonResults.add(sc.getContact());
+		}
+
+		return seasonResults;
 	}
 
 	/*
@@ -213,9 +333,9 @@ public class ContactDao implements ContactDaoRemote
 		ArrayList<ContactReportStructure> ret = new ArrayList<ContactReportStructure>();
 		for(ContactGroup group : groups)
 		{
-			ArrayList<Contact> contacts = EntityInstance
-					.getResultList("SELECT c FROM Contact c WHERE c.contactGroup = ?1 ORDER BY c.name",
-							Contact.class, group);
+			ArrayList<IContact> contacts = EntityInstance.getResultList(
+					"SELECT c FROM Contact c WHERE c.contactGroup = ?1 ORDER BY c.lastName, c.firstName",
+					IContact.class, group);
 			if(contacts.size() > 0)
 			{
 				ContactReportStructure element = new ContactReportStructure(group, contacts);
@@ -233,21 +353,98 @@ public class ContactDao implements ContactDaoRemote
 	 * com.danielbchapman.production.beans.ContactDaoRemote#getContactSheetSeason(com.danielbchapman
 	 * .production.entity.Season)
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<ContactReportStructure> getContactSheetSeason(Season season)
 	{
-		ArrayList<ContactGroup> groups = EntityInstance.getResultList(
+		//@formatter:off
+		String findGroups =
+						"/* A Query to locate Groups inside the SeasonContacts for a season */ \n" +
+						"SELECT DISTINCT id FROM  \n" +
+						"( \n" +
+						"SELECT \n" +
+						"  g.id, \n" +
+						"  g.name \n" +
+						"FROM \n" +
+						"  SeasonContact s  \n" +
+						"  INNER JOIN \n" +
+						"  Contact c \n" +
+						"    ON \n" +
+						"      s.baseContact_id = c.id \n" +
+						"  INNER JOIN \n" +
+						"  ContactGroup g \n" +
+						"    ON  \n" +
+						"      c.contactGroup_id = g.id \n" +
+						"WHERE \n" +
+						"  s.season_id = ?1 \n" +
+						" \n" +
+						"UNION ALL \n" +
+						" \n" +
+						"SELECT \n" +
+						"  g.id, \n" +
+						"  g.name \n" +
+						"FROM \n" +
+						"  SeasonContact s  \n" +
+						"  INNER JOIN \n" +
+						"  LinkedContact l \n" +
+						"    ON \n" +
+						"      s.linkedContact_id = l.id \n" +
+						"  INNER JOIN \n" +
+						"  ContactGroup g \n" +
+						"    ON  \n" +
+						"      l.contactGroup_id = g.id \n" +
+						"WHERE \n" +
+						"  s.season_id = ?1 \n" +
+						"   \n" +
+						"ORDER BY \n" +
+						" 2 \n" +
+						")   \n" ;
+		
+		String linkedEjbql = 
+						"SELECT  \n" +
+						"  sc.linkedContact  \n" +
+						"FROM  \n" +
+						"  SeasonContact sc  \n" +
+						"WHERE  \n" +
+						"      sc.linkedContact.contactGroup = ?1  \n" +
+						"  AND sc.season = ?2   \n" +
+						"  AND sc.linkedContact IS NOT NULL  \n" +
+						"ORDER BY  \n" +
+						"  sc.linkedContact.contact.lastName,  \n" +
+						"  sc.linkedContact.contact.firstName \n" ;
+		
+		String regularEjbql = 
+						"SELECT  \n" +
+						"  sc.baseContact  \n" +
+						"FROM  \n" +
+						"  SeasonContact sc  \n" +
+						"WHERE  \n" +
+						"      sc.baseContact.contactGroup = ?1  \n" +
+						"  AND sc.season = ?2   \n" +
+						"  AND sc.baseContact IS NOT NULL  \n" +
+						"ORDER BY  \n" +
+						"  sc.baseContact.lastName,  \n" +
+						"  sc.baseContact.firstName   \n" ;		
+		//@formatter:on
+		List<Long> ids = (List<Long>) EntityInstance.getEm().createNativeQuery(findGroups)
+				.setParameter(1, season.getId()).getResultList();
+		ArrayList<ContactGroup> groups = new ArrayList<ContactGroup>();
 
-		"SELECT DISTINCT sc.contact.contactGroup FROM SeasonContact sc ORDER BY sc.contact.name",
-				ContactGroup.class);
+		for(Long id : ids)
+			groups.add(getContactGroup(id));
 
 		ArrayList<ContactReportStructure> ret = new ArrayList<ContactReportStructure>();
 		for(ContactGroup group : groups)
 		{
-			ArrayList<Contact> contacts = EntityInstance
-					.getResultList(
-							"SELECT sc.contact FROM SeasonContact sc WHERE sc.contact.contactGroup = ?1 ORDER BY sc.contact.name",
-							Contact.class, group);
+			ArrayList<LinkedContact> linked = EntityInstance.getResultList(linkedEjbql,
+					LinkedContact.class, group, season);
+			ArrayList<Contact> regular = EntityInstance.getResultList(regularEjbql, Contact.class, group,
+					season);
+
+			ArrayList<IContact> contacts = new ArrayList<IContact>(linked);
+			contacts.addAll(regular);
+
+			Collections.sort(contacts);
 
 			if(contacts.size() > 0)
 			{
@@ -261,16 +458,69 @@ public class ContactDao implements ContactDaoRemote
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public ArrayList<Contact> getContactsNotInSeason(Season season)
+	public ArrayList<IContact> getContactsNotInSeason(Season season)
 	{
-		ArrayList<Contact> ret = new ArrayList<Contact>();
-		Query q = EntityInstance
-				.getEm()
-				.createNativeQuery(
-						"SELECT c.id FROM Contact c WHERE c.id NOT IN (SELECT s.contact_id FROM SeasonContact s WHERE s.season_id = ?1) ORDER BY c.name");
+		ArrayList<IContact> ret = new ArrayList<IContact>();
+		/* @formatter:off */
+		String notInSeasonLinked =
+						"/* Query to detrimine LinkedContact not in the season */ \n" +
+						"SELECT id FROM \n" +
+						"( \n" +
+						"  SELECT  \n" +
+						"    l.id, \n" +
+						"    c.lastName, \n" +
+						"    c.firstName \n" +
+						"  FROM  \n" +
+						"    LinkedContact l  \n" +
+						"    INNER JOIN Contact c \n" +
+						"      ON \n" +
+						"        l.contact_id = c.id \n" +
+						"  WHERE  \n" +
+						"    (SELECT  \n" +
+						"        Count(s.id)  \n" +
+						"      FROM  \n" +
+						"        SeasonContact s  \n" +
+						"      WHERE  \n" +
+						"            s.linkedContact_id = l.id \n" +
+						"        AND s.season_id = ?1 \n" +
+						"      ) < 1 \n" +
+						"  ORDER BY \n" +
+						"    2, 3 \n" +
+						"); \n" ;						
+		String notInSeasonContacts = 
+						"/* Query to detrimine Contact not in the season */ \n" +
+						"SELECT id FROM \n" +
+						"( \n" +
+						"  SELECT  \n" +
+						"    c.id, \n" +
+						"    c.lastName, \n" +
+						"    c.firstName \n" +
+						"  FROM  \n" +
+						"    Contact c \n" +
+						"  WHERE \n" +
+						"    ( \n" +
+						"      SELECT  \n" +
+						"        Count(s.id)  \n" +
+						"      FROM  \n" +
+						"        SeasonContact s  \n" +
+						"      WHERE  \n" +
+						"            s.baseContact_id = c.id \n" +
+						"        AND s.season_id = ?1 \n" +
+						"      ) < 1 \n" +
+						"  ORDER BY \n" +
+						"    2, 3 \n" +
+						"); \n" ;
+		/* @formatter:on */
+		Query q = EntityInstance.getEm().createNativeQuery(notInSeasonLinked);
 		q.setParameter(1, season.getId());
-
 		List<Long> results = q.getResultList();
+
+		for(Long id : results)
+			ret.add(EntityInstance.getEm().find(LinkedContact.class, id));
+
+		q = EntityInstance.getEm().createNativeQuery(notInSeasonContacts);
+		q.setParameter(1, season.getId());
+		results = q.getResultList();
 
 		for(Long id : results)
 			ret.add(EntityInstance.getEm().find(Contact.class, id));
@@ -300,6 +550,25 @@ public class ContactDao implements ContactDaoRemote
 	{
 		return EntityInstance.getResultList("SELECT g FROM ContactGroup g ORDER BY g.name",
 				ContactGroup.class);
+	}
+
+	@Override
+	public LinkedContact getLinkedContact(Long id)
+	{
+		return EntityInstance.getEm().find(LinkedContact.class, id);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.danielbchapman.production.beans.ContactDaoRemote#getLinkedContacts(com.danielbchapman.
+	 * production.entity.Contact)
+	 */
+	@Override
+	public ArrayList<LinkedContact> getLinkedContacts(Contact contact)
+	{
+		return EntityInstance.getResultList("SELECT l FROM LinkedContact l WHERE l.contact = ?1",
+				LinkedContact.class, contact);
 	}
 
 	/*
@@ -335,20 +604,53 @@ public class ContactDao implements ContactDaoRemote
 	 * .production.entity.Contact, com.danielbchapman.production.entity.Season)
 	 */
 	@Override
-	public void removeContactFromSeason(Contact contact, Season season)
+	public void removeContactFromSeason(IContact contact, Season season)
 	{
-		ArrayList<SeasonContact> contacts = EntityInstance.getResultList(
-				"SELECT sc FROM SeasonContact sc WHERE sc.contact = ?1 and sc.season = ?2",
-				SeasonContact.class, contact, season);
+		ArrayList<SeasonContact> contacts;
+		if(contact instanceof Contact)
+			contacts = EntityInstance.getResultList(
+					"SELECT sc FROM SeasonContact sc WHERE sc.baseContact = ?1 and sc.season = ?2",
+					SeasonContact.class, contact, season);
+		else
+			contacts = EntityInstance.getResultList(
+					"SELECT sc FROM SeasonContact sc WHERE sc.linkedContact = ?1 and sc.season = ?2",
+					SeasonContact.class, contact, season);
 
 		for(SeasonContact sc : contacts)
 			removeContactFromSeason(sc);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.danielbchapman.production.beans.ContactDaoRemote#removeContactFromSeason(com.danielbchapman
+	 * .production.entity.SeasonContact)
+	 */
 	@Override
 	public void removeContactFromSeason(SeasonContact seasonContact)
 	{
 		EntityInstance.deleteObject(seasonContact);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.danielbchapman.production.beans.ContactDaoRemote#removeLinkedContact(com.danielbchapman
+	 * .production.entity.LinkedContact)
+	 */
+	@Override
+	public void removeLinkedContact(LinkedContact contact)
+	{
+		ArrayList<SeasonContact> seasonContacts = EntityInstance
+				.getResultList("SELECT sc FROM SeasonContact sc WHERE sc.linkedContact = ?1",
+						SeasonContact.class, contact);
+
+		for(SeasonContact sc : seasonContacts)
+			EntityInstance.deleteObject(sc);
+
+		EntityInstance.deleteObject(contact);
 	}
 
 	/*
