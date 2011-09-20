@@ -177,4 +177,49 @@ public interface IContact extends Comparable<IContact>
 	 */
 	public abstract String toHtml();
 
+	public static class Methods
+	{
+		/**
+		 * Compare two IContact instances. <code>
+		 * USE:
+		 * <p>
+		 *   public int compareTo(IContact comp) {return compare(this, comp)};
+		 * </p>
+		 * </code>
+		 * 
+		 * @param a
+		 *          the compare
+		 * @param b
+		 *          the compare to
+		 * @return -1, 0 , 1 per compareTo;
+		 */
+		public static int compare(IContact a, IContact b)
+		{
+			if(a == null && b == null)
+				return 0;
+
+			if(a == null)
+				return -1;
+
+			if(b == null)
+				return 1;
+
+			if(a.getLastName() != null)
+			{
+				int val = a.getLastName().compareTo(b.getLastName());
+				if(val != 0)
+					return val;
+
+				return a.getFirstName().compareTo(b.getFirstName());
+			}
+			else
+				if(a.getFirstName() != null)
+					if(b.getLastName() == null)
+						return a.getFirstName().compareTo(b.getFirstName());
+					else
+						return a.getFirstName().compareTo(b.getLastName());
+
+			return -1;
+		}
+	}
 }

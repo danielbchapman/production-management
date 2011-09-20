@@ -34,22 +34,7 @@ public class LinkedContact extends BaseEntity implements IContact
 	@Override
 	public int compareTo(IContact o)
 	{
-		if(o == null)
-			return 1;
-
-		if(o.getLastName() != null)
-		{
-			int val = o.getLastName().compareTo(getLastName());
-			if(val != 0)
-				return val;
-
-			return o.getFirstName().compareTo(getFirstName());
-		}
-		else
-			if(getLastName() != null)
-				return 1;
-
-		return 0;
+		return IContact.Methods.compare(this, o);
 	}
 
 	/**

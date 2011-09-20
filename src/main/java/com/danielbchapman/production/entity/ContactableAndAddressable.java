@@ -64,6 +64,26 @@ public abstract class ContactableAndAddressable extends BaseEntity implements IC
 	}
 
 	/**
+	 * @return "CITY STATE ZIP"
+	 */
+	public String getAddressCombinedCityStateZip()
+	{
+		return addressCity + " " + addressState + " " + addressZip;
+	}
+
+	/**
+	 * @return <code>"Address Line One" +  hasTwo?["",", Address Line Two"]</code>
+	 */
+	@Transient
+	public String getAddressCombinedLines()
+	{
+		if(addressLineTwo == null || addressLineTwo.length() == 0)
+			return addressLineOne;
+		else
+			return addressLineOne + ", " + addressLineTwo;
+	}
+
+	/**
 	 * @return the addressLineOne
 	 */
 	@Override
