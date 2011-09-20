@@ -1,11 +1,11 @@
 package com.danielbchapman.production.entity;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -21,14 +21,15 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import org.theactingcompany.persistence.Indentifiable;
+
 /**
- * A simple object representing a day of the week for use in the Weekly
- * Schedules for a tour
+ * A simple object representing a day of the week for use in the Weekly Schedules for a tour
  * 
  */
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "date", "week" }))
-public class Day implements Serializable
+public class Day implements Indentifiable
 {
 	private static final long serialVersionUID = 1L;
 
@@ -42,7 +43,7 @@ public class Day implements Serializable
 	private String crewTravel;
 	@Temporal(value = TemporalType.DATE)
 	private Date date;
-	@OneToMany(mappedBy = "day", targetEntity = Event.class, fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "day", targetEntity = Event.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Collection<Event> events;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -53,17 +54,18 @@ public class Day implements Serializable
 	private String milageInformation;
 	@Lob
 	private String notes;
-	@OneToMany(mappedBy = "day", targetEntity = Performance.class, fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "day", targetEntity = Performance.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Collection<Performance> performances;
 	@Column(length = 120)
 	private String theaterInformation;
-	@ManyToOne
+	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH })
 	private Week week;
-	
+
 	public Day()
 	{
 		super();
 	}
+
 	public Hotel getCastHotel()
 	{
 		return castHotel;
@@ -73,19 +75,22 @@ public class Day implements Serializable
 	{
 		return castLocation;
 	}
+
 	public String getCastTravel()
 	{
 		return castTravel;
 	}
+
 	public Hotel getCrewHotel()
 	{
 		return crewHotel;
 	}
+
 	public City getCrewLocation()
 	{
 		return crewLocation;
 	}
-	
+
 	public String getCrewTravel()
 	{
 		return crewTravel;
@@ -107,6 +112,7 @@ public class Day implements Serializable
 	/**
 	 * @return the id
 	 */
+	@Override
 	public Long getId()
 	{
 		return id;
@@ -124,6 +130,7 @@ public class Day implements Serializable
 	{
 		return milageInformation;
 	}
+
 	/**
 	 * @return the notes
 	 */
@@ -137,14 +144,36 @@ public class Day implements Serializable
 		return performances;
 	}
 
+	@Transient
+	public Venue getProbableVenue()
+	{
+		if(getPerformances() == null || getPerformances().size() == 0)
+			return null;
+		else
+		{
+			Performance top = null;
+			for(Performance p : getPerformances())
+			{
+				if(top == null)
+				{
+					top = p;
+					continue;
+				}
+
+				if(p.getStart().compareTo(top.getStart()) > 0)
+					top = p;
+			}
+			return top.getVenue();
+		}
+	}
+
 	public String getTheaterInformation()
 	{
 		return theaterInformation;
 	}
 
 	/**
-	 * A java based hack for JasperReports. The time lines are easier
-	 * to display as collections.
+	 * A java based hack for JasperReports. The time lines are easier to display as collections.
 	 * 
 	 * @return a list of EventMappings (Events/PerformanceEvents) for this day ordered by time.
 	 * @see Performance#getEventSequence()
@@ -153,12 +182,54 @@ public class Day implements Serializable
 	@Transient
 	public ArrayList<EventMapping> getTimeline()
 	{
+		return getTimeline(true, true, true);
+	}
+
+	/**
+	 * <p>
+	 * <em>Java based helper for JasperReports</em>
+	 * </p>
+	 * Return a list of all events based on the filters.
+	 * 
+	 * @param cast
+	 *          whether to show crew only events
+	 * @param crew
+	 *          whether to show cast only events
+	 * @param details
+	 *          whether to show the details surrounding a performance
+	 * @return a list of Events matching the fiterset.
+	 */
+	public ArrayList<EventMapping> getTimeline(boolean cast, boolean crew, boolean details)
+	{
 		ArrayList<EventMapping> ret = new ArrayList<EventMapping>();
-		ret.addAll(getEvents());
-		
-		for(Performance p : getPerformances())
-			ret.addAll(p.getEventSequence());
-		
+		if(crew && cast)
+			ret.addAll(getEvents());
+		else
+			for(Event e : getEvents())
+			{
+				if(e.isCast() || e.isCrew())
+				{
+					if(e.isCast() && e.isCrew())
+						ret.add(e);
+					else
+						if(e.isCast() && cast)
+							ret.add(e);
+						else
+							if(e.isCrew() && crew)
+								ret.add(e);
+				}
+				else
+					ret.add(e);
+			}
+
+		if(details)
+		{
+			for(Performance p : getPerformances())
+				ret.addAll(p.getEventSequence());
+		}
+		else
+			ret.addAll(getPerformances());
+
 		Collections.sort(ret);
 		return ret;
 	}
@@ -219,6 +290,7 @@ public class Day implements Serializable
 	 * @param id
 	 *          the id to set
 	 */
+	@Override
 	public void setId(Long id)
 	{
 		this.id = id;
@@ -266,17 +338,20 @@ public class Day implements Serializable
 		this.week = week;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
+	@Override
 	public String toString()
 	{
 		StringBuilder buf = new StringBuilder();
-		
+
 		buf.append(super.toString());
 		buf.append("Date ");
 		buf.append(date);
-		
+
 		return buf.toString();
 	}
 }
