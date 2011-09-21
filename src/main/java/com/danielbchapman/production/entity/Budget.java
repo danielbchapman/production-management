@@ -9,6 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 /**
  * A simple supertype to group a set of budgets by a single department
@@ -35,6 +36,20 @@ public class Budget extends BaseEntity
 	public Budget()
 	{
 		super();
+	}
+
+	/**
+	 * @return a calculation of the total amount of all entries assigned to this budget This does not
+	 */
+	@Transient
+	public double getCurrentTotals()
+	{
+		double ret = 0.00;
+
+		for(BudgetEntry e : getEntries())
+			ret += e.getCalculatedAmount();
+
+		return ret;
 	}
 
 	public Date getDate()
