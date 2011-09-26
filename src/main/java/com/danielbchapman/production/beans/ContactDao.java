@@ -71,6 +71,7 @@ public class ContactDao implements ContactDaoRemote
 
 		link.setPosition(position);
 		link.setContactGroup(group);
+		link.setSubGroup(subGroup);
 		link.setContact(contact);
 		link = EntityInstance.saveObject(link);
 
