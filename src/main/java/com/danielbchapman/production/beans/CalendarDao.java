@@ -1,5 +1,6 @@
 package com.danielbchapman.production.beans;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -71,15 +72,24 @@ public class CalendarDao implements CalendarDaoRemote
 	@Override
 	public void archiveAdvance(PerformanceAdvance advance, Venue venue)
 	{
+		//@formatter:off		
 		StringBuilder builder = new StringBuilder();
+		SimpleDateFormat date = new SimpleDateFormat("MM-dd-yyyy");
 		builder.append("<div>");
 		builder.append("<h3>");
-		builder.append("Archive of Advance ID:");
+		builder.append("Archive of Advance (ID:");
 		builder.append(advance.getId());
-		builder.append("</h3>");
-
+		builder.append(")</h3>");
+		builder.append("<h4>Date ");
+		builder.append(advance.getPerformance() == null 
+				? "unknown" : date.format(advance.getPerformance().getDay().getDate()));
+		builder.append(" | ");
+		builder.append(advance.getPerformance() == null 
+				? "Unkown Venue" 
+						: advance.getPerformance().getVenue() == null 
+						? "Null Venue" : advance.getPerformance().getVenue().getName());
+		builder.append("</h4>");
 		builder.append("<ul>");
-		//@formatter:off
 		createListItem("Contact Information", advance.getContactInformation(), builder);
 		createListItem("Gaff Tape", advance.getGaffTape(), builder);
 		createListItem("Ground Plan", advance.getGroundPlan(), builder);
@@ -97,10 +107,9 @@ public class CalendarDao implements CalendarDaoRemote
 		createListItem("Laundry", advance.getWardrobeLaundry(), builder);
 		createListItem("Steamer", advance.getWardrobeSteamer(), builder);
 		createListItem("Wardrobe Notes", advance.getWardrobeNotes(), builder);
-		//@formatter:on		
 		builder.append("</ul>");
 		builder.append("</div>");
-
+		//@formatter:on		
 		VenueLog log = new VenueLog();
 		log.setDate(new Date());
 		log.setNotes(builder.toString());
@@ -124,6 +133,7 @@ public class CalendarDao implements CalendarDaoRemote
 		advance.setComplete(false);
 		advance.setDay(performance.getDay());
 		advance.setPerformance(performance);
+		advance.setVenue(performance.getVenue());
 		performance.setAdvance(advance);
 		savePerformance(performance);
 		return advance;
@@ -213,6 +223,18 @@ public class CalendarDao implements CalendarDaoRemote
 				ret.add(w);
 
 		return ret;
+	}
+
+	@Override
+	public ArrayList<Performance> getAlternativePerformances(PerformanceAdvance advance)
+	{
+		if(advance == null)
+			throw new IllegalArgumentException("Advances must be non-null.");
+		//@formatter:off
+		String query = "SELECT p FROM Performance p WHERE p.advance IS NULL ORDER BY p.day.date";
+		//@formatter:on
+
+		return EntityInstance.getResultList(query, Performance.class);
 	}
 
 	/*
@@ -393,6 +415,17 @@ public class CalendarDao implements CalendarDaoRemote
 		return ret;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.danielbchapman.production.beans.CalendarDaoRemote#getPerformance(java.lang.Long)
+	 */
+	@Override
+	public Performance getPerformance(Long id)
+	{
+		return em.find(Performance.class, id);
+	}
+
 	@Override
 	public PerformanceAdvance getPerformanceAdvance(Day d)
 	{
@@ -418,11 +451,12 @@ public class CalendarDao implements CalendarDaoRemote
 	 * com.danielbchapman.production.beans.CalendarDaoRemote#getPerformanceAdvances(com.danielbchapman
 	 * .production.entity.Venue)
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<PerformanceAdvance> getPerformanceAdvances(Venue venue)
 	{
 		//@formatter:off
+		/* Removed by de-normalizing the database and storing venues in the day/performanceAdvance
+		
 		String query = 
 						"SELECT  \n" +
 						"  a.id \n" +
@@ -437,15 +471,19 @@ public class CalendarDao implements CalendarDaoRemote
 						"WHERE \n" +
 						"  p.venue_id = ?1; \n" ;
 		//@formatter:on
-		Query q = EntityInstance.getEm().createNativeQuery(query);
-		q.setParameter(1, venue.getId());
-		List<Long> ids = (List<Long>) q.getResultList();
-
-		ArrayList<PerformanceAdvance> advances = new ArrayList<PerformanceAdvance>();
-		for(Long id : ids)
-			advances.add(getPerformanceAdvance(id));
-
-		return advances;
+		 Query q = EntityInstance.getEm().createNativeQuery(query);
+		 q.setParameter(1, venue.getId());
+		 List<Long> ids = (List<Long>) q.getResultList();
+		
+		 ArrayList<PerformanceAdvance> advances = new ArrayList<PerformanceAdvance>();
+		 for(Long id : ids)
+		 advances.add(getPerformanceAdvance(id));
+		
+		 return advances;
+		 */
+		// @formatter:on
+		return EntityInstance.getResultList("SELECT p FROM PerformanceAdvance p WHERE p.venue = ?1",
+				PerformanceAdvance.class, venue);
 	}
 
 	/*
@@ -584,6 +622,7 @@ public class CalendarDao implements CalendarDaoRemote
 			}
 
 			EntityInstance.deleteObject(advance);
+			return;
 		}
 		throw new IllegalArgumentException("The object " + obj + " was not removed.");
 	}

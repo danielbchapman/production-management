@@ -204,6 +204,15 @@ public interface IContact extends Comparable<IContact>
 			if(b == null)
 				return 1;
 
+			String groupComp = a.getContactGroup().getName();
+			String subGroupComp = a.getSubGroup();
+
+			if(groupComp.compareTo(b.getContactGroup().getName()) != 0)
+				return groupComp.compareTo(b.getContactGroup().getName());
+
+			if(subGroupComp.compareTo(b.getSubGroup()) != 0)
+				return subGroupComp.compareTo(b.getSubGroup());
+
 			if(a.getLastName() != null)
 			{
 				int val = a.getLastName().compareTo(b.getLastName());

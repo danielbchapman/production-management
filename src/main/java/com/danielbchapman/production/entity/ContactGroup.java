@@ -11,7 +11,7 @@ import javax.persistence.Transient;
  * 
  */
 @Entity
-public class ContactGroup extends BaseEntity
+public class ContactGroup extends BaseEntity implements Comparable
 {
 	private static final long serialVersionUID = 1L;
 	private int alpha = 255;
@@ -22,10 +22,36 @@ public class ContactGroup extends BaseEntity
 	@Column(length = 40)
 	private String name;
 	private int red = 255;
+	private int rank = 99;
 
 	public ContactGroup()
 	{
 		super();
+	}
+
+	/*
+	 * @param o
+	 * 
+	 * @return
+	 */
+	@Override
+	public int compareTo(Object o)
+	{
+		if(o == null)
+			return 1;
+
+		if(!(o instanceof ContactGroup))
+			return 1;
+
+		ContactGroup to = (ContactGroup) o;
+
+		if(rank < to.rank)
+			return -1;
+
+		if(rank > to.rank)
+			return 1;
+
+		return name.compareTo(to.name);
 	}
 
 	/**
@@ -34,6 +60,15 @@ public class ContactGroup extends BaseEntity
 	public int getAlpha()
 	{
 		return alpha;
+	}
+
+	/**
+	 * @return a new color based on the current values
+	 */
+	@Transient
+	public Color getAwtColor()
+	{
+		return new Color(red, green, blue, alpha);
 	}
 
 	/**
@@ -63,6 +98,14 @@ public class ContactGroup extends BaseEntity
 	}
 
 	/**
+	 * @return the rank
+	 */
+	public int getRank()
+	{
+		return rank;
+	}
+
+	/**
 	 * @return the red
 	 */
 	public int getRed()
@@ -77,6 +120,21 @@ public class ContactGroup extends BaseEntity
 	public void setAlpha(int alpha)
 	{
 		this.alpha = alpha;
+	}
+
+	/**
+	 * This updates all the integer fields with the new color object.
+	 * 
+	 * @param c
+	 *          the color to set.
+	 */
+	@Transient
+	public void setAwtColor(Color c)
+	{
+		red = c.getRed();
+		blue = c.getBlue();
+		green = c.getGreen();
+		alpha = c.getAlpha();
 	}
 
 	/**
@@ -108,33 +166,20 @@ public class ContactGroup extends BaseEntity
 	}
 
 	/**
+	 * @param rank
+	 *          the rank to set
+	 */
+	public void setRank(int rank)
+	{
+		this.rank = rank;
+	}
+
+	/**
 	 * @param red
 	 *          the red to set
 	 */
 	public void setRed(int red)
 	{
 		this.red = red;
-	}
-	
-	/**
-	 * @return a new color based on the current values
-	 */
-	@Transient
-	public Color getAwtColor()
-	{
-		return new Color(red, green, blue, alpha);
-	}
-	
-	/**
-	 * This updates all the integer fields with the new color object.
-	 * @param c the color to set.
-	 */
-	@Transient
-	public void setAwtColor(Color c)
-	{
-		red = c.getRed();
-		blue = c.getBlue();
-		green = c.getGreen();
-		alpha = c.getAlpha();
 	}
 }

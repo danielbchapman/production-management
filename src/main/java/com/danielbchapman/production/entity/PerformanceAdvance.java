@@ -71,6 +71,8 @@ public class PerformanceAdvance extends BaseEntity
 	private String wardrobeNotes;
 	@Column(length = 128)
 	private String wardrobeSteamer;
+	
+	private Venue venue;
 
 	/**
 	 * @return true if this production is an orphan, else return false.
