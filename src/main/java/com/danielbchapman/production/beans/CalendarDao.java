@@ -574,6 +574,20 @@ public class CalendarDao implements CalendarDaoRemote
 			Day day = (Day) obj;
 			Week week = day.getWeek();
 			week.getDays().remove(day);
+			ArrayList<Performance> performances = getPerformances(day);
+
+			for(Performance p : performances)
+				removeItem(p);
+
+			ArrayList<PerformanceAdvance> advances = EntityInstance.getResultList(
+					"SELECT p FROM PerformanceAdvance p WHERE p.day = ?1", PerformanceAdvance.class, day);
+			for(PerformanceAdvance adv : advances)
+			{
+				adv.setDay(null);
+				adv.setPerformance(null);// probably redundant, but worth setting
+				EntityInstance.saveObject(adv);
+			}
+
 			EntityInstance.deleteObject(day);
 			EntityInstance.saveObject(week);
 			return;
