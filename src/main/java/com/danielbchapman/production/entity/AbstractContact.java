@@ -314,7 +314,7 @@ public class AbstractContact extends BaseEntity implements IContact
 	@Transient
 	public String getFullName()
 	{
-		return getFirstName() + " " + getLastName();
+		return getLastName() + ", " + getFirstName();
 	}
 
 	/*

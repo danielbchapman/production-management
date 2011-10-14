@@ -117,7 +117,7 @@ public class ContactDao implements ContactDaoRemote
 	public void clearLinks(Contact contact)
 	{
 		ArrayList<LinkedContact> links = EntityInstance.getResultList(
-				"SELECT l FROM LinkedContact l WHERE l.contact.id = ?1", LinkedContact.class, contact);
+				"SELECT l FROM LinkedContact l WHERE l.contact = ?1", LinkedContact.class, contact);
 
 		for(LinkedContact l : links)
 			removeLinkedContact(l);
@@ -435,6 +435,8 @@ public class ContactDao implements ContactDaoRemote
 			groups.add(getContactGroup(id));
 
 		ArrayList<ContactReportStructure> ret = new ArrayList<ContactReportStructure>();
+
+		Collections.sort(groups);
 		for(ContactGroup group : groups)
 		{
 			ArrayList<LinkedContact> linked = EntityInstance.getResultList(linkedEjbql,

@@ -77,6 +77,13 @@ public interface CalendarDaoRemote extends Serializable
 	public abstract ArrayList<Week> getAllWeeks(Season production);
 
 	/**
+	 * @param advance
+	 *          the advance to search
+	 * @return a list of possible performances to assign this advance to.
+	 */
+	public abstract ArrayList<Performance> getAlternativePerformances(PerformanceAdvance advance);
+
+	/**
 	 * @param day
 	 *          the day to query
 	 * @return a list of events for this day (zero count for none)
@@ -129,6 +136,13 @@ public interface CalendarDaoRemote extends Serializable
 	 * @return a week by the date
 	 */
 	public abstract Week getOrCreateWeek(Date dayInWeek, Season production);
+
+	/**
+	 * @param id
+	 *          the id of the performance
+	 * @return a performance for this id
+	 */
+	public abstract Performance getPerformance(Long id);
 
 	/**
 	 * 

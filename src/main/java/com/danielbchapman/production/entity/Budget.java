@@ -3,8 +3,10 @@ package com.danielbchapman.production.entity;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
@@ -25,7 +27,7 @@ public class Budget extends BaseEntity
 	private Date date;
 	@ManyToOne(targetEntity = Department.class)
 	private Department department;
-	@OneToMany(targetEntity = BudgetEntry.class, mappedBy = "budget")
+	@OneToMany(targetEntity = BudgetEntry.class, mappedBy = "budget", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Collection<BudgetEntry> entries;
 	@Column(length = 50)
 	private String name;
