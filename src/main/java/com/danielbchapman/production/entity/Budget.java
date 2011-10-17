@@ -29,7 +29,7 @@ public class Budget extends BaseEntity
 	private Department department;
 	@OneToMany(targetEntity = BudgetEntry.class, mappedBy = "budget", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Collection<BudgetEntry> entries;
-	@Column(length = 50)
+	@Column(length = 64, unique = true)
 	private String name;
 	@ManyToOne(targetEntity = Season.class)
 	private Season season;
