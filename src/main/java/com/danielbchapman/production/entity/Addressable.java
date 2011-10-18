@@ -26,19 +26,17 @@ public abstract class Addressable extends BaseEntity implements IAddressable
 	private static final long serialVersionUID = 1L;
 
 	@Column(length = 128)
-	private String addressLineOne;
+	private String addressLineOne = "";
 	@Column(length = 128)
-	private String addressLineTwo;
+	private String addressLineTwo = "";
 	@Column(length = 128)
-	private String addressContact;
+	private String addressContact = "";
 	@Column(length = 20)
-	private String addressZip;
-
+	private String addressZip = "";
 	@Column(length = 40)
-	private String addressCity;
-
+	private String addressCity = "";
 	@Column(length = 60)
-	private String addressState;
+	private String addressState = "";
 
 	/**
 	 * @return the addressCity

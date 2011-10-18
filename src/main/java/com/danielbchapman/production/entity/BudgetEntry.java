@@ -26,7 +26,7 @@ public class BudgetEntry extends BaseEntity
 	private Budget budget;
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "budgetEntry", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Collection<BudgetAdjustingEntry> adjustments;
-	private Double amountInitial;
+	private Double amountInitial = 0.00;
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date date;
 	@Column(length = 125)

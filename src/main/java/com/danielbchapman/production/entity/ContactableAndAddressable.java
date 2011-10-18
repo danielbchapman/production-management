@@ -28,31 +28,31 @@ public abstract class ContactableAndAddressable extends BaseEntity implements IC
 	private static final long serialVersionUID = 1L;
 
 	@Column(length = 40)
-	private String addressCity;
+	private String addressCity = "";
 	@Column(length = 128)
-	private String addressLineOne;
+	private String addressLineOne = "";
 	@Column(length = 128)
-	private String addressLineTwo;
+	private String addressLineTwo = "";
 	@Column(length = 60)
-	private String addressState;
+	private String addressState = "";
 	@Column(length = 20)
-	private String addressZip;
+	private String addressZip = "";
+	@Column(length = 64)
+	private String cell = "";
 	@Column(length = 128)
-	private String cell;
+	private String contact = "";
 	@Column(length = 128)
-	private String contact;
-	@Column(length = 128)
-	private String contactName;
+	private String contactName = "";
 	@Lob
-	private String contactNotes;
+	private String contactNotes = "";
 	@Column(length = 128)
-	private String contactPosition;
+	private String contactPosition = "";
 	@Column(length = 128)
-	private String email;
-	@Column(length = 128)
-	private String fax;
-	@Column(length = 128)
-	private String phone;
+	private String email = "";
+	@Column(length = 64)
+	private String fax = "";
+	@Column(length = 64)
+	private String phone = "";
 
 	/**
 	 * @return the addressCity

@@ -30,10 +30,10 @@ public class Budget extends BaseEntity
 	@OneToMany(targetEntity = BudgetEntry.class, mappedBy = "budget", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Collection<BudgetEntry> entries;
 	@Column(length = 64, unique = true)
-	private String name;
+	private String name = "";
 	@ManyToOne(targetEntity = Season.class)
 	private Season season;
-	private Double startingBudget;
+	private Double startingBudget = 0.00;
 
 	public Budget()
 	{

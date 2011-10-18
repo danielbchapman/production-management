@@ -17,10 +17,10 @@ public class ContactGroup extends BaseEntity implements Comparable
 	private int alpha = 255;
 	private int blue = 255;
 	@Column(length = 512)
-	private String description;
+	private String description = "";
 	private int green = 255;
 	@Column(length = 40)
-	private String name;
+	private String name = "";
 	private int red = 255;
 	private int rank = 99;
 

@@ -27,19 +27,19 @@ public abstract class Contactable extends BaseEntity implements IContactable
 	private static final long serialVersionUID = 1L;
 
 	@Column(length = 128)
-	private String cell;
+	private String cell = "";
 	@Column(length = 128)
-	private String contactName;
+	private String contactName = "";
 	@Lob
-	private String contactNotes;
+	private String contactNotes = "";
 	@Column(length = 128)
-	private String contactPosition;
+	private String contactPosition = "";
 	@Column(length = 128)
-	private String email;
+	private String email = "";
 	@Column(length = 128)
-	private String fax;
+	private String fax = "";
 	@Column(length = 128)
-	private String phone;
+	private String phone = "";
 
 	@Override
 	public String getCell()

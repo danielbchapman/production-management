@@ -19,19 +19,19 @@ public class ContactAddress extends BaseEntity
 {
 	private static final long serialVersionUID = 1L;
 	@Column(length = 40)
-	private String city;
+	private String city = "";
 	@ManyToOne(targetEntity = Contact.class, cascade = { CascadeType.REFRESH })
 	private Contact contact;
 	@Column(length = 128)
-	private String label;
+	private String label = "";
 	@Column(length = 128)
 	private String lineOne = "";
 	@Column(length = 128)
 	private String lineTwo = "";
 	@Column(length = 60)
-	private String state;
+	private String state = "";
 	@Column(length = 20)
-	private String zip;
+	private String zip = "";
 
 	public String getCity()
 	{

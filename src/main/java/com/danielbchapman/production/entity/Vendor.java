@@ -23,11 +23,11 @@ public class Vendor extends Contactable
 	private static final long serialVersionUID = 1L;
 
 	@Column(length = 128)
-	private String companyName;
+	private String companyName = "";
 	@Column(length = 128)
-	private String department;
+	private String department = "";
 	@Lob
-	private String notes;
+	private String notes = "";
 
 	public String getCompanyName()
 	{

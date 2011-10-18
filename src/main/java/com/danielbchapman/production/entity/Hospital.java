@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 public class Hospital extends ContactableAndAddressable
 {
 	private static final long serialVersionUID = 1L;
-	private String name;
+	private String name = "";
 	private City city;
 
 	public City getCity()
