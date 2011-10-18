@@ -24,7 +24,7 @@ public class LinkedContact extends BaseEntity implements IContact
 	@Column(length = 128)
 	private String subGroup = "none";
 	@Column(length = 128)
-	private String position;
+	private String position = "";
 
 	/*
 	 * (non-Javadoc)

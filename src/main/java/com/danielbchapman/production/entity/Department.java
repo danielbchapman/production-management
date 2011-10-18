@@ -15,7 +15,7 @@ public class Department extends BaseEntity
 {
 	private static final long serialVersionUID = 1L;
 	@Column(length = 50)
-	private String name;
+	private String name = "";
 	private Season season;
 
 	public Department()

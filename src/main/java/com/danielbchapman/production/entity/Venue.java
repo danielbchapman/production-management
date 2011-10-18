@@ -14,35 +14,35 @@ public class Venue extends ContactableAndAddressable
 	private static final long serialVersionUID = 1L;
 
 	@Column(length = 256)
-	private String apronWidth;
+	private String apronWidth = "";
 	@Column(length = 256)
-	private String boxOffice;
+	private String boxOffice = "";
 	@Column(length = 256)
-	private String boxOfficeContact;
+	private String boxOfficeContact = "";
 	private City city;
 	@Column(length = 256)
-	private String dressingRoom;
+	private String dressingRoom = "";
 	@Column
-	private String houseCapacity;
+	private String houseCapacity = "";
 	@Column(length = 256)
-	private String loadingDock;
+	private String loadingDock = "";
 	@Column(length = 128)
-	private String name;
+	private String name = "";
 	@Lob
-	private String notes;
+	private String notes = "";
 	@Column(length = 256)
-	private String prosceniumHeight;
+	private String prosceniumHeight = "";
 	@Column(length = 256)
-	private String prosceniumToApron;
+	private String prosceniumToApron = "";
 	@Column(length = 256)
-	private String prosceniumToBackWall;
+	private String prosceniumToBackWall = "";
 	@Column(length = 256)
-	private String prosceniumWidth;
-	private String showersForCrew;
+	private String prosceniumWidth = "";
+	private String showersForCrew = "";
 	@Column(length = 256)
-	private String steamerIron;
+	private String steamerIron = "";
 	@Column(length = 256)
-	private String washerDryer;
+	private String washerDryer = "";
 
 	public Venue()
 	{

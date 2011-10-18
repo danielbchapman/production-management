@@ -25,18 +25,18 @@ public class City extends BaseEntity
 	private static final long serialVersionUID = 1L;
 
 	private Hotel castHotel;
-	private String country;
+	private String country = "USA";
 	private Hotel crewHotel;
 	@OneToMany(cascade = { CascadeType.ALL }, targetEntity = Hospital.class, fetch = FetchType.EAGER)
 	private Collection<Hospital> hospitals;
 	@OneToMany(cascade = { CascadeType.ALL }, targetEntity = Hotel.class, fetch = FetchType.EAGER)
 	private Collection<Hotel> hotels;
-	private String name;
+	private String name = "";
 	private Hospital selectedHospital;
-	private String stateOrTerritory;
-	private String taxiServiceAddress;
-	private String taxiServiceName;
-	private String taxiServicePhone;
+	private String stateOrTerritory = "";
+	private String taxiServiceAddress = "";
+	private String taxiServiceName = "";
+	private String taxiServicePhone = "";
 
 	public Hotel getCastHotel()
 	{

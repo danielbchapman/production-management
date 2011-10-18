@@ -35,42 +35,42 @@ public class PerformanceAdvance extends BaseEntity
 	private static final long serialVersionUID = 1L;
 	private boolean complete;
 	@Lob
-	private String contactInformation;
+	private String contactInformation = "";
 	private Day day;
 	@Column(length = 96)
-	private String gaffTape;
+	private String gaffTape = "";
 	@Column(length = 96)
-	private String groundPlan;
+	private String groundPlan = "";
 	@Lob
-	private String hospitality;
+	private String hospitality = "";
 	@Lob
-	private String lightingNotes;
+	private String lightingNotes = "";
 	@Column(length = 96)
-	private String lightPlot;
+	private String lightPlot = "";
 	@Lob
-	private String loadingDock;
+	private String loadingDock = "";
 	@Lob
-	private String maskingNotes;
+	private String maskingNotes = "";
 	@OneToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH }, optional = true)
 	private Performance performance;
 	@Column(length = 96)
-	private String rigging;
+	private String rigging = "";
 	@Lob
-	private String scenicNotes;
+	private String scenicNotes = "";
 	@Column(length = 96)
-	private String section;
+	private String section = "";
 	@Column(length = 96)
-	private String shorePower;
+	private String shorePower = "";
 	@Lob
-	private String soundNotes;
+	private String soundNotes = "";
 	@Column(length = 128)
-	private String wardrobeIroningBoard;
+	private String wardrobeIroningBoard = "";
 	@Column(length = 128)
-	private String wardrobeLaundry;
+	private String wardrobeLaundry = "";
 	@Lob
-	private String wardrobeNotes;
+	private String wardrobeNotes = "";
 	@Column(length = 128)
-	private String wardrobeSteamer;
+	private String wardrobeSteamer = "";
 	
 	private Venue venue;
 

@@ -50,23 +50,23 @@ public class AbstractContact extends BaseEntity implements IContact
 	@Transient
 	private ContactAddress addressTwo;
 	@Column(length = 128)
-	private String cell;
+	private String cell = "";
 	@ManyToOne(targetEntity = ContactGroup.class)
 	private ContactGroup contactGroup;
 	@Column(length = 128)
-	private String email;
+	private String email = "";
 	@Column(length = 128)
-	private String fax;
+	private String fax = "";
 	@Column(length = 128)
-	private String firstName;
+	private String firstName = "";
 	@Column(length = 128)
-	private String lastName;
+	private String lastName = "";
 	@Lob
-	private String notes;
+	private String notes = "";
 	@Column(length = 128)
-	private String phone;
+	private String phone = "";
 	@Column(length = 128)
-	private String position;
+	private String position = "";
 	@Column(length = 128)
 	private String subGroup = "none";
 

@@ -24,11 +24,11 @@ public class BudgetAdjustingEntry extends BaseEntity
 	@ManyToOne(targetEntity = BudgetEntry.class, fetch = FetchType.EAGER, cascade = {
 			CascadeType.REFRESH, CascadeType.MERGE })
 	private BudgetEntry budgetEntry;
-	private Double amount;
+	private Double amount = 0.00;
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date date;
 	@Column(length = 200)
-	private String note;
+	private String note = "";
 	private EntryType entryType;
 
 	public BudgetAdjustingEntry()

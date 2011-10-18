@@ -36,11 +36,11 @@ public class Day implements Indentifiable
 	private Hotel castHotel;
 	private City castLocation;
 	@Column(length = 20)
-	private String castTravel;
+	private String castTravel = "";
 	private Hotel crewHotel;
 	private City crewLocation;
 	@Column(length = 20)
-	private String crewTravel;
+	private String crewTravel = "";
 	@Temporal(value = TemporalType.DATE)
 	private Date date;
 	@OneToMany(mappedBy = "day", targetEntity = Event.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -49,11 +49,11 @@ public class Day implements Indentifiable
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@Column(length = 75)
-	private String label;
+	private String label = "";
 	@Column(length = 120)
-	private String milageInformation;
+	private String milageInformation = "";
 	@Lob
-	private String notes;
+	private String notes = "";
 	@OneToMany(mappedBy = "day", targetEntity = Performance.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Collection<Performance> performances;
 	@Column(length = 120)

@@ -17,7 +17,7 @@ public class EventMapping extends BaseEntity implements Comparable<EventMapping>
 	private static final long serialVersionUID = 2L;
 
 	@Lob
-	private String description;
+	private String description = "";
 	@Temporal(value = TemporalType.TIME)
 	private Date start;
 	@Temporal(TemporalType.TIME)
