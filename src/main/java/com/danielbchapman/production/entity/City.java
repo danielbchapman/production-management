@@ -20,7 +20,7 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "name" }))
-public class City extends BaseEntity
+public class City extends BaseEntity implements Comparable<City>
 {
 	private static final long serialVersionUID = 1L;
 
@@ -37,6 +37,24 @@ public class City extends BaseEntity
 	private String taxiServiceAddress = "";
 	private String taxiServiceName = "";
 	private String taxiServicePhone = "";
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	@Override
+	public int compareTo(City o)
+	{
+		if(o == null)
+			return 1;
+		if(o.getName() == null)
+			return 1;
+		if(getName() == null)
+			return -1;
+
+		return getName().compareTo(o.getName());
+	}
 
 	public Hotel getCastHotel()
 	{

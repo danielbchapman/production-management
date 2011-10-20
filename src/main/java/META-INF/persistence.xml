@@ -22,6 +22,7 @@
 		<class>com.danielbchapman.production.entity.PerformanceAdvance</class>
 		<class>com.danielbchapman.production.entity.Performance</class>
 		<class>com.danielbchapman.production.entity.Options</class>
+		<class>com.danielbchapman.production.entity.LinkedContact</class>
 		<class>com.danielbchapman.production.entity.Hotel</class>
 		<class>com.danielbchapman.production.entity.Hospital</class>
 		<class>com.danielbchapman.production.entity.EventMapping</class>
@@ -40,8 +41,8 @@
 		<class>com.danielbchapman.production.entity.Budget</class>
 		<class>com.danielbchapman.production.entity.BaseEntity</class>
 		<class>com.danielbchapman.production.entity.Addressable</class>
-		<class>com.danielbchapman.production.entity.LinkedContact</class>
 		<class>com.danielbchapman.production.entity.AbstractContact</class>
+		<class>com.danielbchapman.production.entity.PointOfInterest</class>
 
 		<properties>
 			<!-- 
