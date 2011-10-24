@@ -213,7 +213,7 @@ public class CalendarDao implements CalendarDaoRemote
 		if(season == null)
 			return ret;
 
-		Query q = em.createQuery("SELECT w FROM Week w WHERE w.season = ?1 ORDER BY w.id");
+		Query q = em.createQuery("SELECT w FROM Week w WHERE w.season = ?1 ORDER BY w.date");
 		q.setParameter(1, season);
 
 		List<Week> weeks = (List<Week>) q.getResultList();
