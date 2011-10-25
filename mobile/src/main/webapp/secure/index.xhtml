@@ -1,0 +1,41 @@
+<f:view 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:pm="http://primefaces.prime.com.tr/mobile"
+	xmlns:tac="http://java.sun.com/jsf/composite/tac"
+	xmlns:mobile="http://java.sun.com/jsf/composite/mobile"
+	contentType="text/html"
+>
+	<h:outputText value="TEST TEXT"/>
+	<hr />
+	<pm:page title="Login" rendered="#{not loginBean.loggedIn}">
+		<pm:view id="main">
+			<pm:header title="Header">
+				<f:facet name="center">
+				
+				</f:facet>
+			</pm:header>
+			
+			<pm:content>
+				<pm:listView inset="true" title="Framework" titleSwatch="a">
+					<h:outputLink value="#transitions">Transitions</h:outputLink>
+					<h:outputLink value="#ajaxStatus">Ajax Status</h:outputLink>
+					<h:outputLink value="#ajaxUpdate">Ajax Updates</h:outputLink>
+					<h:outputLink value="#theming">Theming</h:outputLink>
+				</pm:listView>
+			</pm:content>		
+				
+		</pm:view>  
+		
+		<pm:view rendered="#{loginBean.guest}">
+			<pm:header title="Contacts">
+			</pm:header>
+			
+			<pm:listView></pm:listView>
+		</pm:view>          
+	</pm:page>
+</f:view>    
+		
