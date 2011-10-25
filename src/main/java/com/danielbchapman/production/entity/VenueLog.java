@@ -4,14 +4,28 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 /**
- * Entity implementation class for Entity: VenueLog
- * 
+ * A simple implementation of a log.
+ * @author dchapman
+ * @since Oct 24, 2011
+ * @copyright The Acting Company Oct 24, 2011 @link www.theactingcompany.org
  */
 @Entity
+@Data
+@EqualsAndHashCode(callSuper=true)
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString(exclude={"venue"})
 public class VenueLog extends BaseEntity
 {
 	private static final long serialVersionUID = 1L;
@@ -19,36 +33,8 @@ public class VenueLog extends BaseEntity
 	Venue venue;
 	@Temporal(TemporalType.TIMESTAMP)
 	Date date;
-	@Column(length = 4096)
+	@Lob
 	String notes = "";
-
-	public Date getDate()
-	{
-		return date;
-	}
-
-	public String getNotes()
-	{
-		return notes;
-	}
-
-	public Venue getVenue()
-	{
-		return venue;
-	}
-
-	public void setDate(Date date)
-	{
-		this.date = date;
-	}
-
-	public void setNotes(String notes)
-	{
-		this.notes = notes;
-	}
-
-	public void setVenue(Venue venue)
-	{
-		this.venue = venue;
-	}
+	@Column(length=64)
+	String enteredBy = "";
 }

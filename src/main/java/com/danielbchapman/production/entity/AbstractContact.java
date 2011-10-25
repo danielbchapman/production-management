@@ -372,6 +372,15 @@ public class AbstractContact extends BaseEntity implements IContact
 		return subGroup;
 	}
 
+	/**
+	 * @param addresses
+	 *          the addresses to set
+	 */
+	public void setAddresses(Collection<ContactAddress> addresses)
+	{
+		this.addresses = addresses;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 

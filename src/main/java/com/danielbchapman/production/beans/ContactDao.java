@@ -52,7 +52,9 @@ public class ContactDao implements ContactDaoRemote
 		}
 		else
 		{
-			EntityInstance.saveObject(address);
+			contact.setAddresses(new ArrayList<ContactAddress>());
+			contact.getAddresses().add(address);
+			EntityInstance.saveObject(contact);
 		}
 	}
 

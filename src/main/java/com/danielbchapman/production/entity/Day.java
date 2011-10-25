@@ -145,6 +145,29 @@ public class Day implements Indentifiable
 	}
 
 	@Transient
+	public Performance getProbablePerformance()
+	{
+		if(getPerformances() == null || getPerformances().size() == 0)
+			return null;
+		else
+		{
+			Performance top = null;
+			for(Performance p : getPerformances())
+			{
+				if(top == null)
+				{
+					top = p;
+					continue;
+				}
+
+				if(p.getStart().compareTo(top.getStart()) > 0)
+					top = p;
+			}
+			return top;
+		}
+	}
+
+	@Transient
 	public Venue getProbableVenue()
 	{
 		if(getPerformances() == null || getPerformances().size() == 0)
