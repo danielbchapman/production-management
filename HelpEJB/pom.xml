@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.theactingcompany.production</groupId>
 	<artifactId>HelpEJB</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>2.1.1</version>
 	<name>HelpEJB</name>
 	<description>The help system for the production database.
 </description>
