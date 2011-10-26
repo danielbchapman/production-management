@@ -194,7 +194,7 @@ public class CalendarDao implements CalendarDaoRemote
 	@Override
 	public ArrayList<Week> getAllWeeks()
 	{
-		return EntityInstance.getResultList("SELECT w FROM Week w", Week.class);
+		return EntityInstance.getResultList("SELECT w FROM Week w ORDER BY w.date", Week.class);
 	}
 
 	/*
