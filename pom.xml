@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.theactingcompany.production</groupId>
   <artifactId>ProductionResources</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>2.1.1</version>
   <packaging>war</packaging>
   <name>resources</name>
   <description>A simple war with access to style-sheets and JqueryUI for pages outside the container</description>
