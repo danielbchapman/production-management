@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.theactingcompany.production</groupId>
   <artifactId>mobile</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>2.1.1</version>
   <packaging>war</packaging>
   <name>Mobile</name>
   <description>The mobile website for the production database</description>
@@ -21,27 +21,27 @@
 		<dependency>
 			<groupId>org.theactingcompany.production</groupId>
 			<artifactId>GenericLoginEJB</artifactId>
-			<version>1.0.1-SNAPSHOT</version>
+			<version>2.1.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.theactingcompany.production</groupId>
 			<artifactId>HelpEJB</artifactId>
-			<version>1.0.1-SNAPSHOT</version>
+			<version>2.1.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.theactingcompany.production</groupId>
 			<artifactId>InventoryEJB</artifactId>
-			<version>1.0.1-SNAPSHOT</version>
+			<version>2.1.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.theactingcompany.production</groupId>
 			<artifactId>ProductionEJB</artifactId>
-			<version>1.0.1-SNAPSHOT</version>
+			<version>2.1.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.theactingcompany.production</groupId>
 			<artifactId>production</artifactId>
-			<version>1.0.1-SNAPSHOT</version>
+			<version>2.1.1</version>
 		</dependency>
 		<!-- In development, currently in the lib folder 
 		<dependency>  
