@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.theactingcompany.production</groupId>
   <artifactId>JpaFramework</artifactId>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>2.1.1</version>
   <name>JpaFramework</name>
   <description>A simple set of utility classes that can be shared amoungst the projects. This is to simplify the design which has spread based on speed.</description>
   
