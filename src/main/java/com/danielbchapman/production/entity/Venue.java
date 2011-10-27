@@ -115,6 +115,12 @@ public class Venue extends ContactableAndAddressable implements Comparable<Venue
 		if(a.getAddressCity() == null && b.getAddressCity() == null)
 			return Venue.compareVenues(a, b);
 		
+		if(a.getAddressCity() == null)
+			return -1;
+		
+		if(a.getAddressState() == null)
+			return -1;
+		
 		int states = a.getAddressState().compareTo(b.getAddressState());
 		
 		if(states != 0)
