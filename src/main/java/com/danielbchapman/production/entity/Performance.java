@@ -184,7 +184,7 @@ public class Performance extends EventMapping
 		buf.append("' Venue:'");
 		buf.append(venue == null ? "null" : venue.getName());
 		buf.append("' Advance:'");
-		buf.append(advance.getId());
+		buf.append(advance == null ? null : advance.getId());
 
 		return buf.toString();
 	}
