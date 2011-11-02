@@ -51,6 +51,8 @@ public class PerformanceAdvance extends BaseEntity
 	private String loadingDock = "";
 	@Lob
 	private String maskingNotes = "";
+	@Lob
+	private String notes = "";
 	@OneToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH }, optional = true)
 	private Performance performance;
 	@Column(length = 96)

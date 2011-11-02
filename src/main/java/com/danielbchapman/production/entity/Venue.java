@@ -121,6 +121,12 @@ public class Venue extends ContactableAndAddressable implements Comparable<Venue
 		if(a.getAddressState() == null)
 			return -1;
 		
+		if(b.getAddressState() == null)
+			return 1;
+		
+		if(b.getAddressCity() == null)
+			return 1;
+		
 		int states = a.getAddressState().compareTo(b.getAddressState());
 		
 		if(states != 0)
@@ -143,12 +149,41 @@ public class Venue extends ContactableAndAddressable implements Comparable<Venue
 		return compareVenues(this, o);
 	}
 	
+	/**
+	 * Set the city in this element to the referenced city
+	 * and update the address/name information
+	 * @param city
+	 */
+	public void setCity(City city)
+	{
+		this.city = city;
+	}
+	
+	@Override
+	public String getAddressCity()
+	{
+		if(city == null)
+			return "";
+		
+		String ret = city.getName();
+		return ret == null ? "" : ret;
+	}
+	
+	@Override
+	public String getAddressState()
+	{
+		if(city == null)
+			return "";
+		
+		String ret = city.getStateOrTerritory();
+		return ret == null ? "" : ret;
+	}
+	
 	public String getDetailedDescription()
 	{
 		StringBuilder builder = new StringBuilder();
-		builder.append("[");
 		builder.append(getAddressState() == null ? "n/a" : getAddressState());
-		builder.append("]");
+		builder.append("|");
 		builder.append(" ");
 		builder.append(getAddressCity() == null ? "n/a" : getAddressCity());
 		builder.append(" | ");

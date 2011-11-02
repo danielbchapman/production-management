@@ -17,6 +17,7 @@ import javax.persistence.Query;
 import org.apache.log4j.Logger;
 import org.theactingcompany.persistence.Indentifiable;
 
+import com.danielbchapman.production.entity.City;
 import com.danielbchapman.production.entity.Day;
 import com.danielbchapman.production.entity.EntityInstance;
 import com.danielbchapman.production.entity.Event;
@@ -511,9 +512,36 @@ public class CalendarDao implements CalendarDaoRemote
 	@Override
 	public ArrayList<Performance> getPerformances(Season s)
 	{
-		return (ArrayList<Performance>) EntityInstance.getResultList(
-				"SELECT p FROM Performance p WHERE p.season = ?1 ORDER BY p.start", new Object[] { s },
-				Performance.class);
+		String query = "SELECT p FROM Performance p WHERE p.day.week.season = ?1 ORDER BY p.start";
+		return EntityInstance.getResultList(query, Performance.class, s);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.danielbchapman.production.beans.CalendarDaoRemote#getPerformances(com.danielbchapman.production
+	 * .entity.Season, com.danielbchapman.production.entity.City)
+	 */
+	@Override
+	public ArrayList<Performance> getPerformances(Season season, City city)
+	{
+		String query = "SELECT p FROM Performance p WHERE p.day.week.season = ?1 AND p.day.castLocation = ?2 ORDER BY p.start";
+		return EntityInstance.getResultList(query, Performance.class, season, city);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.danielbchapman.production.beans.CalendarDaoRemote#getPerformances(com.danielbchapman.production
+	 * .entity.Season, com.danielbchapman.production.entity.Venue)
+	 */
+	@Override
+	public ArrayList<Performance> getPerformances(Season season, Venue venue)
+	{
+		String query = "SELECT p FROM Performance p WHERE p.day.week.season = ?1 AND p.venue = ?2 ORDER BY p.start";
+		return EntityInstance.getResultList(query, Performance.class, season, venue);
 	}
 
 	@Override
