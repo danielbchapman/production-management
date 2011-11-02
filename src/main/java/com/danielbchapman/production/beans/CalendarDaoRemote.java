@@ -8,6 +8,7 @@ import javax.ejb.Remote;
 
 import org.theactingcompany.persistence.Indentifiable;
 
+import com.danielbchapman.production.entity.City;
 import com.danielbchapman.production.entity.Day;
 import com.danielbchapman.production.entity.Event;
 import com.danielbchapman.production.entity.EventMapping;
@@ -181,6 +182,24 @@ public interface CalendarDaoRemote extends Serializable
 	 * @return a list of all performances for this production
 	 */
 	public abstract ArrayList<Performance> getPerformances(Season p);
+
+	/**
+	 * @param season
+	 *          the season to search
+	 * @param city
+	 *          the city to search
+	 * @return a list of Performances for the sepcified parameters
+	 */
+	public abstract ArrayList<Performance> getPerformances(Season season, City city);
+
+	/**
+	 * @param season
+	 *          the season to search
+	 * @param venue
+	 *          the venue to search
+	 * @return a list of Performances for the sepcified parameters
+	 */
+	public abstract ArrayList<Performance> getPerformances(Season season, Venue venue);
 
 	/**
 	 * @param id
