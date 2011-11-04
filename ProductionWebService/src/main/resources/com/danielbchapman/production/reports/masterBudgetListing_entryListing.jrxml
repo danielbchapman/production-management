@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="masterBudgetListing_entryListing" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="792" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="BUDGET_ID" class="java.lang.Long"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Software Development\\Eclipse Workspace 2009\\Light Assistant\\ProductionEE\\src\\com\\danielbchapman\\production\\reports\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ADJUSTMENT_BINARY" class="java.lang.Object"/>
+	<queryString>
+		<![CDATA[SELECT
+     BUDGETENTRY."ID" AS BUDGETENTRY_ID,
+     BUDGETENTRY."DATE" AS BUDGETENTRY_DATE,
+     BUDGETENTRY."NOTE" AS BUDGETENTRY_NOTE,
+     BUDGETENTRY."AMOUNTINITIAL" AS BUDGETENTRY_AMOUNTINITIAL,
+     (SELECT Sum(ae.Amount) FROM BudgetAdjustingEntry ae WHERE ae.BudgetEntry_Id = BUDGETENTRY."ID" ) AS "AdjustmentAmount"
+FROM
+     "PUBLIC"."BUDGETENTRY" BUDGETENTRY
+WHERE
+  BUDGETENTRY.BUDGET_ID = $P{BUDGET_ID}]]>
+	</queryString>
+	<field name="BUDGETENTRY_ID" class="java.lang.Long"/>
+	<field name="BUDGETENTRY_DATE" class="java.sql.Timestamp"/>
+	<field name="BUDGETENTRY_NOTE" class="java.lang.String"/>
+	<field name="BUDGETENTRY_AMOUNTINITIAL" class="java.lang.Double"/>
+	<field name="AdjustmentAmount" class="java.lang.Double"/>
+	<columnHeader>
+		<band height="15">
+			<staticText>
+				<reportElement x="24" y="0" width="100" height="15"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Entry Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="124" y="0" width="100" height="15"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Initial]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="224" y="0" width="100" height="15"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Adjustments]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="324" y="0" width="100" height="15"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement x="24" y="0" width="100" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{BUDGETENTRY_DATE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="424" y="0" width="368" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{BUDGETENTRY_NOTE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="124" y="0" width="100" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{BUDGETENTRY_AMOUNTINITIAL}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="224" y="0" width="100" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{AdjustmentAmount} == null ? 0.00 : $F{AdjustmentAmount}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="324" y="0" width="100" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{BUDGETENTRY_AMOUNTINITIAL} + ($F{AdjustmentAmount} == null ? 0.00 : $F{AdjustmentAmount})]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="15">
+			<printWhenExpression><![CDATA[$F{AdjustmentAmount} != null]]></printWhenExpression>
+			<subreport>
+				<reportElement x="0" y="0" width="792" height="15" isPrintWhenDetailOverflows="true"/>
+				<subreportParameter name="BUDGET_ENTRY_ID">
+					<subreportParameterExpression><![CDATA[$F{BUDGETENTRY_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{ADJUSTMENT_BINARY}]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

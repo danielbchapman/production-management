@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="weeklySchedules_daily" pageWidth="99" pageHeight="466" whenNoDataType="AllSectionsNoDetail" columnWidth="99" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="2.143588810000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="DAY" class="com.danielbchapman.production.entity.Day"/>
+	<parameter name="DAY_OF_WEEK" class="java.lang.String">
+		<defaultValueExpression><![CDATA[new String("ERROR")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PRINT_CAST" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[Boolean.TRUE]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PRINT_CREW" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[Boolean.TRUE]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PRINT_DETAILS" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[Boolean.TRUE]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATE" class="java.util.Date"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="cast" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[cast]]></fieldDescription>
+	</field>
+	<field name="class" class="java.lang.Class">
+		<fieldDescription><![CDATA[class]]></fieldDescription>
+	</field>
+	<field name="crew" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[crew]]></fieldDescription>
+	</field>
+	<field name="day" class="com.danielbchapman.production.entity.Day">
+		<fieldDescription><![CDATA[day]]></fieldDescription>
+	</field>
+	<field name="description" class="java.lang.String">
+		<fieldDescription><![CDATA[description]]></fieldDescription>
+	</field>
+	<field name="end" class="java.util.Date">
+		<fieldDescription><![CDATA[end]]></fieldDescription>
+	</field>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
+	<field name="performance" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[performance]]></fieldDescription>
+	</field>
+	<field name="persisted" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[persisted]]></fieldDescription>
+	</field>
+	<field name="start" class="java.util.Date">
+		<fieldDescription><![CDATA[start]]></fieldDescription>
+	</field>
+	<field name="utcEnd" class="java.util.Date">
+		<fieldDescription><![CDATA[utcEnd]]></fieldDescription>
+	</field>
+	<field name="utcStart" class="java.util.Date">
+		<fieldDescription><![CDATA[utcStart]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="16">
+			<textField pattern="EEEEE dd">
+				<reportElement x="0" y="0" width="100" height="16" forecolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="12" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DATE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="60" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="2" y="0" width="97" height="13"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DAY}.getCastHotel() == null
+?
+  $P{DAY}.getCastTravel() != null
+  ?
+  $P{DAY}.getCastTravel()
+  :
+  "unknown"
+:
+  !"Hotel".equalsIgnoreCase($P{DAY}.getCastTravel())
+  ?
+  $P{DAY}.getCastTravel()
+  :
+  $P{DAY}.getCastHotel().getName()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="2" y="30" width="97" height="13"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DAY}.getCrewHotel() == null ||
+!"Hotel".equalsIgnoreCase($P{DAY}.getCrewTravel())
+?
+  $P{DAY}.getCrewTravel() == null
+  ?
+  "unknown"
+  :
+  $P{DAY}.getCrewTravel()
+:
+$P{DAY}.getCrewHotel().getName()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="2" y="13" width="97" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DAY}.getCastHotel() == null ||
+!"Hotel".equalsIgnoreCase($P{DAY}.getCastTravel())
+?
+""
+:
+$P{DAY}.getCastHotel().getAddressCity() + " " +
+$P{DAY}.getCastHotel().getAddressState() + " " +
+$P{DAY}.getCastHotel().getAddressZip()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="2" y="43" width="97" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(
+    $P{DAY}.getCrewHotel() == null ||
+    !"Hotel".equalsIgnoreCase($P{DAY}.getCrewTravel())
+)
+?
+""
+:
+$P{DAY}.getCrewHotel().getAddressCity() + " " +
+$P{DAY}.getCrewHotel().getAddressState() + " " +
+$P{DAY}.getCrewHotel().getAddressZip()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="80" splitType="Stretch">
+			<elementGroup>
+				<textField isBlankWhenNull="true">
+					<reportElement x="42" y="1" width="57" height="11">
+						<printWhenExpression><![CDATA[$P{DAY}.getProbableVenue() != null]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{DAY}.getMilageInformation()]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="2" y="1" width="35" height="11">
+						<printWhenExpression><![CDATA[$P{DAY}.getProbableVenue() != null &&
+$P{DAY}.getMilageInformation() != null]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Mileage:]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="2" y="39" width="96" height="11">
+						<printWhenExpression><![CDATA[$P{DAY}.getProbableVenue() != null]]></printWhenExpression>
+					</reportElement>
+					<textElement markup="none">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{DAY}.getProbableVenue() == null ? "" : $P{DAY}.getProbableVenue().getAddressCombinedCityStateZip()]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="2" y="54" width="40" height="11">
+						<printWhenExpression><![CDATA[$P{DAY}.getProbableVenue() != null &&
+$P{DAY}.getProbableVenue().getHouseCapacity() != null]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Capacity:]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="2" y="17" width="97" height="11">
+						<printWhenExpression><![CDATA[$P{DAY}.getProbableVenue() != null]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{DAY}.getProbableVenue().getName()]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="43" y="54" width="56" height="11">
+						<printWhenExpression><![CDATA[$P{DAY}.getProbableVenue() != null]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{DAY}.getProbableVenue().getHouseCapacity()]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="2" y="28" width="96" height="11">
+						<printWhenExpression><![CDATA[$P{DAY}.getProbableVenue() != null]]></printWhenExpression>
+					</reportElement>
+					<textElement markup="none">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{DAY}.getProbableVenue() == null ? "" : $P{DAY}.getProbableVenue().getAddressCombinedLines()]]></textFieldExpression>
+				</textField>
+			</elementGroup>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<printWhenExpression><![CDATA[$F{cast} && !$F{crew} && !$F{performance} && $P{PRINT_CAST}]]></printWhenExpression>
+			<textField pattern="h:mm a">
+				<reportElement x="2" y="0" width="97" height="11"/>
+				<textElement>
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("h:mm a").format($F{utcStart}) + " [Cast]"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="8" y="9" width="91" height="11" isPrintWhenDetailOverflows="true"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20">
+			<printWhenExpression><![CDATA[$F{crew} && !$F{performance} && !$F{cast} && $P{PRINT_CREW}]]></printWhenExpression>
+			<textField pattern="h:mm a">
+				<reportElement x="2" y="0" width="96" height="11"/>
+				<textElement>
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("h:mm a").format($F{utcStart}) + " [Crew]"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="8" y="9" width="91" height="11" isPrintWhenDetailOverflows="true"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20">
+			<printWhenExpression><![CDATA[!$F{performance}
+&&
+(
+    (!$F{cast} && !$F{crew})
+    ||
+    ($F{cast} && $F{crew})
+)]]></printWhenExpression>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="7" y="9" width="92" height="11" isPrintWhenDetailOverflows="true"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<textField pattern="h:mm a">
+				<reportElement x="2" y="0" width="97" height="11"/>
+				<textElement>
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{utcStart}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20">
+			<printWhenExpression><![CDATA[$F{performance}]]></printWhenExpression>
+			<rectangle>
+				<reportElement x="91" y="5" width="5" height="11" forecolor="#FFFFFF" backcolor="#00CC00"/>
+			</rectangle>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="7" y="9" width="92" height="11" isPrintWhenDetailOverflows="true"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<textField pattern="h:mm a">
+				<reportElement x="2" y="0" width="97" height="11"/>
+				<textElement>
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{utcStart}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="28" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="2" y="15" width="97" height="11">
+					<printWhenExpression><![CDATA[$P{DAY}.getNotes().trim().length() > Integer.valueOf("0")]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DAY}.getNotes()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="6" width="100" height="11">
+					<printWhenExpression><![CDATA[$P{DAY}.getNotes().trim().length() > Integer.valueOf("0")]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Notes:]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

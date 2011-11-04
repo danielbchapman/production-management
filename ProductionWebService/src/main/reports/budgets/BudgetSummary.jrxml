@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Budget Summary" pageWidth="595" pageHeight="788" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0000000000000013"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#EFF7FF"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="FILE_PATH" class="java.lang.String">
+		<defaultValueExpression><![CDATA["./"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+	(
+		SELECT
+  		SUM(Amount) AS "Adjustments"
+		FROM
+			BudgetEntry e
+			INNER JOIN BudgetAdjustingEntry a
+				ON
+							e.id = a.budgetEntry_id
+					AND b.id = e.budget_id
+	)
+	+
+	(
+		SELECT
+		  SUM(AmountInitial) AS "Entries"
+		FROM
+		  BudgetEntry e
+		WHERE
+			e.budget_id = b.id
+	)
+	AS "EntriesAndAdjustments",
+	b.*,
+	s.name AS "SeasonName"
+FROM
+  Budget b
+  INNER JOIN BudgetEntry e
+    ON
+      e.budget_id = b.id
+	INNER JOIN BudgetAdjustingEntry a
+		ON
+			e.id = a.budgetEntry_id
+  INNER JOIN Season s
+    ON
+      b.season_id = s.id
+GROUP BY
+  b.id
+ORDER BY
+  b.id]]>
+	</queryString>
+	<field name="EntriesAndAdjustments" class="java.lang.Double"/>
+	<field name="ID" class="java.lang.Long"/>
+	<field name="DATE" class="java.sql.Timestamp"/>
+	<field name="NAME" class="java.lang.String"/>
+	<field name="STARTINGBUDGET" class="java.lang.Double"/>
+	<field name="DEPARTMENT_ID" class="java.lang.Long"/>
+	<field name="SEASON_ID" class="java.lang.Long"/>
+	<field name="SeasonName" class="java.lang.String"/>
+	<background>
+		<band height="748" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="60" height="40"/>
+				<imageExpression><![CDATA[$P{FILE_PATH} + "tac-red.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="151" y="382" width="404" height="366"/>
+				<imageExpression><![CDATA[$P{FILE_PATH} + "tac-watermark.png"]]></imageExpression>
+			</image>
+		</band>
+	</background>
+	<pageHeader>
+		<band height="40" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="537" height="40"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+					<font fontName="Monospaced" size="20" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Budget Summary [" + $F{SeasonName} + "]"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="22">
+			<rectangle radius="3">
+				<reportElement x="0" y="1" width="555" height="20" backcolor="#660000"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="237" y="1" width="100" height="20" forecolor="#FFFFFF"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Allocation]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="1" width="100" height="20" forecolor="#FFFFFF"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NAME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="337" y="0" width="100" height="20" forecolor="#FFFFFF"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Expenses]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="437" y="0" width="100" height="20" forecolor="#FFFFFF"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Remaining]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="18">
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="237" y="0" width="100" height="18"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{STARTINGBUDGET}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="5" y="0" width="220" height="18"/>
+				<textElement>
+					<font size="12" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NAME}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="337" y="0" width="100" height="18"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EntriesAndAdjustments}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="437" y="0" width="100" height="18"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EntriesAndAdjustments} + $F{STARTINGBUDGET}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="5" width="60" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="60" y="5" width="40" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="191" y="5" width="173" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
+				<text><![CDATA[Prepared by: Daniel B. Chapman]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="400" y="5" width="155" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

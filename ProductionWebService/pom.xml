@@ -17,10 +17,27 @@
 			<artifactId>javax.persistence</artifactId>
 			<version>2.0.3</version>
 		</dependency>
+		<dependency>  
+		    <groupId>org.primefaces</groupId>  
+		    <artifactId>primefaces</artifactId>  
+		    <version>2.2</version>  
+		</dependency>
 		<dependency>
-			<groupId>org.theactingcompany.production</groupId>
-			<artifactId>BugsEJB</artifactId>
-			<version>2.1.1</version>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>0.10.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+       <groupId>net.sf.json-lib</groupId>
+       <artifactId>json-lib</artifactId>
+       <version>2.4</version>
+       <classifier>jdk15</classifier>
+    </dependency>
+		<dependency>
+		    <groupId>xom</groupId>
+		    <artifactId>xom</artifactId>
+		    <version>1.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.theactingcompany.production</groupId>
@@ -29,7 +46,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.theactingcompany.production</groupId>
-			<artifactId>HelpEJB</artifactId>
+			<artifactId>BugsEJB</artifactId>
 			<version>2.1.1</version>
 		</dependency>
 		<dependency>
@@ -42,17 +59,16 @@
 			<artifactId>ProductionEJB</artifactId>
 			<version>2.1.1</version>
 		</dependency>
-		<dependency>  
-		    <groupId>org.primefaces</groupId>  
-		    <artifactId>primefaces</artifactId>  
-		    <version>2.2</version>  
+		<dependency>
+			<groupId>jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>3.5.3</version>
 		</dependency>
 		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>0.10.0</version>
-			<scope>provided</scope>
-		</dependency>				
+			<groupId>org.theactingcompany.production</groupId>
+			<artifactId>HelpEJB</artifactId>
+			<version>2.1.1</version>
+		</dependency>
 	</dependencies>
 	<repositories>
 		<repository>
@@ -62,12 +78,18 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
+		<repository>  
+		    <id>prime-repo</id>  
+		    <name>PrimeFaces Maven Repository</name>  
+		    <url>http://repository.primefaces.org</url>  
+		    <layout>default</layout>  
+		</repository> 
 		<repository>
-			<id>prime-repo</id>
-			<name>Prime Technology Maven Repository</name>
-			<url>http://repository.prime.com.tr</url>
+			<id>MVNRepository</id>
+			<name>Maven Repository</name>
+			<url>http://mvnrepository.com/</url>
 			<layout>default</layout>
-		</repository>
+		</repository>		
 	</repositories>
 
 	<build>
@@ -93,5 +115,5 @@
 			</plugin>
 			
 		</plugins>
-	</build>  
+	</build>
 </project>

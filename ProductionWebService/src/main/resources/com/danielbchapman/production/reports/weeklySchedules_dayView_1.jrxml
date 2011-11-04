@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="weeklySchedules_dayView" pageWidth="100" pageHeight="802" whenNoDataType="AllSectionsNoDetail" columnWidth="100" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.948717100000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="162"/>
+	<parameter name="Date" class="java.sql.Date"/>
+	<parameter name="Offset" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT
+  SEQUENCE.SEQ_NAME AS SquenceName,
+  DATEADD('DAY',$P{Offset},$P{Date}) AS DateParam,
+  DAY.Label AS DAY_LABEL,
+  DAY.Date AS DAY_DATE,
+  DAY.Notes AS DAY_NOTES,
+  DAY.CastTravel AS DAY_CASTTRAVEL,
+  DAY.CrewTravel AS DAY_CREWTRAVEL,
+  DAY.CastLocation AS DAY_CASTLOCATION,
+  DAY.CrewLocation AS DAY_CREWLOCATION,
+  DAY.TheaterInformation AS DAY_THEATERINFORMATION,
+  DAY.MilageInformation AS DAY_MILAGEINFORMATION,
+  EVENT.Time AS EVENT_TIME,
+  EVENT.Description AS EVENT_DESCRIPTION,
+  EVENT.Department AS EVENT_DEPARTMENT
+FROM
+  SEQUENCE SEQUENCE
+    LEFT OUTER JOIN
+      DAY DAY ON
+        Day.Date = DATEADD('DAY',$P{Offset},$P{Date})
+    LEFT OUTER JOIN EVENT EVENT ON
+      DAY.Id = EVENT.Day_Id]]>
+	</queryString>
+	<field name="SQUENCENAME" class="java.lang.String"/>
+	<field name="DATEPARAM" class="java.sql.Timestamp"/>
+	<field name="DAY_LABEL" class="java.lang.String"/>
+	<field name="DAY_DATE" class="java.sql.Date"/>
+	<field name="DAY_NOTES" class="java.lang.String"/>
+	<field name="DAY_CASTTRAVEL" class="java.lang.String"/>
+	<field name="DAY_CREWTRAVEL" class="java.lang.String"/>
+	<field name="DAY_CASTLOCATION" class="java.lang.String"/>
+	<field name="DAY_CREWLOCATION" class="java.lang.String"/>
+	<field name="DAY_THEATERINFORMATION" class="java.lang.String"/>
+	<field name="DAY_MILAGEINFORMATION" class="java.lang.String"/>
+	<field name="EVENT_TIME" class="java.sql.Timestamp"/>
+	<field name="EVENT_DESCRIPTION" class="java.lang.String"/>
+	<field name="EVENT_DEPARTMENT" class="java.lang.String"/>
+	<group name="DAY_DATE">
+		<groupExpression><![CDATA[$F{DAY_DATE}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="192" splitType="Stretch">
+			<textField pattern="EEEEE MM/dd" isBlankWhenNull="true">
+				<reportElement x="5" y="0" width="90" height="20" forecolor="#FFFFFF"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{DATEPARAM}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="20" width="38" height="15">
+					<printWhenExpression><![CDATA[$F{DAY_CASTTRAVEL} == null ? false : true]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CAST:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="35" width="38" height="15">
+					<printWhenExpression><![CDATA[$F{DAY_CREWTRAVEL} == null ? false : true]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CREW:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="43" y="20" width="52" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{DAY_CASTTRAVEL}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="43" y="35" width="52" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{DAY_CREWTRAVEL}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="5" y="50" width="90" height="24"/>
+				<textElement markup="html">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{DAY_MILAGEINFORMATION}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="5" y="94" width="90" height="12"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{DAY_CASTLOCATION}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="5" y="106" width="90" height="12"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{DAY_CREWLOCATION}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="5" y="118" width="90" height="74"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{DAY_THEATERINFORMATION}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="19" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="5" y="2" width="90" height="15"/>
+				<textElement markup="html">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["<b>"
++ new SimpleDateFormat("hh:mm a").format($F{EVENT_TIME})
++ "</b><p>"
++ $F{EVENT_DESCRIPTION}
++"</p>"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="63" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="5" y="10" width="90" height="51" isPrintWhenDetailOverflows="true"/>
+				<textElement markup="html">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{DAY_NOTES} == null ? "" : "<p><b>Notes</b><br/>" + $F{DAY_NOTES} + "</p>"]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>

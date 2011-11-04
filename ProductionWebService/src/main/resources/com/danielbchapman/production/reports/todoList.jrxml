@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="todoList" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.2100000000000017"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="9"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<queryString>
+		<![CDATA[SELECT
+     TODOLIST."ID" AS TODOLIST_ID,
+     TODOLIST."DESCRIPTION" AS TODOLIST_DESCRIPTION,
+     TODOLIST."DEPARTMENT" AS TODOLIST_DEPARTMENT,
+     TODOLIST."PRIORITY" AS TODOLIST_PRIORITY,
+     TODOLIST."TARGETDATE" AS TODOLIST_TARGETDATE,
+     TODOLIST."LASTUPDATED" AS TODOLIST_LASTUPDATED,
+     TODOLIST."LABEL" AS TODOLIST_LABEL,
+     TODOSTATUSUPDATE."NOTES" AS TODOSTATUSUPDATE_NOTES,
+     TODOSTATUSUPDATE."LASTUPDATED" AS TODOSTATUSUPDATE_LASTUPDATED,
+     TODOLIST."ISCOMPLETE" AS TODOLIST_ISCOMPLETE,
+     PRODUCTION."NAME" AS PRODUCTION_NAME
+FROM
+     "PUBLIC"."TODOLIST" TODOLIST INNER JOIN "PUBLIC"."TODOSTATUSUPDATE" TODOSTATUSUPDATE ON TODOLIST."ID" = TODOSTATUSUPDATE."TODOLIST_ID"
+     INNER JOIN "PUBLIC"."PRODUCTION" PRODUCTION ON TODOLIST."PRODUCTION_ID" = PRODUCTION."ID"
+
+ORDER BY
+  TODOLIST."ISCOMPLETE",
+  TODOLIST."DEPARTMENT",
+  TODOLIST."TARGETDATE",
+  TODOLIST."PRIORITY"]]>
+	</queryString>
+	<field name="TODOLIST_ID" class="java.lang.Long"/>
+	<field name="TODOLIST_DESCRIPTION" class="java.lang.String"/>
+	<field name="TODOLIST_DEPARTMENT" class="java.lang.String"/>
+	<field name="TODOLIST_PRIORITY" class="java.lang.Integer"/>
+	<field name="TODOLIST_TARGETDATE" class="java.sql.Date"/>
+	<field name="TODOLIST_LASTUPDATED" class="java.sql.Timestamp"/>
+	<field name="TODOLIST_LABEL" class="java.lang.String"/>
+	<field name="TODOSTATUSUPDATE_NOTES" class="java.lang.String"/>
+	<field name="TODOSTATUSUPDATE_LASTUPDATED" class="java.sql.Timestamp"/>
+	<field name="TODOLIST_ISCOMPLETE" class="java.lang.Boolean"/>
+	<field name="PRODUCTION_NAME" class="java.lang.String"/>
+	<group name="TODOLIST_ISCOMPLETE" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{TODOLIST_ISCOMPLETE}]]></groupExpression>
+		<groupHeader>
+			<band height="37">
+				<frame>
+					<reportElement mode="Opaque" x="-21" y="7" width="597" height="24" forecolor="#B89F7D" backcolor="#F2EBDF"/>
+					<rectangle>
+						<reportElement mode="Opaque" x="21" y="0" width="36" height="24" backcolor="#736343"/>
+						<graphicElement>
+							<pen lineWidth="0.0"/>
+						</graphicElement>
+					</rectangle>
+					<textField>
+						<reportElement style="SubTitle" x="68" y="0" width="413" height="24" forecolor="#736343"/>
+						<textElement>
+							<font isBold="true"/>
+						</textElement>
+						<textFieldExpression class="java.lang.String"><![CDATA[$F{TODOLIST_ISCOMPLETE} == null ? "Null" : $F{TODOLIST_ISCOMPLETE}.equals(true) ? "Completed Items" : "Pending Items"]]></textFieldExpression>
+					</textField>
+				</frame>
+				<line>
+					<reportElement positionType="FixRelativeToBottom" x="1" y="6" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.5" lineColor="#999999"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="4"/>
+		</groupFooter>
+	</group>
+	<group name="TODOLIST_DEPARTMENT" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{TODOLIST_DEPARTMENT}]]></groupExpression>
+		<groupHeader>
+			<band height="47">
+				<textField>
+					<reportElement style="SubTitle" x="0" y="4" width="460" height="20"/>
+					<textElement>
+						<font size="16" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{TODOLIST_DEPARTMENT}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="TODOLIST_ID" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{TODOLIST_ID}]]></groupExpression>
+		<groupHeader>
+			<band height="50">
+				<frame>
+					<reportElement style="Row" mode="Transparent" x="0" y="0" width="555" height="15"/>
+					<staticText>
+						<reportElement x="0" y="0" width="36" height="15" forecolor="#736343"/>
+						<textElement/>
+						<text><![CDATA[Priority]]></text>
+					</staticText>
+					<staticText>
+						<reportElement x="69" y="0" width="52" height="15" forecolor="#736343"/>
+						<textElement/>
+						<text><![CDATA[Target Date]]></text>
+					</staticText>
+					<staticText>
+						<reportElement x="460" y="0" width="92" height="15" forecolor="#736343"/>
+						<textElement/>
+						<text><![CDATA[Updated]]></text>
+					</staticText>
+				</frame>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="36" y="0" width="33" height="15"/>
+					<textElement textAlignment="Justified"/>
+					<textFieldExpression class="java.lang.Integer"><![CDATA[$F{TODOLIST_PRIORITY}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="EEEEE dd MMMMM yyyy" isBlankWhenNull="true">
+					<reportElement style="Detail" x="121" y="0" width="195" height="15"/>
+					<textElement/>
+					<textFieldExpression class="java.util.Date"><![CDATA[$F{TODOLIST_TARGETDATE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="1" y="15" width="459" height="15"/>
+					<textElement>
+						<font isBold="true" isItalic="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{TODOLIST_LABEL}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement style="Detail" x="1" y="30" width="315" height="15"/>
+					<textElement markup="html"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{TODOLIST_DESCRIPTION}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="MM/dd/yyyy HH.mm" isBlankWhenNull="true">
+					<reportElement style="Detail" x="457" y="15" width="95" height="15"/>
+					<textElement/>
+					<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{TODOLIST_LASTUPDATED}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band height="802" splitType="Stretch">
+			<image>
+				<reportElement x="1" y="438" width="555" height="276"/>
+				<imageExpression class="java.lang.String"><![CDATA["C:\\Database\\actingco-BG.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="100" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="337" y="0" width="218" height="62"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Todo List]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy" isBlankWhenNull="true">
+				<reportElement style="SubTitle" x="404" y="62" width="151" height="22"/>
+				<textElement textAlignment="Right" markup="none">
+					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="0" y="0" width="170" height="94"/>
+				<imageExpression class="java.lang.String"><![CDATA["C:\\Database\\actingco.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="19" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="128" y="0" width="424" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{TODOSTATUSUPDATE_NOTES}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MM/dd/yyyy HH.mm" isBlankWhenNull="true">
+				<reportElement x="23" y="0" width="98" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{TODOSTATUSUPDATE_LASTUPDATED}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="14" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-21" y="1" width="597" height="24" forecolor="#D0B48E" backcolor="#F2EBDF"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="533" y="0" width="40" height="20" forecolor="#736343"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="453" y="0" width="80" height="20" forecolor="#736343"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
