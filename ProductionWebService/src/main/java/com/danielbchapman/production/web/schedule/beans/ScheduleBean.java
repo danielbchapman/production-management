@@ -230,6 +230,16 @@ public class ScheduleBean
 	}
 
 	/**
+	 * @param season
+	 *          the season to search
+	 * @return a list of performances for this season
+	 */
+	public ArrayList<Performance> getPerformancesForSeason(Season season)
+	{
+		return getCalendarDao().getPerformances(season);
+	}
+
+	/**
 	 * @see com.danielbchapman.production.beans.CalendarDaoRemote#getPerformances(Season, Venue)
 	 * @param seaon
 	 *          the season
@@ -240,16 +250,6 @@ public class ScheduleBean
 	public ArrayList<Performance> getPerformancesForSeasonAndVenue(Season season, Venue venue)
 	{
 		return getCalendarDao().getPerformances(season, venue);
-	}
-
-	/**
-	 * @param season
-	 *          the season to search
-	 * @return a list of performances for this season
-	 */
-	public ArrayList<Performance> getPerformancesForSeason(Season season)
-	{
-		return getCalendarDao().getPerformances(season);
 	}
 
 	public PerformanceUI getPerformanceUi()
@@ -876,8 +876,8 @@ public class ScheduleBean
 		{
 			LoginBean login = Utility.getBean(LoginBean.class);
 			userDaylightSavingsOffset = Integer.valueOf(login.getTimeZoneDaylightOffset());
-
-			if(userDaylightSavingsOffset != 0)
+			int tmpDstActive = Integer.valueOf(login.getTimeZoneDaylightActive());
+			if(tmpDstActive != 0)
 				userInDaylightSavings = true;
 			else
 				userInDaylightSavings = false;

@@ -224,10 +224,11 @@ public class Utility
 	@SuppressWarnings("unchecked")
 	public static <T> T getObjectFromContext(Class<T> clazz, Namespace namespace)
 	{
+		// java:app/ProductionEJB/OptionsDao!com.danielbchapman.production.beans.OptionsDaoRemote
 		String lookup;
 		if(JEE6)
-			lookup = namespace.toString() + "/" + clazz.getSimpleName().replaceAll("Remote", "") + "!"
-					+ clazz.getName();
+			lookup = "java:global/" + namespace.toEnterpriseSix() + "/"
+					+ clazz.getSimpleName().replaceAll("Remote", "") + "!" + clazz.getName();
 		else
 			lookup = "ProductionEE5/" + clazz.getSimpleName().replaceAll("Remote", "") + "/remote";
 
@@ -447,23 +448,30 @@ public class Utility
 	public enum Namespace
 	{
 		//@formatter:off
-		PRODUCTION("Production/ProductionEJB.jar"), 
-		INVENTORY("Production/InventoryEJB.jar"), 
-		LOGIN("Production/GenericLoginEJB.jar"), 
-		BUGS("Production/BugsEJB.jar"), 
-		HELP("Production/HelpEJB.jar");
+		PRODUCTION("Production/ProductionEJB.jar", "ProductionEE6/ProductionEJB" ), 
+		INVENTORY("Production/InventoryEJB.jar", "ProductionEE6/InventoryEJB"), 
+		LOGIN("Production/GenericLoginEJB.jar", "ProductionEE6/GenericLoginEJB"), 
+		BUGS("Production/BugsEJB.jar", "ProductionEE6/BugsEJB"), 
+		HELP("Production/HelpEJB.jar", "ProductionEE6/HelpEJB");
 		//@formatter:on
-		String s;
+		String ee5;
+		String ee6;
 
-		Namespace(String s)
+		Namespace(String ee5, String ee6)
 		{
-			this.s = s;
+			this.ee5 = ee5;
+			this.ee6 = ee6;
+		}
+
+		public String toEnterpriseSix()
+		{
+			return ee6;
 		}
 
 		@Override
 		public String toString()
 		{
-			return s;
+			return ee5;
 		}
 	}
 }

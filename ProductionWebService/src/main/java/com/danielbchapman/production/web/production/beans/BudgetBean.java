@@ -1,8 +1,11 @@
 package com.danielbchapman.production.web.production.beans;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Map;
 
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
@@ -10,6 +13,7 @@ import javax.faces.model.SelectItem;
 
 import org.primefaces.model.DefaultStreamedContent;
 
+import com.danielbchapman.production.AbstractPrintController;
 import com.danielbchapman.production.Utility;
 import com.danielbchapman.production.beans.BudgetDaoRemote;
 import com.danielbchapman.production.beans.OptionsDaoRemote;
@@ -25,6 +29,8 @@ import com.danielbchapman.production.web.schedule.beans.LoginBean;
 @SessionScoped
 public class BudgetBean
 {
+	public final static String REPORTING_DIRCTORY = "budgets";
+
 	private Budget activeBudget;
 	private Double actualizedTotal = 0.00;
 	private Double allocation = 0.00;
@@ -38,8 +44,8 @@ public class BudgetBean
 
 	private Double estimateTotal = 0.00;
 	private OptionsDaoRemote optionsDao;
-	private byte[] masterListing;
-	private byte[] budgetListing;
+	private AllBudgetPrintController printAll = new AllBudgetPrintController();
+	private SingleBudgetPrintController printSingle = new SingleBudgetPrintController();
 
 	public BudgetBean()
 	{
@@ -298,6 +304,22 @@ public class BudgetBean
 		return null;
 	}
 
+	/**
+	 * @return the printAll
+	 */
+	public AllBudgetPrintController getPrintAll()
+	{
+		return printAll;
+	}
+
+	/**
+	 * @return the printSingle
+	 */
+	public SingleBudgetPrintController getPrintSingle()
+	{
+		return printSingle;
+	}
+
 	public boolean isCanHasABudget()
 	{
 		return activeBudget != null;
@@ -356,6 +378,34 @@ public class BudgetBean
 			optionsDao = Utility.getObjectFromContext(OptionsDaoRemote.class,
 					Utility.Namespace.PRODUCTION);
 		return optionsDao;
+	}
+
+	public class AllBudgetPrintController extends AbstractPrintController
+	{
+
+		public AllBudgetPrintController()
+		{
+			super(REPORTING_DIRCTORY + File.separator + "multi", "sub");
+		}
+
+		@Override
+		protected Collection<?> getData()
+		{
+			Season selection = Utility.getBean(SeasonBean.class).getSeason();
+			return getBudgetDao().getAllBudgets(selection);
+		}
+
+		@Override
+		protected Map<String, Object> getParameters()
+		{
+			return null;
+		}
+
+		@Override
+		protected String getReportName()
+		{
+			return "Season Budgets";
+		}
 	}
 
 	public class BudgetCreationVariables
@@ -687,5 +737,32 @@ public class BudgetBean
 				this.adjustment = adjustment;
 			}
 		}
+	}
+
+	public class SingleBudgetPrintController extends AbstractPrintController
+	{
+		public SingleBudgetPrintController()
+		{
+			super(REPORTING_DIRCTORY + File.separator + "single", "sub");
+		}
+
+		@Override
+		protected Collection<?> getData()
+		{
+			return getActiveBudget().getEntries();
+		}
+
+		@Override
+		protected Map<String, Object> getParameters()
+		{
+			return null;
+		}
+
+		@Override
+		protected String getReportName()
+		{
+			return "Single Budget Report";
+		}
+
 	}
 }
