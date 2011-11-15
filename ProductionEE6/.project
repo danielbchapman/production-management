@@ -3,6 +3,15 @@
 	<name>ProductionEE6</name>
 	<comment></comment>
 	<projects>
+		<project>InventoryEJB</project>
+		<project>GenericLoginEJB</project>
+		<project>HelpEJB</project>
+		<project>ProductionEJB</project>
+		<project>JpaFramework</project>
+		<project>ProductionResources</project>
+		<project>ProductionSchedule</project>
+		<project>BugsEJB</project>
+		<project>CustomJaasRealm</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
