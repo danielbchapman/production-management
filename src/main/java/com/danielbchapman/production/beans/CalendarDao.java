@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
+import java.util.logging.Logger;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -14,7 +15,6 @@ import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
 
-import org.apache.log4j.Logger;
 import org.theactingcompany.persistence.Indentifiable;
 
 import com.danielbchapman.production.entity.City;
@@ -58,7 +58,7 @@ public class CalendarDao implements CalendarDaoRemote
 		return cal.getTime();
 	}
 
-	Logger log = Logger.getLogger(CalendarDao.class);
+	Logger log = Logger.getLogger(CalendarDao.class.getName());
 
 	// @PersistenceContext
 	EntityManager em = EntityInstance.getEm();
@@ -270,16 +270,12 @@ public class CalendarDao implements CalendarDaoRemote
 	@Override
 	public ArrayList<EventMapping> getEventsAndPerformancesForDay(Day day)
 	{
-		log.debug("getEventsAndPerformancesForDay(); " + day);
 		ArrayList<Event> events = getEvents(day);
 		ArrayList<Performance> performances = getPerformances(day);
 
 		ArrayList<EventMapping> ret = new ArrayList<EventMapping>();
 		for(Event e : events)
 			ret.add(e);
-
-		log.debug("Event Count" + events.size());
-		log.debug("Performance Count" + performances.size());
 
 		for(Performance p : performances)
 			ret.add(p);
