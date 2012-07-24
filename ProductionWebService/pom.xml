@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.theactingcompany.production</groupId>
   <artifactId>ProductionWebService</artifactId>
-  <version>2.1.1</version>
+  <version>1.0.1-SNAPSHOT</version>
   <name>ProducitonWebService</name>
   <description>This project is the repository for all the web-related beans so that it can be shared by both the UI framework and the Mobile framework</description>
   
@@ -47,12 +47,12 @@
 		<dependency>
 			<groupId>org.theactingcompany.production</groupId>
 			<artifactId>BugsEJB</artifactId>
-			<version>2.1.1</version>
+			<version>1.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.theactingcompany.production</groupId>
 			<artifactId>InventoryEJB</artifactId>
-			<version>2.1.1</version>
+			<version>1.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.theactingcompany.production</groupId>
