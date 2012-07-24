@@ -60,8 +60,9 @@
 			<property name="eclipselink.target-database" value="org.eclipse.persistence.platform.database.H2Platform"/>
 			<property name="eclipselink.weaving" value="false" />
 			<property name="eclipselink.logging.level" value="INFO"/>
+			<!-- 
 			<property name="eclipselink.session.customizer" value="com.danielbchapman.jboss.haxx.JPAEclipseLinkSessionCustomizer" />			
-			
+			 -->
 		</properties>		
 	</persistence-unit>
 </persistence>
