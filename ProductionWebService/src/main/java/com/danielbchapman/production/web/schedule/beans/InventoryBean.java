@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -41,8 +42,9 @@ import com.danielbchapman.production.Utility;
  *************************************************************************** 
  */
 @SessionScoped
-public class InventoryBean
+public class InventoryBean implements Serializable
 {
+	private static final long serialVersionUID = 3L;
 	private InventoryDaoRemote inventoryDao;
 	private Selection selection = Selection.parseValue(null);
 
@@ -371,8 +373,9 @@ public class InventoryBean
 	 * @link http://www.theactingcompany.org
 	 *************************************************************************** 
 	 */
-	public class InventoryElementSet<T extends InventoryElement>
+	public class InventoryElementSet<T extends InventoryElement> implements Serializable
 	{
+		private static final long serialVersionUID = 3L;
 		protected String bulkUploadProduction;
 		protected Class<T> clazz;
 		protected ArrayList<InventoryElementWrapper<T>> inactiveResults;
@@ -487,7 +490,8 @@ public class InventoryBean
 			}
 
 			selected = new InventoryElementWrapper<T>(element);
-			EmbeddableImage image = getImageForClass(selected.getElement().getId());
+			//FIXME Potential problem here, this might be why images are not working
+//			EmbeddableImage image = getImageForClass(selected.getElement().getId());
 			doModeEdit(evt);
 		}
 
@@ -1193,8 +1197,9 @@ public class InventoryBean
 		}
 	}
 
-	public class InventoryProblemSet
+	public class InventoryProblemSet implements Serializable
 	{
+		private static final long serialVersionUID = 3L;
 		protected ArrayList<InventoryProblem> active;
 
 		public void findProblem(ActionEvent evt)

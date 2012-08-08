@@ -1,7 +1,9 @@
 package com.danielbchapman.production.web.schedule.beans;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.TimeZone;
 
 import javax.faces.application.FacesMessage;
@@ -12,14 +14,27 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.PhaseEvent;
 import javax.faces.model.SelectItem;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import org.primefaces.event.ToggleEvent;
 
+import com.danielbchapman.jboss.login.LoginBeanRemote;
+import com.danielbchapman.jboss.login.Role;
 import com.danielbchapman.jboss.login.Roles;
+import com.danielbchapman.jboss.login.User;
 import com.danielbchapman.production.Utility;
 
 @SessionScoped
-public class LoginBean
+public class LoginBean implements Serializable
 {
+	private static final long serialVersionUID = 3L;
+	@Getter
+	@Setter
+	private String authUser;
+	@Getter
+	@Setter
+	private String authPass;
 	private String value;
 	private TimeZone zone;
 	private HtmlOutputText timeZoneField;
@@ -27,7 +42,7 @@ public class LoginBean
 	private String timeZoneCalculated = "unknown";
 	private String timeZoneDaylightOffset = "0";
 	private String timeZoneDaylightActive = "0";
-	private RoleManager roles = new RoleManager();
+	private RoleManager roles;
 
 	private TimeZone[] validZones = new TimeZone[] { TimeZone.getTimeZone("US/Alaska"),
 			TimeZone.getTimeZone("US/Aleutian"), TimeZone.getTimeZone("US/Arizona"),
@@ -44,6 +59,8 @@ public class LoginBean
 			TimeZone.getTimeZone("US/Pacific"), TimeZone.getTimeZone("US/Alaska") };
 
 	private ArrayList<SelectItem> timeZones;
+	
+	private String username;
 
 	public void confirmChangeZone(ActionEvent evt)
 	{
@@ -168,7 +185,7 @@ public class LoginBean
 
 	public String getUserPrinciple()
 	{
-		return FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal() == null ? null
+		return FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal() == null ? username
 				: FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal().getName();
 	}
 
@@ -248,72 +265,104 @@ public class LoginBean
 
 	public boolean isAdmin()
 	{
-		return roles.isAdmin();
+		return isUserInRole(Roles.ADMIN);
 	}
 
 	public boolean isGuest()
 	{
-		return roles.isGuest();
+		return isUserInRole(Roles.GUEST);
 	}
 
 	public boolean isInventoryAdmin()
 	{
-		return roles.isInventoryAdmin();
+		return isUserInRole(Roles.INVENTORY_ADMIN);
 	}
 
 	public boolean isInventoryGeneral()
 	{
-		return roles.isInventoryGeneral();
+		return isUserInRole(Roles.INVENTORY_GENERAL);
 	}
 
 	public boolean isInventoryLighting()
 	{
-		return roles.isInventoryLighting();
+		return isUserInRole(Roles.INVENTORY_LIGHTING);
 	}
 
 	public boolean isInventoryProps()
 	{
-		return roles.isInventoryProps();
+		return isUserInRole(Roles.INVENTORY_PROPS);
 	}
 
 	public boolean isInventoryScenic()
 	{
-		return roles.isInventoryScenic();
+		return isUserInRole(Roles.INVENTORY_SCENIC);
 	}
 
 	public boolean isInventorySound()
 	{
-		return roles.isInventorySound();
+		return isUserInRole(Roles.INVENTORY_SOUND);
 	}
 
 	public boolean isInventoryStageManagement()
 	{
-		return roles.isInventoryStageManagement();
+		return isUserInRole(Roles.INVENTORY_STAGE_MANAGEMENT);
 	}
 
 	public boolean isInventoryWardrobe()
 	{
-		return roles.isInventoryWardrobe();
-	}
-
-	public boolean isLoggedIn()
-	{
-		return getUserPrinciple() != null;
+		return isUserInRole(Roles.INVENTORY_WARDROBE);
 	}
 
 	public boolean isScheduler()
 	{
-		return roles.isScheduler();
+		return isUserInRole(Roles.SCHEDULER);
 	}
 
 	public boolean isUser()
 	{
-		return roles.isUser();
+		return isUserInRole(Roles.USER);
 	}
 
 	public boolean isUserInRole(Roles role)
 	{
-		return roles.isUserInRole(role);
+		if(roles == null)
+			roles = new RoleManager(Roles.GUEST);
+		
+		boolean ret = roles.isUserInRole(role); /* Debug hook */
+		return ret;
+	}
+
+	public boolean isLoggedIn()
+	{
+		return getUserPrinciple() != null || username != null;
+	}
+
+	/**
+	 * Log into the database via a user session. This will do 
+	 * a manual calculation of roles.
+	 * 
+	 * @param evt the action event (not used)
+	 */
+	public void doSessionLogin(ActionEvent evt)
+	{
+		String user = authUser;
+		String pass = authPass;
+		
+		LoginBeanRemote login = Utility.getObjectFromContext(LoginBeanRemote.class, Utility.Namespace.LOGIN);
+		User userObject = login.validateLogin(user, pass);
+		if(userObject != null)
+		{
+			List<Role> db = login.getRolesForUser(user);
+			this.roles = new RoleManager(db);
+				
+			Utility.login();
+			username = authUser;
+			authUser = null;
+			authPass = null;
+			Utility.redirect(Utility.getSession().getServletContext().getContextPath() + "/index.xhtml");
+		}
+		
+		authPass = null;
 	}
 
 	public void selectZone(ActionEvent evt)

@@ -1,5 +1,6 @@
 package com.danielbchapman.production.web.schedule.beans;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -48,8 +49,9 @@ import com.danielbchapman.production.web.schedule.beans.LocationBean.HotelWrappe
  *************************************************************************** 
  */
 @SessionScoped
-public class ScheduleBean
+public class ScheduleBean implements Serializable
 {
+	private static final long serialVersionUID = 3L;
 	private ArrayList<SelectItem> allSeasons;
 	private CalendarDaoRemote calendarDao;
 	private Selection currentSelection = Selection.CALENDAR;
@@ -884,9 +886,9 @@ public class ScheduleBean
 		}
 	}
 
-	public class ComplexEntityScheduleEvent extends DefaultScheduleEvent
+	public class ComplexEntityScheduleEvent extends DefaultScheduleEvent implements Serializable
 	{
-		private static final long serialVersionUID = 1L;
+		private static final long serialVersionUID = 3L;
 		private Object backingEntity;
 
 		public ComplexEntityScheduleEvent(String title, Date start, Date end, boolean allDay)
@@ -905,8 +907,9 @@ public class ScheduleBean
 		}
 	}
 
-	public class DayUI
+	public class DayUI implements Serializable
 	{
+		private static final long serialVersionUID = 3L;
 		private Long castCity;
 		private Long castHotel;
 		private ArrayList<SelectItem> castHotels;
@@ -1067,8 +1070,9 @@ public class ScheduleBean
 		}
 	}
 
-	public class PerformanceSchedules
+	public class PerformanceSchedules implements Serializable
 	{
+		private static final long serialVersionUID = 3L;
 		private Long editableId;
 		private ArrayList<SelectItem> performanceScheduleItems;
 		private PerformanceSchedule wrapper;
@@ -1121,8 +1125,9 @@ public class ScheduleBean
 		}
 	}
 
-	public class PerformanceUI extends TimeUI
+	public class PerformanceUI extends TimeUI implements Serializable
 	{
+		private static final long serialVersionUID = 3L;
 		private Long cityId;
 		private boolean crewCall;
 		private boolean fightCall;
@@ -1340,8 +1345,9 @@ public class ScheduleBean
 		}
 	}
 
-	public class TimeUI
+	public class TimeUI implements Serializable
 	{
+		private static final long serialVersionUID = 3L;
 		final static String AM = "AM";
 		final static String PM = "PM";
 		private Date end;

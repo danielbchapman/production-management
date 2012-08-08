@@ -2,6 +2,7 @@ package com.danielbchapman.production.web.schedule.beans;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,8 +28,9 @@ import com.danielbchapman.production.web.production.beans.AdministrationBean;
 import com.danielbchapman.production.web.production.beans.SeasonBean;
 
 @SessionScoped
-public class LocationBean
+public class LocationBean implements Serializable
 {
+	private static final long serialVersionUID = 3L;
 	private ArrayList<SelectItem> cities;
 	private CityPrintingController cityPrinting;
 	private static String reportingDirectory = "location";
@@ -308,8 +310,9 @@ public class LocationBean
 		return companyManagmentDao;
 	}
 
-	public class CityPrintingController
+	public class CityPrintingController implements Serializable
 	{
+		private static final long serialVersionUID = 3L;
 		private boolean printAll = false;
 		private File baseDir;
 		private ArrayList<PrintElement> elements;
@@ -375,8 +378,9 @@ public class LocationBean
 			this.selection = selection;
 		}
 
-		public class PrintElement
+		public class PrintElement implements Serializable
 		{
+			private static final long serialVersionUID = 3L;
 			private File file;
 			private StreamedContent content;
 			private boolean validSeason;
@@ -440,8 +444,9 @@ public class LocationBean
 		}
 	}
 
-	public class HospitalWrapper
+	public class HospitalWrapper implements Serializable
 	{
+		private static final long serialVersionUID = 3L;
 		private Hospital hospital;
 
 		public HospitalWrapper(Hospital hospital)
@@ -493,8 +498,9 @@ public class LocationBean
 		}
 	}
 
-	public class HotelWrapper
+	public class HotelWrapper implements Serializable
 	{
+		private static final long serialVersionUID = 3L;
 		private Hotel hotel;
 
 		public HotelWrapper(Hotel hotel)
@@ -542,8 +548,9 @@ public class LocationBean
 		}
 	}
 
-	public class PointOfInterestWrapper
+	public class PointOfInterestWrapper implements Serializable
 	{
+		private static final long serialVersionUID = 3L;
 		PointOfInterest value;
 
 		public PointOfInterestWrapper(PointOfInterest value)

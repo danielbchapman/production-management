@@ -2,6 +2,7 @@ package com.danielbchapman.production;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.io.StringWriter;
 import java.util.Stack;
 
@@ -22,8 +23,9 @@ import org.theactingcompany.core.bugs.BugsDaoRemote;
  *************************************************************************** 
  */
 @SessionScoped
-public class ExceptionBean
+public class ExceptionBean implements Serializable
 {
+	private static final long serialVersionUID = 3L;
 	private Bug bug = new Bug();
 	private BugsDaoRemote bugDao;
 	private Stack<Throwable> exceptions = new Stack<Throwable>();

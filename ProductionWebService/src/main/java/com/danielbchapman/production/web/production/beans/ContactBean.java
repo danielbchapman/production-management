@@ -42,8 +42,9 @@ import com.danielbchapman.production.entity.SeasonContact;
  */
 @ManagedBean(name = "contactBean")
 @ViewScoped
-public class ContactBean
+public class ContactBean implements Serializable
 {
+	private static final long serialVersionUID = 3L;
 	private static String reportingDirectory = "contacts";
 	private ArrayList<ContactWrapper> allContacts;
 	private ContactDaoRemote contactDao;
@@ -200,8 +201,9 @@ public class ContactBean
 		return contactDao;
 	}
 
-	public class ContactAddressWrapper
+	public class ContactAddressWrapper implements Serializable
 	{
+		private static final long serialVersionUID = 3L;
 		private ContactAddress address;
 		private Contact contact;
 
@@ -264,8 +266,9 @@ public class ContactBean
 	 * @since Aug 24, 2011
 	 * @copyright The Acting Company Aug 24, 2011 @link www.theactingcompany.org
 	 */
-	public class ContactGroupWrapper
+	public class ContactGroupWrapper implements Serializable
 	{
+		private static final long serialVersionUID = 3L;
 		private ContactGroup group;
 
 		public ContactGroupWrapper(ContactGroup group)
@@ -305,8 +308,9 @@ public class ContactBean
 	 * @since Aug 24, 2011
 	 * @copyright The Acting Company Aug 24, 2011 @link www.theactingcompany.org
 	 */
-	public class ContactWrapper
+	public class ContactWrapper implements Serializable
 	{
+		private static final long serialVersionUID = 3L;
 		private AbstractConverter<ContactGroup> converter;
 		private ArrayList<ContactAddressWrapper> addresses;
 
@@ -570,6 +574,8 @@ public class ContactBean
 	 */
 	public class EditContact extends NewContact
 	{
+		private static final long serialVersionUID = 1L;
+
 		public EditContact(Contact c)
 		{
 			if(c == null)
@@ -594,6 +600,7 @@ public class ContactBean
 	 */
 	public class EditContactGroup extends NewContactGroup
 	{
+		private static final long serialVersionUID = 1L;
 		private ContactGroup group;
 
 		public EditContactGroup(ContactGroup group)
@@ -637,8 +644,9 @@ public class ContactBean
 		}
 	}
 
-	public class NewContact
+	public class NewContact implements Serializable
 	{
+		private static final long serialVersionUID = 3L;
 		protected ArrayList<ContactAddressWrapper> addresses = new ArrayList<ContactAddressWrapper>();
 		protected Contact contact = new Contact();
 		protected Long contactGroup;
@@ -721,8 +729,9 @@ public class ContactBean
 	 * @since Aug 23, 2011
 	 * @copyright The Acting Company Aug 23, 2011 @link www.theactingcompany.org
 	 */
-	public class NewContactGroup
+	public class NewContactGroup implements Serializable
 	{
+		private static final long serialVersionUID = 3L;
 		protected Color color = Color.BLACK;
 		protected String description;
 		protected String name;
@@ -956,8 +965,9 @@ public class ContactBean
 		}
 	}
 
-	public class SeasonPrintingController
+	public class SeasonPrintingController implements Serializable
 	{
+		private static final long serialVersionUID = 3L;
 		private File baseDir;
 		private ArrayList<PrintElement> elements;
 

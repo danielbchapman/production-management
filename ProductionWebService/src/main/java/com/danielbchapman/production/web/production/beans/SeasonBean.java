@@ -1,5 +1,6 @@
 package com.danielbchapman.production.web.production.beans;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.faces.event.ActionEvent;
@@ -21,8 +22,9 @@ import com.danielbchapman.production.entity.Season;
  * @link http://www.theactingcompany.org
  *************************************************************************** 
  */
-public class SeasonBean
+public class SeasonBean implements Serializable
 {
+	private static final long serialVersionUID = 3L;
 	private Season newSeason = new Season();
 	private Season season;
 	private Long seasonCount;;
@@ -153,8 +155,9 @@ public class SeasonBean
 		return seasonDao;
 	}
 
-	public class SeasonSelection
+	public class SeasonSelection implements Serializable
 	{
+		private static final long serialVersionUID = 3L;
 		private Selection mode = Selection.SUMMARY;
 
 		public Selection getMode()
@@ -180,11 +183,6 @@ public class SeasonBean
 		public boolean isPettyCash()
 		{
 			return mode == Selection.PETTY_CASH;
-		}
-
-		public boolean isReminder()
-		{
-			return mode == Selection.TASKS;
 		}
 
 		public boolean isReports()
@@ -221,13 +219,6 @@ public class SeasonBean
 			// bean.refreshDepartments(evt);
 		}
 
-		public void selectReminders(ActionEvent evt)
-		{
-			mode = Selection.TASKS;
-			TaskBean bean = Utility.getBean(TaskBean.class);
-			bean.refreshItems(null);
-		}
-
 		public void selectReports(ActionEvent evt)
 		{
 			mode = Selection.REPORTS;
@@ -243,7 +234,7 @@ public class SeasonBean
 	public enum Selection
 	{
 		BUDGET("budget", "Budget"), DEPARTMENTS("departments", "Departments"), PETTY_CASH("pettyCash",
-				"Petty Cash"), SUMMARY("summary", "Summary"), TASKS("tasks", "Tasks"), REPORTS("reports",
+				"Petty Cash"), SUMMARY("summary", "Summary"), REPORTS("reports",
 				"Reports"), CONTACTS("contacts", "Contacts");
 
 		public static Selection parseValue(String sub)

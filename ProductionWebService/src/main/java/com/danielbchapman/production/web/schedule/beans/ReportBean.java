@@ -1,20 +1,23 @@
 package com.danielbchapman.production.web.schedule.beans;
 
+import java.io.Serializable;
+
 import javax.faces.component.UIForm;
+
+import lombok.Getter;
+import lombok.Setter;
 
 import org.primefaces.component.datatable.DataTable;
 import org.primefaces.component.tabview.Tab;
 
-import com.danielbchapman.production.Utility;
-import com.danielbchapman.production.beans.ReportingBeanRemote;
 import com.danielbchapman.production.beans.ReportingBeanRemote.ReportingType;
 
-public class ReportBean
+public class ReportBean implements Serializable
 {
+	private static final long serialVersionUID = 3L;
 	private TabWrapper budget;
 	private TabWrapper budgetEstimate;
-	private ReportingBeanRemote reporting;
-	private Tab[] tabs;
+//	private Tab[] tabs;
 	private TabWrapper weekly;
 
 	/**
@@ -37,13 +40,7 @@ public class ReportBean
 			budgetEstimate = new TabWrapper(ReportingType.BUDGET_ESTIMATE);
 		return budgetEstimate;
 	}
-	
-	private ReportingBeanRemote getReportingRemote()
-	{
-		if(reporting == null)
-			reporting = Utility.getObjectFromContext(ReportingBeanRemote.class, Utility.Namespace.PRODUCTION);
-		return reporting;
-	}
+
 	/**
 	 * @return the weekly
 	 */
@@ -73,10 +70,15 @@ public class ReportBean
 		// tab.getChildren().
 	}
 
-	public class TabWrapper
+	public class TabWrapper implements Serializable
 	{
+		private static final long serialVersionUID = 3L;
+		@Getter
+		@Setter
 		private Tab tab;
 		private UIForm form;
+		@Getter
+		@Setter
 		private ReportingType type;
 		private TabWrapper(ReportingType type)
 		{
@@ -87,24 +89,6 @@ public class ReportBean
 			tab.getChildren().add(form);
 			populateTab(this);
 		}
-		
-		/**
-		 * @return the tab
-		 */
-		public Tab getTab()
-		{
-			return tab;
-		}
-		
-		/**
-		 * @param tab the tab to set
-		 */
-		public void setTab(Tab tab)
-		{
-			this.tab = tab;
-		}
-		
-		
 	}
 //	private Table createTable() {
 //    //Create the Table Dynamically

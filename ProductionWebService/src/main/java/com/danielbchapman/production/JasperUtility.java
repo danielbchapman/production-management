@@ -99,6 +99,9 @@ public class JasperUtility
 		HashMap<String, File> files = new HashMap<String, File>();
 		File[] children = parent.listFiles();
 
+		if(children == null)
+			return new ArrayList<File>();
+		
 		for(File f : children)
 		{
 			boolean include = true;

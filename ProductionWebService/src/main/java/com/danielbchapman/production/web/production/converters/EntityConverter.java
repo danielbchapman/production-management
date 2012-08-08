@@ -1,5 +1,7 @@
 package com.danielbchapman.production.web.production.converters;
 
+import java.io.Serializable;
+
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -19,8 +21,9 @@ import com.danielbchapman.production.entity.BaseEntity;
  * @link http://www.theactingcompany.org
  ***************************************************************************
  */
-public abstract class EntityConverter implements Converter 
+public abstract class EntityConverter implements Converter, Serializable
 {
+	private static final long serialVersionUID = 3L;
 	protected abstract Class<? extends BaseEntity> getEntityType();
 	/* (non-Javadoc)
 	 * @see javax.faces.convert.Converter#getAsObject(javax.faces.context.FacesContext, javax.faces.component.UIComponent, java.lang.String)

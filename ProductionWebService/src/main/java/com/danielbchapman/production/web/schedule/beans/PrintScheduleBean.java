@@ -3,6 +3,7 @@ package com.danielbchapman.production.web.schedule.beans;
 import java.awt.Color;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,13 +17,13 @@ import org.primefaces.model.StreamedContent;
 import com.danielbchapman.production.JasperUtility;
 import com.danielbchapman.production.Utility;
 import com.danielbchapman.production.beans.CalendarDaoRemote;
-import com.danielbchapman.production.beans.OptionsDaoRemote;
 import com.danielbchapman.production.entity.Season;
 import com.danielbchapman.production.entity.Week;
 import com.danielbchapman.production.web.production.beans.AdministrationBean;
 
-public class PrintScheduleBean
+public class PrintScheduleBean implements Serializable
 {
+	private static final long serialVersionUID = 3L;
 	private static String reportingDirectory = "schedules";
 
 	private ArrayList<PrintElement> elements;
@@ -38,7 +39,7 @@ public class PrintScheduleBean
 	private Color colorOne;
 	private Color colorTwo;
 
-	private StreamedContent print;
+//	private StreamedContent print;
 	//@formatter:off
 	//private Color[] colors = new Color[]{}
 	//@formatter:on
@@ -48,7 +49,7 @@ public class PrintScheduleBean
 
 	private String title;
 
-	private OptionsDaoRemote optionsDao;
+//	private OptionsDaoRemote optionsDao;
 
 	private CalendarDaoRemote calendarDao;
 
@@ -226,8 +227,9 @@ public class PrintScheduleBean
 		return calendarDao;
 	}
 
-	public class PrintElement
+	public class PrintElement implements Serializable
 	{
+		private static final long serialVersionUID = 3L;
 		private File file;
 		private StreamedContent content;
 

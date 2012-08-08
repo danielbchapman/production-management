@@ -2,6 +2,7 @@ package com.danielbchapman.production;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,8 +17,9 @@ import org.primefaces.model.StreamedContent;
 
 import com.danielbchapman.production.web.production.beans.AdministrationBean;
 
-public abstract class AbstractPrintController
+public abstract class AbstractPrintController implements Serializable
 {
+	private static final long serialVersionUID = 3L;
 	private String reportingDirectoryName;
 	private File baseDir;
 	private String[] exclusions;
@@ -70,8 +72,9 @@ public abstract class AbstractPrintController
 
 	protected abstract String getReportName();
 
-	public class PrintElement
+	public class PrintElement implements Serializable
 	{
+		private static final long serialVersionUID = 3L;
 		private File file;
 		private StreamedContent content;
 

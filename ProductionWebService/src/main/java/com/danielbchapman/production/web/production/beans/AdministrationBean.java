@@ -1,18 +1,24 @@
 package com.danielbchapman.production.web.production.beans;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 
+import lombok.Data;
+import lombok.Getter;
+
+import com.danielbchapman.composite.RoleSelection;
 import com.danielbchapman.jboss.login.LoginBeanRemote;
 import com.danielbchapman.jboss.login.Roles;
 import com.danielbchapman.jboss.login.User;
 import com.danielbchapman.production.Utility;
 import com.danielbchapman.production.beans.OptionsDaoRemote;
 
-public class AdministrationBean
+public class AdministrationBean implements Serializable
 {
+	private static final long serialVersionUID = 3L;
 	private String connectionString;
 	private User editableUser;
 	private String editableUserName;
@@ -21,11 +27,11 @@ public class AdministrationBean
 	private String password;
 	private String reportingDocumentRoot;
 	private String role;
-	private SelectItem[] roles;
-
 	private String user;
-
-	private UserAddModify userAddModify = new UserAddModify();
+	
+	private UserAdd userAdd = new UserAdd();
+	@Getter
+	private UserAdd editable = new UserAdd();
 
 	private ArrayList<SelectItem> users;
 
@@ -47,6 +53,7 @@ public class AdministrationBean
 		if(evt != null)
 		{
 			editableUser = getLoginBean().getUser(editableUserName);
+			editable = new UserAdd(getLoginBean().getUser(editableUserName));
 		}
 	}
 
@@ -87,34 +94,15 @@ public class AdministrationBean
 	{
 		return role;
 	}
-
-	/**
-	 * 
-	 * @return a list of all the Roles available (bad object name...)
-	 * 
-	 */
-	public SelectItem[] getRoles()
-	{
-		if(roles == null)
-		{
-			Roles[] statics = Roles.values();
-			roles = new SelectItem[statics.length];
-
-			for(int i = 0; i < roles.length; i++)
-				roles[i] = new SelectItem(statics[i].getLabel());
-		}
-
-		return roles;
-	}
-
+	
 	public String getUser()
 	{
 		return user;
 	}
 
-	public UserAddModify getUserAddModify()
+	public UserAdd getUserAdd()
 	{
-		return userAddModify;
+		return userAdd;
 	}
 
 	public ArrayList<SelectItem> getUsers()
@@ -146,8 +134,8 @@ public class AdministrationBean
 	{
 		if(evt != null)
 		{
-			String username = userAddModify.getUsername();
-			String password = userAddModify.getPassword();
+			String username = userAdd.getUsername();
+			String password = userAdd.getPassword();
 			if(username == null || username.length() < 4)
 			{
 				Utility.raiseError("Error", "The user " + username
@@ -162,16 +150,13 @@ public class AdministrationBean
 				return;
 			}
 
-			Roles role = Roles.fromString(userAddModify.getRole());
-
-			ArrayList<Roles> roleTmp = new ArrayList<Roles>();
-			roleTmp.add(role);
+			ArrayList<Roles> roles = userAdd.getRoleSelection().getSelectedRoles();
 
 			try
 			{
-				getLoginBean().addUser(username, password, roleTmp);
+				getLoginBean().addUser(username, password, roles);
 				Utility.raiseInfo("User added", "The user " + username + " was added to the database.");
-				userAddModify = new UserAddModify();
+				userAdd = new UserAdd();
 			}
 			catch(Exception e)
 			{
@@ -253,41 +238,25 @@ public class AdministrationBean
 			options = Utility.getObjectFromContext(OptionsDaoRemote.class, Utility.Namespace.PRODUCTION);
 		return options;
 	}
-
-	public class UserAddModify
+	
+	@Data
+	public class UserAdd implements Serializable
 	{
+		private static final long serialVersionUID = 3L;
 		private String password;
-		private String role;
+		private String password2;
 		private String username;
-
-		public String getPassword()
+		private RoleSelection roleSelection;
+		
+		public UserAdd(User u)
 		{
-			return password;
+			this.username = u.getUser();
+			this.roleSelection = new RoleSelection(getLoginBean().getRolesForUser(username));
 		}
-
-		public String getRole()
+		
+		public UserAdd()
 		{
-			return role;
-		}
-
-		public String getUsername()
-		{
-			return username;
-		}
-
-		public void setPassword(String password)
-		{
-			this.password = password;
-		}
-
-		public void setRole(String role)
-		{
-			this.role = role;
-		}
-
-		public void setUsername(String username)
-		{
-			this.username = username;
+			roleSelection = new RoleSelection();
 		}
 	}
 

@@ -5,8 +5,12 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.ResourceBundle;
+import java.util.WeakHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,11 +25,15 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.http.HttpSession;
 
+import org.theactingcompany.security.SecurityFilter;
+
 import com.danielbchapman.jboss.login.Roles;
 
 public class Utility
 {
-	private final static boolean JEE6 = false;
+	private final static WeakHashMap<Class<?>, Object> RESOURCE_MANAGER = new WeakHashMap<Class<?>, Object>();
+	private final static boolean TOMCAT_6 = true;
+	private final static boolean JEE6 = true;
 	private static ResourceBundle MESSAGE;
 	private final static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MM-dd-yyyy");
 	private final static SimpleDateFormat DATETIME_FORMAT = new SimpleDateFormat(
@@ -224,6 +232,37 @@ public class Utility
 	@SuppressWarnings("unchecked")
 	public static <T> T getObjectFromContext(Class<T> clazz, Namespace namespace)
 	{
+		if(TOMCAT_6)
+		{
+			T instance = (T) RESOURCE_MANAGER.get(clazz);
+			
+			if(instance != null)
+				return instance;
+			
+			String name = clazz.getName().replace("Remote", "");
+			try
+			{
+				Class<? extends T>instanceClass = (Class<? extends T>) Class.forName(name);
+				instance = instanceClass.newInstance();
+				
+				RESOURCE_MANAGER.put(clazz, instance);	
+				return instance;
+			}
+			catch(ClassNotFoundException e)
+			{
+				throw new RuntimeException("Class not found, please check the configuration", e);
+			}
+			catch(InstantiationException e)
+			{
+				throw new RuntimeException("Class failed to initialize, odds are it has a constructor.\nBAD DEV, NO BISCUIT", e);
+			}
+			catch(IllegalAccessException e)
+			{
+				throw new RuntimeException("JVM Illegal Access - CRITICAL ERROR", e);
+			}				
+
+			 
+		}
 		// java:app/ProductionEJB/OptionsDao!com.danielbchapman.production.beans.OptionsDaoRemote
 		String lookup;
 		if(JEE6)
@@ -245,6 +284,9 @@ public class Utility
 	 */
 	public static Object getObjectFromContext(String jndiName) throws RuntimeNamingException
 	{
+		if(TOMCAT_6)
+			throw new RuntimeException("Under Tomcat 6 initialization this application does not have a local context for the container");
+		
 		try
 		{
 			return new InitialContext().lookup(jndiName);
@@ -329,6 +371,10 @@ public class Utility
 		Logger.getLogger("APPLICATION_CRITICAL").log(Level.SEVERE, string);
 	}
 
+	public static void login()
+	{
+		getSession().setAttribute(SecurityFilter.PRODUCTION_AUTH_TOKEN, SecurityFilter.PRODUCTION_AUTH_VALUE);
+	}
 	public static void logOut()
 	{
 		getSession().invalidate();
@@ -419,7 +465,83 @@ public class Utility
 
 		return false;
 	}
+	
+	/**
+	 * @param args an array of (T) types
+	 * @return the collection of the array by type
+	 */
+	public static <T> Collection<T> asCollection(T ... args)
+	{
+		return asList(args);
+	}
+	
+	/**
+	 * @param args an array of (T) types
+	 * @return an ArrayList of type (T)
+	 */
+	public static<T> ArrayList<T> asList(T ... args)
+	{
+		if(args == null)
+			return new ArrayList<T>();
+		
+		ArrayList<T> arrayList = new ArrayList<T>();
+		
+		for(int i = 0; i < args.length; i++)
+			arrayList.add(args[i]);
 
+		return arrayList;
+	}
+	
+	/**
+	 * @param args an array of (T) types
+	 * @return a HashSet of type (T)
+	 */	
+	public static <T> HashSet<T> asSet(T ... args)
+	{
+		if(args == null)
+			return new HashSet<T>();
+		
+		HashSet<T> set = new HashSet<T>();
+		
+		for(int i = 0; i < args.length; i++)
+			set.add(args[i]);
+		
+		return set;
+	}
+
+	/**
+	 * @param obj any object
+	 * @return true if the object isn't null and if it isn't a boolean equal to false.
+	 */
+	public final static boolean TRUE(Object obj)
+	{
+		if(obj == null)
+			return false;
+		
+		if(obj instanceof Boolean)
+			return ((Boolean) obj).booleanValue();
+		
+		return true;
+	}
+	
+	/**
+	 * A null-safe compareTo call that can be used statically. It essentially
+	 * passes off the checks.
+	 * @param one
+	 * @param two
+	 * @return
+	 */
+	public static <T extends Comparable<T>> int compareTo(T one, T two)
+	{
+		if(one == null && two == null)
+			return 0;
+		if(one == null)
+			return -1;
+		if(two == null)
+			return 1;
+		else
+			return one.compareTo(two);
+	}
 	private final static void closeElement(String extension, String mime, StringBuilder build)
 	{
 		String map = "\t<mime-mapping>\n";

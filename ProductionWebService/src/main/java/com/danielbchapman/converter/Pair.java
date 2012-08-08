@@ -1,5 +1,7 @@
 package com.danielbchapman.converter;
 
+import java.io.Serializable;
+
 import lombok.Data;
 
 /**
@@ -9,9 +11,12 @@ import lombok.Data;
  * @since Sep 27, 2011
  * @copyright The Acting Company Sep 27, 2011 @link www.theactingcompany.org
  */
+
 @Data
-public class Pair<K,V>
+public class Pair<K,V> implements Serializable
 {
+	private static final long serialVersionUID = -1521974392550872585L;
+	
 	private K k;
 	private V v;
 	

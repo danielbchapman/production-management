@@ -16,7 +16,7 @@ import javax.faces.model.SelectItem;
 public abstract class AbstractConverter<Type> implements ISelectItemGenerator<Type>
 {
 	private static final long serialVersionUID = 1L;
-	private int val = 0;
+
 	private final LinkedHashMap<Integer, Type> map;
 	private final SelectItem[] items;
 	private Type selection;

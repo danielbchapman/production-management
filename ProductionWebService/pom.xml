@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.theactingcompany.production</groupId>
   <artifactId>ProductionWebService</artifactId>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>2.3.0-EE6</version>
   <name>ProducitonWebService</name>
   <description>This project is the repository for all the web-related beans so that it can be shared by both the UI framework and the Mobile framework</description>
   

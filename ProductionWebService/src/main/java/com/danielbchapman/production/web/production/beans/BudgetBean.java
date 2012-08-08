@@ -1,6 +1,7 @@
 package com.danielbchapman.production.web.production.beans;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -16,7 +17,6 @@ import org.primefaces.model.DefaultStreamedContent;
 import com.danielbchapman.production.AbstractPrintController;
 import com.danielbchapman.production.Utility;
 import com.danielbchapman.production.beans.BudgetDaoRemote;
-import com.danielbchapman.production.beans.OptionsDaoRemote;
 import com.danielbchapman.production.entity.Budget;
 import com.danielbchapman.production.entity.BudgetAdjustingEntry;
 import com.danielbchapman.production.entity.BudgetEntry;
@@ -27,8 +27,9 @@ import com.danielbchapman.production.web.production.beans.DepartmentBean.Departm
 import com.danielbchapman.production.web.schedule.beans.LoginBean;
 
 @SessionScoped
-public class BudgetBean
+public class BudgetBean implements Serializable
 {
+	private static final long serialVersionUID = 3L;
 	public final static String REPORTING_DIRCTORY = "budgets";
 
 	private Budget activeBudget;
@@ -43,7 +44,6 @@ public class BudgetBean
 	private ArrayList<EntryWrapper> entries;
 
 	private Double estimateTotal = 0.00;
-	private OptionsDaoRemote optionsDao;
 	private AllBudgetPrintController printAll = new AllBudgetPrintController();
 	private SingleBudgetPrintController printSingle = new SingleBudgetPrintController();
 
@@ -372,16 +372,9 @@ public class BudgetBean
 		return budgetDaoObj;
 	}
 
-	private OptionsDaoRemote getOptionsDao()
-	{
-		if(optionsDao == null)
-			optionsDao = Utility.getObjectFromContext(OptionsDaoRemote.class,
-					Utility.Namespace.PRODUCTION);
-		return optionsDao;
-	}
-
 	public class AllBudgetPrintController extends AbstractPrintController
 	{
+		private static final long serialVersionUID = 1L;
 
 		public AllBudgetPrintController()
 		{
@@ -408,8 +401,9 @@ public class BudgetBean
 		}
 	}
 
-	public class BudgetCreationVariables
+	public class BudgetCreationVariables implements Serializable
 	{
+		private static final long serialVersionUID = 3L;
 		private double amount = 0.00;
 		private Long department;
 
@@ -434,8 +428,9 @@ public class BudgetBean
 		}
 	}
 
-	public class BudgetEntryVariables
+	public class BudgetEntryVariables implements Serializable
 	{
+		private static final long serialVersionUID = 3L;
 		private Double amount = 0.00;
 		private boolean credit = false;;
 		private boolean estimated = true;
@@ -490,8 +485,9 @@ public class BudgetBean
 		}
 	}
 
-	public class ChartField
+	public class ChartField implements Serializable
 	{
+		private static final long serialVersionUID = 3L;
 		private Double amount;
 		private String label;
 
@@ -522,8 +518,9 @@ public class BudgetBean
 		}
 	}
 
-	public class EntryWrapper
+	public class EntryWrapper implements Serializable
 	{
+		private static final long serialVersionUID = 3L;
 		private Double adjustmentAmount = 0.00;
 		private String adjustmentMemo;
 		private boolean credit;
@@ -741,6 +738,8 @@ public class BudgetBean
 
 	public class SingleBudgetPrintController extends AbstractPrintController
 	{
+		private static final long serialVersionUID = 1L;
+
 		public SingleBudgetPrintController()
 		{
 			super(REPORTING_DIRCTORY + File.separator + "single", "sub");

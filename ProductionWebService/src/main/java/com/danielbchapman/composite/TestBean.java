@@ -1,5 +1,6 @@
 package com.danielbchapman.composite;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.faces.bean.ManagedBean;
@@ -12,8 +13,10 @@ import com.danielbchapman.production.entity.PointOfInterest;
 
 @ViewScoped
 @ManagedBean(name = "testBean")
-public class TestBean
+public class TestBean implements Serializable
 {
+	private static final long serialVersionUID = 3L;
+
 	public String setMe = "Unset";
 
 	private AbstractConverter<String> testConverter;

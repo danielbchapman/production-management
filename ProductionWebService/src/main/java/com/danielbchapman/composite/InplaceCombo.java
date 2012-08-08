@@ -21,7 +21,7 @@ public class InplaceCombo
 		parent.getAttributes().put("comboRendered", Boolean.FALSE);
 		AbstractConverter converter = (AbstractConverter) parent.getAttributes().get("converter");
 		converter.processValueChangeEvent(evt);
-		Object obj = converter.getSelection();
+		
 		if(evt.getNewValue() instanceof Pair)
 		{
 			Pair pair = (Pair) evt.getNewValue();

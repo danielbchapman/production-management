@@ -1,5 +1,6 @@
 package com.danielbchapman.production.web.production.beans;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.faces.bean.ViewScoped;
@@ -11,8 +12,10 @@ import org.theactingcompany.help.entity.HelpPage;
 import com.danielbchapman.production.Utility;
 
 @ViewScoped
-public class HelpBean
+public class HelpBean implements Serializable
 {
+	private static final long serialVersionUID = 1L;
+	
 	private HelpPage helpPage;
 	private String lookupString;
 	private HelpDaoRemote helpDao;

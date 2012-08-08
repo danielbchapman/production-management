@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -36,8 +37,9 @@ import com.danielbchapman.production.entity.Season;
 import com.danielbchapman.production.entity.Venue;
 import com.danielbchapman.production.entity.VenueLog;
 
-public class VenueBean
+public class VenueBean implements Serializable
 {
+	private static final long serialVersionUID = 3L;
 
 	private FileModel attachments;
 
@@ -505,8 +507,9 @@ public class VenueBean
 			f.mkdirs();
 	}
 
-	public class Advance
+	public class Advance implements Serializable
 	{
+		private static final long serialVersionUID = 3L;
 		private ArrayList<AdvanceWrapper> advances;
 
 		public Advance(Venue venue)
@@ -634,6 +637,7 @@ public class VenueBean
 			/**
 			 * @return the printController
 			 */
+			@SuppressWarnings("serial")
 			public AbstractPrintController getPrintController()
 			{
 				if(printController == null)
@@ -707,8 +711,9 @@ public class VenueBean
 		}
 	}
 
-	public class FileModel
+	public class FileModel implements Serializable
 	{
+		private static final long serialVersionUID = 3L;
 		ArrayList<FileWrapper> files;
 		File modelRoot;
 
@@ -779,8 +784,9 @@ public class VenueBean
 		}
 	}
 
-	public class FileWrapper
+	public class FileWrapper implements Serializable
 	{
+		private static final long serialVersionUID = 3L;
 		String department;
 		File file;
 		DefaultStreamedContent stream;
@@ -843,8 +849,9 @@ public class VenueBean
 
 	}
 
-	public class NewVenue
+	public class NewVenue implements Serializable
 	{
+		private static final long serialVersionUID = 3L;
 		private Long cityId;
 		private String name;
 		private String productionName;

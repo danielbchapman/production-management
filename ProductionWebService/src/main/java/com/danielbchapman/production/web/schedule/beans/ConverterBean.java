@@ -1,5 +1,7 @@
 package com.danielbchapman.production.web.schedule.beans;
 
+import java.io.Serializable;
+
 import com.danielbchapman.production.SmartConvertCurrency;
 import com.danielbchapman.production.Utility;
 import com.danielbchapman.production.beans.EntityFinderRemote;
@@ -14,8 +16,9 @@ import com.danielbchapman.production.web.production.converters.CityConverter;
  * @link http://www.theactingcompany.org
  *************************************************************************** 
  */
-public class ConverterBean
+public class ConverterBean implements Serializable
 {
+	private static final long serialVersionUID = 3L;
 	private CityConverter cityConverter = new CityConverter();
 	private EntityFinderRemote entityFinder;
 

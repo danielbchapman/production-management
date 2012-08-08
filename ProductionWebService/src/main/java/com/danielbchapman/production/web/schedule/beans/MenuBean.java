@@ -1,6 +1,7 @@
 package com.danielbchapman.production.web.schedule.beans;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -14,12 +15,11 @@ import com.danielbchapman.production.Utility;
 import com.danielbchapman.production.web.production.beans.SeasonBean;
 
 @SessionScoped
-public class MenuBean
+public class MenuBean implements Serializable
 {
+	private static final long serialVersionUID = 3L;
 	private MenuItem[] items;
 	private MenuItem selectedItem = new MenuItem("Null", "./");
-
-	private RoleManager manager = new RoleManager();
 
 	public MenuBean()
 	{
@@ -56,8 +56,6 @@ public class MenuBean
 					SeasonBean.Selection.DEPARTMENTS));
 			production.addMenuItem(new SeasonMenuItem("season.xhtml", Roles.USER,
 					SeasonBean.Selection.PETTY_CASH));
-			production.addMenuItem(new SeasonMenuItem("season.xhtml", Roles.USER,
-					SeasonBean.Selection.TASKS));
 			production.addMenuItem(new SeasonMenuItem("season.xhtml", Roles.USER,
 					SeasonBean.Selection.REPORTS));
 			production.addMenuItem(new SeasonMenuItem("season.xhtml", Roles.USER,
@@ -114,71 +112,72 @@ public class MenuBean
 
 	public boolean isAdmin()
 	{
-		return manager.isAdmin();
+		return isUserInRole(Roles.ADMIN);
 	}
 
 	public boolean isGuest()
 	{
-		return manager.isGuest();
+		return isUserInRole(Roles.GUEST);
 	}
 
 	public boolean isInventoryAdmin()
 	{
-		return manager.isInventoryAdmin();
+		return isUserInRole(Roles.INVENTORY_ADMIN);
 	}
 
 	public boolean isInventoryGeneral()
 	{
-		return manager.isInventoryGeneral();
+		return isUserInRole(Roles.INVENTORY_GENERAL);
 	}
 
 	public boolean isInventoryLighting()
 	{
-		return manager.isInventoryLighting();
+		return isUserInRole(Roles.INVENTORY_LIGHTING);
 	}
 
 	public boolean isInventoryProps()
 	{
-		return manager.isInventoryProps();
+		return isUserInRole(Roles.INVENTORY_PROPS);
 	}
 
 	public boolean isInventoryScenic()
 	{
-		return manager.isInventoryScenic();
+		return isUserInRole(Roles.INVENTORY_SCENIC);
 	}
 
 	public boolean isInventorySound()
 	{
-		return manager.isInventorySound();
+		return isUserInRole(Roles.INVENTORY_SOUND);
 	}
 
 	public boolean isInventoryStageManagement()
 	{
-		return manager.isInventoryStageManagement();
+		return isUserInRole(Roles.INVENTORY_STAGE_MANAGEMENT);
 	}
 
 	public boolean isInventoryWardrobe()
 	{
-		return manager.isInventoryWardrobe();
+		return isUserInRole(Roles.INVENTORY_WARDROBE);
 	}
 
 	public boolean isScheduler()
 	{
-		return manager.isScheduler();
+		return isUserInRole(Roles.SCHEDULER);
 	}
 
 	public boolean isUser()
 	{
-		return manager.isUser();
+		return isUserInRole(Roles.USER);
 	}
 
 	public boolean isUserInRole(Roles role)
 	{
-		return manager.isUserInRole(role);
+		return Utility.getBean(LoginBean.class).isUserInRole(role);
 	}
 
-	public class ActionMenuItem<T> extends MenuItem
+	public class ActionMenuItem<T> extends MenuItem implements Serializable
 	{
+		private static final long serialVersionUID = 3L;
 
 		private Method voidMethod;
 		private T bean;
@@ -218,8 +217,9 @@ public class MenuBean
 		}
 	}
 
-	public class InventoryMenuItem extends MenuItem
+	public class InventoryMenuItem extends MenuItem implements Serializable
 	{
+		private static final long serialVersionUID = 3L;
 
 		private InventoryBean.Selection key;
 
@@ -286,8 +286,9 @@ public class MenuBean
 
 	}
 
-	public class MenuItem
+	public class MenuItem implements Serializable
 	{
+		private static final long serialVersionUID = 3L;
 		public final static String SELECTED = "topLevelMenuItemSelected";
 		public final static String BASE = "topLevelMenuItem";
 
@@ -477,8 +478,9 @@ public class MenuBean
 		}
 	}
 
-	public class ScheduleMenuItem extends MenuItem
+	public class ScheduleMenuItem extends MenuItem implements Serializable
 	{
+		private static final long serialVersionUID = 3L;
 		private ScheduleBean.Selection key;
 
 		public ScheduleMenuItem(String link, Roles role, ScheduleBean.Selection key)
@@ -505,8 +507,9 @@ public class MenuBean
 		}
 	}
 
-	public class SeasonMenuItem extends MenuItem
+	public class SeasonMenuItem extends MenuItem implements Serializable
 	{
+		private static final long serialVersionUID = 3L;
 
 		private SeasonBean.Selection key;
 
@@ -529,9 +532,6 @@ public class MenuBean
 
 			if(key == SeasonBean.Selection.PETTY_CASH)
 				bean.getSelection().selectPettyCash(evt);
-
-			if(key == SeasonBean.Selection.TASKS)
-				bean.getSelection().selectReminders(evt);
 
 			if(key == SeasonBean.Selection.SUMMARY)
 				bean.getSelection().selectSummary(evt);

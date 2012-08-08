@@ -1,5 +1,6 @@
 package com.danielbchapman.production.web.production.beans;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -16,8 +17,9 @@ import com.danielbchapman.production.entity.Department;
  * 
  */
 @SessionScoped
-public class DepartmentBean
+public class DepartmentBean implements Serializable
 {
+	private static final long serialVersionUID = 3L;
 	private DepartmentDaoRemote departmentDaoObj;
 	private ArrayList<SelectItem> departmentItems;
 	private ArrayList<SelectItem> departmentItemsNameOnly;
@@ -39,7 +41,7 @@ public class DepartmentBean
 			Department dept = new Department();
 			dept.setName(departmentName);
 			getDepartmentDao().saveDepartment(dept, Utility.getBean(SeasonBean.class).getSeason());
-			Utility.raiseInfo("Department Added", "The department " + dept
+			Utility.raiseInfo("Department Added", "The department " + dept.getName()
 					+ " has been added to the database");
 			refreshDepartments(evt);
 		}
@@ -165,8 +167,9 @@ public class DepartmentBean
 		return departmentDaoObj;
 	}
 
-	public class DepartmentWrapper
+	public class DepartmentWrapper implements Serializable
 	{
+		private static final long serialVersionUID = 3L;
 		private Department department;
 
 		public DepartmentWrapper()

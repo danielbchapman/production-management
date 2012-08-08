@@ -1,11 +1,37 @@
 package com.danielbchapman.production.web.schedule.beans;
 
-import javax.faces.context.FacesContext;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 
+import com.danielbchapman.jboss.login.Role;
 import com.danielbchapman.jboss.login.Roles;
 
-public class RoleManager
+public class RoleManager implements Serializable
 {
+	private static final long serialVersionUID = 3L;
+	private ArrayList<String> roles = new ArrayList<String>();
+	
+	public RoleManager(Role ... args)
+	{
+		if(args != null)
+			for(Role s : args)
+				roles.add(s.getRole());
+	}
+	
+	public RoleManager(Collection<Role> arg)
+	{
+		if(arg != null)
+			for(Role r : arg)
+				roles.add(r.getRole());
+	}
+	
+	public RoleManager(Roles ... args)
+	{
+		if(args != null)
+			for(Roles r : args)
+				roles.add(r.getRoleValue());
+	}
   /**
    * @return true if user is 'admin'  
    * 
@@ -20,10 +46,7 @@ public class RoleManager
    * @return If a user has a role, return true  
    */
   public boolean isGuest()
-  {
-    for(Roles r : Roles.values())
-      if(isUserInRole(r));
-    
+  {    
     return true;
   }  
   
@@ -120,6 +143,10 @@ public class RoleManager
   
   public boolean isUserInRole(Roles role)
   {
-    return FacesContext.getCurrentInstance().getExternalContext().isUserInRole(role.getRoleValue()); 
+  	if(role.getRoleValue().equals(Roles.GUEST.getRoleValue()))
+  		return true;
+  	
+  	return roles.contains(role.getRoleValue());
+//    return FacesContext.getCurrentInstance().getExternalContext().isUserInRole(role.getRoleValue()); 
   }
 }
