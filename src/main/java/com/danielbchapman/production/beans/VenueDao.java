@@ -23,7 +23,7 @@ public class VenueDao implements VenueDaoRemote
 {
 	private static final long serialVersionUID = 1L;
 	// @PersistenceContext
-	EntityManager em = EntityInstance.getEm();
+//	EntityManager em = EntityInstance.getEm();
 
 	/**
 	 * Default constructor.
@@ -39,67 +39,39 @@ public class VenueDao implements VenueDaoRemote
 		EntityInstance.saveObject(log);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<Venue> getAllVenues()
 	{
-		Query q = em.createQuery("SELECT v FROM Venue v ORDER BY v.name");
-		List<Venue> results = (List<Venue>) q.getResultList();
-		ArrayList<Venue> ret = new ArrayList<Venue>();
-		if(results != null)
-			for(Venue v : results)
-				ret.add(v);
-
-		return ret;
+		return EntityInstance.getResultList("SELECT v FROM Venue v ORDER BY v.name", Venue.class);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<VenueLog> getLogEntries(Venue venue)
 	{
-		Query q = em.createQuery("SELECT log FROM VenueLog log WHERE log.venue = ?1 ORDER BY log.date");
-		q.setParameter(1, venue);
-
-		List<VenueLog> results = (List<VenueLog>) q.getResultList();
-		ArrayList<VenueLog> ret = new ArrayList<VenueLog>();
-		if(results != null)
-			for(VenueLog l : results)
-				ret.add(l);
-
-		return ret;
-
+		return EntityInstance.getResultList("SELECT log FROM VenueLog log WHERE log.venue = ?1 ORDER BY log.date", VenueLog.class, venue);
 	}
 
 	@Override
 	public File getRootGeneralFolder()
 	{
-		// TODO Auto Generated Sub
 		return null;
 	}
 
 	@Override
 	public Venue getVenue(Long id)
 	{
-		if(id == null || id < 1)
-			return null;
-
-		Query q = em.createQuery("SELECT v FROM Venue v WHERE v.id = ?1");
-		q.setParameter(1, id);
-
-		return (Venue) q.getSingleResult();
+		return EntityInstance.find(Venue.class, id);
 	}
 
 	@Override
 	public Venue getVenue(String user)
 	{
-		// TODO Auto Generated Sub
 		return null;
 	}
 
 	@Override
 	public ArrayList<Venue> getVenues(Season production)
 	{
-		// TODO Auto Generated Sub
 		return null;
 	}
 

@@ -17,7 +17,7 @@ public class OptionsDao implements OptionsDaoRemote
 	 */
 	private static final long serialVersionUID = 1L;
 	//@PersistenceContext
-  EntityManager em = EntityInstance.getEm();
+//  EntityManager em = EntityInstance.getEm();
   /**
    * Default constructor.
    */
@@ -32,7 +32,7 @@ public class OptionsDao implements OptionsDaoRemote
   @Override
   public Options getOptions()
   { 
-    Options opt = em.find(Options.class, Options.PRODUCTION_ID);
+    Options opt = EntityInstance.find(Options.class, Options.PRODUCTION_ID);
     if(opt == null)
     {
       opt = new Options();
@@ -43,15 +43,6 @@ public class OptionsDao implements OptionsDaoRemote
       EntityInstance.saveObject(opt);
     }
     return opt; 
-  }
-
-  /* (non-Javadoc)
-   * @see com.danielbchapman.production.beans.OptionsDaoRemote#getEntityManager()
-   */
-  @Override
-  public EntityManager getEntityManager()
-  {
-    return em;
   }
 
   @Override
@@ -83,7 +74,5 @@ public class OptionsDao implements OptionsDaoRemote
     Options opt = getOptions();
     opt.setReportingRoot(reportingDocumentRoot);
     EntityInstance.saveObject(opt);
-    
   }
-
 }

@@ -20,14 +20,11 @@ import javax.persistence.OneToMany;
  *************************************************************************** 
  */
 @Entity
-public class PettyCash implements Serializable
+public class PettyCash extends BaseEntity
 {
 	private static final long serialVersionUID = 1L;
 
 	private Double amount = 0.00;
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
 	@Column(length = 50)
 	private String name = "";
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "pettyCash")
@@ -51,11 +48,6 @@ public class PettyCash implements Serializable
 		return ret;
 	}
 
-	public Long getId()
-	{
-		return id;
-	}
-
 	public String getName()
 	{
 		return name;
@@ -74,11 +66,6 @@ public class PettyCash implements Serializable
 	public void setAmount(Double amount)
 	{
 		this.amount = amount;
-	}
-
-	public void setId(Long id)
-	{
-		this.id = id;
 	}
 
 	public void setName(String name)

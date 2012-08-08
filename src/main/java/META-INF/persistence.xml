@@ -7,7 +7,9 @@
 		 --> 
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		 
+		 <!-- 
 		<non-jta-data-source>java:/ProductionDS</non-jta-data-source>
+		 -->
 		<class>com.danielbchapman.production.entity.Week</class>
 		<class>com.danielbchapman.production.entity.VenueLog</class>
 		<class>com.danielbchapman.production.entity.Venue</class>
@@ -43,6 +45,7 @@
 		<class>com.danielbchapman.production.entity.Addressable</class>
 		<class>com.danielbchapman.production.entity.AbstractContact</class>
 		<class>com.danielbchapman.production.entity.PointOfInterest</class>
+		<shared-cache-mode>NONE</shared-cache-mode>
 
 		<properties>
 			<!-- 
@@ -52,14 +55,12 @@
 			<property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
 			<property name="javax.persistence.jdbc.user" value="sa"/>
 			<property name="javax.persistence.jdbc.password" value="acting_co"/>
-			<property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/C:\Database\Data\production;"/>      
-			
-			<property name="eclipselink.target-server" value="JBoss"/> 
+			<property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/C:\Database\Data\production;"/> 
 			<property name="eclipselink.ddl-generation" value="create-tables"/>
-			<property name="eclipselink.ddl-generation.output-mode" value="database"/>
+			<property name="eclipselink.ddl-generation.output-mode" value="both"/>
 			<property name="eclipselink.target-database" value="org.eclipse.persistence.platform.database.H2Platform"/>
 			<property name="eclipselink.weaving" value="false" />
-			<property name="eclipselink.logging.level" value="INFO"/>
+			<property name="eclipselink.logging.level" value="ALL"/>
 			<!-- 
 			<property name="eclipselink.session.customizer" value="com.danielbchapman.jboss.haxx.JPAEclipseLinkSessionCustomizer" />			
 			 -->

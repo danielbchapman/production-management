@@ -41,19 +41,10 @@ public class EmplyoeeDao implements EmplyoeeDaoRemote
   /* (non-Javadoc)
    * @see com.danielbchapman.production.beans.EmplyoeeDaoRemote#getEmployees()
    */
-  @SuppressWarnings("unchecked")
   @Override
   public ArrayList<Employee> getEmployees()
   {
-    Query q = em.createQuery("SELECT emp FROM Employee ORDER BY emp.name");
-    List<Employee> results = (List<Employee>)q.getResultList();
-    ArrayList<Employee> ret = new ArrayList<Employee>();
-    if(results != null)
-      for(Employee e : results)
-        ret.add(e);
-    
-    return ret;
-    
+  	return EntityInstance.getResultList("SELECT emp FROM Employee ORDER BY emp.name", Employee.class);
   }
 
 }

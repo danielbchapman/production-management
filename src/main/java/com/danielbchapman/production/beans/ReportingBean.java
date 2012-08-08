@@ -32,10 +32,8 @@ public class ReportingBean implements ReportingBeanRemote
 	@Override	
 	public <T> ArrayList<T> getResultList(String query, Class<T> clazz, Object... params)
 	{
-		ArrayList<T> results = EntityInstance.getResultList(query, clazz, params);
-		for(T t : results)
-			EntityInstance.getEm().detach(t);
-		return results;
+		return EntityInstance.detatch(EntityInstance.getResultList(query, clazz, params)); 
+
 	}
 
 	@Override

@@ -23,7 +23,7 @@ public class BudgetDao implements BudgetDaoRemote
 	 */
 	private static final long serialVersionUID = 1L;
 	// @PersistenceContext
-	EntityManager em = EntityInstance.getEm();
+//	EntityManager em = EntityInstance.getEm();
 
 	@Override
 	public void cancelEntry(BudgetAdjustingEntry entry)
@@ -98,6 +98,7 @@ public class BudgetDao implements BudgetDaoRemote
 	@SuppressWarnings("unchecked")
 	public ArrayList<BudgetAdjustingEntry> getAdjustingEntries(BudgetEntry entry)
 	{
+		EntityManager em = EntityInstance.getEm();
 		ArrayList<BudgetAdjustingEntry> entries = new ArrayList<BudgetAdjustingEntry>();
 		Query q = em.createQuery("SELECT e FROM BudgetAdjustingEntry e WHERE e.budgetEntry = ?1");
 		q.setParameter(1, entry);
@@ -108,6 +109,7 @@ public class BudgetDao implements BudgetDaoRemote
 			for(BudgetAdjustingEntry e : results)
 				entries.add(e);
 
+		em.close();
 		return entries;
 	}
 
@@ -119,20 +121,9 @@ public class BudgetDao implements BudgetDaoRemote
 	 * .entity.Production)
 	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public ArrayList<Budget> getAllBudgets(Season season)
 	{
-		ArrayList<Budget> budgets = new ArrayList<Budget>();
-		Query q = em.createQuery("SELECT b FROM Budget b WHERE b.season = ?1 ORDER BY b.name");
-		q.setParameter(1, season);
-
-		List<Budget> results = q.getResultList();
-
-		if(results != null)
-			for(Budget e : results)
-				budgets.add(e);
-
-		return budgets;
+		return EntityInstance.getResultList("SELECT b FROM Budget b WHERE b.season = ?1 ORDER BY b.name", Budget.class, season);
 	}
 
 	/*
@@ -143,7 +134,7 @@ public class BudgetDao implements BudgetDaoRemote
 	@Override
 	public Budget getBudget(Long id)
 	{
-		return em.find(Budget.class, id);
+		return EntityInstance.find(Budget.class, id);
 	}
 
 	/*
@@ -154,20 +145,9 @@ public class BudgetDao implements BudgetDaoRemote
 	 * .entity.Budget)
 	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public ArrayList<BudgetEntry> getBudgetEntries(Budget budget)
 	{
-		ArrayList<BudgetEntry> entries = new ArrayList<BudgetEntry>();
-		Query q = em.createQuery("SELECT e FROM BudgetEntry e WHERE e.budget = ?1 ORDER BY e.date ");
-		q.setParameter(1, budget);
-
-		List<BudgetEntry> results = q.getResultList();
-
-		if(results != null)
-			for(BudgetEntry e : results)
-				entries.add(e);
-
-		return entries;
+		return EntityInstance.getResultList("SELECT e FROM BudgetEntry e WHERE e.budget = ?1 ORDER BY e.date ", BudgetEntry.class, budget);
 	}
 
 	/*

@@ -20,7 +20,6 @@ public interface OptionsDaoRemote extends Serializable
 	static final long serialVersionUID = 1L;
 	
   public Options getOptions();
-  public EntityManager getEntityManager();
   public void setConnectionString(String connectionString);
   public void setVenueDocumentRoot(String venueDocumentRoot);
   public void setReportingDocumentRoot(String reportingDocumentRoot);

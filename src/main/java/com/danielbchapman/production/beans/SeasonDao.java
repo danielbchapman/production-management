@@ -19,7 +19,7 @@ public class SeasonDao implements SeasonDaoRemote
 {
 	private static final long serialVersionUID = 1L;
 	//  @PersistenceContext
-	EntityManager em = EntityInstance.getEm();
+//	EntityManager em = EntityInstance.getEm();
 	
   public SeasonDao()
   {
@@ -39,15 +39,7 @@ public class SeasonDao implements SeasonDaoRemote
 	@SuppressWarnings("unchecked")
 	public ArrayList<Season> getSeasons()
 	{
-		Query q = em.createQuery("SELECT s FROM Season s ORDER BY s.name");
-		ArrayList<Season> ret = new ArrayList<Season>();
-		List<Season> results = (List<Season>)q.getResultList();
-		
-		if(results != null)
-			for(Season p : results)
-				ret.add(p);
-		
-		return ret;
+		return EntityInstance.getResultList("SELECT s FROM Season s ORDER BY s.name", Season.class);		
 	}
 	
 	/* (non-Javadoc)
@@ -55,12 +47,7 @@ public class SeasonDao implements SeasonDaoRemote
    */
 	public long getSeasonCount()
 	{
-		Query q = em.createNativeQuery("SELECT Count(*) FROM Season");
-		Long i = (Long) q.getSingleResult();
-		if(i == null)
-			return -1;
-		
-		return i;
+		return getSeasons().size();
 	}
 	
 	/* (non-Javadoc)
@@ -68,7 +55,7 @@ public class SeasonDao implements SeasonDaoRemote
    */
 	public Season getSeason(Long id)
 	{
-		return em.find(Season.class, id);
+		return EntityInstance.find(Season.class, id);
 	}
 	
 	/* (non-Javadoc)
@@ -76,9 +63,7 @@ public class SeasonDao implements SeasonDaoRemote
    */
 	public Season getSeason(String name)
 	{
-		Query q = em.createQuery("SELECT s FROM Season s WHERE s.name = ?!");
-		q.setParameter(1, name);
-		return (Season) q.getSingleResult();
+		return EntityInstance.getSingleResult("SELECT s FROM Season s WHERE s.name = ?1", Season.class, name);
 	}
 	/* (non-Javadoc)
    * @see com.danielbchapman.production.beans.ProductionDaoRemote#removeProduction(com.danielbchapman.production.entity.Production)

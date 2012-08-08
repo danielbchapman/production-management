@@ -49,7 +49,7 @@ public class CompanyManagementDao implements CompanyManagementDaoRemote
 	@Override
 	public City getCity(Long id)
 	{
-		return EntityInstance.getEm().find(City.class, id);
+		return EntityInstance.find(City.class, id);
 	}
 
 	/*
@@ -150,7 +150,7 @@ public class CompanyManagementDao implements CompanyManagementDaoRemote
 	@Override
 	public Hospital getHospital(Long id)
 	{
-		return EntityInstance.getEm().find(Hospital.class, id);
+		return EntityInstance.find(Hospital.class, id);
 	}
 
 	/*
@@ -174,7 +174,7 @@ public class CompanyManagementDao implements CompanyManagementDaoRemote
 	@Override
 	public Hotel getHotel(Long id)
 	{
-		return EntityInstance.getEm().find(Hotel.class, id);
+		return EntityInstance.find(Hotel.class, id);
 	}
 
 	/*
@@ -201,7 +201,7 @@ public class CompanyManagementDao implements CompanyManagementDaoRemote
 	@Override
 	public PointOfInterest getPointOfInterest(Long id)
 	{
-		return EntityInstance.getEm().find(PointOfInterest.class, id);
+		return EntityInstance.find(PointOfInterest.class, id);
 	}
 
 	/*

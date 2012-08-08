@@ -16,7 +16,7 @@ public class DepartmentDao implements DepartmentDaoRemote
 {
 	private static final long serialVersionUID = 1L;
 	//  @PersistenceContext
-	EntityManager em = EntityInstance.getEm();
+//	EntityManager em = EntityInstance.getEm();
 	
 	/* (non-Javadoc)
    * @see com.danielbchapman.production.beans.DepartmentDaoRemote#removeDepartment(com.danielbchapman.production.entity.Department)
@@ -31,7 +31,7 @@ public class DepartmentDao implements DepartmentDaoRemote
    */
 	public Department getDepartment(Long id)
 	{
-		return em.find(Department.class, id);
+		return EntityInstance.find(Department.class, id);
 	}
 
 	/* (non-Javadoc)
