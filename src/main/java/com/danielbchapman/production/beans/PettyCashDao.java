@@ -27,7 +27,7 @@ public class PettyCashDao implements PettyCashDaoRemote
 {
 	private static final long serialVersionUID = 1L;
 	//  @PersistenceContext
-  EntityManager em = EntityInstance.getEm();
+//  EntityManager em = EntityInstance.getEm();
   
   public PettyCashDao()
   {
@@ -42,13 +42,7 @@ public class PettyCashDao implements PettyCashDaoRemote
     cash.setName(name);
     cash.setAmount(amount == null ? 0.00 : amount);
     
-    if(!Config.CONTAINER_MANAGED)
-      em.getTransaction().begin();
-    
-    em.persist(cash);
-    
-    if(!Config.CONTAINER_MANAGED)
-      em.getTransaction().commit();
+    EntityInstance.saveObject(cash);
   }
   
   /* (non-Javadoc)
@@ -68,22 +62,15 @@ public class PettyCashDao implements PettyCashDaoRemote
     PettyCashEntry petty = new PettyCashEntry();
     petty.setBudgetEntry(entry);
     petty.setPettyCash(pettyCash);
-    
-    if(!Config.CONTAINER_MANAGED)
-      em.getTransaction().begin();
-    
-    em.persist(entry);
-    em.persist(petty);
-    
-    if(!Config.CONTAINER_MANAGED)
-      em.getTransaction().commit();
+
+    EntityInstance.saveObjects(entry, petty);
   }
   /* (non-Javadoc)
    * @see com.danielbchapman.production.beans.PettyCashDaoRemote#canHasPettyCash(java.lang.Long)
    */
   public PettyCash canHasPettyCash(Long id)
   {
-    return em.find(PettyCash.class, id);
+    return EntityInstance.find(PettyCash.class, id);
   }
   
   /* (non-Javadoc)
@@ -92,51 +79,24 @@ public class PettyCashDao implements PettyCashDaoRemote
   @SuppressWarnings("unchecked")
   public ArrayList<PettyCashEntry> getPettyCashEntries(PettyCash petty)
   {
-    Query q = em.createQuery("SELECT p FROM PettyCashEntry p WHERE p.pettyCash = ?1");
-    q.setParameter(1, petty);
-    List<PettyCashEntry> results = (List<PettyCashEntry>)q.getResultList();
-    ArrayList<PettyCashEntry> ret = new ArrayList<PettyCashEntry>();
-    
-    if(results != null)
-      for(PettyCashEntry p : results)
-        ret.add(p);
-    
-    return ret;    
+  	return EntityInstance.getResultList("SELECT p FROM PettyCashEntry p WHERE p.pettyCash = ?1", PettyCashEntry.class, petty);
   }
 
   
   /* (non-Javadoc)
    * @see com.danielbchapman.production.beans.PettyCashDaoRemote#getPettyCashIssues()
    */
-  @SuppressWarnings("unchecked")
   public ArrayList<PettyCash> getPettyCashIssues()
   {
-    Query q = em.createQuery("SELECT p FROM PettyCash p WHERE p.reconciled = false ORDER BY p.name");
-    List<PettyCash> results = (List<PettyCash>)q.getResultList();
-    ArrayList<PettyCash> ret = new ArrayList<PettyCash>();
-    
-    if(results != null)
-      for(PettyCash p : results)
-        ret.add(p);
-    
-    return ret;
+  	return EntityInstance.getResultList("SELECT p FROM PettyCash p WHERE p.reconciled = false ORDER BY p.name", PettyCash.class);
   }
   
   /* (non-Javadoc)
    * @see com.danielbchapman.production.beans.remote.PettyCashDaoRemote#getPettyCashIssuesClosed()
    */
-  @SuppressWarnings("unchecked")
   public ArrayList<PettyCash> getPettyCashIssuesClosed()
   {
-    Query q = em.createQuery("SELECT p FROM PettyCash p WHERE p.reconciled = true ORDER BY p.name");
-    List<PettyCash> results = (List<PettyCash>)q.getResultList();
-    ArrayList<PettyCash> ret = new ArrayList<PettyCash>();
-    
-    if(results != null)
-      for(PettyCash p : results)
-        ret.add(p);
-    
-    return ret;
+  	return EntityInstance.getResultList("SELECT p FROM PettyCash p WHERE p.reconciled = true ORDER BY p.name", PettyCash.class);
   }
 
   /* (non-Javadoc)
@@ -146,14 +106,6 @@ public class PettyCashDao implements PettyCashDaoRemote
   {
     //TODO this could feasibly confirm all entries and mark them as "unmodifiable"
     pettyCash.setReconciled(true);
-    
-    if(!Config.CONTAINER_MANAGED)  
-      em.getTransaction().begin();
-    
-    em.merge(pettyCash);
-    
-    if(!Config.CONTAINER_MANAGED)
-      em.getTransaction().commit();
+    EntityInstance.saveObject(pettyCash);
   }
- 
 }

@@ -61,7 +61,7 @@ public class CalendarDao implements CalendarDaoRemote
 	Logger log = Logger.getLogger(CalendarDao.class.getName());
 
 	// @PersistenceContext
-	EntityManager em = EntityInstance.getEm();
+	//	EntityManager em = EntityInstance.getEm();
 
 	/*
 	 * (non-Javadoc)
@@ -146,43 +146,15 @@ public class CalendarDao implements CalendarDaoRemote
 		if(date == null)
 			return false;
 
-		Query q = em.createQuery("SELECT d FROM Day d WHERE d.date = ?1 AND d.week.season = ?2");
-		q.setParameter(1, date);
-		q.setParameter(2, season);
-
-		Day day = null;
-		try
-		{
-			day = (Day) q.getSingleResult();
-			if(day != null)
-				return true;
-		}
-		catch(NoResultException e)
-		{
-			day = null;// debug hook
-		}
-		catch(NonUniqueResultException e)
-		{
-			day = null;// it must exist...
-			return true;
-		}
-		return false;
+		Day day = EntityInstance.getSingleResult("SELECT d FROM Day d WHERE d.date = ?1 AND d.week.season = ?2", Day.class, date, season);
+		return day != null;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<Day> getActiveDaysForWeek(Week week)
 	{
-		Query q = em.createQuery("SELECT d FROM Day d WHERE d.week = ?1");
-		q.setParameter(1, week);
-		ArrayList<Day> days = new ArrayList<Day>();
-
-		List<Day> results = (List<Day>) q.getResultList();
-		if(results != null)
-			for(Day d : results)
-				days.add(d);
-
-		return days;
+		return EntityInstance.getResultList("SELECT d FROM Day d WHERE d.week = ?1", Day.class, week);
 	}
 
 	@Override
@@ -209,21 +181,8 @@ public class CalendarDao implements CalendarDaoRemote
 	@SuppressWarnings("unchecked")
 	public ArrayList<Week> getAllWeeks(Season season)
 	{
-		ArrayList<Week> ret = new ArrayList<Week>();
 
-		if(season == null)
-			return ret;
-
-		Query q = em.createQuery("SELECT w FROM Week w WHERE w.season = ?1 ORDER BY w.date");
-		q.setParameter(1, season);
-
-		List<Week> weeks = (List<Week>) q.getResultList();
-
-		if(weeks != null)
-			for(Week w : weeks)
-				ret.add(w);
-
-		return ret;
+		return EntityInstance.getResultList("SELECT w FROM Week w WHERE w.season = ?1 ORDER BY w.date", Week.class, season);
 	}
 
 	@Override
@@ -249,16 +208,7 @@ public class CalendarDao implements CalendarDaoRemote
 	@SuppressWarnings("unchecked")
 	public ArrayList<Event> getEvents(Day day)
 	{
-		Query q = em.createQuery("SELECT e FROM Event e WHERE e.day = ?1 ORDER BY e.start");
-		q.setParameter(1, day);
-
-		ArrayList<Event> ret = new ArrayList<Event>();
-		List<Event> results = (List<Event>) q.getResultList();
-		if(results != null)
-			for(Event e : results)
-				ret.add(e);
-
-		return ret;
+		return EntityInstance.getResultList("SELECT e FROM Event e WHERE e.day = ?1 ORDER BY e.start", Event.class, day);
 	}
 
 	/*
@@ -289,16 +239,7 @@ public class CalendarDao implements CalendarDaoRemote
 	@Override
 	public ArrayList<Event> getEventsForDay(Day day)
 	{
-		Query q = em.createQuery("SELECT e FROM Event e WHERE e.day = ?1");
-		q.setParameter(1, day);
-		ArrayList<Event> events = new ArrayList<Event>();
-
-		List<Event> results = (List<Event>) q.getResultList();
-		if(results != null)
-			for(Event e : results)
-				events.add(e);
-
-		return events;
+		return EntityInstance.getResultList("SELECT e FROM Event e WHERE e.day = ?1", Event.class, day);
 	}
 
 	/*
@@ -310,7 +251,7 @@ public class CalendarDao implements CalendarDaoRemote
 	@Override
 	public Day getOrCreateDay(Date date, Season season)
 	{
-		Week weekRef = getOrCreateWeek(date, season);// Haha week reference? Get it?!
+		Week weekRef = getOrCreateWeek(date, season);
 		Day day = getOrCreateDay(date, weekRef);
 		return day;
 	}
@@ -325,6 +266,8 @@ public class CalendarDao implements CalendarDaoRemote
 	@SuppressWarnings("unchecked")
 	public Day getOrCreateDay(Date date, Week week)
 	{
+		EntityManager em = EntityInstance.getEm();
+		
 		Query q = em.createQuery("SELECT d FROM Day d WHERE d.date = ?1 AND d.week = ?2 ORDER BY d.id");
 		q.setParameter(1, date);
 		q.setParameter(2, week);
@@ -369,6 +312,7 @@ public class CalendarDao implements CalendarDaoRemote
 			day = getOrCreateDay(day.getDate(), day.getWeek()); // refresh
 		}
 
+		em.close();
 		return day;
 	}
 
@@ -386,18 +330,7 @@ public class CalendarDao implements CalendarDaoRemote
 
 		dayInWeek = findMonday(dayInWeek);
 
-		Query q = em.createQuery("SELECT w FROM Week w WHERE w.date = ?1 AND w.season = ?2");
-		q.setParameter(1, dayInWeek);
-		q.setParameter(2, season);
-		Week ret = null;
-		try
-		{
-			ret = (Week) q.getSingleResult();
-		}
-		catch(NoResultException e)
-		{
-			ret = null; // debug hook
-		}
+		Week ret = EntityInstance.getSingleResult("SELECT w FROM Week w WHERE w.date = ?1 AND w.season = ?2", Week.class, dayInWeek, season);
 
 		if(ret == null)
 		{
@@ -406,7 +339,7 @@ public class CalendarDao implements CalendarDaoRemote
 			ret.setDate(dayInWeek);
 
 			saveWeek(ret);
-			ret = getOrCreateWeek(ret.getDate(), ret.getSeason());
+			return getOrCreateWeek(ret.getDate(), ret.getSeason());
 		}
 
 		return ret;
@@ -420,7 +353,7 @@ public class CalendarDao implements CalendarDaoRemote
 	@Override
 	public Performance getPerformance(Long id)
 	{
-		return em.find(Performance.class, id);
+		return EntityInstance.find(Performance.class, id);
 	}
 
 	@Override
@@ -438,7 +371,7 @@ public class CalendarDao implements CalendarDaoRemote
 	@Override
 	public PerformanceAdvance getPerformanceAdvance(Long id)
 	{
-		return em.find(PerformanceAdvance.class, id);
+		return EntityInstance.find(PerformanceAdvance.class, id);
 	}
 
 	/*
@@ -453,7 +386,7 @@ public class CalendarDao implements CalendarDaoRemote
 	{
 		//@formatter:off
 		/* Removed by de-normalizing the database and storing venues in the day/performanceAdvance
-		
+
 		String query = 
 						"SELECT  \n" +
 						"  a.id \n" +
@@ -471,11 +404,11 @@ public class CalendarDao implements CalendarDaoRemote
 		 Query q = EntityInstance.getEm().createNativeQuery(query);
 		 q.setParameter(1, venue.getId());
 		 List<Long> ids = (List<Long>) q.getResultList();
-		
+
 		 ArrayList<PerformanceAdvance> advances = new ArrayList<PerformanceAdvance>();
 		 for(Long id : ids)
 		 advances.add(getPerformanceAdvance(id));
-		
+
 		 return advances;
 		 */
 		// @formatter:on
@@ -543,7 +476,7 @@ public class CalendarDao implements CalendarDaoRemote
 	@Override
 	public PerformanceSchedule getPerformanceSchedule(Long id)
 	{
-		return em.find(PerformanceSchedule.class, id);
+		return EntityInstance.find(PerformanceSchedule.class, id);
 	}
 
 	@Override
@@ -561,7 +494,7 @@ public class CalendarDao implements CalendarDaoRemote
 	@Override
 	public Week getWeek(Long id)
 	{
-		return em.find(Week.class, id);
+		return EntityInstance.find(Week.class, id);
 	}
 
 	@Override
@@ -571,7 +504,7 @@ public class CalendarDao implements CalendarDaoRemote
 		Date endMonday = findMonday(end);
 		//@formatter:off
 		String query = 
-						"SELECT  \n" +
+				"SELECT  \n" +
 						"  w  \n" +
 						"FROM  \n" +
 						"  Week w  \n" +

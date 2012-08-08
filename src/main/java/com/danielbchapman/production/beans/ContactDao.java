@@ -32,7 +32,6 @@ public class ContactDao implements ContactDaoRemote
 {
 
 	private static final long serialVersionUID = 1L;
-	EntityManager em = EntityInstance.getEm();
 
 	/*
 	 * (non-Javadoc)
@@ -214,7 +213,7 @@ public class ContactDao implements ContactDaoRemote
 	@Override
 	public Contact getContact(Long id)
 	{
-		return EntityInstance.getEm().find(Contact.class, id);
+		return EntityInstance.find(Contact.class, id);
 	}
 
 	/*
@@ -225,7 +224,7 @@ public class ContactDao implements ContactDaoRemote
 	@Override
 	public ContactGroup getContactGroup(Long id)
 	{
-		return EntityInstance.getEm().find(ContactGroup.class, id);
+		return EntityInstance.find(ContactGroup.class, id);
 	}
 
 	/*
@@ -306,7 +305,8 @@ public class ContactDao implements ContactDaoRemote
 
 		List<Long> ids = null;
 
-		Query q = EntityInstance.getEm().createNativeQuery(sql);
+		EntityManager em = EntityInstance.getEm();
+		Query q = em.createNativeQuery(sql);
 		q.setParameter(1, season.getId());
 		ids = (List<Long>) q.getResultList();
 
@@ -319,6 +319,7 @@ public class ContactDao implements ContactDaoRemote
 				seasonResults.add(sc.getContact());
 		}
 
+		em.close();
 		return seasonResults;
 	}
 
@@ -429,7 +430,8 @@ public class ContactDao implements ContactDaoRemote
 						"  sc.baseContact.lastName,  \n" +
 						"  sc.baseContact.firstName   \n" ;		
 		//@formatter:on
-		List<Long> ids = (List<Long>) EntityInstance.getEm().createNativeQuery(findGroups)
+		EntityManager em = EntityInstance.getEm();
+		List<Long> ids = (List<Long>) em.createNativeQuery(findGroups)
 				.setParameter(1, season.getId()).getResultList();
 		ArrayList<ContactGroup> groups = new ArrayList<ContactGroup>();
 
@@ -458,6 +460,7 @@ public class ContactDao implements ContactDaoRemote
 			}
 		}
 
+		em.close();
 		return ret;
 	}
 
@@ -516,20 +519,22 @@ public class ContactDao implements ContactDaoRemote
 						"    2, 3 \n" +
 						"); \n" ;
 		/* @formatter:on */
-		Query q = EntityInstance.getEm().createNativeQuery(notInSeasonLinked);
+		EntityManager em = EntityInstance.getEm();
+		Query q = em.createNativeQuery(notInSeasonLinked);
 		q.setParameter(1, season.getId());
 		List<Long> results = q.getResultList();
 
 		for(Long id : results)
-			ret.add(EntityInstance.getEm().find(LinkedContact.class, id));
+			ret.add(EntityInstance.find(LinkedContact.class, id));
 
-		q = EntityInstance.getEm().createNativeQuery(notInSeasonContacts);
+		q = em.createNativeQuery(notInSeasonContacts);
 		q.setParameter(1, season.getId());
 		results = q.getResultList();
 
 		for(Long id : results)
-			ret.add(EntityInstance.getEm().find(Contact.class, id));
+			ret.add(EntityInstance.find(Contact.class, id));
 
+		em.close();
 		return ret;
 	}
 
@@ -560,7 +565,7 @@ public class ContactDao implements ContactDaoRemote
 	@Override
 	public LinkedContact getLinkedContact(Long id)
 	{
-		return EntityInstance.getEm().find(LinkedContact.class, id);
+		return EntityInstance.find(LinkedContact.class, id);
 	}
 
 	/*
@@ -584,7 +589,7 @@ public class ContactDao implements ContactDaoRemote
 	@Override
 	public SeasonContact getSeasonContacts(Long id)
 	{
-		return EntityInstance.getEm().find(SeasonContact.class, id);
+		return EntityInstance.find(SeasonContact.class, id);
 	}
 
 	/*

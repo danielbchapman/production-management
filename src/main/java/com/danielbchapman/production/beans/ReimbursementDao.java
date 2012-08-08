@@ -2,17 +2,13 @@ package com.danielbchapman.production.beans;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
 import com.danielbchapman.production.entity.BudgetEntry;
 import com.danielbchapman.production.entity.Department;
 import com.danielbchapman.production.entity.Employee;
 import com.danielbchapman.production.entity.EntityInstance;
-import com.danielbchapman.production.entity.EntryType;
 import com.danielbchapman.production.entity.Reimbursement;
 
 /**
@@ -22,7 +18,7 @@ import com.danielbchapman.production.entity.Reimbursement;
 public class ReimbursementDao implements ReimbursementDaoRemote
 {
 	private static final long serialVersionUID = 1L;
-	EntityManager em = EntityInstance.getEm();
+//	EntityManager em = EntityInstance.getEm();
   /**
    * Default constructor.
    */
@@ -48,14 +44,7 @@ public class ReimbursementDao implements ReimbursementDaoRemote
     reimbursement.setEmployee(employee);
     reimbursement.setReported(false);
     
-    if(!Config.CONTAINER_MANAGED)//FIXME -> This should be centralized, all entities should extend the base
-      em.getTransaction().begin();
-    
-    em.persist(entry);
-    em.persist(reimbursement);
-    
-    if(!Config.CONTAINER_MANAGED)
-      em.getTransaction().commit();
+    EntityInstance.saveObjects(entry, reimbursement);
   }
 
   /* (non-Javadoc)
@@ -71,36 +60,19 @@ public class ReimbursementDao implements ReimbursementDaoRemote
   /* (non-Javadoc)
    * @see com.danielbchapman.production.beans.ReimbursementDaoRemote#getAllReimbursements()
    */
-  @SuppressWarnings("unchecked")
   @Override
   public ArrayList<Reimbursement> getAllReimbursements()
   {
-    Query q = em.createQuery("SELECT r FROM Reimbursement r");
-    List<Reimbursement> results = (List<Reimbursement>)q.getResultList();
-    ArrayList<Reimbursement> ret = new ArrayList<Reimbursement>();
-    if(results != null)
-      for(Reimbursement r : results)
-        ret.add(r);
-    
-    return ret;
+  	return EntityInstance.getResultList("SELECT r FROM Reimbursement r", Reimbursement.class);
   }
 
   /* (non-Javadoc)
    * @see com.danielbchapman.production.beans.ReimbursementDaoRemote#getReimbursementsForEmployee(com.danielbchapman.production.entity.Employee)
    */
-  @SuppressWarnings("unchecked")
   @Override
   public ArrayList<Reimbursement> getReimbursementsForEmployee(Employee employee)
   {
-    Query q = em.createQuery("SELECT r FROM Reimbursement r WHERE r.employee = ?1");
-    q.setParameter(1, employee);
-    List<Reimbursement> results = (List<Reimbursement>)q.getResultList();
-    ArrayList<Reimbursement> ret = new ArrayList<Reimbursement>();
-    if(results != null)
-      for(Reimbursement r : results)
-        ret.add(r);
-    
-    return ret;
+  	return EntityInstance.getResultList("SELECT r FROM Reimbursement r WHERE r.employee = ?1", Reimbursement.class, employee);
   }
 
 }

@@ -21,13 +21,10 @@ import javax.persistence.ManyToOne;
  */
 //FIXME Java Doc Needed
 @Entity
-public class PettyCashEntry implements Serializable
+public class PettyCashEntry extends BaseEntity
 {
   private static final long serialVersionUID = 1L;
   private BudgetEntry budgetEntry;
-  @Id
-  @GeneratedValue(strategy=GenerationType.AUTO)
-  private Long id;
   @ManyToOne(fetch = FetchType.EAGER, optional = false)
   private PettyCash pettyCash;
   
@@ -35,11 +32,7 @@ public class PettyCashEntry implements Serializable
   {
     return budgetEntry;
   }
-  public Long getId()
-  {
-    return id;
-  }
-  
+
   public PettyCash getPettyCash()
   {
     return pettyCash;
@@ -48,10 +41,7 @@ public class PettyCashEntry implements Serializable
   {
     this.budgetEntry = budgetEntry;
   }
-  public void setId(Long id)
-  {
-    this.id = id;
-  }
+
   public void setPettyCash(PettyCash pettyCash)
   {
     this.pettyCash = pettyCash;

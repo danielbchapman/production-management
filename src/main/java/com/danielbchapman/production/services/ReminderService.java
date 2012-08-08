@@ -1,16 +1,7 @@
 package com.danielbchapman.production.services;
 
-import java.util.ArrayList;
-import java.util.Date;
-
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-
 //import org.apache.log4j.Logger;
 //import org.jboss.varia.scheduler.Schedulable;
-
-import com.danielbchapman.production.beans.TaskDaoRemote;
-import com.danielbchapman.production.entity.Task;
 
 public class ReminderService //implements Schedulable
 {

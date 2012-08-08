@@ -20,6 +20,6 @@ class DelegateInstance extends AbstractEntityInstance
 	@Override
 	protected boolean isContainerManaged()
 	{
-		return true;
+		return false;
 	}
 }
