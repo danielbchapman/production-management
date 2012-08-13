@@ -41,21 +41,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.theactingcompany.production</groupId>
-			<artifactId>GenericLoginEJB</artifactId>
-			<version>2.1.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.theactingcompany.production</groupId>
-			<artifactId>BugsEJB</artifactId>
-			<version>1.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>org.theactingcompany.production</groupId>
-			<artifactId>InventoryEJB</artifactId>
-			<version>1.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>org.theactingcompany.production</groupId>
 			<artifactId>ProductionEJB</artifactId>
 			<version>2.1.1</version>
 		</dependency>
@@ -65,9 +50,24 @@
 			<version>3.5.3</version>
 		</dependency>
 		<dependency>
+			<groupId>google-gson</groupId>
+			<artifactId>google-gson</artifactId>
+			<version>2.2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.theactingcompany.production</groupId>
+			<artifactId>BugsEJB</artifactId>
+			<version>1.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
 			<groupId>org.theactingcompany.production</groupId>
 			<artifactId>HelpEJB</artifactId>
 			<version>2.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.theactingcompany.production</groupId>
+			<artifactId>InventoryEJB</artifactId>
+			<version>1.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 	<repositories>
