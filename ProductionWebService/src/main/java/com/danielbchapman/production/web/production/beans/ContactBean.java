@@ -737,6 +737,15 @@ public class ContactBean implements Serializable
 		protected String name;
 		protected int rank = 99;
 
+		public void setStringColor(String color)
+		{
+			setColor(Utility.stringHexToColor(color));
+		}
+		
+		public String getStringColor()
+		{
+			return Utility.colorToStringHex(color);
+		}
 		/**
 		 * @return the color
 		 */

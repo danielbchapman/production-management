@@ -1,9 +1,11 @@
 package com.danielbchapman.production;
 
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -99,6 +101,21 @@ public class Utility
 			new SelectItem("NS"), new SelectItem("NB"), new SelectItem("MB"), new SelectItem("BC"),
 			new SelectItem("PE"), new SelectItem("SK"), new SelectItem("AB"), new SelectItem("NL"), };
 
+	@SuppressWarnings("unchecked")
+	public static <T> T[] array(Collection<T> collection, Class<T> clazz)
+	{
+		if(collection.isEmpty())
+			return (T[]) Array.newInstance(clazz, 0);
+			
+		T[] ret = (T[]) Array.newInstance(clazz, collection.size());
+		
+		int i = 0;
+		for(T t : collection)
+			ret[i++] = t;
+		
+		return ((T[]) ret);
+	}
+	
 	public static void close(Closeable resource)
 	{
 		if(resource != null)
@@ -560,6 +577,44 @@ public class Utility
 		build.append(typeClose);
 		build.append(mapClose);
 	}
+	public static String colorToStringHex(Color color)
+	{
+		return colorToStringHex(color.getRed(), color.getGreen(), color.getBlue());
+	}
+	 
+	public static String colorToStringHex(int red, int green, int blue)
+	{
+		//@formatter:off
+		return 
+				  Integer.toHexString(0xF & red >> 4)
+				+ Integer.toHexString(0x0F & red)
+				+ Integer.toHexString(0xF & green >> 4)
+				+ Integer.toHexString(0x0F & green)
+				+ Integer.toHexString(0xF & blue >> 4)
+				+ Integer.toHexString(0x0F & blue);
+		//@formatter:on				
+	}
+
+	public static Color stringHexToColor(String color)
+	{
+		if(color == null)
+			return new Color(Color.RED.getRGB());
+		
+		char[] colors = color.toCharArray();
+		if(colors.length < 6)
+		{
+			System.out.println("Color not set " + color + " was not of length 6");
+			return new Color(Color.RED.getRGB());
+		}
+			
+		
+		int red = Integer.parseInt(new String(new char[] { colors[0], colors[1] }));
+		int green = Integer.parseInt(new String(new char[] { colors[2], colors[3] }));
+		int blue = Integer.parseInt(new String(new char[] { colors[4], colors[5] }));
+		
+		//Intentional, do not optimize, this way the NFException will be thrown before setting values.
+		return new Color(red, green, blue, 255);
+	}	
 
 	private static void raiseMessage(FacesMessage.Severity severity, String summary, String message)
 	{
