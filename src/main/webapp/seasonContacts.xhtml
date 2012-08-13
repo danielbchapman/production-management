@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:tac="http://java.sun.com/jsf/composite"
+	xmlns:contacts="http://java.sun.com/jsf/composite/contacts"
+	xmlns:inventory="http://java.sun.com/jsf/composite/inventory"		
+>
+	
+	<f:subview id="contacts" contentType="text/html" rendered="#{loginBean.user}">
+		<p:growl id="messages" showDetail="true" showSummary="true"/>
+		<br />
+		
+    <div class="help" style="width:100%;text-align:right;margin-left:auto;">
+      <p:lightBox iframe="true" width="80%" height="80%">  
+        <h:outputLink 
+          value="help.xhtml?lookupString=contacts" 
+          title="Help" 
+        >  
+          <span class="ui-icon ui-icon-info" style="display:inline-block;"></span>
+          <h:outputText value="Help"/>  
+        </h:outputLink>  
+       </p:lightBox>      
+    </div>		
+		
+		<p:panel rendered="#{loginBean.user}">
+		
+			<p:tabView id="tabs">
+				<p:tab title="Contacts">
+					<h:form id="contacts">
+						<p:dataTable
+							paginator="true" 
+							rows="10"  
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+							rowsPerPageTemplate="5,10,15,25" 
+							var="wrapper" 
+							value="#{contactBean.allContacts}"
+							widgetVar="contactsTable"
+							emptyMessage="No contacts found..."
+						>
+							<p:column>
+								<p:rowToggler/>
+							</p:column>
+							
+							<p:column headerText="Name">
+								<h:outputText value="#{wrapper.contact.fullName}"/>
+								<br />
+								<h:outputText value="#{wrapper.contact.contactGroup.name}" style="font-style:italic;"/>
+							</p:column>
+							
+							<p:column headerText="Phone">
+								<h:outputText value="#{wrapper.contact.phone}" style="text-wrap: none;"/>
+							</p:column>
+							
+							<p:column headerText="Mobile">
+								<h:outputText value="#{wrapper.contact.cell}"  style="text-wrap: none;"/>
+							</p:column>
+							
+							<p:column headerText="E-mail" style="text-wrap: none;">
+								<h:outputLink value="mailto:#{wrapper.contact.email}">
+									<h:outputText value="#{wrapper.contact.email}" />
+								</h:outputLink>
+							</p:column>			
+							
+							<p:column rendered="#{loginBean.user}">
+								<p:commandButton
+									actionListener="#{wrapper.delete}" 
+									image="ui-icon ui-icon-circle-close"
+									update=":contacts:messages, :contacts:tabs:contacts, :contacts:tabs:newContacts, :contacts:tabs:season"
+									value="Delete"
+								/>
+							</p:column>				
+							
+							<p:rowExpansion>
+								<div style="margin:0; padding:0;background-color:#fff">
+									<p:panel>
+										<h3> Edit Details</h3>
+										
+										<contacts:editContactWide 
+											contact="#{wrapper.contact}" 
+											converter="#{wrapper.converter}"
+										/>
+										
+										<h:outputText value="Notes/Agent" styleClass="information"/>
+										<p:inputText value="#{wrapper.contact.notes}" style="width:580px; margin-left:5px;"/>
+									
+										<p:commandButton 
+											value="Update" 
+											image="ui-icon ui-icon-circle-check"
+											actionListener="#{wrapper.save}"
+											update=":contacts:messages, :contacts:tabs:contacts, :contacts:tabs:newContacts"
+										/>	
+									</p:panel>
+									
+									<br />
+									
+									<p:panel>
+										<h3>
+											Edit Addresses
+										</h3>
+										<p:dataTable								 
+											var="address" 
+											value="#{wrapper.addresses}"
+										>
+											<f:facet name="header">
+												Contact Addresses
+											</f:facet>
+											
+											<p:column headerText="Label">
+												<h:outputText value="#{address.address.label}"/>
+											</p:column>
+											 
+											<p:column headerText="Address">
+												<h:outputText value="#{address.address.lineOne}, #{address.address.lineTwo}" />
+											</p:column>						
+											
+											<p:column headerText="City">
+												<h:outputText value="#{address.address.city}"/>
+											</p:column>
+											
+											<p:column headerText="State">
+												<h:outputText value="#{address.address.state}"/>
+											</p:column>
+											
+											<p:column headerText="Zip">
+												<h:outputText value="#{address.address.zip}"/>
+											</p:column>
+											
+											<p:column>
+												<p:commandButton
+													actionListener="#{address.delete}"
+													image="ui-icon ui-icon-circle-close"
+													value="Delete"
+													update=":contacts:tabs:contacts, :contacts:messages"
+												/>
+											</p:column>									
+																
+											<f:facet name="footer">
+												<p:panel style="text-align:left;">
+													<contacts:editContactAddress contactAddress="#{wrapper.newAddress.address}"/>
+													<p:commandButton
+														image="ui-icon ui-icon-circle-plus"
+														actionListener="#{wrapper.newAddress.save}" 
+														value="Add"
+														update=":contacts:tabs:contacts, :contacts:messages" 
+													/>
+												</p:panel>
+											</f:facet>
+										</p:dataTable>
+										
+									</p:panel>
+									
+									<br />
+									
+									<p:panel>
+										<h3>Linked Contacts</h3>
+										<p:dataTable
+											paginator="true" 
+											rows="10"  
+											paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+											rowsPerPageTemplate="5,10,15,25"											 
+											var="link" 
+											value="#{wrapper.links}"
+										>
+											<p:column title="Link">
+												<h:outputText value="#{link.linkedContact.displayName} "/>
+											</p:column>
+											
+											<p:column title="Group">
+												<h:outputText value="#{link.linkedContact.contactGroup.name}"/>
+											</p:column>
+											
+											<p:column title="Sub Group">
+												<h:outputText value="#{link.linkedContact.subGroup}"/>
+											</p:column>
+											
+											<p:column title="Group">
+												<h:outputText value="#{link.linkedContact.position}"/>
+											</p:column>
+											
+											<p:column>
+												<p:commandButton 
+													value="Delete"
+													image="ui-icon ui-icon-circle-close"
+													actionListener="#{link.doDelete}"
+													update=":contacts:messages, :contacts:tabs:contacts"
+												/>
+											</p:column>
+										</p:dataTable>										
+										
+										<h3>
+											Create Link
+										</h3>
+										<h:panelGrid columns="3">
+											<h:outputText value="Group" styleClass="information"/>
+											<h:outputText value="Sub-Group" styleClass="information"/>
+											<h:outputText value="Title/Position" styleClass="information"/>
+											
+											<h:selectOneMenu value="#{wrapper.newLinkedGroupId}">
+												<f:selectItems value="#{contactBean.contactGroupItems}"/>
+											</h:selectOneMenu>
+											<p:inputText value="#{wrapper.newLinkSubGroup}"/>
+											<p:inputText value="#{wrapper.newLinkPosition}"/>
+										</h:panelGrid>
+										<p:commandButton 
+											actionListener="#{wrapper.doSaveNewLink}"
+											update=":contacts:tabs:contacts, :contacts:messages"
+											image="ui-icon ui-icon-circle-arrow-e"
+											value="Add Link"
+										/>
+									</p:panel>
+
+								</div>
+							</p:rowExpansion>
+							
+						</p:dataTable>
+					</h:form>
+				</p:tab>
+				
+				<p:tab title="Season">
+					<h:form id="season">
+						<h3>Remaining Contacts</h3>
+						<p:dataTable 
+							paginator="true" 
+							rows="10"  
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+							rowsPerPageTemplate="5,10,15,25"											 				
+							var="contact"
+							value="#{contactBean.seasonListStructure.source}"
+						>
+							<p:column headerText="Name">
+								<h:outputText value="#{contact.fullName}"/>
+							</p:column>
+							
+							<p:column headerText="Group">
+								<h:outputText value="#{contact.contactGroup.name}"/>
+							</p:column>
+							
+							<p:column headerText="Sub Group">
+								<h:outputText value="#{contact.subGroup}"/>
+							</p:column>
+							
+							<p:column headerText="Position">
+								<h:outputText value="#{contact.position}"/>
+							</p:column>
+							
+							<p:column>
+								<p:commandButton
+									actionListener="#{contactBean.seasonListStructure.doAddContact}"
+									value="Add"
+									image="ui-icon ui-icon-circle-plus"
+									update=":contacts:tabs:season, :contacts:messages" 
+								>
+									<f:attribute value="#{contact.id}" name="contactId"/>
+								</p:commandButton>
+							</p:column>								
+						</p:dataTable>
+						
+						<h3>Season Contacts</h3>
+						<p:dataTable
+							paginator="true" 
+							rows="10"  
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+							rowsPerPageTemplate="5,10,15,25"											 					 
+							var="contact" 
+							value="#{contactBean.seasonListStructure.target}"
+						>
+							<p:column headerText="Name">
+								<h:outputText value="#{contact.fullName}"/>
+							</p:column>
+							
+							<p:column headerText="Group">
+								<h:outputText value="#{contact.contactGroup.name}"/>
+							</p:column>
+							
+							<p:column headerText="Sub Group">
+								<h:outputText value="#{contact.subGroup}"/>
+							</p:column>
+							
+							<p:column headerText="Position">
+								<h:outputText value="#{contact.position}"/>
+							</p:column>
+							
+							<p:column>
+								<p:commandButton
+									actionListener="#{contactBean.seasonListStructure.doRemoveContact}"
+									value="Remove"
+									image="ui-icon ui-icon-circle-minus" 
+									update=":contacts:tabs:season, :contacts:messages" 
+								>
+									<f:attribute value="#{contact.id}" name="contactId"/>
+								</p:commandButton>
+							</p:column>
+						</p:dataTable>
+
+					</h:form>
+					<h:form id="prints">
+						<p:panel>
+							<h3>Printing</h3>
+							<ui:repeat value="#{contactBean.printingController.elements}" var="print">
+								<div style="width:100%">
+									<h:panelGrid columns="2">
+										<h:outputText value="Report File #{print.fileName}" styleClass="information" />
+										<p:commandButton  
+											id="downloadButton"
+											value="Download" 
+											ajax="false"
+											image="ui-icon ui-icon-circle-arrow-s"
+											update=":contacts:tabs:prints, :contacts:messages"
+											onclick="this.style='display: none;''"
+										> 
+											<p:fileDownload value="#{print.pdf}"></p:fileDownload>										
+										</p:commandButton>
+									</h:panelGrid>
+								</div>
+							</ui:repeat>
+						</p:panel>		
+					</h:form>			
+				</p:tab>
+				
+				<p:tab title="New Contacts">
+					<h:form id="newContacts">
+						
+						<contacts:newContact contact="#{contactBean.newContact}" />
+						<hr />
+						<p:commandButton 
+							value="Save"
+							image="ui-icon ui-icon-disk"
+							actionListener="#{contactBean.newContact.saveContact}"
+							update=":contacts:messages, :contacts:tabs:contacts, :contacts:tabs:newContacts, :contacts:tabs:season"
+						/>
+						
+					</h:form>
+				</p:tab>
+								
+				<p:tab title="Groups">
+					<h:form id="groups">
+						<p:dataTable var="group" value="#{contactBean.contactGroups}">
+							<p:column>
+								<p:rowToggler />
+							</p:column>
+							
+							<p:column headerText="Color">
+								<p:colorPicker value="#{group.group.stringColor}"/>
+								
+								<f:facet name="footer">
+									<p:colorPicker value="#{contactBean.newContactGroup.stringColor}" />
+								</f:facet>
+							</p:column>
+														
+							<p:column headerText="Group Name">
+								<h:outputText value="#{group.group.name}"/>
+								
+								<f:facet name="footer">
+									<p:inputText value="#{contactBean.newContactGroup.name}" />
+								</f:facet>
+							</p:column>
+							
+							<p:column headerText="Description">
+								<h:outputText value="#{group.group.description}"/>
+								
+								<f:facet name="footer">
+									<p:inputText value="#{contactBean.newContactGroup.description}" />
+								</f:facet>
+							</p:column>
+							
+							<p:column headerText="Rank">
+								<h:outputText value="#{group.group.rank}"/>
+								
+								<f:facet name="footer">
+									<p:inputText value="#{contactBean.newContactGroup.rank}" />
+								</f:facet>
+							</p:column>
+													
+							<p:column>								
+								<f:facet name="footer">
+									<p:commandButton 
+										value="Save"
+										image="ui-icon ui-icon-disk"
+										actionListener="#{contactBean.newContactGroup.saveGroup}"
+										update=":contacts:messages, :contacts:tabs:newContacts, :contacts:tabs:groups, :contacts:tabs:contacts"
+									/>
+								</f:facet>
+							</p:column>
+							
+							<p:rowExpansion>
+								<p:panel>
+									<h4>
+										<h:outputText value="Edit Group" styleClass="information"/>
+									</h4>
+									<h:panelGrid styleClass="noBorders" columns="5">
+										<h:outputText value="Color" styleClass="information" />
+										<h:outputText value="Name" styleClass="information" />
+										<h:outputText value="Description" styleClass="information" />
+										<h:outputText value="Rank" styleClass="information" />
+										<h:outputText />
+										
+										<p:colorPicker value="#{group.group.stringColor}" styleClass="spaced"/>
+										<p:inputText value="#{group.group.name}" styleClass="spaced"/>
+										<p:inputText value="#{group.group.description}" styleClass="spaced"/>
+										<p:inputText value="#{group.group.rank}" styleClass="spaced"/>
+										<p:commandButton 
+											value="Save" 
+											image="ui-icon ui-icon-disk"
+											actionListener="#{group.save}"
+											update=":contacts:messages, :contacts:tabs:groups, :contacts:tabs:contacts, :contacts:tabs:newContacts"
+										/>									
+									</h:panelGrid>
+								</p:panel>
+
+							</p:rowExpansion>
+						</p:dataTable>
+						
+					</h:form>
+				</p:tab>
+			</p:tabView>
+		</p:panel>			
+	</f:subview>
+</jsp:root>
+	

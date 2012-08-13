@@ -1,0 +1,509 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:tac="http://java.sun.com/jsf/composite/composite"
+	xmlns:inventory="http://java.sun.com/jsf/composite/inventory"	
+	xmlns:p="http://primefaces.org/ui">
+	<composite:interface>
+		<composite:attribute name="inventoryElementSet" type="com.danielbchapman.production.web.schedule.beans.InventoryBean$InventoryElementSet"/>
+		<composite:attribute name="displayName" type="java.lang.String"/>
+	</composite:interface>
+	
+	<composite:implementation>
+		<f:metadata>
+			<f:viewParam name="searchString" />
+		</f:metadata>
+		
+		<p:growl id="messages" showDetail="true" showSummary="true" />
+			
+		<p:accordionPanel autoHeight="false" dynamic="true" cache="true" >	
+			<p:tab title="Search #{cc.attrs.displayName} Inventory">
+				<div>
+					<h:form id="searchForm">
+						<p:outputPanel id="search" rendered="#{cc.attrs.inventoryElementSet.search}">
+							<p:panel style="margin-top:15px;">
+								<p:messages showDetail="true" showSummary="true"/>
+								
+								<h3>
+									Search Options
+									<p:ajaxStatus style="display:inline-block;width:16px;height:16px;margin-left:8px;">
+								    <f:facet name="start">  
+					       		 <h:graphicImage value="ajax-loader.gif" style="display:inline;"/>  
+					  			  </f:facet>  
+					      
+								    <f:facet name="complete">  
+											<h:outputText value="" />  
+							    	</f:facet>  
+									</p:ajaxStatus>
+									
+								</h3>
+								<h:panelGrid columns="2">
+									<h:inputText value="#{requestScope.searchString}"  style="width:95%;"/>
+
+									<p:commandButton 
+										value="Search"
+										actionListener="#{cc.attrs.inventoryElementSet.searchViaParameters}"
+										update=":#{cc.attrs.id}:searchForm"
+										style="margin-left:15px;width:95%"
+									>
+										<f:attribute name="searchString" value="#{requestScope.searchString}"/>
+									</p:commandButton>
+																		
+									<h:selectOneMenu value="#{requestScope.searchProduction}" style="width:95%;">
+										<f:selectItems value="#{cc.attrs.inventoryElementSet.knownProduction}"/>
+									</h:selectOneMenu>				
+									
+									<p:commandButton 
+										value="By Production"
+										actionListener="#{cc.attrs.inventoryElementSet.searchViaParameters}"
+										update=":#{cc.attrs.id}:searchForm"
+										style="margin-left:15px;width:95%"
+									>
+										<f:attribute name="searchString" value="#{requestScope.searchProduction}"/>
+									</p:commandButton>
+									
+									<h:selectOneMenu value="#{requestScope.searchTypes}" style="width:95%;">
+										<f:selectItems value="#{cc.attrs.inventoryElementSet.knownTypes}"/>
+									</h:selectOneMenu>
+																		
+									<p:commandButton 
+										value="By Type"
+										actionListener="#{cc.attrs.inventoryElementSet.searchViaParameters}"
+										update=":#{cc.attrs.id}:searchForm"
+										style="margin-left:15px;width:95%"
+									>
+										<f:attribute name="searchString" value="#{requestScope.searchTypes}"/>
+									</p:commandButton>
+									
+									<h:panelGroup />
+									
+									<p:commandButton 
+										value="View All"
+										actionListener="#{cc.attrs.inventoryElementSet.searchAll}"
+										update=":#{cc.attrs.id}:searchForm"
+										style="margin-left:15px;width:95%"
+									/>
+																																																					
+								</h:panelGrid>											
+								
+								<p class="information" style="font-style:italic">
+									*The set of key words is searched as full text meaning all fields and all objects are
+									checked for each individual word. This is not perfect, but will yield a larger set 
+									of results. Please use the filtered search for specific information.
+								</p>
+							</p:panel>
+						</p:outputPanel>
+						
+						<p:outputPanel id="searchResults" rendered="#{cc.attrs.inventoryElementSet.results}">
+							<div>
+								<h3>
+									<h:outputText value="#{cc.attrs.inventoryElementSet.searchTitle}"/>
+								</h3>
+								
+								<p:dataTable 
+									var="wrapper" 
+									value="#{cc.attrs.inventoryElementSet.searchResults}"  
+									paginator="true" 
+									rows="10"  
+									paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+									rowsPerPageTemplate="5,10,15,25,50"
+									paginatorPosition="bottom"
+									style="margin-left:5px;margin-right:5px;padding-left:0px;padding-right:0px;"
+									>
+
+									<p:column>
+	                	<p:rowToggler />										
+	                </p:column>
+	                
+	                <p:column>
+	                	<f:facet name="header">
+	                		<h:outputText value="ID" />
+	                	</f:facet>
+	                	<h:outputText value="#{wrapper.element.id}" styleClass="information"/>
+									</p:column>
+	                	                 
+									<p:column>
+	                	<f:facet name="header">
+	                		<h:outputText value="Type" />
+	                	</f:facet>
+	                	<h:outputText value="#{wrapper.element.type}"/>
+	                </p:column>
+	                	                
+									<p:column>
+	                	<f:facet name="header">
+	                		<h:outputText value="Description" />
+	                	</f:facet>
+	                	<h:outputText value="#{wrapper.element.description}"/>
+	                </p:column>
+	                
+									<p:column>
+	                	<f:facet name="header">
+	                		<h:outputText value="Production" />
+	                	</f:facet>
+	                	<h:outputText value="#{wrapper.element.production}"/>
+	                </p:column>	  
+	                
+									<p:column>
+	                	<f:facet name="header">
+	                		<h:outputText value="Colors" />
+	                	</f:facet>
+	                	<h:outputText value="#{wrapper.element.colors}"/>
+	                </p:column>
+	                
+									<p:column rendered="#{inventoryElementSet.wardrobe}">
+	                	<f:facet name="header">
+	                		<h:outputText value="Period" />
+	                	</f:facet>
+	                	<h:outputText value="#{wrapper.element.period}" rendered="#{inventoryElementSet.wardrobe}"/>
+	                </p:column>	                	 	                              
+	                
+									<p:column>
+	                			
+	                	<p:commandButton 
+	                		rendered="#{loginBean.inventoryAdmin}"
+	                		actionListener="#{cc.attrs.inventoryElementSet.editElement}" 
+	                		value="Edit"
+	                		styleClass="information"
+	                		update=":#{cc.attrs.id}:searchForm"
+	                	>	                		
+	                		<f:attribute name="elementId" value="#{wrapper.element.id}"/>
+	                	</p:commandButton>
+	                	
+	                	<p:commandButton
+	                		rendered="#{loginBean.inventoryAdmin}"
+	                		actionListener="#{cc.attrs.inventoryElementSet.deactivate}" 
+	                		value="Deactivate"
+	                		styleClass="error"
+	                		update=":#{cc.attrs.id}:searchForm, :#{cc.attrs.id}:messages, :#{cc.attrs.id}:inactive"
+	                	>	
+	                		<f:attribute name="elementId" value="#{wrapper.element.id}"/>
+	                	</p:commandButton>	                	
+
+	                </p:column>	                
+	                		    
+									<p:rowExpansion>
+										<inventory:displayInventory elementWrapper="#{wrapper}" update=":#{cc.attrs.id}:messages,:#{cc.attrs.id}:searchForm"/>
+									</p:rowExpansion>	 
+									               		    
+								</p:dataTable> 
+								 
+								<p:commandButton 
+									value="Search Again" 
+									actionListener="#{cc.attrs.inventoryElementSet.doModeSearch}"
+									update=":#{cc.attrs.id}:searchForm"
+									/>
+							</div>
+						</p:outputPanel>
+						
+						<p:outputPanel id="searchDetail"  rendered="#{cc.attrs.inventoryElementSet.detail}">
+							<h:panelGrid columns="2" style="vertical-align:top;">
+								<h:panelGroup>
+									<p:graphicImage
+									 	width="300px" 									 	
+										value="#{cc.attrs.inventoryElementSet.urlParameters}" />
+								</h:panelGroup>
+								<h:panelGroup>
+
+									<h:panelGrid columns="6">
+									
+										<h:outputText value="Type" styleClass="information"/>
+										<h:outputText value="#{cc.attrs.inventoryElementSet.selected.element.type}" styleClass="data"/>							
+		
+										<h:outputText value="Sex" styleClass="information" rendered="#{inventoryElementSet.wardrobe}"/>
+										<h:outputText value="#{cc.attrs.inventoryElementSet.selected.element.sex}" rendered="#{inventoryElementSet.wardrobe}"/>
+										
+										<h:outputText value="Period" styleClass="information" rendered="#{inventoryElementSet.wardrobe}"/>
+										<h:outputText value="#{cc.attrs.inventoryElementSet.selected.element.period}" rendered="#{inventoryElementSet.wardrobe}"/>
+										
+										<h:outputText value="Condition" styleClass="information"/>
+										<h:outputText value="#{cc.attrs.inventoryElementSet.selected.element.condition}"/>
+										
+										<h:outputText value="Location" styleClass="information"/>
+										<h:outputText value="#{cc.attrs.inventoryElementSet.selected.element.location}"/>
+		
+										<h:outputText value="Serial or ID" styleClass="information"/>
+										<h:outputText value="#{cc.attrs.inventoryElementSet.selected.element.serialNumberOrId}"/>
+																																
+									</h:panelGrid>
+									
+									<h:panelGrid columns="2">
+			
+										<h:outputText value="Production" styleClass="information"/>
+										<h:outputText value="#{cc.attrs.inventoryElementSet.selected.element.production}"/>
+																	
+										<h:outputText value="Description" styleClass="information"/>
+										<h:outputText value="#{cc.attrs.inventoryElementSet.selected.element.description}"/>
+																	
+										<h:outputText value="Colors" styleClass="information"/>
+										<h:outputText value="#{cc.attrs.inventoryElementSet.selected.element.colors}"/>							
+										
+										<h:outputText value="Notes" styleClass="information"/>
+										<h:outputText value="#{cc.attrs.inventoryElementSet.selected.element.notes}"/>
+										
+										<h:outputText value="User Notes" styleClass="information"/>
+										<h:outputText value="#{cc.attrs.inventoryElementSet.selected.element.userNotes}"/>							
+										
+										<h:outputText value="Size" styleClass="information"/>
+                    <h:outputText value="#{cc.attrs.inventoryElementSet.selected.element.userNotes}"/>
+                    
+                    <h:outputText value="Count" styleClass="information"/>
+                    <h:outputText value="#{cc.attrs.inventoryElementSet.selected.element.userNotes}"/>
+									</h:panelGrid>
+									
+								</h:panelGroup>
+														
+							</h:panelGrid>
+							
+							<p:commandButton 
+								value="Results" 
+								actionListener="#{cc.attrs.inventoryElementSet.doModeResults}"
+								update=":#{cc.attrs.id}:searchForm"
+							/>
+							<p:commandButton 
+								value="Search Again" 
+								actionListener="#{cc.attrs.inventoryElementSet.doModeSearch}"
+								update=":#{cc.attrs.id}:searchForm"
+							/>
+							
+						</p:outputPanel>
+						
+						<p:outputPanel id="searchEditDetail" rendered="#{cc.attrs.inventoryElementSet.edit}">
+							<div>						
+								<inventory:editInventory 
+									inventoryElementSet="#{cc.attrs.inventoryElementSet}"
+									elementWrapper="#{cc.attrs.inventoryElementSet.selected}"
+								/>			
+								
+								<p:separator />
+									
+								<p:outputPanel id="imagePanel" style="padding:20px;margin:10px;">
+									<h:panelGroup>
+										<h4>Image Details</h4>
+										<h:panelGrid columns="2">
+											<h:outputText value="File ID" styleClass="information"/>
+											<h:outputText value="#{cc.attrs.inventoryElementSet.selected.element.image}" />
+											<h:outputText value="Stream Type" styleClass="information"/>
+											<h:outputText value="Mime-Type Disabled" styleClass="error"/>
+										</h:panelGrid>
+										
+										<!-- FIXME -->
+										<h:outputText value="Preview Disabled" styleClass="error"/>
+									</h:panelGroup>
+									
+									<p:fileUpload 
+										auto="true"
+										multiple="false"
+										label="Upload Image"
+										allowTypes="*.jpg;*.png;"
+										description="Images"
+										fileUploadListener="#{cc.attrs.inventoryElementSet.selected.handleImageUpdateUpload}" 										   
+										update=":#{cc.attrs.id}:searchForm,:#{cc.attrs.id}:messages"
+									/>
+									<p:separator />									
+								</p:outputPanel>	
+								
+								<h:panelGroup style="width:100%;text-align:right;">
+									<div style="text-align:left;width:250px;">
+										<p:commandButton 
+											value="Save" 
+											actionListener="#{cc.attrs.inventoryElementSet.selected.saveUpdates}" 
+											update=":#{cc.attrs.id}:messages,:#{cc.attrs.id}:searchForm"/>
+										<p:commandButton
+											value="Cancel" 
+											actionListener="#{cc.attrs.inventoryElementSet.doModeResults}"
+											update=":#{cc.attrs.id}:messages,:#{cc.attrs.id}:searchForm"/>
+									</div>							
+								</h:panelGroup>
+								
+							</div>
+							
+							<p:commandButton 
+								value="Results" 
+								actionListener="#{cc.attrs.inventoryElementSet.doModeResults}"
+								update=":#{cc.attrs.id}:searchForm"
+							/>
+							<p:commandButton 
+								value="Search Again" 
+								actionListener="#{cc.attrs.inventoryElementSet.doModeSearch}"
+								update=":#{cc.attrs.id}:searchForm"
+							/>
+							
+						</p:outputPanel>
+						
+					</h:form>
+					
+				</div>
+			</p:tab>
+			
+			<p:tab title="Add #{cc.attrs.displayName} Inventory" rendered="#{loginBean.inventoryAdmin}">
+				<h:form id="add">	
+					<inventory:newInventory inventoryElementSet="#{cc.attrs.inventoryElementSet}"/>	
+					<h:panelGroup style="width:100%;text-align:right;">
+						<div style="text-align:left;width:250px;">
+							<p:commandButton 
+								value="Save" 
+								actionListener="#{cc.attrs.inventoryElementSet.saveNewElement}" 
+								update=":#{cc.attrs.id}:messages,:#{cc.attrs.id}:add"/>
+							<p:commandButton
+								value="Clear" 
+								type="reset"
+								actionListener="#{cc.attrs.inventoryElementSet.clearNewElement}"
+								update=":#{cc.attrs.id}:messages,:#{cc.attrs.id}:add"/>
+						</div>							
+					</h:panelGroup>
+						
+				</h:form>			
+			</p:tab>
+			
+			<p:tab title="Bulk Upload" rendered="#{loginBean.inventoryAdmin}">
+				<h:form id="bulkUpload">
+					<h3>
+						<h:outputText value="Bulk Image Upload" />
+					</h3>
+											
+					<h:panelGrid columns="3">
+						<h:outputText value="Production" styleClass="information"/>
+						<h:outputText value="" />
+						<h:outputText value="" />
+						
+						<p:inputText value="#{cc.attrs.inventoryElementSet.bulkUploadProduction}"/>		
+						<p:commandButton 
+							value="Prepare Upload"
+							actionListener="#{cc.attrs.inventoryElementSet.doSetProductionForBulkUpload}"
+							update=":#{cc.attrs.id}:messages,:#{cc.attrs.id}:bulkUpload" 
+						/>
+						
+						<p:ajaxStatus style="display:inline-block;width:16px;height:16px">
+					    <f:facet name="start">  
+		       		 <h:graphicImage value="ajax-loader.gif" style="display:inline;"/>  
+		  			  </f:facet>  
+		      
+					    <f:facet name="complete">  
+								<h:outputText value="" />  
+				    	</f:facet>  
+						</p:ajaxStatus>			 										
+					</h:panelGrid>
+					
+					<p:separator rendered="#{cc.attrs.inventoryElementSet.readyForBulkUpload}"/>	
+						
+					<h:outputText 
+						value="*Please select one or more files (shift-click) to upload below" 
+						styleClass="information" 
+						rendered="#{cc.attrs.inventoryElementSet.readyForBulkUpload}"
+					/>	
+								
+					<p:fileUpload
+						rendered="#{cc.attrs.inventoryElementSet.readyForBulkUpload}"
+						allowTypes="*.jpg;*.png"
+						multiple="true"
+						auto="false"
+						fileUploadListener="#{cc.attrs.inventoryElementSet.handleBulkImageUpload}"
+						update=":#{cc.attrs.id}:messages"
+						description="Images" 
+						label="Upload Images"
+					/>					
+					
+					<p:separator />
+	
+				</h:form>	
+			</p:tab>
+			<p:tab title="Inactive Items" rendered="#{loginBean.inventoryAdmin}">
+				<h:form id="inactive">
+					<h3 class="error">
+						Inactive Items
+					</h3>
+					<p:dataTable 
+						var="wrapper" 
+						value="#{cc.attrs.inventoryElementSet.inactiveResults}"  
+						paginator="true" 
+						rows="10"  
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+						rowsPerPageTemplate="5,10,15,25,50"
+						paginatorPosition="bottom"
+						style="margin-left:5px;margin-right:5px;padding-left:0px;padding-right:0px;"
+					>
+
+						<p:column>
+              	<p:rowToggler />										
+            </p:column>
+              
+            <p:column>
+             	<f:facet name="header">
+             		<h:outputText value="ID" />
+             	</f:facet>
+             	<h:outputText value="#{wrapper.element.id}" styleClass="information"/>
+						</p:column>
+              	                 
+						<p:column>
+             	<f:facet name="header">
+             		<h:outputText value="Type" />
+             	</f:facet>
+             	<h:outputText value="#{wrapper.element.type}"/>
+            </p:column>
+              	                
+						<p:column>
+             	<f:facet name="header">
+             		<h:outputText value="Description" />
+             	</f:facet>
+             	<h:outputText value="#{wrapper.element.description}"/>
+            </p:column>
+              
+						<p:column>
+             	<f:facet name="header">
+             		<h:outputText value="Production" />
+             	</f:facet>
+             	<h:outputText value="#{wrapper.element.production}"/>
+            </p:column>	  
+              
+						<p:column>
+             	<f:facet name="header">
+             		<h:outputText value="Colors" />
+             	</f:facet>
+             	<h:outputText value="#{wrapper.element.colors}"/>
+            </p:column>
+              
+						<p:column rendered="#{inventoryElementSet.wardrobe}">
+             	<f:facet name="header">
+             		<h:outputText value="Period" />
+             	</f:facet>
+             	<h:outputText value="#{wrapper.element.period}"/>
+            </p:column>	                	 	                              
+              
+						<p:column>
+              			
+             	<p:commandButton 
+             		rendered="#{loginBean.inventoryAdmin}"
+             		actionListener="#{wrapper.activateElement}" 
+             		value="Activate"
+             		styleClass="information"
+             		update=":#{cc.attrs.id}:inactive,:#{cc.attrs.id}:searchForm,:#{cc.attrs.id}:messages">	                		
+             		<f:attribute name="elementId" value="#{wrapper.element.id}"/>
+             	</p:commandButton>
+							<p:commandButton
+									rendered="#{loginBean.admin}"
+									styleClass="error" 
+									value="Delete"
+									actionListener="#{wrapper.delete}"
+									update=":#{cc.attrs.id}:messages,:#{cc.attrs.id}:inactive" 
+								/>             	
+
+            </p:column>	                
+              		    
+						<p:rowExpansion>
+							<inventory:displayInventory 
+								elementWrapper="#{wrapper}" 
+								update=":#{cc.attrs.id}:inactive,:#{cc.attrs.id}:searchForm,:#{cc.attrs.id}:messages"
+							/>
+
+						</p:rowExpansion>	 
+						               		    
+					</p:dataTable> 
+					
+					<p:commandButton ajax="false" value="Refresh"/>
+				</h:form>
+			</p:tab>
+		</p:accordionPanel>
+	</composite:implementation>
+</html>

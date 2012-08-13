@@ -1,0 +1,330 @@
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:tac="http://java.sun.com/jsf/composite/composite"
+	xmlns:contacts="http://java.sun.com/jsf/composite/contacts"
+>
+	
+	<f:subview id="insertCities" rendered="#{menuBean.scheduler}">
+		<p:growl id="messages" showDetail="true" />
+		
+    <div class="help" style="width:100%;text-align:right;margin-left:auto;">
+      <p:lightBox iframe="true" width="80%" height="80%">  
+        <h:outputLink 
+          value="help.xhtml?lookupString=cities" 
+          title="Help" 
+        >  
+          <span class="ui-icon ui-icon-info" style="display:inline-block;"></span>
+          <h:outputText value="Help"/>  
+        </h:outputLink>  
+       </p:lightBox>      
+    </div>
+		<p:panel>
+			<h:form id="create">
+				<h3>
+					<h:outputText value="Add City" />
+				</h3>
+				
+				<h:panelGrid>
+					<h:outputText value="City Name" styleClass="information" />
+					<h:inputText value="#{locationBean.newCity.name}" />
+					
+					<h:outputText value="State/Territory" styleClass="information" />
+					<h:selectOneMenu value="#{locationBean.newCity.stateOrTerritory}">
+						<f:selectItems value="#{locationBean.allStates}"/>
+					</h:selectOneMenu>
+					
+				</h:panelGrid>
+				
+				<p:commandButton
+					actionListener="#{locationBean.saveCity}"
+					update=":insertCities:messages, :insertCities:edit, :insertCities:create"
+					value="Save City"
+				/>
+				
+			</h:form>
+		</p:panel>
+		
+		<br />
+		
+		<p:panel>
+			<h:form id="edit">
+				<h3>
+					<h:outputText value="#{scheduleBean.selectedSeason.name}" id="productionName" />
+				</h3>
+				
+				<h:panelGrid columns="2">
+					<h:outputText value="Select City" styleClass="information"/>
+					<h:selectOneMenu value="#{locationBean.editCityId}">
+						<f:selectItems value="#{locationBean.cities}"/>
+					</h:selectOneMenu>
+				</h:panelGrid>
+				
+				<h:panelGroup />
+				<p:commandButton
+					actionListener="#{locationBean.doEditSelection}" 
+					update=":insertCities:messages, :insertCities:edit"
+					value="Edit"
+				/>
+				
+				<p:outputPanel rendered="#{locationBean.readyForEdits}">
+					<br />
+					<p:panel>
+						
+						<div style="clear: both;" />
+													
+							<div style="position: relative; float:left;">
+								<h3>
+									<h:outputText value="#{locationBean.editCity.name}" />
+								</h3>
+								
+								<h:panelGrid colums="2">
+									<h:outputText value="Name" styleClass="information" />
+									<p:inputText value="#{locationBean.editCity.name}" />
+									
+									<h:outputText value="State/Territory" styleClass="information" />
+									<h:selectOneMenu value="#{locationBean.editCity.stateOrTerritory}">
+										<f:selectItems value="#{locationBean.allStates}"/>
+									</h:selectOneMenu> 
+									
+									<h:outputText value="Taxi Service" styleClass="information" />
+									<p:inputText value="#{locationBean.editCity.taxiServiceName}" />							
+									
+									<h:outputText value="Address" styleClass="information" />
+									<p:inputTextarea value="#{locationBean.editCity.taxiServiceAddress}" />
+									
+									<h:outputText value="Phone" styleClass="information" />
+									<tac:phone value="#{locationBean.editCity.taxiServicePhone}" />
+		
+								</h:panelGrid>
+								
+								<p:commandButton 
+									actionListener="#{locationBean.saveEdits}"
+									value="Save Changes"
+									update=":insertCities:messages, :insertCities:edit, :insertCities:create"
+								/>
+							</div>
+							
+							<div style="position: relative; float:left; margin-left: 50px;">
+								<h3>City Sheet Download</h3>
+								<ui:repeat var="element" value="#{locationBean.cityPrinting.elements}">
+									<h:outputText value="#{element.fileName}" styleClass="information" style="width:200px;"/>
+									<p:commandButton 
+										value="Download"
+										ajax="false"
+										image="ui-icon ui-icon-circle-arrow-s"
+										disabled="#{not element.validSeason}"
+									>
+										<p:fileDownload value="#{element.pdf}" />
+									</p:commandButton>	
+									<h:outputLink value="season.xhtml" rendered="#{not element.validSeason}">
+										<h:outputText value="Select a Season"/>
+									</h:outputLink>
+									
+								</ui:repeat>
+								
+							</div>
+						<div style="clear: both;" />
+						
+						<br />
+						
+						<p:panel>
+							<h4>Hospitals</h4>
+							<p:tabView>
+					<p:tab title="Manage Hospitals">
+		              <p:dataTable value="#{locationBean.editHospitals}" var="wrapper">
+		              <p:column>
+		                <p:rowToggler />
+		              </p:column>
+		              
+		              <p:column>
+		                <f:facet name="header">
+		                  Name
+		                </f:facet>
+		                <h:outputText value="#{wrapper.hospital.name}" />
+		              </p:column>
+		              
+		              <p:column>
+		                <f:facet name="header">
+		                  Phone
+		                </f:facet>
+		                <h:outputText value="#{wrapper.hospital.phone}" />
+		              </p:column>
+		              
+		              <p:column>
+		                <f:facet name="header">
+		                  Address
+		                </f:facet>
+		                <h:outputText value="#{wrapper.hospital.fullAddressSpaced}" />
+		              </p:column>                           
+		              
+		              <p:column>
+		                <p:commandButton 
+	                    value="Select"
+	                    actionListener="#{wrapper.onHospitalSelected}"
+	                    update=":insertCities:edit,:insertCities:messages"
+	                    rendered="#{wrapper.selectable}"
+		                />
+		                <h:panelGroup rendered="#{!wrapper.selectable}" styleClass="information">
+		                  <b>
+	                      <h:outputText value="Selected"/>	                  
+		                  </b>
+		                </h:panelGroup>
+		                
+		              </p:column>
+		              <p:rowExpansion>
+		                <h3>Edit Hospital</h3>
+		                <tac:editHospital hospital="#{wrapper.hospital}"/>
+		                <p:commandButton 
+		                  value="Update"
+		                  update=":insertCities:edit,:insertCities:messages"
+		                  actionListener="#{wrapper.updateHospital}"
+		                />
+		                
+		              </p:rowExpansion>
+		            </p:dataTable>
+	              </p:tab>						
+							  <p:tab title="Add Hospital">
+									<h3>Add Hospital</h3>
+									<tac:editHospital hospital="#{locationBean.newHospital}"/>
+									<p:commandButton 
+									  value="Save"
+									  update=":insertCities:edit,:insertCities:messages"
+									  actionListener="#{locationBean.doAddHospital}"
+									/>
+							  </p:tab>
+							  
+							</p:tabView>
+						</p:panel>	
+						<p:panel>
+							<h4>Hotels</h4>
+							<p:tabView>
+	              <p:tab title="Manage Hotels">
+	                <p:dataTable value="#{locationBean.editHotels}" var="wrapper">
+		                <p:column>
+		                  <p:rowToggler />
+		                </p:column>
+		                
+		                <p:column>
+		                  <f:facet name="header">
+		                    Name
+		                  </f:facet>
+		                  <h:outputText value="#{wrapper.hotel.name}" />
+		                </p:column>
+		                
+		                <p:column>
+		                  <f:facet name="header">
+		                    Phone
+		                  </f:facet>
+		                  <h:outputText value="#{wrapper.hotel.phone}" />
+		                </p:column>
+		                
+		                <p:column>
+		                  <f:facet name="header">
+		                    Address
+		                  </f:facet>
+		                  <h:outputText value="#{wrapper.hotel.fullAddressSpaced}" />
+		                </p:column>                           
+		                
+		                <p:column>
+		                  <f:facet name="header">
+		                    Rate Single
+		                  </f:facet>
+		                  
+		                  <h:outputText value="#{wrapper.hotel.rateSingle}">
+		                    <f:convertNumber currencySymbol="$" type="currency" />
+		                  </h:outputText>
+		                </p:column>
+		                
+		                <p:column>
+		                  <f:facet name="header">
+		                    Rate Double
+		                  </f:facet>
+		                  
+		                  <h:outputText value="#{wrapper.hotel.rateDouble}">
+		                    <f:convertNumber currencySymbol="$" type="currency" />
+		                  </h:outputText>
+		                </p:column>          
+		                      
+		                <p:rowExpansion>
+		                  <h3>Edit Hotel</h3>
+											<tac:editHotel hotel="#{wrapper.hotel}"/>
+		                  <p:commandButton 
+		                    value="Update"
+		                    update=":insertCities:edit,:insertCities:messages"
+		                    actionListener="#{wrapper.updateHotel}"
+		                  />
+		                  
+		                </p:rowExpansion>
+	                </p:dataTable>
+	              </p:tab>   
+	                       
+	              <p:tab title="Add Hotel">
+	                <h3>Add Hotel</h3>
+	                <tac:editHotel hotel="#{locationBean.newHotel}"/> 
+	                <p:commandButton 
+	                  value="Save"
+	                  update=":insertCities:edit,:insertCities:messages"
+	                  actionListener="#{locationBean.doAddHotel}"
+	                />
+	              </p:tab>
+	            </p:tabView>
+            </p:panel>
+            
+            <p:panel>
+            	<h3>Points of Interest</h3>
+            	<p:tabView>
+            		<p:tab title="Manage">
+            			<p:dataTable value="#{locationBean.pointsOfInterest}" var="point">
+            				<p:column>
+            					<p:rowToggler />
+            				</p:column>
+            				
+            				<p:column headerText="Name">
+            					#{point.value.name}
+            				</p:column>
+            				
+            				<p:column headerText="Distance">
+            					#{point.value.distance}
+            				</p:column>
+            				
+            				<p:column headerText="Phone">
+            					#{point.value.phone}
+            				</p:column>
+            				
+            				<p:column headerText="Notes">
+            					#{point.value.notes}
+            				</p:column>
+            				
+            				<p:rowExpansion>
+            					<contacts:pointOfInterest value="#{point.value}" />
+            					<p:commandButton 
+            						actionListener="#{point.doUpdatePoint}"
+            						image="ui-icon ui-icon-check"
+            						value="Update"
+            						update="insertCities:messages,insertCities:edit"
+            					/>
+            				</p:rowExpansion>
+            			</p:dataTable>
+            		</p:tab>
+            		
+            		<p:tab title="Add">
+            			<contacts:pointOfInterest value="#{locationBean.newPointOfInterest}" />
+            			<p:commandButton 
+         						actionListener="#{locationBean.doAddPointOfInterest}"
+         						image="ui-icon ui-icon-circle-plus"
+         						value="Add"
+         						update="insertCities:messages,insertCities:edit"
+            			/>
+            		</p:tab>
+            	</p:tabView>
+            </p:panel>
+					</p:panel>
+				</p:outputPanel>
+			</h:form>
+		</p:panel>		
+	</f:subview>
+</jsp:root>

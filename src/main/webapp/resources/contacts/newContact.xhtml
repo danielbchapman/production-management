@@ -1,0 +1,83 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"	
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:tac="http://java.sun.com/jsf/composite/composite"
+>
+	<composite:interface>
+		<composite:attribute name="contact" type="com.danielbchapman.production.web.production.beans.ContactBean$NewContact"/>
+	</composite:interface>
+	
+	<composite:implementation>
+		<div style="clear:both;"></div>
+		<div style="width:840px;">
+			<div style="position: relative; float: left; vertical-align: top;">
+				<h:panelGrid columns="2">
+					<h:outputText value="Group" styleClass="information" />
+					<h:selectOneMenu value="#{cc.attrs.contact.contactGroup}">
+						<f:selectItems value="#{contactBean.contactGroupItems}"	/>
+					</h:selectOneMenu>
+					
+					<h:outputText value="Sub Group" styleClass="information" />
+					<p:inputText 
+						value="#{cc.attrs.contact.contact.subGroup}" 
+					/>
+					
+					<h:outputText value="First Name" styleClass="information" />
+					<p:inputText value="#{cc.attrs.contact.contact.firstName}"/>
+					
+					<h:outputText value="Last Name" styleClass="information" />
+					<p:inputText value="#{cc.attrs.contact.contact.lastName}"/>
+					
+					<h:outputText value="Position/Title" styleClass="information" />
+					<p:inputText value="#{cc.attrs.contact.contact.position}"/>
+		
+				</h:panelGrid>
+			</div>
+			
+			<div style="position: relative; float: left; vertical-align: top;">
+				<h:panelGrid columns="2">
+					<h:outputText value="Notes/Agent" styleClass="information" />
+					<p:inputText value="#{cc.attrs.contact.contact.notes}"/>
+									
+					<h:outputText value="E-mail" styleClass="information" />
+					<p:inputText value="#{cc.attrs.contact.contact.email}"/>
+												
+					<h:outputText value="Phone" styleClass="information" />
+					<tac:phone value="#{cc.attrs.contact.contact.phone}"/>
+					
+					<h:outputText value="Mobile" styleClass="information" />
+					<tac:phone value="#{cc.attrs.contact.contact.cell}" />
+		
+					<h:outputText value="Fax" styleClass="information" />
+					<tac:phone value="#{cc.attrs.contact.contact.fax}"/>
+				</h:panelGrid>
+			</div>
+			
+			<div style="position: relative; float: left; vertical-align: top;">
+				<h:panelGrid columns="2">
+					<h:outputText value="Address Label" styleClass="information" />
+					<p:inputText value="#{cc.attrs.contact.newAddress.label}" />
+					
+					<h:outputText value="Address" styleClass="information" />
+					<p:inputText value="#{cc.attrs.contact.newAddress.lineOne}" />
+					
+					<h:outputText value="" styleClass="information" />
+					<p:inputText value="#{cc.attrs.contact.newAddress.lineTwo}" />
+					
+					<h:outputText value="City" styleClass="information" />
+					<p:inputText value="#{cc.attrs.contact.newAddress.city}" />
+					
+					<h:outputText value="State" styleClass="information" />
+					<p:inputText value="#{cc.attrs.contact.newAddress.state}" />
+					
+					<h:outputText value="Zip" styleClass="information" />
+					<p:inputText value="#{cc.attrs.contact.newAddress.zip}" />				
+				</h:panelGrid>
+			</div>
+		</div>
+		<div style="clear:both;"></div>
+	</composite:implementation>
+</html>

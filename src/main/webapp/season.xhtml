@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+ 	xmlns:jsp="http://java.sun.com/JSP/Page"	
+	xmlns:p="http://primefaces.org/ui">
+
+	<f:loadBundle var="msg" basename="com.danielbchapman.production.international"/>	
+	<h:head>
+		<h:outputStylesheet library="css" name="production.css"/>
+		<!-- for editor -->
+		<link rel="stylesheet" href="./resources/css/production.css" type="text/css"/>
+	    <title>
+				<ui:insert name="title">
+					<h:outputText value="#{msg.applicationTitle}"/>
+				</ui:insert>
+	    </title>   
+	  <style type="text/css">
+			.ui-datatable .ui-datatable-data td,
+			.ui-datatable .ui-datatable-data-empty td 
+			{
+	    border-width: 0px;
+	    border-style: solid;
+	    border-color: inherit;
+	    padding:4px 10px 4px 10px;
+			}
+		</style>
+	</h:head>
+		
+	<h:body class="center" style="zIndex:-3">
+	
+		<img src="floatingImage.png" style="zIndex:-2;position:absolute;left:0px;top:0px;" />
+		
+		<div class="center" style="zIndex:-1; position:relative;">
+			<div class="mainBody">
+				<img src="./resources/images/logo.jpg" width="880" height="142" style="margin-left:10px;"/>	
+				<div class="content" style="margin-top:-30px;">
+					<!-- HEADER -->
+					<f:view contentType="text/html">
+						<ui:include src="menu.xhtml"/>
+					</f:view>
+
+					<div class="roundedBottom" style="margin-top:6px;">
+					
+						<f:view contentType="text/html">
+							<ui:include src="subMenu.xhtml"/>	
+						</f:view>	
+												
+						<!-- CONTENT STARTS HERE -->
+						<f:view id="production" contentType="text/html" beforePhase="#{seasonBean.phaseInitializeSeasons}">
+							<div class="topInformation">
+								<h1 style="color:#fff">
+									<h:outputText value="#{seasonBean.season.name}"/>
+									 &gt;&gt;
+									<h:outputText value="#{seasonBean.selection.mode.label}"/>
+								</h1>
+							</div>						
+							
+							<p:growl id="mainMessages" showDetail="true" />
+							
+							<h:panelGroup rendered="#{seasonBean.selection.summary}">
+								<ui:include src="/seasonSummary.xhtml"/>
+							</h:panelGroup>
+							
+							<h:panelGroup rendered="#{seasonBean.selection.budget}">
+								<ui:include src="/seasonBudgets.xhtml"/>
+							</h:panelGroup>
+							
+							<h:panelGroup rendered="#{seasonBean.selection.departments}">
+								<ui:include src="/seasonDepartments.xhtml"/>
+							</h:panelGroup>
+							
+							<h:panelGroup rendered="#{seasonBean.selection.pettyCash}">
+								<ui:include src="/seasonPettyCash.xhtml"/>
+							</h:panelGroup>
+							
+							<h:panelGroup rendered="#{seasonBean.selection.reports}">
+								<ui:include src="/seasonReports.xhtml"/>
+							</h:panelGroup>
+							
+							<h:panelGroup rendered="#{seasonBean.selection.contacts}">
+								<ui:include src="/seasonContacts.xhtml"/>
+							</h:panelGroup>																				
+							
+						</f:view>
+						<!-- CONENT ENDS HERE -->
+						
+					</div>
+					<ui:include src="footer.xhtml"/>
+				</div>
+				
+			</div>
+			<!-- END SHADER -->
+			
+			<div class="footerHeel">
+			  <img src="footerbackground.png" width="900" height="20" />
+			</div>
+		</div>
+	</h:body>    
+</html>

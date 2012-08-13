@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt">
+	
+	<f:subview id="reports" contentType="text/html" rendered="#{loginBean.user}">
+		<p:growl id="messages" showDetail="true" showSummary="true"/>
+		
+		<br />
+    <div class="help" style="width:100%;text-align:right;margin-left:auto;">
+      <p:lightBox iframe="true" width="80%" height="80%">  
+        <h:outputLink 
+          value="help.xhtml?lookupString=reports" 
+          title="Help" 
+        >  
+          <span class="ui-icon ui-icon-info" style="display:inline-block;"></span>
+          <h:outputText value="Help"/>  
+        </h:outputLink>  
+       </p:lightBox>      
+    </div>		
+		
+		<p:panel rendered="#{loginBean.user}">
+			<h3>Report Management</h3>
+			<p:accordionPanel>
+				<p:tab binding="#{reportBean.budget.tab}"/>
+				<p:tab binding="#{reportBean.budgetEstimate.tab}"/>
+				<p:tab binding="#{reportBean.weekly.tab}"/>
+			</p:accordionPanel>
+		</p:panel>		
+	</f:subview>
+</jsp:root>
+	

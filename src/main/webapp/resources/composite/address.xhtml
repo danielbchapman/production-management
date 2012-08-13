@@ -1,0 +1,30 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"	
+	xmlns:p="http://primefaces.org/ui">
+	<composite:interface>
+		<composite:attribute name="address" type="com.danielbchapman.production.entity.IAddressable"/>
+	</composite:interface>
+	
+	<composite:implementation>
+		<h:panelGrid columns="2">
+			<h:outputText value="Address (1)" styleClass="information"/>
+			<h:inputText value="#{cc.attrs.address.addressLineOne}"/>
+			
+			<h:outputText value="Address (2)" styleClass="information"/>
+			<h:inputText value="#{cc.attrs.address.addressLineTwo}"/>
+			
+			<h:outputText value="City" styleClass="information"/>
+			<h:inputText value="#{cc.attrs.address.addressCity}"/>
+			
+			<h:outputText value="State" styleClass="information"/>
+			<h:inputText value="#{cc.attrs.address.addressState}"/>
+			
+			<h:outputText value="Zip" styleClass="information"/>
+			<h:inputText value="#{cc.attrs.address.addressZip}"/>
+		</h:panelGrid>
+			
+	</composite:implementation>
+</html>
