@@ -305,7 +305,7 @@
             						actionListener="#{point.doUpdatePoint}"
             						image="ui-icon ui-icon-check"
             						value="Update"
-            						update="insertCities:messages,insertCities:edit"
+            						update=":insertCities:messages,:insertCities:edit"
             					/>
             				</p:rowExpansion>
             			</p:dataTable>
@@ -317,7 +317,7 @@
          						actionListener="#{locationBean.doAddPointOfInterest}"
          						image="ui-icon ui-icon-circle-plus"
          						value="Add"
-         						update="insertCities:messages,insertCities:edit"
+         						update=":insertCities:messages,:insertCities:edit"
             			/>
             		</p:tab>
             	</p:tabView>
