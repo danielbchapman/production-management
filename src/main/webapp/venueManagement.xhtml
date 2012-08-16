@@ -33,7 +33,10 @@
 	            
 							<h:panelGroup />
 							<h:panelGroup style="width:100%;text-align:right;">
-								<p:commandButton value="Add Venue" actionListener="#{venueBean.addVenue}" update="venueFiles:selectVenue, venueFiles:newVenue"/>
+								<p:commandButton 
+									value="Add Venue" 
+									actionListener="#{venueBean.addVenue}" 
+									update=":venueFiles:selectVenue, :venueFiles:newVenue"/>
 							</h:panelGroup>	
 						</h:panelGrid>
 					</h:form>			
@@ -51,7 +54,7 @@
 							<p:commandButton 
 								actionListener="#{venueBean.selectVenue}" 
 								value="Select Venue" 
-								update="venueFiles:editVenue" 
+								update=":venueFiles:editVenue" 
 								ajax="true" />								
 						</h:panelGrid>								
 					</h:form>
@@ -60,7 +63,7 @@
 			
 			<h:form id="editVenue" prependId="false">
 				<p:panel id="venueInformation" header="#{venueBean.venue.name}" rendered="#{venueBean.canHasVenue}">
-					<p:tabView>
+					<p:tabView id="tabs">
 						<p:tab title="Advance">
 							<p:dataTable var="wrapper" value="#{venueBean.advance.advances}">
 								<p:column>
@@ -140,9 +143,9 @@
 								<div style="position: relative; float: left;">
 									<h:panelGrid columns="2">
 										<h:outputText value="Presenter" styleClass="information" />
-										<h:inputText value="#{venueBean.venue.presenter}" style="width: 350px;"/>						
-		                
-		                <h:outputText value="Technical" styleClass="information" />
+										<h:inputText value="#{venueBean.venue.presenter}" style="width: 350px;"/>
+
+										<h:outputText value="Technical" styleClass="information" />
 										<h:inputText value="#{venueBean.venue.techicalOrProduction}" style="width: 350px;"/>
 										
 										<h:outputText value="Educational" styleClass="information" />
@@ -158,13 +161,13 @@
 							<h3>Box Office</h3>
 							<h:panelGrid columns="2">
 								<h:outputText value="Box Office" styleClass="information" />
-                 <h:outputText value="#{venueBean.venue.boxOffice}"/>
-                 
-                 <h:outputText value="Capacity" styleClass="information" />
-                 <p:inputText value="#{venueBean.venue.houseCapacity}" />
-                 
-                 <h:outputText value="Box Office Phone" styleClass="information" />
-                 <tac:phone value="#{venueBean.venue.boxOfficeContact}" />		
+								<h:outputText value="#{venueBean.venue.boxOffice}" />
+
+								<h:outputText value="Capacity" styleClass="information" />
+								<p:inputText value="#{venueBean.venue.houseCapacity}" />
+
+								<h:outputText value="Box Office Phone" styleClass="information" />
+								<tac:phone value="#{venueBean.venue.boxOfficeContact}" />
 							</h:panelGrid>
 							
 							<h3>Contact</h3>
@@ -261,13 +264,13 @@
 									<f:selectItems value="#{venueBean.departments}"/>
 								</h:selectOneRadio>
 								<p:fileUpload 
-                   fileUploadListener="#{venueBean.handleFileUpload}"   
-                   multiple="true" 
-                   label="Select Files" 
-                   allowTypes="*.*;" 
-                   description="Production Documents"
-                   update="venueFiles:messages,venueFiles:documentTable"
-									/>
+				                   fileUploadListener="#{venueBean.handleFileUpload}"   
+				                   multiple="true" 
+				                   label="Select Files" 
+				                   allowTypes="*.*;" 
+				                   description="Production Documents"
+				                   update=":venueFiles:messages, documentTable"
+								/>
 							</p:panel>								
 						</p:tab>
 						
@@ -301,7 +304,7 @@
 								<p:commandButton 
 									value="Save Notes" 
 									actionListener="#{venueBean.saveNotes}" 
-									update=":venueFiles:editVenue,:venueFiles:logTable"
+									update=":venueFiles:editVenue"
 								/>
 							</div>
 						</p:tab>										
@@ -311,7 +314,7 @@
 					<p:commandButton 
 						value="Update Venue Information" 
 						actionListener="#{venueBean.saveVenue}" 
-						update="venueFiles:editVenue, venueFiles:messages, venueFiles:selectVenue"
+						update=":venueFiles:editVenue, :venueFiles:messages, :venueFiles:selectVenue"
 					/>												
 				</p:panel>
 			</h:form>			

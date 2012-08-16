@@ -7,17 +7,19 @@
 	
 	<f:subview id="insertPerformances" rendered="#{menuBean.scheduler}">
 		<p:growl id="messages" showDetail="true" />
-    <div class="help" style="width:100%;text-align:right;margin-left:auto;">
-      <p:lightBox iframe="true" width="80%" height="80%">  
-        <h:outputLink 
-          value="help.xhtml?lookupString=inventoryPerformances" 
-          title="Help" 
-        >  
-          <span class="ui-icon ui-icon-info" style="display:inline-block;"></span>
-          <h:outputText value="Help"/>  
-        </h:outputLink>  
-       </p:lightBox>      
-    </div>		
+		
+	    <div class="help" style="width:100%;text-align:right;margin-left:auto;">
+	      <p:lightBox iframe="true" width="80%" height="80%">  
+	        <h:outputLink 
+	          value="help.xhtml?lookupString=inventoryPerformances" 
+	          title="Help" 
+	        >  
+	          <span class="ui-icon ui-icon-info" style="display:inline-block;"></span>
+	          <h:outputText value="Help"/>  
+	        </h:outputLink>  
+	       </p:lightBox>      
+	    </div>
+	    		
 		<p:panel>
 			<h:form id="modify">
 				<h3>
@@ -63,7 +65,7 @@
 				<p:commandButton 
 					value="Create Performance"
 					actionListener="#{scheduleBean.performanceSchedules.createPerformance}" 
-					update="insertPerformances:message, insertPerformances:create, insertPerformances:modify"/>
+					update=":insertPerformances:messages, :insertPerformances:create, :insertPerformances:modify"/>
 			</h:form>
 		</p:panel>		
 	</f:subview>

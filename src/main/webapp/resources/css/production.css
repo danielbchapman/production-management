@@ -678,3 +678,88 @@ a.menuLink:hover
 	margin-left:2px;
 	margin-right:3px;
 }
+
+##############################
+# Full Calendar Overrides
+##############################
+.eventPerformance
+{
+	color:#fff;
+	background-color:green;
+}
+
+.eventPerformance a
+{
+	color:#fff;
+	background-color:green;
+}
+
+.eventSchedule
+{
+	color:#fff;
+}
+
+.eventSchedule a
+{
+	color:#fff;
+}
+
+.eventScheduleCrew
+{
+	color:#fff;
+	background-color:#e9604a;
+}
+
+.eventScheduleCrew a
+{
+	color:#fff;
+	background-color:#e9604a;
+}
+
+.eventScheduleCrew a:before
+{
+	color:#fff;
+	content:"[crew]";
+}
+
+.eventScheduleCast
+{
+	color:#fff;
+	background-color:#20646a;
+}
+
+.eventScheduleCast a
+{
+	color:#fff;
+	background-color:#20646a;
+}
+
+.eventScheduleCast a:before
+{
+	color:#fff;
+	content:"[cast]";
+}
+
+.eventPerformanceLocked
+{
+	color:#fff;
+	background-color:#62ed62;
+}
+
+.eventPerformanceLocked a
+{
+	color:#fff;
+	background-color:#62ed62;
+}
+
+.eventDay
+{
+	color:#fff;
+	background-color:purple;
+}
+
+.fc eventDay a
+{
+	color:#fff;
+	background-color:purple;
+}

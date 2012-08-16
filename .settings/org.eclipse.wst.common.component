@@ -5,9 +5,6 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/resources"/>
-        <dependent-module archiveName="primefaces-3.3.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/primefaces/primefaces/3.3.1/primefaces-3.3.1.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="JpaFramework.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/JpaFramework/JpaFramework">
             <dependency-type>uses</dependency-type>
         </dependent-module>
@@ -36,6 +33,9 @@
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="GenericLoginEJB.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/GenericLoginEJB/GenericLoginEJB">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="primefaces-3.4-SNAPSHOT-SCHEDULE.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/primefaces/primefaces/3.4-SNAPSHOT-SCHEDULE/primefaces-3.4-SNAPSHOT-SCHEDULE.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="context-root" value="/"/>

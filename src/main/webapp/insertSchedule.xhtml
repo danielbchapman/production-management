@@ -66,10 +66,11 @@
 				<p:schedule 
 					editable="#{menuBean.scheduler}"
 					value="#{scheduleBean.scheduleModel}" 
-					widgetVar="schedule" 
+					widgetVar="eventSchedule" 
 					resizable="false"
 					draggable="false"
 					view="month"
+					locale="#{scheduleBean.serverLocale}"
 				>
 					<p:ajax 
 						event="dateSelect"
@@ -172,7 +173,7 @@
 						<h3>
 							<h:outputText value="#{scheduleBean.day.date}">
 							<f:convertDateTime pattern="MMMM d, yyyy"
-								timeZone="#{scheduleBean.timeZone}" />
+								timeZone="#{scheduleBean.serverTimezone}" />
 							</h:outputText>
 						</h3>
 						<p:tabView>
@@ -264,10 +265,10 @@
 
 					<p:outputPanel rendered="#{scheduleBean.event and not scheduleBean.virtualEvent}" id="eventPanel">
 						<h3>
-							<h:outputText value="#{scheduleBean.eventEntity.utcStart}">
+							<h:outputText value="#{scheduleBean.eventEntity.startDate}">
 								<f:convertDateTime
 									pattern="MMMM d, yyyy" 
-									timeZone="#{scheduleBean.timeZone}" 
+									timeZone="#{scheduleBean.serverTimezone}" 
 								/>
 							</h:outputText>
 						</h3>
