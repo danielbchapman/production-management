@@ -1,0 +1,414 @@
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:tac="http://java.sun.com/jsf/composite/composite"
+>
+	
+	<f:subview id="insertSchedule" rendered="#{menuBean.guest}">
+		<p:growl id="messages" showDetail="true" />
+    <div class="help" style="width:100%;text-align:right;margin-left:auto;">
+      <p:lightBox iframe="true" width="80%" height="80%">  
+        <h:outputLink 
+          value="help.xhtml?lookupString=schedule" 
+          title="Help" 
+        >  
+          <span class="ui-icon ui-icon-info" style="display:inline-block;"></span>
+          <h:outputText value="Help"/>  
+        </h:outputLink>  
+       </p:lightBox>      
+    </div>	
+    	
+		<p:panel>
+			<h:form id="scheduleHeader">
+				<h3>
+					<h:outputText value="#{scheduleBean.selectedSeason}" id="productionName" />
+				</h3>
+				<h:selectOneMenu value="#{scheduleBean.tmpSeason}">
+					<f:selectItems value="#{scheduleBean.allSeasons}" />
+				</h:selectOneMenu>
+				<p:commandButton 
+					process="@all"
+					ajax="false"
+					value="Change Production" 
+					actionListener="#{scheduleBean.confirmSeason}" 
+					update=":insertSchedule:dialog, :insertSchedule:scheduleHeader, :insertSchedule:schedule, :insertSchedule:messages"/>
+				<br />
+				<h:outputText style="margin-left:20px;" styleClass="information" value="Time Zone: "/>
+				<h:outputText value="#{loginBean.readableOffset}"/>
+			</h:form>
+		</p:panel>
+		<br />
+		<h:form id="schedule">
+			
+			<p:ajaxStatus style="display:inline-block;width:16px;height:16px;margin-left:8px;">
+		    <f:facet name="start">  
+      		 <h:graphicImage value="ajax-loader.gif" style="display:inline;"/>  
+ 			  </f:facet>  
+     
+		    <f:facet name="complete">  
+					<h:outputText value="" />  
+	    	</f:facet>  
+			</p:ajaxStatus>
+
+			<p:dialog header="PrintSchedule" widgetVar="printDialog"
+				showEffect="growl" hideEffect="growl">
+				<h:outputText value="Download Report (PDF):"
+					styleClass="information" />
+				<p:commandButton value="Download" ajax="false">
+					<p:fileDownload value="#{printScheduleBean.report}" />
+				</p:commandButton>
+			</p:dialog>
+			
+			<p:panel>
+				<p:schedule 
+					editable="#{menuBean.scheduler}"
+					value="#{scheduleBean.scheduleModel}" 
+					widgetVar="eventSchedule" 
+					resizable="false"
+					draggable="false"
+					view="month"
+					locale="#{scheduleBean.serverLocale}"
+				>
+					<p:ajax 
+						event="dateSelect"
+						listener="#{scheduleBean.onDateSelect}"
+						update=":insertSchedule:dialog,:insertSchedule:messages"
+						oncomplete="eventDialog.show();"
+					/>
+					<p:ajax 
+						event="eventSelect"
+						listener="#{scheduleBean.onEventSelect}"
+						update=":insertSchedule:dialog, :insertSchedule:messages"
+						oncomplete="eventDialog.show();"
+					/>
+				</p:schedule>
+			</p:panel>
+			<br />	
+		</h:form>
+		
+		<h:form id="print">
+			<p:panel>
+				<h3>
+					<h:outputText value="Print Schedules"/>
+				</h3>
+				<h:panelGrid columns="2" style="margin-left:20px;margin-right:20px;">
+					
+						<h:outputText value="From:" styleClass="information"/>
+						<p:calendar value="#{printScheduleBean.startDate}"/>
+						
+						<h:outputText value="To:" styleClass="information"/>
+						<p:calendar value="#{printScheduleBean.endDate}"/>
+					
+						<h:outputText value="All Dates" styleClass="information" />
+						<h:selectBooleanCheckbox value="#{printScheduleBean.printAll}"/>
+						
+						<h:outputText value="Cast Events" styleClass="information" />
+						<h:selectBooleanCheckbox value="#{printScheduleBean.cast}"/>
+						
+						<h:outputText value="Crew Events" styleClass="information" />
+						<h:selectBooleanCheckbox value="#{printScheduleBean.crew}"/>
+						
+						<h:outputText value="Performance Details" styleClass="information" />
+						<h:selectBooleanCheckbox value="#{printScheduleBean.details}"/>						
+					</h:panelGrid>
+					
+					<h3>
+						Reports Available
+						<p:ajaxStatus style="display:inline-block;width:16px;height:16px;margin-left:8px;">
+						
+					    <f:facet name="start">  
+			      		 <h:graphicImage value="ajax-loader.gif" style="display:inline;"/>  
+			 			  </f:facet>  
+			     
+					    <f:facet name="complete">  
+								<h:outputText value="" />  
+				    	</f:facet>  
+					</p:ajaxStatus>						
+					</h3>
+
+					
+					<h:panelGroup>
+						<table>
+							<tbody>
+							
+							
+								<ui:repeat var="element" value="#{printScheduleBean.elements}">
+									<tr>
+										<td>
+											<h:outputText value="#{element.fileName}" styleClass="information"/>
+										</td>
+										<td>
+											<p:commandButton 
+												value="Print Schedule"
+												process="@all" 
+												update=":insertSchedule:messages"
+												actionListener="#{element.printSchedule}"
+												oncomplete="printDialog.show()" 
+											/>				
+										</td>	
+									</tr>
+								</ui:repeat>
+							</tbody>
+						</table>
+					</h:panelGroup>					
+							
+				
+			</p:panel>		
+		</h:form>
+		
+		<h:form id="dialog">
+			<p:dialog 
+				widgetVar="eventDialog"
+				header="Event Details"  
+				showEffect="growl" 
+				hideEffect="growl"
+				width="400"
+			>
+				<h:panelGroup id="eventDetails">
+
+					<p:outputPanel autoUpdate="true" rendered="#{scheduleBean.dayEvent and not scheduleBean.virtualEvent}">
+						<h3>
+							<h:outputText value="#{scheduleBean.day.date}">
+							<f:convertDateTime pattern="MMMM d, yyyy"
+								timeZone="#{scheduleBean.serverTimezone}" />
+							</h:outputText>
+						</h3>
+						<p:tabView>
+							<p:tab title="Location">
+								<h:panelGrid columns="4">
+									<h:panelGroup /> 
+									<h:outputLabel value="Location" styleClass="information"/>
+									<h:outputLabel value="Lodging" styleClass="information"/>
+									<h:outputLabel value="Hotel" styleClass="information"/>								
+																										
+									<h:outputLabel value="Cast" styleClass="information" />
+									<h:selectOneMenu value="#{scheduleBean.dayUi.castCity}">
+										<f:selectItems value="#{locationBean.cities}"/>
+									</h:selectOneMenu>
+									<h:selectOneMenu 
+										value="#{scheduleBean.day.castTravel}" 
+									>
+										<p:ajax 
+											event="change"
+											listener="#{scheduleBean.dayUi.onSelectShowCastHotels}"
+											update="@form"
+										/>									
+										<f:selectItems value="#{scheduleBean.travelItems}" />
+									</h:selectOneMenu>
+									<h:panelGroup>
+										<p:outputPanel id="subEventCast">
+											<h:selectOneMenu 
+												value="#{scheduleBean.dayUi.castHotel}" 
+												disabled="#{!scheduleBean.dayUi.showCastHotel}"
+											>
+												<f:selectItems value="#{scheduleBean.dayUi.castHotels}"/>
+											</h:selectOneMenu>
+										</p:outputPanel>
+									</h:panelGroup>
+									
+									<h:outputLabel value="Crew" styleClass="information" />
+									<h:selectOneMenu value="#{scheduleBean.dayUi.crewCity}">
+										<f:selectItems value="#{locationBean.cities}"/>
+									</h:selectOneMenu>
+									<h:selectOneMenu value="#{scheduleBean.day.crewTravel}">
+										<p:ajax 
+											event="change"
+											listener="#{scheduleBean.dayUi.onSelectShowCrewHotels}"
+											update="@form"
+										/>										
+										<f:selectItems value="#{scheduleBean.travelItems}" />
+									</h:selectOneMenu>
+									<h:panelGroup>
+										<p:outputPanel id="subEventCrew">
+											<h:selectOneMenu 
+												value="#{scheduleBean.dayUi.crewHotel}" 
+												disabled="#{!scheduleBean.dayUi.showCrewHotel}"
+											>
+												<f:selectItems value="#{scheduleBean.dayUi.crewHotels}"/>
+											</h:selectOneMenu>										
+										</p:outputPanel>
+									</h:panelGroup>								
+								</h:panelGrid>
+							</p:tab>
+							<p:tab title="Info">
+								<h:panelGrid columns="2">
+									<h:outputText value="Venue:" styleClass="information" />
+									<h:inputText value="#{scheduleBean.day.theaterInformation}" />
+
+									<h:outputText value="Milage:" styleClass="information" />
+									<h:inputText value="#{scheduleBean.day.milageInformation}" />
+
+									<h:outputText value="Notes:" styleClass="information" />
+									<h:inputText value="#{scheduleBean.day.notes}" />
+
+								</h:panelGrid>
+							</p:tab>
+						</p:tabView>
+						<h:panelGrid columns="3">
+							<p:commandButton value="Save"
+								actionListener="#{scheduleBean.saveDay}"
+								oncomplete="eventDialog.hide(); eventSchedule.update();"
+								rendered="#{loginBean.scheduler}" />
+							<p:commandButton value="Cancel"
+								actionListener="#{scheduleBean.cancel}"
+								oncomplete="eventDialog.hide(); eventSchedule.update();" />
+							<p:commandButton value="Remove"
+								rendered="#{scheduleBean.existingDay}"
+								actionListener="#{scheduleBean.removeDay}"
+								oncomplete="eventDialog.hide(); eventSchedule.update();" />									
+						</h:panelGrid>
+
+					</p:outputPanel>
+
+					<p:outputPanel rendered="#{scheduleBean.event and not scheduleBean.virtualEvent}" id="eventPanel">
+						<h3>
+							<h:outputText value="#{scheduleBean.eventEntity.startDate}">
+								<f:convertDateTime
+									pattern="MMMM d, yyyy" 
+									timeZone="#{scheduleBean.serverTimezone}" 
+								/>
+							</h:outputText>
+						</h3>
+						<p:panel>
+							<p:tabView>
+								<p:tab title="Event" rendered="#{(!scheduleBean.eventEntity.persisted) or (!scheduleBean.eventEntity.performance)}">
+									<h:panelGrid columns="2">
+										<h:outputLabel value="Description" styleClass="information"/>
+										<h:inputText value="#{scheduleBean.eventEntity.description}" />
+		
+										<h:outputLabel value="Start Time" styleClass="information"/>
+										<h:panelGroup>
+											<h:selectOneMenu value="#{scheduleBean.timeUi.startHour}">
+												<f:selectItems value="#{scheduleBean.hourItems}" />
+											</h:selectOneMenu>
+		
+											<h:selectOneMenu value="#{scheduleBean.timeUi.startMinute}">
+												<f:selectItems value="#{scheduleBean.minuteItems}" />
+											</h:selectOneMenu>
+										</h:panelGroup>
+		
+										<h:outputLabel value="End Time" styleClass="information"/>
+										<h:panelGroup>
+											<h:selectOneMenu value="#{scheduleBean.timeUi.endHour}">
+												<f:selectItems value="#{scheduleBean.hourItems}" />
+											</h:selectOneMenu>
+		
+											<h:selectOneMenu value="#{scheduleBean.timeUi.endMinute}">
+												<f:selectItems value="#{scheduleBean.minuteItems}" />
+											</h:selectOneMenu>
+										</h:panelGroup>
+										
+										<h:outputText value="Filters" styleClass="information"/>
+										<h:panelGroup>
+											<h:selectBooleanCheckbox value="#{scheduleBean.eventEntity.cast}" />
+											<h:outputText value="Cast" />
+											<h:selectBooleanCheckbox value="#{scheduleBean.eventEntity.crew}" />
+											<h:outputText value="Crew" />
+										</h:panelGroup>								
+																			
+									</h:panelGrid>								
+									<h:panelGroup>
+										<p:commandButton style="text-align:center" value="Save"
+											actionListener="#{scheduleBean.saveEvent}"
+											oncomplete="eventDialog.hide(); eventSchedule.update();"
+											update=":insertSchedule:messages"
+											rendered="#{loginBean.scheduler}" />
+										<p:commandButton style="text-align:center" value="Close"
+											actionListener="#{scheduleBean.cancel}"
+											oncomplete="eventDialog.hide(); eventSchedule.update();" />
+										<p:commandButton style="text-align:center" value="Remove"
+											rendered="#{scheduleBean.existingEvent}"
+											actionListener="#{scheduleBean.removeEvent}"
+											update=":insertSchedule:messages"
+											oncomplete="eventDialog.hide(); eventSchedule.update();" />									
+									</h:panelGroup>
+								</p:tab>
+								
+								<p:tab title="Performance" rendered="#{(!scheduleBean.eventEntity.persisted) or (scheduleBean.eventEntity.performance)}">
+									<h:panelGrid columns="3">
+										<h:outputLabel value="Performance" styleClass="information"/>
+										<h:selectOneMenu value="#{scheduleBean.performanceSchedules.editableId}">
+											<f:selectItems value="#{scheduleBean.performanceSchedules.perforanceScheduleItems}"/>
+										</h:selectOneMenu>
+										<h:outputText value=""/>
+										
+										<h:outputLabel value="Start Time" styleClass="information"/>
+										<h:panelGroup>
+											<h:selectOneMenu value="#{scheduleBean.performanceUi.startHour}">
+												<f:selectItems value="#{scheduleBean.hourItems}" />
+											</h:selectOneMenu>
+		
+											<h:selectOneMenu value="#{scheduleBean.performanceUi.startMinute}">
+												<f:selectItems value="#{scheduleBean.minuteItems}" />
+											</h:selectOneMenu>
+										</h:panelGroup>
+										<h:outputText value=""/>
+										
+										<h:outputLabel value="Fight Call" styleClass="information"/>	
+										<h:selectBooleanCheckbox value="#{scheduleBean.performanceUi.fightCall}" />
+										<h:outputText value=""/>
+										
+										<h:outputLabel value="Strike" styleClass="information"/>
+										<h:selectBooleanCheckbox value="#{scheduleBean.performanceUi.strike}" />
+										<h:outputText value=""/>
+										
+										<h:outputLabel value="Talk Back" styleClass="information"/>
+										<h:selectBooleanCheckbox value="#{scheduleBean.performanceUi.talkback}" />
+										<h:outputText value=""/>
+										
+										<h:outputLabel value="Crew Call" styleClass="information"/>	
+										<h:selectBooleanCheckbox value="#{scheduleBean.performanceUi.crewCall}" />
+										<h:outputText value=""/>
+										
+								    <h:outputLabel value="Venue" styleClass="information" />
+								    
+								    <h:selectOneMenu value="#{scheduleBean.performanceUi.venueId}">
+								      <f:selectItems value="#{scheduleBean.performanceUi.venueItems}"/>
+								    </h:selectOneMenu>
+								    
+								    <p:commandLink 
+								    	value="Create Advance"
+								    	actionListener="#{scheduleBean.performanceUi.doCreateAdvance}"
+								    	rendered="#{scheduleBean.performanceUi.showAdvance}"
+								    	update=":insertSchedule:messages,:insertSchedule:dialog"
+								    	oncomplete="eventDialog.hide(); eventSchedule.update();" 
+								    />
+									</h:panelGrid>
+									<p:commandButton 
+										value="#{(scheduleBean.eventEntity.id eq null) ? 'Create' : 'Update'}"
+										update=":insertSchedule:messages"
+										actionListener="#{scheduleBean.savePerformance}"
+										oncomplete="eventDialog.hide();eventSchedule.update();"
+									/>
+									<p:commandButton 
+										value="Remove" 
+										update=":insertSchedule:messages"
+										rendered="#{not (scheduleBean.eventEntity.id eq null)}"
+										actionListener="#{scheduleBean.removePerformance}"
+										oncomplete="eventDialog.hide(); eventSchedule.update();"
+									/>
+									
+								</p:tab>
+							</p:tabView>
+						</p:panel>
+					</p:outputPanel>
+					<p:outputPanel rendered="#{scheduleBean.virtualEvent}">
+						<h3>Virtual Event</h3>
+						<p class="informationBox">
+							<em class="information">Virtual Events</em>
+							are created in relation to another event, in this case a 
+							<em class="information">Performance.</em> To modify this event change the master
+							event which will alter the related times. If a performance is 
+							non-standard it should be marked as such: a new <em class="information">Performance Schedule</em> 
+							can be created by selecting <em class="information">Performance and Advance</em> above.
+						</p>
+					</p:outputPanel>
+				</h:panelGroup>
+			</p:dialog>
+		
+		</h:form>
+	</f:subview>
+</jsp:root>
