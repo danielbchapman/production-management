@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html 	lang="en"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:p="http://primefaces.org/ui"
+		xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+		xmlns:tac="http://java.sun.com/jsf/composite/composite"
+>
+<body>
+<ui:composition template="/template/template.xhtml">
+<ui:define name="content">
+	<div class="hero-unit">
+		<ui:insert name="main">
+	        <h1>Main Area</h1>
+	        <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+	        <p><a class="btn btn-primary btn-large">Learn more...</a></p>  
+		</ui:insert>
+	</div>
+	
+	<div class="row">
+		<div class="span4">
+			<ui:insert name="left">
+				<h2>Left Default</h2>
+				<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+				<p><a class="btn" href="#">View details</a></p>
+			</ui:insert>	          
+		</div>
+		<div class="span4">
+			<ui:insert name="center">
+				<h2>Center default</h2>
+				<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+				<p><a class="btn" href="#">View details</a></p>
+			</ui:insert>		
+		</div>
+		<div class="span4">
+			<ui:insert name="right">
+				<h2>Right Default</h2>
+				<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+				<p><a class="btn" href="#">View details</a></p>
+			</ui:insert>	
+		</div>
+	</div>
+</ui:define>
+</ui:composition>
+</body>
+</html>

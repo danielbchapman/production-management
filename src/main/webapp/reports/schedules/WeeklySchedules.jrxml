@@ -1,0 +1,536 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="weeklySchedules" pageWidth="775" pageHeight="595" orientation="Landscape" whenNoDataType="NoDataSection" columnWidth="735" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d36a86ab-7777-49f4-b234-d3374b06dc15">
+	<property name="ireport.zoom" value="1.1566298682885996"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="colorOne" mode="Opaque" forecolor="#FFFFFF" backcolor="#990000"/>
+	<style name="colorTwo" mode="Opaque" forecolor="#FFFFFF" backcolor="#985858"/>
+	<style name="lines" forecolor="#990000" backcolor="#FFFFFF"/>
+	<style name="gray" mode="Opaque" backcolor="#F0EDED"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FILE_PATH" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["./"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PRINT_CAST" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[Boolean.FALSE]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PRINT_CREW" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[Boolean.FALSE]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PRINT_DETAILS" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[Boolean.FALSE]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="class" class="java.lang.Class">
+		<fieldDescription><![CDATA[class]]></fieldDescription>
+	</field>
+	<field name="date" class="java.util.Date">
+		<fieldDescription><![CDATA[date]]></fieldDescription>
+	</field>
+	<field name="days" class="java.util.Collection">
+		<fieldDescription><![CDATA[days]]></fieldDescription>
+	</field>
+	<field name="friday" class="com.danielbchapman.production.entity.Day">
+		<fieldDescription><![CDATA[friday]]></fieldDescription>
+	</field>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
+	<field name="lastUpdated" class="java.util.Date">
+		<fieldDescription><![CDATA[lastUpdated]]></fieldDescription>
+	</field>
+	<field name="monday" class="com.danielbchapman.production.entity.Day">
+		<fieldDescription><![CDATA[monday]]></fieldDescription>
+	</field>
+	<field name="saturday" class="com.danielbchapman.production.entity.Day">
+		<fieldDescription><![CDATA[saturday]]></fieldDescription>
+	</field>
+	<field name="season" class="com.danielbchapman.production.entity.Season">
+		<fieldDescription><![CDATA[season]]></fieldDescription>
+	</field>
+	<field name="sunday" class="com.danielbchapman.production.entity.Day">
+		<fieldDescription><![CDATA[sunday]]></fieldDescription>
+	</field>
+	<field name="thursday" class="com.danielbchapman.production.entity.Day">
+		<fieldDescription><![CDATA[thursday]]></fieldDescription>
+	</field>
+	<field name="tuesday" class="com.danielbchapman.production.entity.Day">
+		<fieldDescription><![CDATA[tuesday]]></fieldDescription>
+	</field>
+	<field name="wednesday" class="com.danielbchapman.production.entity.Day">
+		<fieldDescription><![CDATA[wednesday]]></fieldDescription>
+	</field>
+	<background>
+		<band height="555">
+			<image>
+				<reportElement uuid="fbdf69cf-4d16-438a-bc4b-d23f7270cf57" x="398" y="0" width="337" height="269"/>
+				<imageExpression><![CDATA[$P{FILE_PATH} + "tac-watermark.png"]]></imageExpression>
+			</image>
+		</band>
+	</background>
+	<columnHeader>
+		<band height="63" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy" isBlankWhenNull="false">
+				<reportElement uuid="680469b1-084d-4535-90fa-9464a5aa523b" x="420" y="12" width="282" height="33"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="58041fde-9195-4256-a1fb-b38448744b4a" x="160" y="12" width="260" height="33"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Schedule for the week of]]></text>
+			</staticText>
+			<image>
+				<reportElement uuid="f0e7bab1-f93e-4457-bd56-29cd63d189eb" x="0" y="0" width="101" height="63"/>
+				<imageExpression><![CDATA[$P{FILE_PATH} + "tac-red.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="470" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="0de91138-c94e-4f0d-b9d7-3da50e045ccc" x="17" y="16" width="700" height="450" forecolor="#FFFFFF"/>
+			</rectangle>
+			<elementGroup>
+				<rectangle>
+					<reportElement uuid="1e53de6b-ff3c-43f7-8434-3e6bb4543424" style="gray" x="517" y="56" width="100" height="40"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement uuid="e9db1355-7eb2-4c4d-8d70-a953d92f4682" style="gray" x="417" y="96" width="100" height="80"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement uuid="c9c69439-ba30-415c-a32c-4f8d9b6b4ed9" style="gray" x="417" y="16" width="100" height="40"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement uuid="95415dae-5db8-4052-9996-0093395ae0c2" style="gray" x="517" y="176" width="100" height="291"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement uuid="c3a05bbc-5f63-4fe2-9ae2-14cedb1c006c" style="gray" x="617" y="96" width="100" height="80"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement uuid="f573706c-050c-4cf1-afdb-074aa5b93cdf" style="gray" x="617" y="16" width="100" height="40"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement uuid="820e00aa-4c2a-484e-84fd-4c38d425eef0" style="gray" x="117" y="176" width="100" height="291"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement uuid="29d51076-3ba7-4e81-8d4d-a5860dcfe424" style="gray" x="17" y="16" width="100" height="40"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement uuid="28fd60e1-bc91-4c69-8e31-3a86d3fcfc9d" style="colorTwo" x="17" y="0" width="100" height="16"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement uuid="edb368a6-ba5d-4254-9433-4c333cbbec5f" style="colorOne" x="117" y="0" width="100" height="16"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement uuid="5972ab82-f554-4e4f-98f8-f6a40e86ed1e" style="colorTwo" x="217" y="0" width="100" height="16"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement uuid="8082ef1f-cc2a-420f-93dc-ecfe0b2b9639" style="colorOne" x="317" y="0" width="100" height="16"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement uuid="161cf416-0e4d-480e-9e30-c26a099cf629" style="colorTwo" x="417" y="0" width="100" height="16"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement uuid="d6e92458-3973-4a8b-9305-5843ef23e741" style="colorOne" x="517" y="0" width="100" height="16"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement uuid="8d6f2b98-4db2-4efe-8f30-7adde44f34d0" style="colorTwo" x="617" y="0" width="100" height="16"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement uuid="9577eea7-416d-4ff4-ae0c-29f0d803df2f" style="gray" x="16" y="96" width="100" height="80"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement uuid="e5d733d4-daff-4aab-a3b8-f6c6ac088880" style="gray" x="117" y="56" width="100" height="40"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement uuid="74f3fa7b-0ba7-470e-ae03-f9609cb6d555" style="gray" x="217" y="16" width="100" height="40"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement uuid="d20ced2a-405b-4207-bbac-108a2abff327" style="gray" x="317" y="56" width="100" height="40"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement uuid="77a6c371-aac7-4a4c-a8ae-76d5d9d0fe69" style="gray" x="317" y="176" width="100" height="291"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement uuid="158be11d-a239-493e-91fb-d08f928dbc0a" style="gray" x="217" y="96" width="100" height="80"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<staticText>
+					<reportElement uuid="8b618252-0924-45ce-9659-170d72978f2c" style="colorOne" mode="Opaque" x="0" y="96" width="16" height="80" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+						<font fontName="DejaVu Sans Mono" size="12" isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[LOCATION]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="f4229c7a-3438-4696-bb0c-a207e62f03ae" style="colorTwo" mode="Opaque" x="0" y="176" width="16" height="272" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+						<font fontName="DejaVu Sans Mono" size="12" isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[S  C  H  E  D  U  L  E]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="7972ad22-fba4-4cd6-97b7-d713e682e541" style="colorOne" mode="Opaque" x="0" y="16" width="16" height="40"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+						<font fontName="DejaVu Sans Mono" size="11" isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[CAST]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="f8608e60-99db-4324-9d21-36182b92c782" style="colorTwo" mode="Opaque" x="0" y="56" width="16" height="40"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+						<font fontName="DejaVu Sans Mono" size="11" isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[CREW]]></text>
+				</staticText>
+				<line direction="BottomUp">
+					<reportElement uuid="74c6c788-dc54-43fa-9343-f8f7d038e98d" style="lines" x="16" y="466" width="701" height="1"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement uuid="996acbdf-c55b-4210-b9ac-e9e13e760c9e" style="lines" x="0" y="448" width="16" height="1"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement uuid="6589535e-8492-468b-8a92-6a7403d849fa" style="lines" x="717" y="0" width="1" height="467"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement uuid="92a21ebf-3ebc-4df9-8300-362e931a9109" style="lines" x="16" y="16" width="1" height="451"/>
+				</line>
+				<line>
+					<reportElement uuid="026a5478-9be4-42b1-b6db-adaccc327433" style="lines" x="17" y="0" width="1" height="16"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement uuid="f87f3cca-0500-4a55-a903-c580cae6401c" style="lines" x="0" y="15" width="717" height="1"/>
+				</line>
+			</elementGroup>
+			<subreport>
+				<reportElement uuid="a7ec17ff-67a9-44a1-803e-f2ff188342f1" x="317" y="0" width="100" height="466"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DAY_OF_WEEK">
+					<subreportParameterExpression><![CDATA["THURSDAY"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DAY">
+					<subreportParameterExpression><![CDATA[$F{thursday}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_CAST">
+					<subreportParameterExpression><![CDATA[$P{PRINT_CAST}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_DETAILS">
+					<subreportParameterExpression><![CDATA[$P{PRINT_DETAILS}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DATE">
+					<subreportParameterExpression><![CDATA[com.danielbchapman.production.entity.Week.getDate(Integer.valueOf("3"), $F{date})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="FILE_PATH">
+					<subreportParameterExpression><![CDATA[$P{FILE_PATH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_CREW">
+					<subreportParameterExpression><![CDATA[$P{PRINT_CREW}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[$F{thursday} == null ?
+new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(new ArrayList())
+:
+new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{thursday}.getTimeline($P{PRINT_CAST}, $P{PRINT_CREW}, $P{PRINT_DETAILS}))]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "weeklySchedules_daily.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement uuid="b664440b-dd01-4598-b891-724de264d9d2" x="17" y="0" width="100" height="466"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DAY_OF_WEEK">
+					<subreportParameterExpression><![CDATA["MONDAY"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DAY">
+					<subreportParameterExpression><![CDATA[$F{monday}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_CAST">
+					<subreportParameterExpression><![CDATA[$P{PRINT_CAST}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_DETAILS">
+					<subreportParameterExpression><![CDATA[$P{PRINT_DETAILS}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DATE">
+					<subreportParameterExpression><![CDATA[com.danielbchapman.production.entity.Week.getDate(Integer.valueOf("0"), $F{date})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="FILE_PATH">
+					<subreportParameterExpression><![CDATA[$P{FILE_PATH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_CREW">
+					<subreportParameterExpression><![CDATA[$P{PRINT_CREW}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[$F{monday} == null ?
+new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(new ArrayList())
+:
+new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(
+    $F{monday}.getTimeline($P{PRINT_CAST}, $P{PRINT_CREW}, $P{PRINT_DETAILS})
+)]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "weeklySchedules_daily.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement uuid="20d606c7-a121-489a-8b0a-fcf3433a8c72" x="117" y="0" width="100" height="466"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DAY_OF_WEEK">
+					<subreportParameterExpression><![CDATA["TUESDAY"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DAY">
+					<subreportParameterExpression><![CDATA[$F{tuesday}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_CAST">
+					<subreportParameterExpression><![CDATA[$P{PRINT_CAST}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_DETAILS">
+					<subreportParameterExpression><![CDATA[$P{PRINT_DETAILS}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DATE">
+					<subreportParameterExpression><![CDATA[com.danielbchapman.production.entity.Week.getDate(Integer.valueOf("1"), $F{date})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="FILE_PATH">
+					<subreportParameterExpression><![CDATA[$P{FILE_PATH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_CREW">
+					<subreportParameterExpression><![CDATA[$P{PRINT_CREW}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[$F{tuesday} == null ?
+new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(new ArrayList())
+:
+new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{tuesday}.getTimeline($P{PRINT_CAST}, $P{PRINT_CREW}, $P{PRINT_DETAILS}))]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "weeklySchedules_daily.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement uuid="43855561-238c-4457-9824-b3f12ff976ee" x="417" y="0" width="100" height="466"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DAY_OF_WEEK">
+					<subreportParameterExpression><![CDATA["FRIDAY"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DAY">
+					<subreportParameterExpression><![CDATA[$F{friday}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_CAST">
+					<subreportParameterExpression><![CDATA[$P{PRINT_CAST}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_DETAILS">
+					<subreportParameterExpression><![CDATA[$P{PRINT_DETAILS}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DATE">
+					<subreportParameterExpression><![CDATA[com.danielbchapman.production.entity.Week.getDate(Integer.valueOf("4"), $F{date})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="FILE_PATH">
+					<subreportParameterExpression><![CDATA[$P{FILE_PATH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_CREW">
+					<subreportParameterExpression><![CDATA[$P{PRINT_CREW}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[$F{friday} == null ?
+new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(new ArrayList())
+:
+new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{friday}.getTimeline($P{PRINT_CAST}, $P{PRINT_CREW}, $P{PRINT_DETAILS}))]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "weeklySchedules_daily.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement uuid="9bc9bcdf-fb8d-47da-8f4f-975040ae1323" x="617" y="0" width="100" height="466"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DAY_OF_WEEK">
+					<subreportParameterExpression><![CDATA["SUNDAY"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DAY">
+					<subreportParameterExpression><![CDATA[$F{sunday}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_CAST">
+					<subreportParameterExpression><![CDATA[$P{PRINT_CAST}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_DETAILS">
+					<subreportParameterExpression><![CDATA[$P{PRINT_DETAILS}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DATE">
+					<subreportParameterExpression><![CDATA[com.danielbchapman.production.entity.Week.getDate(Integer.valueOf("6"), $F{date})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="FILE_PATH">
+					<subreportParameterExpression><![CDATA[$P{FILE_PATH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_CREW">
+					<subreportParameterExpression><![CDATA[$P{PRINT_CREW}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[$F{sunday} == null ?
+new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(new ArrayList())
+:
+new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{sunday}.getTimeline($P{PRINT_CAST}, $P{PRINT_CREW}, $P{PRINT_DETAILS}))]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "weeklySchedules_daily.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement uuid="a3db2437-a4c6-4fac-a237-eeef1ad358a4" x="517" y="0" width="100" height="466"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DAY_OF_WEEK">
+					<subreportParameterExpression><![CDATA["SATURDAY"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DAY">
+					<subreportParameterExpression><![CDATA[$F{saturday}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_CAST">
+					<subreportParameterExpression><![CDATA[$P{PRINT_CAST}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_DETAILS">
+					<subreportParameterExpression><![CDATA[$P{PRINT_DETAILS}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DATE">
+					<subreportParameterExpression><![CDATA[com.danielbchapman.production.entity.Week.getDate(Integer.valueOf("5"), $F{date})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="FILE_PATH">
+					<subreportParameterExpression><![CDATA[$P{FILE_PATH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_CREW">
+					<subreportParameterExpression><![CDATA[$P{PRINT_CREW}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[$F{saturday} == null ?
+new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(new ArrayList())
+:
+new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{saturday}.getTimeline($P{PRINT_CAST}, $P{PRINT_CREW}, $P{PRINT_DETAILS}))]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "weeklySchedules_daily.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement uuid="3d37c5b5-167b-40ce-a65b-e8ef2d3448b9" x="217" y="0" width="100" height="466"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DAY_OF_WEEK">
+					<subreportParameterExpression><![CDATA["WEDNESDAY"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DAY">
+					<subreportParameterExpression><![CDATA[$F{wednesday}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_CAST">
+					<subreportParameterExpression><![CDATA[$P{PRINT_CAST}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_DETAILS">
+					<subreportParameterExpression><![CDATA[$P{PRINT_DETAILS}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DATE">
+					<subreportParameterExpression><![CDATA[com.danielbchapman.production.entity.Week.getDate(Integer.valueOf("2"), $F{date})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="FILE_PATH">
+					<subreportParameterExpression><![CDATA[$P{FILE_PATH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_CREW">
+					<subreportParameterExpression><![CDATA[$P{PRINT_CREW}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[$F{wednesday} == null ?
+new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(new ArrayList())
+:
+new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{wednesday}.getTimeline($P{PRINT_CAST}, $P{PRINT_CREW}, $P{PRINT_DETAILS}))]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "weeklySchedules_daily.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement uuid="db32ddea-da78-4e16-bdef-cbcae892c648" x="612" y="5" width="66" height="15"/>
+				<textElement textAlignment="Right">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="0d868bb0-2daf-499f-8356-cee437caba0a" x="678" y="5" width="40" height="15"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement uuid="59bdfeae-8210-4f31-b730-ad9796ce2f3e" x="0" y="5" width="160" height="15"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="91701a86-23ac-4f81-8f47-e580a1a7e639" x="250" y="5" width="235" height="15"/>
+				<textElement textAlignment="Center">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Prepared by Daniel B. Chapman]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

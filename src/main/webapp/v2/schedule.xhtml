@@ -35,7 +35,7 @@
 					<div class="roundedBottom" style="margin-top:6px;">
 					
 						<f:view contentType="text/html">
-							<ui:include src="subMenu.xhtml"/>	
+							<ui:include src="/v2/subMenu.xhtml"/>	
 						</f:view>
 							
 						<br />
@@ -50,15 +50,15 @@
 							<p:growl id="mainMessages" showDetail="true" />
 							
 							<p:outputPanel rendered="#{scheduleBean.selectedCalendar}">
-								<ui:include src="insertSchedule.xhtml"/>
+								<ui:include src="/v2/insertSchedule.xhtml"/>
 							</p:outputPanel>
 							
 							<p:outputPanel rendered="#{scheduleBean.selectedCities}">
-								<ui:include src="/insertCities.xhtml" />
+								<ui:include src="/v2/insertCities.xhtml" />
 							</p:outputPanel>
 							
 							<p:outputPanel rendered="#{scheduleBean.selectedPerformances}">
-								<ui:include src="/insertPerformances.xhtml"/>
+								<ui:include src="/v2/insertPerformances.xhtml"/>
 							</p:outputPanel>
 							
 						</f:view>

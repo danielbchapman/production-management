@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html 	lang="en"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:p="http://primefaces.org/ui"
+		xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+		xmlns:tac="http://java.sun.com/jsf/composite/composite"
+>
+<body>
+<ui:composition template="/template/templateResponsive.xhtml">
+<ui:define name="main">
+<f:view contentType="text/html"  beforePhase="#{seasonBean.phaseInitializeSeasons}">
+	<h2>Petty Cash</h2>
+	<p>The petty cash system is not implemented yet, please be patient!</p>
+</f:view>
+</ui:define>
+
+<ui:define name="left">
+<f:view contentType="text/html"  beforePhase="#{seasonBean.phaseInitializeSeasons}">
+	<p>Under Construction!</p>
+</f:view>
+</ui:define>
+
+<ui:define name="right">
+<f:view contentType="text/html"  beforePhase="#{seasonBean.phaseInitializeSeasons}">
+	<p>Under Construction!</p>
+</f:view>
+</ui:define>
+
+<ui:define name="center">
+<f:view contentType="text/html"  beforePhase="#{seasonBean.phaseInitializeSeasons}">
+	<p>Under Construction!</p>
+</f:view>
+</ui:define>
+
+</ui:composition>
+</body>
+</html>

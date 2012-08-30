@@ -4,12 +4,8 @@
 	<comment></comment>
 	<projects>
 		<project>JpaFramework</project>
-		<project>CustomJaasRealm</project>
 		<project>ProductionEJB</project>
 		<project>ProductionWebService</project>
-		<project>InventoryEJB</project>
-		<project>HelpEJB</project>
-		<project>GenericLoginEJB</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

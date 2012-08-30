@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html 
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:core="http://java.sun.com/jsf/composite/core"
+>
+	<h:head>
+	  	<f:facet name="first">
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	    	<script src="./bootstrap/js/bootstrap.js"></script>
+	  	</f:facet>
+	    <meta charset="utf-8"></meta>
+	    <title><ui:insert name="title">Production Database</ui:insert></title>
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+	    <meta name="description" content=""></meta>
+	    <meta name="author" content=""></meta>
+	
+	    <!-- Le styles -->
+	    <link href="./bootstrap/css/bootstrap.css" rel="stylesheet"></link>
+	    <link href="./bootstrap/css/bootstrap-responsive.css" rel="stylesheet"></link>
+	
+	    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+	    <!--[if lt IE 9]>
+	      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	    <![endif]-->
+	
+	    <!-- Le fav and touch icons -->
+	    <link rel="shortcut icon" href="../assets/ico/favicon.ico"></link>
+	    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png"></link>
+	    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png"></link>
+	    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png"></link>
+	    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png"></link>
+	    <h:outputStylesheet name="production.css" library="css" />
+	    
+	    <style type="text/css">
+			body {
+			  padding-top: 60px;
+			  padding-bottom: 40px;
+			}
+	      
+			.ui-growl {
+				position: fixed;
+				top: 80px;
+				right: 20px;
+				width: 301px;
+			}
+			.smaller {
+				font-size: .75em;
+			}
+			
+			.ui150 {
+				width: 150px;
+			}
+			
+			.ui100 {
+				width: 100px;
+			}
+			
+			.ui50 {
+				width: 50px;
+			}
+	    </style>
+	</h:head>
+ 
+    <h:body>
+	<div id="header">
+		<ui:insert name="header">
+			<ui:include src="/template/menus.xhtml" />
+		</ui:insert>
+	</div>
+	
+	<ui:insert name="base">
+		<div class="container">
+			<h1>BASE TEMPLATE</h1>
+			<p>This is intended as an abstract root, not as an actual template</p>
+		</div>
+	</ui:insert>
+	</h:body>
+</html>

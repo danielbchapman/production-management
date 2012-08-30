@@ -40,47 +40,7 @@
 						</f:view>	
 												
 						<!-- CONTENT STARTS HERE -->
-						<f:view id="setProduction" contentType="text/html">
-							<h:form id="setProductionForm">
-								<p:growl id="mainMessages" showDetail="true" />
-								
-								<br />
-								
-								<p:panel>
-									<h3>Select a Season</h3>
-								
-									<h:selectOneMenu valueChangeListener="#{seasonBean.selectSeason}">
-										<f:selectItems value="#{seasonBean.seasons}"/>		
-									</h:selectOneMenu>
-									<p:commandButton 
-										value="Confirm Season" 
-										actionListener="#{seasonBean.confirmSeason}"
-										update="setProductionForm:mainMessages,setProductionForm"
-										/>
-								</p:panel>
-								
-								<br />
-								
-								<p:panel rendered="#{loginBean.user}">
-									<h3>Create a Season</h3>
-									
-									<h:outputText value="Season Name" styleClass="information"/>
-									<br />
-									<p:inputText value="#{seasonBean.newSeason.name}"/>
-									<br />
-									<h:outputText value="Description" styleClass="information"/>
-									<br />
-									<p:editor value="#{seasonBean.newSeason.desriptionMarkup}"/>
-									
-									<p:commandButton 
-										value="Save Season"
-										actionListener="#{seasonBean.createSeason}" 
-										update="setProductionForm:mainMessages,setProductionForm"
-										/>
-								</p:panel>
-							</h:form>
-							
-						</f:view>
+						
 						<!-- CONENT ENDS HERE -->
 						
 					</div>

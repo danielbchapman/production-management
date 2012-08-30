@@ -1,0 +1,58 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"	
+>
+	<composite:interface>
+		<composite:attribute name="user" />
+		<composite:attribute name="pass" />
+		<composite:attribute name="loggedIn" />
+		<composite:attribute 
+			name="loginAction" 
+			method-signature="void actionListener(javax.faces.event.ActionEvent)"
+		/>
+		<composite:attribute 
+			name="logoutAction" 
+			method-signature="void actionListener(javax.faces.event.ActionEvent)"
+		/>
+	</composite:interface>
+	
+	<composite:implementation>
+		<h:form class="navbar-form pull-right" id="login" prependId="false">
+			<h:panelGroup rendered="#{!cc.attrs.loggedIn}" layout="span">
+				<h:inputHidden value="#{cc.attrs.user}" id="userText"/>
+				<h:inputHidden value="#{cc.attrs.pass}" id="passValue"/>
+					
+				<input 
+					class="span2" 
+					type="text" 
+					placeholder="Username" 
+					onblur="document.getElementById('#{cc.attrs.id}:userText').value = this.value;"
+				>
+				</input>
+				<input 
+					class="span2" 
+					type="password" 
+					placeholder="Password"
+					onblur="document.getElementById('#{cc.attrs.id}:passValue').value = this.value;"
+				>
+				</input>
+				
+				<h:commandButton 
+					class="btn" 
+					value="Sign in"
+					actionListener="#{cc.attrs.loginAction}"
+				/>
+			</h:panelGroup>
+		
+			<h:panelGroup rendered="#{cc.attrs.loggedIn}" class="span2" style="display: inline-block;">
+				<h:commandLink 
+					value="#{cc.attrs.user} | Sign Out" 
+					class="btn btn-primary"
+					actionListener="#{cc.attrs.logoutAction}"
+				/>
+			</h:panelGroup>
+		</h:form>
+	</composite:implementation>
+</html>

@@ -1,0 +1,802 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="weeklySchedules" pageWidth="595" pageHeight="775" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="62682f4e-aec2-484e-b497-6c866452ec84">
+	<property name="ireport.zoom" value="1.3995221406292053"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="103"/>
+	<style name="colorOne" mode="Opaque" forecolor="#FFFFFF" backcolor="#990000"/>
+	<style name="colorTwo" mode="Opaque" forecolor="#FFFFFF" backcolor="#985858"/>
+	<style name="lines" forecolor="#990000" backcolor="#FFFFFF"/>
+	<style name="gray" mode="Opaque" backcolor="#F0EDED"/>
+	<subDataset name="Performances" whenResourceMissingType="Empty" uuid="294ee519-3474-4914-8206-5b02ff145821">
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="cast" class="java.lang.Boolean">
+			<fieldDescription><![CDATA[cast]]></fieldDescription>
+		</field>
+		<field name="class" class="java.lang.Class">
+			<fieldDescription><![CDATA[class]]></fieldDescription>
+		</field>
+		<field name="crew" class="java.lang.Boolean">
+			<fieldDescription><![CDATA[crew]]></fieldDescription>
+		</field>
+		<field name="day" class="com.danielbchapman.production.entity.Day">
+			<fieldDescription><![CDATA[day]]></fieldDescription>
+		</field>
+		<field name="description" class="java.lang.String">
+			<fieldDescription><![CDATA[description]]></fieldDescription>
+		</field>
+		<field name="end" class="java.util.Date">
+			<fieldDescription><![CDATA[end]]></fieldDescription>
+		</field>
+		<field name="endDate" class="java.util.Date">
+			<fieldDescription><![CDATA[endDate]]></fieldDescription>
+		</field>
+		<field name="id" class="java.lang.Long">
+			<fieldDescription><![CDATA[id]]></fieldDescription>
+		</field>
+		<field name="performance" class="java.lang.Boolean">
+			<fieldDescription><![CDATA[performance]]></fieldDescription>
+		</field>
+		<field name="persisted" class="java.lang.Boolean">
+			<fieldDescription><![CDATA[persisted]]></fieldDescription>
+		</field>
+		<field name="publicEvent" class="java.lang.Boolean">
+			<fieldDescription><![CDATA[publicEvent]]></fieldDescription>
+		</field>
+		<field name="start" class="java.util.Date">
+			<fieldDescription><![CDATA[start]]></fieldDescription>
+		</field>
+		<field name="startDate" class="java.util.Date">
+			<fieldDescription><![CDATA[startDate]]></fieldDescription>
+		</field>
+	</subDataset>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FILE_PATH" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["./"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PRINT_CAST" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[Boolean.FALSE]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PRINT_CREW" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[Boolean.FALSE]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PRINT_DETAILS" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[Boolean.FALSE]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="class" class="java.lang.Class">
+		<fieldDescription><![CDATA[class]]></fieldDescription>
+	</field>
+	<field name="date" class="java.util.Date">
+		<fieldDescription><![CDATA[date]]></fieldDescription>
+	</field>
+	<field name="days" class="java.util.Collection">
+		<fieldDescription><![CDATA[days]]></fieldDescription>
+	</field>
+	<field name="friday" class="com.danielbchapman.production.entity.Day">
+		<fieldDescription><![CDATA[friday]]></fieldDescription>
+	</field>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
+	<field name="lastUpdated" class="java.util.Date">
+		<fieldDescription><![CDATA[lastUpdated]]></fieldDescription>
+	</field>
+	<field name="monday" class="com.danielbchapman.production.entity.Day">
+		<fieldDescription><![CDATA[monday]]></fieldDescription>
+	</field>
+	<field name="saturday" class="com.danielbchapman.production.entity.Day">
+		<fieldDescription><![CDATA[saturday]]></fieldDescription>
+	</field>
+	<field name="season" class="com.danielbchapman.production.entity.Season">
+		<fieldDescription><![CDATA[season]]></fieldDescription>
+	</field>
+	<field name="sunday" class="com.danielbchapman.production.entity.Day">
+		<fieldDescription><![CDATA[sunday]]></fieldDescription>
+	</field>
+	<field name="thursday" class="com.danielbchapman.production.entity.Day">
+		<fieldDescription><![CDATA[thursday]]></fieldDescription>
+	</field>
+	<field name="tuesday" class="com.danielbchapman.production.entity.Day">
+		<fieldDescription><![CDATA[tuesday]]></fieldDescription>
+	</field>
+	<field name="wednesday" class="com.danielbchapman.production.entity.Day">
+		<fieldDescription><![CDATA[wednesday]]></fieldDescription>
+	</field>
+	<background>
+		<band height="555">
+			<image>
+				<reportElement uuid="2ae2ba9e-9abf-4492-b084-829069db8420" x="217" y="286" width="337" height="269"/>
+				<imageExpression><![CDATA[$P{FILE_PATH} + "tac-watermark.png"]]></imageExpression>
+			</image>
+		</band>
+	</background>
+	<pageHeader>
+		<band height="108">
+			<textField>
+				<reportElement uuid="3199eec9-31aa-4d0c-a8b7-378a83761138" style="colorOne" mode="Opaque" x="0" y="76" width="556" height="16" forecolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="DejaVu Sans Mono" size="12" isBold="true" isItalic="false"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Preliminary Schedule | Important Dates"]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement uuid="a22652a1-c251-4033-963b-67ea7d02aa93" x="0" y="0" width="101" height="63"/>
+				<imageExpression><![CDATA[$P{FILE_PATH} + "tac-red.jpg"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement uuid="b5f5f931-3e77-43c6-b4e0-352adaeca15a" x="137" y="20" width="416" height="33"/>
+				<textElement markup="none">
+					<font fontName="DejaVu Sans" size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{season}.getName()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="192f6a36-da5f-4858-982f-c6c556413e14" style="lines" x="22" y="93" width="100" height="15"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8acb2e0b-19f7-425f-931f-9347921f2f0a" style="lines" x="188" y="92" width="112" height="15"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Details]]></text>
+			</staticText>
+			<line direction="BottomUp">
+				<reportElement uuid="9121b932-6973-42ed-a01b-2191a1fc8548" style="lines" x="22" y="104" width="531" height="1"/>
+			</line>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="18">
+			<printWhenExpression><![CDATA[$F{monday} != null
+&& $F{monday}.getEvents() != null
+&& !$F{monday}.getEvents().isEmpty()]]></printWhenExpression>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement uuid="d255173e-e059-450c-9187-5a43f53c799f" x="23" y="0" width="166" height="18"/>
+				<textElement>
+					<font isBold="false" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{monday}.getDate()]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement uuid="c07b13bf-c4bb-4d85-9086-ec1cde9b6ce2" mode="Transparent" x="189" y="0" width="365" height="18" isPrintWhenDetailOverflows="true"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Performances" uuid="862c283f-8408-475d-8a08-b59e342735be">
+						<dataSourceExpression><![CDATA[$F{monday}.getEvents() == null ?
+new net.sf.jasperreports.engine.JREmptyDataSource()
+  :
+  new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{monday}.getEvents())]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column uuid="1ba83c5d-9246-4f94-9983-7960b1a75c6f" width="62">
+						<jr:tableHeader height="0" rowSpan="1"/>
+						<jr:tableFooter height="0" rowSpan="1"/>
+						<jr:columnHeader height="0" rowSpan="1">
+							<genericElement>
+								<reportElement uuid="4eb69fe9-a026-450d-8778-4b6d1a6cbd39" mode="Transparent" x="0" y="0" width="0" height="0">
+									<property name="controlParameter" value="true"/>
+								</reportElement>
+								<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
+								<genericElementParameter name="sortColumnName">
+									<valueExpression><![CDATA["utcStart"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortColumnType">
+									<valueExpression><![CDATA["Field"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerHorizontalAlign">
+									<valueExpression><![CDATA["Right"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerVerticalAlign">
+									<valueExpression><![CDATA["Middle"]]></valueExpression>
+								</genericElementParameter>
+							</genericElement>
+						</jr:columnHeader>
+						<jr:columnFooter height="0" rowSpan="1"/>
+						<jr:detailCell height="20" rowSpan="1">
+							<textField pattern="h:mm a">
+								<reportElement uuid="ce2b6e27-a806-4c2f-8754-2adfea957cf3" x="0" y="0" width="62" height="20"/>
+								<textElement/>
+								<textFieldExpression><![CDATA[$F{startDate}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column uuid="ae728c5a-7087-4de8-bcc6-382c1146a53c" width="368">
+						<jr:tableHeader height="0" rowSpan="1"/>
+						<jr:tableFooter height="0" rowSpan="1"/>
+						<jr:columnHeader height="0" rowSpan="1">
+							<genericElement>
+								<reportElement uuid="ee1ab83d-288b-492b-9869-f7f24ca2fb79" mode="Transparent" x="0" y="0" width="0" height="0">
+									<property name="controlParameter" value="true"/>
+								</reportElement>
+								<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
+								<genericElementParameter name="sortColumnName">
+									<valueExpression><![CDATA["description"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortColumnType">
+									<valueExpression><![CDATA["Field"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerHorizontalAlign">
+									<valueExpression><![CDATA["Right"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerVerticalAlign">
+									<valueExpression><![CDATA["Middle"]]></valueExpression>
+								</genericElementParameter>
+							</genericElement>
+						</jr:columnHeader>
+						<jr:columnFooter height="0" rowSpan="1"/>
+						<jr:detailCell height="20" rowSpan="1">
+							<textField>
+								<reportElement uuid="9abd618b-a07d-44d4-a7d3-45f644382430" x="3" y="0" width="365" height="20"/>
+								<textElement/>
+								<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+		<band height="18">
+			<printWhenExpression><![CDATA[$F{tuesday} != null
+&& $F{tuesday}.getEvents() != null
+&& !$F{tuesday}.getEvents().isEmpty()]]></printWhenExpression>
+			<textField pattern="EEEEE M/d">
+				<reportElement uuid="2ca3e321-b2be-4275-b9b0-ddb56c7259be" x="23" y="0" width="166" height="18"/>
+				<textElement>
+					<font isBold="false" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tuesday}.getDate()]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement uuid="19f62f22-694d-4f08-b7e8-5361a18e1134" mode="Transparent" x="189" y="0" width="365" height="18" isPrintWhenDetailOverflows="true"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Performances" uuid="66438572-6d79-433d-9adf-18193188b271">
+						<dataSourceExpression><![CDATA[$F{tuesday}.getEvents() == null ?
+new net.sf.jasperreports.engine.JREmptyDataSource()
+  :
+  new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{tuesday}.getEvents())]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column uuid="b089f4d2-d82b-4c44-9048-3d850bda45b9" width="62">
+						<jr:tableHeader height="0" rowSpan="1"/>
+						<jr:tableFooter height="0" rowSpan="1"/>
+						<jr:columnHeader height="0" rowSpan="1">
+							<genericElement>
+								<reportElement uuid="bde7f1a3-48b4-4c81-96b6-c852ef1269da" mode="Transparent" x="0" y="0" width="0" height="0">
+									<property name="controlParameter" value="true"/>
+								</reportElement>
+								<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
+								<genericElementParameter name="sortColumnName">
+									<valueExpression><![CDATA["utcStart"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortColumnType">
+									<valueExpression><![CDATA["Field"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerHorizontalAlign">
+									<valueExpression><![CDATA["Right"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerVerticalAlign">
+									<valueExpression><![CDATA["Middle"]]></valueExpression>
+								</genericElementParameter>
+							</genericElement>
+						</jr:columnHeader>
+						<jr:columnFooter height="0" rowSpan="1"/>
+						<jr:detailCell height="20" rowSpan="1">
+							<textField pattern="h:mm a">
+								<reportElement uuid="bc5ec8bd-a12c-4e4c-8a3e-967d694a5ae6" x="0" y="0" width="62" height="20"/>
+								<textElement/>
+								<textFieldExpression><![CDATA[$F{startDate}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column uuid="f128534f-3eb6-424d-af5a-f63e5606a475" width="368">
+						<jr:tableHeader height="0" rowSpan="1"/>
+						<jr:tableFooter height="0" rowSpan="1"/>
+						<jr:columnHeader height="0" rowSpan="1">
+							<genericElement>
+								<reportElement uuid="41fe167c-775a-416a-b642-00e3158e6cf2" mode="Transparent" x="0" y="0" width="0" height="0">
+									<property name="controlParameter" value="true"/>
+								</reportElement>
+								<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
+								<genericElementParameter name="sortColumnName">
+									<valueExpression><![CDATA["description"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortColumnType">
+									<valueExpression><![CDATA["Field"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerHorizontalAlign">
+									<valueExpression><![CDATA["Right"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerVerticalAlign">
+									<valueExpression><![CDATA["Middle"]]></valueExpression>
+								</genericElementParameter>
+							</genericElement>
+						</jr:columnHeader>
+						<jr:columnFooter height="0" rowSpan="1"/>
+						<jr:detailCell height="20" rowSpan="1">
+							<textField>
+								<reportElement uuid="9e7514c6-5eef-4ab9-beed-a85cb51b7b86" x="3" y="0" width="365" height="20"/>
+								<textElement/>
+								<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+		<band height="18">
+			<printWhenExpression><![CDATA[$F{wednesday} != null
+&& $F{wednesday}.getEvents() != null
+&& !$F{wednesday}.getEvents().isEmpty()]]></printWhenExpression>
+			<textField pattern="EEEEE M/d">
+				<reportElement uuid="b8f55817-cc10-4e5e-a1e8-f6577df64e8c" x="23" y="0" width="166" height="18"/>
+				<textElement>
+					<font isBold="false" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{wednesday}.getDate()]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement uuid="d1637aae-2ac6-415a-893e-423ba8f404ef" mode="Transparent" x="189" y="0" width="365" height="18" isPrintWhenDetailOverflows="true"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Performances" uuid="35329994-9123-4a91-802d-9cb7554fe2fd">
+						<dataSourceExpression><![CDATA[$F{wednesday}.getEvents() == null ?
+new net.sf.jasperreports.engine.JREmptyDataSource()
+  :
+  new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{wednesday}.getEvents())]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column uuid="54448859-e9f0-41e1-ad8f-8fdecb9d485b" width="62">
+						<jr:tableHeader height="0" rowSpan="1"/>
+						<jr:tableFooter height="0" rowSpan="1"/>
+						<jr:columnHeader height="0" rowSpan="1">
+							<genericElement>
+								<reportElement uuid="6b1a1aee-75ed-4861-826e-8f65c9512e44" mode="Transparent" x="0" y="0" width="0" height="0">
+									<property name="controlParameter" value="true"/>
+								</reportElement>
+								<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
+								<genericElementParameter name="sortColumnName">
+									<valueExpression><![CDATA["utcStart"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortColumnType">
+									<valueExpression><![CDATA["Field"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerHorizontalAlign">
+									<valueExpression><![CDATA["Right"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerVerticalAlign">
+									<valueExpression><![CDATA["Middle"]]></valueExpression>
+								</genericElementParameter>
+							</genericElement>
+						</jr:columnHeader>
+						<jr:columnFooter height="0" rowSpan="1"/>
+						<jr:detailCell height="20" rowSpan="1">
+							<textField pattern="h:mm a">
+								<reportElement uuid="692f59a2-07e2-4268-a474-9ec17f61e52f" x="0" y="0" width="62" height="20"/>
+								<textElement/>
+								<textFieldExpression><![CDATA[$F{startDate}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column uuid="d5eb9d6c-767d-43f8-bbc8-e7687cd6880e" width="368">
+						<jr:tableHeader height="0" rowSpan="1"/>
+						<jr:tableFooter height="0" rowSpan="1"/>
+						<jr:columnHeader height="0" rowSpan="1">
+							<genericElement>
+								<reportElement uuid="13f77256-d3d0-42a5-990d-a9cc2d3b62e3" mode="Transparent" x="0" y="0" width="0" height="0">
+									<property name="controlParameter" value="true"/>
+								</reportElement>
+								<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
+								<genericElementParameter name="sortColumnName">
+									<valueExpression><![CDATA["description"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortColumnType">
+									<valueExpression><![CDATA["Field"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerHorizontalAlign">
+									<valueExpression><![CDATA["Right"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerVerticalAlign">
+									<valueExpression><![CDATA["Middle"]]></valueExpression>
+								</genericElementParameter>
+							</genericElement>
+						</jr:columnHeader>
+						<jr:columnFooter height="0" rowSpan="1"/>
+						<jr:detailCell height="20" rowSpan="1">
+							<textField>
+								<reportElement uuid="8417086e-e84e-4182-9f87-93e02b40f131" x="3" y="0" width="365" height="20"/>
+								<textElement/>
+								<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+		<band height="18">
+			<printWhenExpression><![CDATA[$F{thursday} != null
+&& $F{thursday}.getEvents() != null
+&& !$F{thursday}.getEvents().isEmpty()]]></printWhenExpression>
+			<textField pattern="EEEEE M/d">
+				<reportElement uuid="fd03e180-5973-45ae-8306-dd64f46c709e" x="23" y="0" width="166" height="18"/>
+				<textElement>
+					<font isBold="false" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{thursday}.getDate()]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement uuid="eee91d70-a55a-45b8-8bc6-43c790678192" mode="Transparent" x="189" y="0" width="365" height="18" isPrintWhenDetailOverflows="true"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Performances" uuid="9839a543-0064-4283-8916-6460399042fe">
+						<dataSourceExpression><![CDATA[$F{thursday}.getEvents() == null ?
+new net.sf.jasperreports.engine.JREmptyDataSource()
+  :
+  new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{thursday}.getEvents())]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column uuid="2557a116-e8ad-4244-9d9c-66445170d840" width="62">
+						<jr:tableHeader height="0" rowSpan="1"/>
+						<jr:tableFooter height="0" rowSpan="1"/>
+						<jr:columnHeader height="0" rowSpan="1">
+							<genericElement>
+								<reportElement uuid="8835a152-fc68-4c40-ab58-7ba6eb535f82" mode="Transparent" x="0" y="0" width="0" height="0">
+									<property name="controlParameter" value="true"/>
+								</reportElement>
+								<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
+								<genericElementParameter name="sortColumnName">
+									<valueExpression><![CDATA["utcStart"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortColumnType">
+									<valueExpression><![CDATA["Field"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerHorizontalAlign">
+									<valueExpression><![CDATA["Right"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerVerticalAlign">
+									<valueExpression><![CDATA["Middle"]]></valueExpression>
+								</genericElementParameter>
+							</genericElement>
+						</jr:columnHeader>
+						<jr:columnFooter height="0" rowSpan="1"/>
+						<jr:detailCell height="20" rowSpan="1">
+							<textField pattern="h:mm a">
+								<reportElement uuid="0f0ffddc-b316-4a20-8d65-80acb7aa1522" x="0" y="0" width="62" height="20"/>
+								<textElement/>
+								<textFieldExpression><![CDATA[$F{startDate}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column uuid="526d4b53-7dbd-4ddd-afe3-2900a2760bf3" width="368">
+						<jr:tableHeader height="0" rowSpan="1"/>
+						<jr:tableFooter height="0" rowSpan="1"/>
+						<jr:columnHeader height="0" rowSpan="1">
+							<genericElement>
+								<reportElement uuid="702a47f6-e46e-43c6-95d2-a52156ccf933" mode="Transparent" x="0" y="0" width="0" height="0">
+									<property name="controlParameter" value="true"/>
+								</reportElement>
+								<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
+								<genericElementParameter name="sortColumnName">
+									<valueExpression><![CDATA["description"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortColumnType">
+									<valueExpression><![CDATA["Field"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerHorizontalAlign">
+									<valueExpression><![CDATA["Right"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerVerticalAlign">
+									<valueExpression><![CDATA["Middle"]]></valueExpression>
+								</genericElementParameter>
+							</genericElement>
+						</jr:columnHeader>
+						<jr:columnFooter height="0" rowSpan="1"/>
+						<jr:detailCell height="20" rowSpan="1">
+							<textField>
+								<reportElement uuid="caa8561b-6aa4-4d84-9c9a-3fff69b7103e" x="3" y="0" width="365" height="20"/>
+								<textElement/>
+								<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+		<band height="18">
+			<printWhenExpression><![CDATA[$F{friday} != null
+&& $F{friday}.getEvents() != null
+&& !$F{friday}.getEvents().isEmpty()]]></printWhenExpression>
+			<textField pattern="EEEEE M/d">
+				<reportElement uuid="0f0e2748-e77c-4219-9df1-91ca51a176dc" x="23" y="0" width="166" height="18"/>
+				<textElement>
+					<font isBold="false" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{friday}.getDate()]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement uuid="1ce73530-fef4-4b84-acdb-4b1bad8a30f7" mode="Transparent" x="189" y="0" width="365" height="18" isPrintWhenDetailOverflows="true"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Performances" uuid="79c5f82c-b039-415c-acb2-c8cede8e4be0">
+						<dataSourceExpression><![CDATA[$F{friday}.getEvents() == null ?
+new net.sf.jasperreports.engine.JREmptyDataSource()
+  :
+  new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{friday}.getEvents())]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column uuid="87279826-e868-48a4-9fbd-b71520174875" width="62">
+						<jr:tableHeader height="0" rowSpan="1"/>
+						<jr:tableFooter height="0" rowSpan="1"/>
+						<jr:columnHeader height="0" rowSpan="1">
+							<genericElement>
+								<reportElement uuid="455d4702-edb7-4d77-a16d-e81395a38404" mode="Transparent" x="0" y="0" width="0" height="0">
+									<property name="controlParameter" value="true"/>
+								</reportElement>
+								<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
+								<genericElementParameter name="sortColumnName">
+									<valueExpression><![CDATA["utcStart"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortColumnType">
+									<valueExpression><![CDATA["Field"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerHorizontalAlign">
+									<valueExpression><![CDATA["Right"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerVerticalAlign">
+									<valueExpression><![CDATA["Middle"]]></valueExpression>
+								</genericElementParameter>
+							</genericElement>
+						</jr:columnHeader>
+						<jr:columnFooter height="0" rowSpan="1"/>
+						<jr:detailCell height="20" rowSpan="1">
+							<textField pattern="h:mm a">
+								<reportElement uuid="1a036427-a91f-4d24-9564-4dedaaaa023c" x="0" y="0" width="62" height="20"/>
+								<textElement/>
+								<textFieldExpression><![CDATA[$F{startDate}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column uuid="d4d699e0-d195-47e4-ac67-60d0b5aa5e0c" width="368">
+						<jr:tableHeader height="0" rowSpan="1"/>
+						<jr:tableFooter height="0" rowSpan="1"/>
+						<jr:columnHeader height="0" rowSpan="1">
+							<genericElement>
+								<reportElement uuid="7bfb93ad-b4bc-408f-95bd-7b7d9cf0f09c" mode="Transparent" x="0" y="0" width="0" height="0">
+									<property name="controlParameter" value="true"/>
+								</reportElement>
+								<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
+								<genericElementParameter name="sortColumnName">
+									<valueExpression><![CDATA["description"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortColumnType">
+									<valueExpression><![CDATA["Field"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerHorizontalAlign">
+									<valueExpression><![CDATA["Right"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerVerticalAlign">
+									<valueExpression><![CDATA["Middle"]]></valueExpression>
+								</genericElementParameter>
+							</genericElement>
+						</jr:columnHeader>
+						<jr:columnFooter height="0" rowSpan="1"/>
+						<jr:detailCell height="20" rowSpan="1">
+							<textField>
+								<reportElement uuid="cca0e144-d30c-474b-9f8a-ff5b8f6f13bd" x="3" y="0" width="365" height="20"/>
+								<textElement/>
+								<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+		<band height="18">
+			<printWhenExpression><![CDATA[$F{saturday} != null
+&& $F{saturday}.getEvents() != null
+&& !$F{saturday}.getEvents().isEmpty()]]></printWhenExpression>
+			<textField pattern="EEEEE M/d">
+				<reportElement uuid="97ebec20-7016-420c-8ede-eaa3508a9c58" x="23" y="0" width="166" height="18"/>
+				<textElement>
+					<font isBold="false" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{saturday}.getDate()]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement uuid="ab465a71-dfad-47e3-a6d7-4dbd7a8b802f" mode="Transparent" x="189" y="0" width="365" height="18" isPrintWhenDetailOverflows="true"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Performances" uuid="7fb33ef8-0b41-4750-8318-60b4f73ac693">
+						<dataSourceExpression><![CDATA[$F{saturday}.getEvents() == null ?
+new net.sf.jasperreports.engine.JREmptyDataSource()
+  :
+  new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{saturday}.getEvents())]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column uuid="a369b8cb-badd-4cc9-90ad-5faf80d49edc" width="62">
+						<jr:tableHeader height="0" rowSpan="1"/>
+						<jr:tableFooter height="0" rowSpan="1"/>
+						<jr:columnHeader height="0" rowSpan="1">
+							<genericElement>
+								<reportElement uuid="88fcc15c-ab9d-4fba-8b0b-7483e11c1d43" mode="Transparent" x="0" y="0" width="0" height="0">
+									<property name="controlParameter" value="true"/>
+								</reportElement>
+								<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
+								<genericElementParameter name="sortColumnName">
+									<valueExpression><![CDATA["utcStart"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortColumnType">
+									<valueExpression><![CDATA["Field"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerHorizontalAlign">
+									<valueExpression><![CDATA["Right"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerVerticalAlign">
+									<valueExpression><![CDATA["Middle"]]></valueExpression>
+								</genericElementParameter>
+							</genericElement>
+						</jr:columnHeader>
+						<jr:columnFooter height="0" rowSpan="1"/>
+						<jr:detailCell height="20" rowSpan="1">
+							<textField pattern="h:mm a">
+								<reportElement uuid="15da1063-1be2-4d79-b641-41bac3a2e5bb" x="0" y="0" width="62" height="20"/>
+								<textElement/>
+								<textFieldExpression><![CDATA[$F{startDate}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column uuid="8dbcd5ec-b6b7-42f5-85d4-03c8921d1ed8" width="368">
+						<jr:tableHeader height="0" rowSpan="1"/>
+						<jr:tableFooter height="0" rowSpan="1"/>
+						<jr:columnHeader height="0" rowSpan="1">
+							<genericElement>
+								<reportElement uuid="8a423fef-7a5c-4c21-961d-e785d7ba91fa" mode="Transparent" x="0" y="0" width="0" height="0">
+									<property name="controlParameter" value="true"/>
+								</reportElement>
+								<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
+								<genericElementParameter name="sortColumnName">
+									<valueExpression><![CDATA["description"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortColumnType">
+									<valueExpression><![CDATA["Field"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerHorizontalAlign">
+									<valueExpression><![CDATA["Right"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerVerticalAlign">
+									<valueExpression><![CDATA["Middle"]]></valueExpression>
+								</genericElementParameter>
+							</genericElement>
+						</jr:columnHeader>
+						<jr:columnFooter height="0" rowSpan="1"/>
+						<jr:detailCell height="20" rowSpan="1">
+							<textField>
+								<reportElement uuid="dc0231ce-13e2-431c-b1ad-fc460f4273e6" x="3" y="0" width="365" height="20"/>
+								<textElement/>
+								<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+		<band height="18">
+			<printWhenExpression><![CDATA[$F{sunday} != null
+&& $F{sunday}.getEvents() != null
+&& !$F{sunday}.getEvents().isEmpty()]]></printWhenExpression>
+			<textField pattern="EEEEE M/d">
+				<reportElement uuid="74ea3986-e9e2-4878-82f8-b308598d66ea" x="23" y="0" width="166" height="18"/>
+				<textElement>
+					<font isBold="false" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sunday}.getDate()]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement uuid="74d93bfa-ea10-4e13-893b-e22ce5558342" mode="Transparent" x="189" y="0" width="365" height="18" isPrintWhenDetailOverflows="true"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Performances" uuid="1e1518aa-3383-4a99-b6d1-856f873509a5">
+						<dataSourceExpression><![CDATA[$F{sunday}.getEvents() == null ?
+new net.sf.jasperreports.engine.JREmptyDataSource()
+  :
+  new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{sunday}.getEvents())]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column uuid="341056bb-f84b-4448-8ea0-41b05d557bac" width="62">
+						<jr:tableHeader height="0" rowSpan="1"/>
+						<jr:tableFooter height="0" rowSpan="1"/>
+						<jr:columnHeader height="0" rowSpan="1">
+							<genericElement>
+								<reportElement uuid="38629761-5032-4717-87ea-59223dacc4fe" mode="Transparent" x="0" y="0" width="0" height="0">
+									<property name="controlParameter" value="true"/>
+								</reportElement>
+								<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
+								<genericElementParameter name="sortColumnName">
+									<valueExpression><![CDATA["utcStart"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortColumnType">
+									<valueExpression><![CDATA["Field"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerHorizontalAlign">
+									<valueExpression><![CDATA["Right"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerVerticalAlign">
+									<valueExpression><![CDATA["Middle"]]></valueExpression>
+								</genericElementParameter>
+							</genericElement>
+						</jr:columnHeader>
+						<jr:columnFooter height="0" rowSpan="1"/>
+						<jr:detailCell height="20" rowSpan="1">
+							<textField pattern="h:mm a">
+								<reportElement uuid="42422081-7c51-4dae-b9b6-18cbf22d391e" x="0" y="0" width="62" height="20"/>
+								<textElement/>
+								<textFieldExpression><![CDATA[$F{startDate}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column uuid="de320747-43d2-4cf7-a5d2-cc9e432bd3fe" width="368">
+						<jr:tableHeader height="0" rowSpan="1"/>
+						<jr:tableFooter height="0" rowSpan="1"/>
+						<jr:columnHeader height="0" rowSpan="1">
+							<genericElement>
+								<reportElement uuid="fb771ad1-72a5-4d3a-b9e9-b9266bae944b" mode="Transparent" x="0" y="0" width="0" height="0">
+									<property name="controlParameter" value="true"/>
+								</reportElement>
+								<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
+								<genericElementParameter name="sortColumnName">
+									<valueExpression><![CDATA["description"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortColumnType">
+									<valueExpression><![CDATA["Field"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerHorizontalAlign">
+									<valueExpression><![CDATA["Right"]]></valueExpression>
+								</genericElementParameter>
+								<genericElementParameter name="sortHandlerVerticalAlign">
+									<valueExpression><![CDATA["Middle"]]></valueExpression>
+								</genericElementParameter>
+							</genericElement>
+						</jr:columnHeader>
+						<jr:columnFooter height="0" rowSpan="1"/>
+						<jr:detailCell height="20" rowSpan="1">
+							<textField>
+								<reportElement uuid="ffd8f3ef-352e-4bbf-a3ec-c0b11acd7249" x="3" y="0" width="365" height="20"/>
+								<textElement/>
+								<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement uuid="0f67a217-f71c-4788-a85f-167ce86a50c4" x="449" y="5" width="66" height="15"/>
+				<textElement textAlignment="Right">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="185a8fff-c1cb-492c-82d4-d1c9379bb9b4" x="515" y="5" width="40" height="15"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement uuid="b5eef41d-e63b-43fc-a9fe-a171020a1c9b" x="0" y="5" width="160" height="15"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="3fb8affd-a122-4633-b3a5-2f412b99d27d" x="160" y="5" width="235" height="15"/>
+				<textElement textAlignment="Center">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Prepared by Daniel B. Chapman]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

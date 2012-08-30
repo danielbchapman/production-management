@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html 	lang="en"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:p="http://primefaces.org/ui"
+		xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+		xmlns:tac="http://java.sun.com/jsf/composite/composite"
+>
+<body>
+<ui:composition template="/template/templateLeftCenterRight.xhtml">
+
+<ui:define name="left">
+	<br />
+	<h2>Performance Management</h2>
+	<p>Performances are managed, you can create and update the
+	performance information via the menus. These updates will
+	propagate to the <a href="calendar.xhtml">CALENDAR</a> and will
+	be reflected on any printed schedules.</p>
+</ui:define>
+
+<ui:define name="center">
+	<br />
+	<f:view contentType="text/html"  beforePhase="#{seasonBean.phaseInitializeSeasons}">
+		<f:subview id="addPerformances" rendered="#{menuBean.scheduler}">
+			<p:growl id="messages" showDetail="true" />
+		
+			<p:panel>
+				<h:form id="modify">
+					<h3>
+						<h:outputText value="Edit Performance"/>
+					</h3>
+					<h:panelGrid columns="2">
+						<h:outputText value="Name" styleClass="information"/>
+						<h:selectOneMenu
+							styleClass="input-medium" 
+							value="#{scheduleBean.performanceSchedules.editableId}"
+						>
+							<f:selectItems value="#{scheduleBean.performanceSchedules.perforanceScheduleItems}"/>
+						</h:selectOneMenu>
+						<h:panelGroup />
+						<p:commandButton value="Select" />
+					</h:panelGrid>
+				</h:form>
+			</p:panel>	
+	</f:subview>
+
+</f:view>
+</ui:define>
+
+<ui:define name="right">
+	<br />
+	<f:view>
+		<f:subview id="insertPerformances">
+			<p:growl id="messages" showDetail="true" />
+		    
+			<p:panel>
+				<h:form id="create">
+					<h3>
+						<h:outputText value="New Performance"/>
+					</h3>
+					<h:panelGrid>
+						<h:outputText value="Name" styleClass="information" />
+						<h:inputText value="#{scheduleBean.performanceSchedules.wrapper.name}" />
+						
+						<h:outputText value="Run Time" styleClass="information" />
+						<h:inputText value="#{scheduleBean.performanceSchedules.wrapper.performanceLength}" />
+						
+						<h:outputText value="Crew Call" styleClass="information" />
+						<h:inputText value="#{scheduleBean.performanceSchedules.wrapper.crewCall}" />
+																
+						<h:outputText value="AEA Call" styleClass="information" />
+						<h:inputText value="#{scheduleBean.performanceSchedules.wrapper.actorsEquityCall}" />
+						
+						<h:outputText value="Fight Call" styleClass="information" />
+						<h:inputText value="#{scheduleBean.performanceSchedules.wrapper.fightCall}" />
+						
+						<h:outputText value="House Open" styleClass="information" />
+						<h:inputText value="#{scheduleBean.performanceSchedules.wrapper.houseCall}" />
+						
+					</h:panelGrid>
+					<p:commandButton 
+						value="Create Performance"
+						actionListener="#{scheduleBean.performanceSchedules.createPerformance}" 
+						ajax="false"
+					/>
+				</h:form>
+			</p:panel>			    
+		</f:subview>
+	</f:view>
+</ui:define>
+</ui:composition>
+</body>
+</html>

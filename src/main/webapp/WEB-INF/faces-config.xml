@@ -5,7 +5,7 @@
  <managed-bean>
   <managed-bean-name>scheduleBean</managed-bean-name>
   <managed-bean-class>com.danielbchapman.production.web.schedule.beans.ScheduleBean</managed-bean-class>
-  <managed-bean-scope>session</managed-bean-scope>
+  <managed-bean-scope>view</managed-bean-scope>
  </managed-bean>
  <managed-bean>
   <managed-bean-name>loginBean</managed-bean-name>
@@ -30,7 +30,7 @@
  <managed-bean>
   <managed-bean-name>inventoryBean</managed-bean-name>
   <managed-bean-class>com.danielbchapman.production.web.schedule.beans.InventoryBean</managed-bean-class>
-  <managed-bean-scope>session</managed-bean-scope>
+  <managed-bean-scope>view</managed-bean-scope>
  </managed-bean>
  <managed-bean>
   <managed-bean-name>vendorBean</managed-bean-name>
@@ -96,6 +96,11 @@
  	<managed-bean-name>backupBean</managed-bean-name>
  	<managed-bean-class>com.danielbchapman.production.BackupBean</managed-bean-class>
  	<managed-bean-scope>view</managed-bean-scope>
+ </managed-bean>
+ <managed-bean>
+ 	<managed-bean-name>bootstrapMenuBean</managed-bean-name>
+ 	<managed-bean-class>com.danielbchapman.production.web.schedule.beans.BootstrapMenuBean</managed-bean-class>
+ 	<managed-bean-scope>session</managed-bean-scope>
  </managed-bean>
  <navigation-rule>
   <from-view-id>/setTimeZoneOld.xhtml</from-view-id>

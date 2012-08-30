@@ -1,46 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"	
-	xmlns:p="http://primefaces.org/ui">
-	
-	<h:head>
-		<h:outputStylesheet library="css" name="production.css"/>
-		<!-- for editor -->
-		<link rel="stylesheet" href="./resources/css/production.css" type="text/css"/>
-	    <title>
-				<ui:insert name="title">
-					<h:outputText value="#{msg.applicationTitle}"/>
-				</ui:insert>
-	    </title>
-      <f:metadata>
-        <f:viewParam name="lookupString" value="#{helpBean.lookupString}" />
-      </f:metadata>   
-	</h:head>
-		
-	<h:body style="background-color:white;">
-    <f:view>
-      <p:tabView>
-        <p:tab title="Help">
-          <p:panel>
-            <h:outputText value="#{helpBean.helpPage.helpPage}" escape="false"/>
-          </p:panel>        
-        </p:tab>
-        <p:tab title="Revise Help" rendered="#{loginBean.scheduler}">
-	        <p:panel>
-	          <h:form id="edit">
-	            <p:editor value="#{helpBean.helpPage.helpPage}"/>
-	            <p:commandButton 
-	              value="Update"
-	              actionListener="#{helpBean.saveHelpPage}" 
-	              ajax="false"
-	             />
-	          </h:form>
-	        </p:panel>        
-        </p:tab>
-      </p:tabView>
-    </f:view>
-	</h:body>    
+<!DOCTYPE html>
+<html 	lang="en"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:p="http://primefaces.org/ui"
+		xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+		xmlns:tac="http://java.sun.com/jsf/composite/composite"
+>
+<body>
+<h2>NOT IMPLEMENTED</h2>
+</body>
 </html>
