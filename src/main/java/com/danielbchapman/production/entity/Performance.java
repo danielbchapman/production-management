@@ -194,8 +194,8 @@ public class Performance extends EventMapping
 	{
 		Calendar startTime = Calendar.getInstance();
 		Calendar endTime = Calendar.getInstance();
-		startTime.setTime(composeUtcFromDay(getDay(), getStart()));
-		endTime.setTime(composeUtcFromDay(getDay(), getStart()));
+		startTime.setTime(composeFromDay(getDay(), getStart()));
+		endTime.setTime(composeFromDay(getDay(), getStart()));
 
 		if(eventBeforePerformance)
 		{

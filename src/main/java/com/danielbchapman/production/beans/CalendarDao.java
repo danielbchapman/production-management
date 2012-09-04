@@ -181,7 +181,6 @@ public class CalendarDao implements CalendarDaoRemote
 	@SuppressWarnings("unchecked")
 	public ArrayList<Week> getAllWeeks(Season season)
 	{
-
 		return EntityInstance.getResultList("SELECT w FROM Week w WHERE w.season = ?1 ORDER BY w.date", Week.class, season);
 	}
 
