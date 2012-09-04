@@ -70,7 +70,18 @@ public class ContactGroup extends BaseEntity implements Comparable
 	{
 		return new Color(red, green, blue, alpha);
 	}
+	
+	@Transient 
+	public String getStringColor()
+	{
+		return Utility.colorToStringHex(red, green, blue);				
+	}
 
+	@Transient 
+	public void setStringColor(String color)
+	{
+		setAwtColor(Utility.stringHexToColor(color));
+	}
 	/**
 	 * @return the blue
 	 */

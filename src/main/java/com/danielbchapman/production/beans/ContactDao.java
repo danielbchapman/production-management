@@ -300,7 +300,7 @@ public class ContactDao implements ContactDaoRemote
 						"  \"subGroup\", " +
 						"  \"lastName\", " +
 						"  \"firstName\" " +
-						"  ) " ;	
+						"  ) as DerivedForMySql " ;	
 		/*@formatter:on*/
 
 		List<Long> ids = null;
@@ -402,7 +402,7 @@ public class ContactDao implements ContactDaoRemote
 						"   \n" +
 						"ORDER BY \n" +
 						" 2 \n" +
-						")   \n" ;
+						") as DerivedMySQL   \n" ;
 		
 		String linkedEjbql = 
 						"SELECT  \n" +
@@ -484,17 +484,17 @@ public class ContactDao implements ContactDaoRemote
 						"      ON \n" +
 						"        l.contact_id = c.id \n" +
 						"  WHERE  \n" +
-						"    (SELECT  \n" +
+						"    ((SELECT  \n" +
 						"        Count(s.id)  \n" +
 						"      FROM  \n" +
 						"        SeasonContact s  \n" +
 						"      WHERE  \n" +
 						"            s.linkedContact_id = l.id \n" +
 						"        AND s.season_id = ?1 \n" +
-						"      ) < 1 \n" +
+						"      )) < 1 \n" +
 						"  ORDER BY \n" +
 						"    2, 3 \n" +
-						"); \n" ;						
+						") as DerivedSubTwo; \n" ;						
 		String notInSeasonContacts = 
 						"/* Query to detrimine Contact not in the season */ \n" +
 						"SELECT id FROM \n" +
@@ -506,18 +506,17 @@ public class ContactDao implements ContactDaoRemote
 						"  FROM  \n" +
 						"    Contact c \n" +
 						"  WHERE \n" +
-						"    ( \n" +
-						"      SELECT  \n" +
+						"      ((SELECT  \n" +
 						"        Count(s.id)  \n" +
 						"      FROM  \n" +
 						"        SeasonContact s  \n" +
 						"      WHERE  \n" +
 						"            s.baseContact_id = c.id \n" +
 						"        AND s.season_id = ?1 \n" +
-						"      ) < 1 \n" +
+						"      )) < 1 \n" +
 						"  ORDER BY \n" +
 						"    2, 3 \n" +
-						"); \n" ;
+						") as DerivedSubOne; \n" ;
 		/* @formatter:on */
 		EntityManager em = EntityInstance.getEm();
 		Query q = em.createNativeQuery(notInSeasonLinked);

@@ -22,4 +22,10 @@ class DelegateInstance extends AbstractEntityInstance
 	{
 		return false;
 	}
+
+	@Override
+	protected ClassLoader getClassLoader()
+	{
+		return DelegateInstance.class.getClassLoader();
+	}
 }

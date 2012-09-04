@@ -2,6 +2,9 @@ package com.danielbchapman.production.entity;
 
 import javax.persistence.Entity;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 /**
  * A hotel is simply as it states. A hotel somewhere.
  * 
@@ -12,10 +15,23 @@ import javax.persistence.Entity;
  *************************************************************************** 
  */
 @Entity
+@Data
+@EqualsAndHashCode(callSuper=true)
 public class Hotel extends ContactableAndAddressable
 {
 	private static final long serialVersionUID = 1L;
 
+	
+	public Hotel()
+	{
+	}
+	
+	public Hotel(String name, String notes)
+	{
+		this.name = name;
+		this.notes = notes;
+	}
+	
 	private City city;
 	private String name = "";
 	private String notes = "";

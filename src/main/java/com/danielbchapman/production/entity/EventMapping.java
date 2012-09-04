@@ -1,5 +1,6 @@
 package com.danielbchapman.production.entity;
 
+import java.sql.Time;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -10,6 +11,9 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+
+import lombok.Getter;
+import lombok.Setter;
 
 @MappedSuperclass
 public class EventMapping extends BaseEntity implements Comparable<EventMapping>
@@ -26,6 +30,9 @@ public class EventMapping extends BaseEntity implements Comparable<EventMapping>
 	private Day day;
 	private boolean cast;
 	private boolean crew;
+	@Getter
+	@Setter
+	private boolean publicEvent;
 
 	/**
 	 * Sort in reverse time lines should be null, low, high.
@@ -80,34 +87,6 @@ public class EventMapping extends BaseEntity implements Comparable<EventMapping>
 	public Date getStart()
 	{
 		return start;
-	}
-
-	/**
-	 * Return a composite of the Day and Event Times
-	 * 
-	 * @return java.util.Date composite of Day.date && Event.Time
-	 */
-	@Transient
-	public Date getUtcEnd()
-	{
-		if(day != null && day.getDate() != null && end != null)
-			return composeUtcFromDay(day, end);
-		else
-			return end;
-	}
-
-	/**
-	 * Return a composite of the Day and Event Times
-	 * 
-	 * @return java.util.Date composite of Day.date && Event.Time
-	 */
-	@Transient
-	public Date getUtcStart()
-	{
-		if(day != null && day.getDate() != null && start != null)
-			return composeUtcFromDay(day, start);
-		else
-			return start;
 	}
 
 	public boolean isCast()
@@ -170,7 +149,7 @@ public class EventMapping extends BaseEntity implements Comparable<EventMapping>
 
 	public void setEnd(Date end)
 	{
-		this.end = end;
+		this.end = new Time(end.getTime());
 	}
 
 	/**
@@ -179,7 +158,7 @@ public class EventMapping extends BaseEntity implements Comparable<EventMapping>
 	 */
 	public void setStart(Date time)
 	{
-		start = time;
+		start = new Time(time.getTime());
 	}
 
 	/*
@@ -212,7 +191,24 @@ public class EventMapping extends BaseEntity implements Comparable<EventMapping>
 		return buf.toString();
 
 	}
-
+	
+	/**
+	 * @return a full date instead of the time
+	 */
+	@Transient
+	public final synchronized Date getStartDate()
+	{
+		return composeFromDay(day, start);
+	}
+	/**
+	 * @return a full date instead of the time
+	 */
+	@Transient
+	public final Date getEndDate()
+	{
+		return composeFromDay(day, end);
+	}
+	
 	/**
 	 * Merge a data and a time together to create a valid "TIMESTAMP".
 	 * 
@@ -221,11 +217,18 @@ public class EventMapping extends BaseEntity implements Comparable<EventMapping>
 	 * @return a date indicating a real world value
 	 * 
 	 */
-	protected final Date composeUtcFromDay(Day day, Date utcHour)
+	protected synchronized final Date composeFromDay(final Day day, final Date hour)
 	{
+		if(day == null)
+			throw new IllegalArgumentException("Day is null");
+		
+		/** Using Server Instance **/
 		Calendar composite = Calendar.getInstance();
 		Calendar time = Calendar.getInstance();
-		time.setTime(utcHour);
+		if(hour == null)
+			return day.getDate();
+		
+		time.setTime(hour);
 
 		// MERGE TIMES
 		composite.setTime(day.getDate());

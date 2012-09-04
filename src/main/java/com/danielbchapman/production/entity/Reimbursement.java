@@ -1,5 +1,7 @@
 package com.danielbchapman.production.entity;
 
+import javax.persistence.Entity;
+
 /**
  * A reimbursement links to an BudgetEntry so that it can be tied to a department
  * but at the same time easily reported based on who needs Reimbursement.
@@ -9,6 +11,7 @@ package com.danielbchapman.production.entity;
  * @link http://www.theactingcompany.org
  ***************************************************************************
  */
+@Entity
 public class Reimbursement extends BaseEntity
 {
   private static final long serialVersionUID = 1L;

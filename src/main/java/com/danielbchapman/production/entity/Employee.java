@@ -1,5 +1,7 @@
 package com.danielbchapman.production.entity;
 
+import javax.persistence.Entity;
+
 /**
  * A placeholder class that clearly represents an employee.
  *************************************************************************** 
@@ -8,6 +10,7 @@ package com.danielbchapman.production.entity;
  * @link http://www.theactingcompany.org
  *************************************************************************** 
  */
+@Entity
 public class Employee extends BaseEntity
 {
 	private static final long serialVersionUID = 1L;

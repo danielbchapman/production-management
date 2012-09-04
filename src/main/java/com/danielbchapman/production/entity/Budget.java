@@ -1,5 +1,6 @@
 package com.danielbchapman.production.entity;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
 
@@ -114,6 +115,35 @@ public class Budget extends BaseEntity
 		this.startingBudget = startingBudget;
 	}
 
+	@Transient
+	public BigDecimal getEstimatedTotals()
+	{
+		BigDecimal total = BigDecimal.ZERO;
+		
+		for(BudgetEntry e : getEntries())
+			if(e.isEstimated())
+			total = total.add(BigDecimal.valueOf(e.getCalculatedAmount()));
+		
+		return total;
+	}
+	
+	@Transient
+	public BigDecimal getTotalsNotEsimated()
+	{
+		BigDecimal total = BigDecimal.ZERO;
+		
+		for(BudgetEntry e : getEntries())
+			if(!e.isEstimated())
+				total = total.add(BigDecimal.valueOf(e.getCalculatedAmount()));
+		
+		return total;		
+	}
+	
+	@Transient
+	public BigDecimal getForecast()
+	{
+		return BigDecimal.valueOf(getCurrentTotals());
+	}
 	/*
 	 * (non-Javadoc)
 	 * 

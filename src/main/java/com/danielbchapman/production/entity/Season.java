@@ -15,9 +15,10 @@ public class Season extends BaseEntity
 
 	private static final long serialVersionUID = 1L;
 
-	@Lob
+	@Lob()
+	@Column(length=1024)
 	private String desriptionMarkup;
-	@Column(length=256,unique=true)
+	@Column(length=128,unique=true)
 	private String name;
 	
 	public Season()
