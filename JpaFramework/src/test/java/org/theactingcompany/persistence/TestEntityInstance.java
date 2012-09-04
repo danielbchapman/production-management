@@ -14,4 +14,10 @@ public class TestEntityInstance extends AbstractEntityInstance
 	{
 		return false;
 	}
+
+	@Override
+	protected ClassLoader getClassLoader()
+	{
+		return TestEntityInstance.class.getClassLoader();
+	}
 }

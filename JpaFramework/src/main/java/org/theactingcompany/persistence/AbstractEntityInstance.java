@@ -1,5 +1,10 @@
 package org.theactingcompany.persistence;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +15,6 @@ import javax.persistence.FlushModeType;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-
-import com.sun.corba.se.spi.ior.Identifiable;
 
 public abstract class AbstractEntityInstance
 {
@@ -35,7 +38,7 @@ public abstract class AbstractEntityInstance
 		if(!isContainerManaged())
 			em.getTransaction().begin();
 
-		em.remove(getEm().find(obj.getClass(), obj.getId())); // This makes sure the entity is managed
+		em.remove(em.find(obj.getClass(), obj.getId())); // This makes sure the entity is managed
 
 		if(!isContainerManaged())
 			em.getTransaction().commit();
@@ -117,9 +120,85 @@ public abstract class AbstractEntityInstance
 	 */
 	public EntityManager getEm()
 	{
-		if(factory == null || !factory.isOpen())
-			factory = Persistence.createEntityManagerFactory(getPersistenceUnitId());
 
+		
+//		try
+//		{
+//			Class<?> persistence = getClassLoader().loadClass("javax.persistence.Persistence");
+//			if(factory == null || !factory.isOpen())
+//			{
+//				Method create = persistence.getMethod("createEntityManagerFactory", String.class);
+//				create.setAccessible(true);
+//				factory = (EntityManagerFactory) create.invoke(null, getPersistenceUnitId());
+//			}
+//		}
+//		catch(ClassNotFoundException e)
+//		{
+//			throw new RuntimeException(e.getMessage(), e);
+//		}
+//		catch(SecurityException e)
+//		{
+//			throw new RuntimeException(e.getMessage(), e);
+//		}
+//		catch(NoSuchMethodException e)
+//		{
+//			throw new RuntimeException(e.getMessage(), e);
+//		}
+//		catch(IllegalArgumentException e)
+//		{
+//			throw new RuntimeException(e.getMessage(), e);
+//		}
+//		catch(IllegalAccessException e)
+//		{
+//			throw new RuntimeException(e.getMessage(), e);
+//		}
+//		catch(InvocationTargetException e)
+//		{
+//			throw new RuntimeException(e.getMessage(), e);
+//		}
+		
+
+		try{
+			if(factory == null || !factory.isOpen())
+				factory = Persistence.createEntityManagerFactory(getPersistenceUnitId());			
+		}
+		catch (Exception e)
+		{
+			BufferedReader reader = new BufferedReader(new InputStreamReader(getClassLoader().getResourceAsStream("META-INF/persistence.xml")));
+			
+			StringBuilder build = new StringBuilder(2048);
+			String line = null;
+			int i = 0;
+			try
+			{
+				while((line = reader.readLine()) != null)
+				{
+					build.append(line);
+					build.append("\r\n");
+					if(++i > 500)//Buffer overflow
+						break;
+				}
+			}
+			catch(IOException e1)
+			{
+				try
+				{
+					reader.close();
+				}
+				catch(IOException e2)
+				{
+					//FATAL
+					e2.printStackTrace();
+				}
+			}
+			
+			System.out.println("-->> PERSISTENCE.XML-->>");
+			System.out.println(build.toString());
+			System.out.println("<<--END <<--");
+			throw new RuntimeException(e.getMessage(), e);
+		}
+
+		
 		EntityManager em = factory.createEntityManager();
 		em.setFlushMode(FlushModeType.AUTO);
 		return em;
@@ -130,6 +209,12 @@ public abstract class AbstractEntityInstance
 	 */
 	protected abstract String getPersistenceUnitId();
 
+	/**
+	 * @return
+	 *   The class loader for this unit to work around not finding the correct
+	 *   persistence.xml.
+	 */
+	protected abstract ClassLoader getClassLoader();
 	/**
 	 * @param query
 	 *          the query to use
