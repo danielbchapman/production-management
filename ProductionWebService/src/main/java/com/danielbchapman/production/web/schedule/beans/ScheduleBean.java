@@ -1,20 +1,35 @@
 package com.danielbchapman.production.web.schedule.beans;
 
+import java.io.File;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.TimeZone;
+import java.util.concurrent.locks.ReentrantLock;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+
+import org.primefaces.component.blockui.BlockUI;
+import org.primefaces.component.schedule.Schedule;
 import org.primefaces.event.DateSelectEvent;
 import org.primefaces.event.ScheduleEntrySelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
@@ -22,6 +37,7 @@ import org.primefaces.model.DefaultScheduleModel;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 
+import com.danielbchapman.production.AbstractPrintController;
 import com.danielbchapman.production.Utility;
 import com.danielbchapman.production.beans.CalendarDaoRemote;
 import com.danielbchapman.production.beans.SeasonDaoRemote;
@@ -35,6 +51,7 @@ import com.danielbchapman.production.entity.PerformanceSchedule;
 import com.danielbchapman.production.entity.Season;
 import com.danielbchapman.production.entity.Venue;
 import com.danielbchapman.production.entity.Week;
+import com.danielbchapman.production.web.production.beans.AdministrationBean;
 import com.danielbchapman.production.web.schedule.beans.LocationBean.HotelWrapper;
 
 /**
@@ -48,7 +65,8 @@ import com.danielbchapman.production.web.schedule.beans.LocationBean.HotelWrappe
  * @link http://www.theactingcompany.org
  *************************************************************************** 
  */
-@SessionScoped
+@ViewScoped
+@ManagedBean(name="scheduleBean")
 public class ScheduleBean implements Serializable
 {
 	private static final long serialVersionUID = 3L;
@@ -59,6 +77,7 @@ public class ScheduleBean implements Serializable
 	private DayUI dayUi = new DayUI(new Day());
 	private EventMapping eventEntity;
 
+	private ReentrantLock modelLock = new ReentrantLock();
 	//@formatter:off
 	private SelectItem[] hourItems = 
 			new SelectItem[] 
@@ -109,25 +128,39 @@ public class ScheduleBean implements Serializable
 	private Season selectedSeason;
 
 	private TimeUI timeUi = new TimeUI(new Date(), new Date());
-	private TimeZone timeZone = TimeZone.getDefault();
 	private Long tmpSeason;
 	//@formatter:off
 	private SelectItem[] travelItems = 
 			new SelectItem[] 
-			{
-				new SelectItem(TravelItems.NONE.toString()), 
-				new SelectItem(TravelItems.HOTEL.toString()),
-				new SelectItem(TravelItems.OVERNIGHT.toString()),
-				new SelectItem(TravelItems.TRAVEL_DAY.toString()) 
-			};
+					{
+			new SelectItem(TravelItems.NONE.toString()), 
+			new SelectItem(TravelItems.HOTEL.toString()),
+			new SelectItem(TravelItems.OVERNIGHT.toString()),
+			new SelectItem(TravelItems.TRAVEL_DAY.toString()) 
+					};
 	//@formatter:on	
-	private int userDaylightSavingsOffset;
 
 	private Boolean userInDaylightSavings;
 	private VenueDaoRemote venueDao;
+	@Getter
+	@Setter
+	private Schedule scheduleBinding;
 
 	private boolean virtualEvent;
+	@Getter
+	@Setter
+	private CalendarPrintController calendarPrintController = new CalendarPrintController();
 
+	public TimeZone getServerTimezone()
+	{
+		//Hooked
+		return TimeZone.getDefault();
+	}
+
+	public String getServerLocale()
+	{
+		return Locale.US.getDisplayName();
+	}
 	public void cancel(ActionEvent evt)
 	{
 		day = new Day();
@@ -261,80 +294,116 @@ public class ScheduleBean implements Serializable
 		return performanceUi;
 	}
 
-	public ScheduleModel getScheduleModel()
+	public synchronized ScheduleModel getScheduleModel()
 	{
-		if(scheduleModel == null)
+		if(scheduleModel != null)
+			return scheduleModel;
+		
+		synchronized(ScheduleBean.this)
 		{
-			scheduleModel = new DefaultScheduleModel();
-
-			scheduleModelWeeks = getCalendarDao().getAllWeeks(selectedSeason);
-			for(Week w : scheduleModelWeeks)
+			modelLock.lock();
+			ScheduleModel prepare = new DefaultScheduleModel();	
+			
+			try
 			{
-				ArrayList<Day> days = getCalendarDao().getActiveDaysForWeek(w);
-				for(Day d : days)
+				boolean companySecurity = Utility.getBean(LoginBean.class).isCompanyMember(); 
+				scheduleModelWeeks = getCalendarDao().getAllWeeks(selectedSeason);
+
+				for(Week w : scheduleModelWeeks)
 				{
-					ComplexEntityScheduleEvent dayEvent = new ComplexEntityScheduleEvent("CAST: "
-							+ d.getCastLocation() + " CREW: " + d.getCrewLocation(),
-							changeUtcToClientDate(d.getDate()), changeUtcToClientDate(d.getDate()), true);
-					dayEvent.setBackingEntity(d);
-					dayEvent.setStyleClass("eventDay");
-
-					scheduleModel.addEvent(dayEvent);
-					ArrayList<EventMapping> events = getCalendarDao().getEventsAndPerformancesForDay(d);
-					for(EventMapping e : events)
+					ArrayList<Day> days = getCalendarDao().getActiveDaysForWeek(w);
+					for(Day d : days)
 					{
-						ComplexEntityScheduleEvent se;
-						if(e.getUtcEnd() == null)
-						{
-							Calendar c = Calendar.getInstance();
-							c.setTime(e.getUtcStart());
-							c.add(Calendar.HOUR, 2);
-							se = new ComplexEntityScheduleEvent(e.getDescription(),
-									changeUtcToClientDate(e.getUtcStart()), changeUtcToClientDate(c.getTime()), false);
-						}
-						else
-							se = new ComplexEntityScheduleEvent(e.getDescription(),
-									changeUtcToClientDate(e.getUtcStart()), changeUtcToClientDate(e.getUtcEnd()),
-									false);
+						//@formatter:off
+						ComplexEntityScheduleEvent dayEvent =
+								new ComplexEntityScheduleEvent(
+										"CAST: " + d.getCastLocation() 
+										+ " CREW: " + d.getCrewLocation(),
+										d.getDate(), 
+										d.getDate(),
+										true
+										);
+						//@formatter:on					
+						dayEvent.setBackingEntity(d);
+						dayEvent.setStyleClass("eventDay");
 
-						se.setBackingEntity(e);
-
-						if(e instanceof Performance)
+						prepare.addEvent(dayEvent);
+						ArrayList<EventMapping> events = getCalendarDao().getEventsAndPerformancesForDay(d);
+						for(EventMapping e : events)
 						{
-							Performance p = (Performance) e;
-							se.setStyleClass("eventPerformance");
-							// CREATE VIRTUAL EVENTS
-							ArrayList<Performance.PerformanceEvent> performanceEvents = p.getEventSequence();
-							for(Performance.PerformanceEvent seq : performanceEvents)
+							if(!companySecurity)
+								if(!e.isPublicEvent() && !e.isPerformance())
+									continue;
+
+							ComplexEntityScheduleEvent se;
+							if(e.getEnd() == null)
 							{
-								ComplexEntityScheduleEvent sub = new ComplexEntityScheduleEvent(
-										seq.getDescription(), changeUtcToClientDate(seq.getUtcStart()),
-										changeUtcToClientDate(seq.getUtcEnd()), false);
-								sub.setBackingEntity(seq);
-								sub.setStyleClass("eventPerformanceLocked");
-								scheduleModel.addEvent(sub);
+								Calendar c = Calendar.getInstance();
+								c.setTime(e.getStartDate());
+								c.add(Calendar.HOUR, 2);
+								se = new ComplexEntityScheduleEvent(e.getDescription(), e.getStartDate(), c.getTime(), false);							
+							}
+							else
+								se = new ComplexEntityScheduleEvent(e.getDescription(), e.getStartDate(), e.getEndDate(), false);
+
+							se.setBackingEntity(e);
+
+							if(e instanceof Performance)
+							{
+								Performance p = (Performance) e;
+								se.setStyleClass("eventPerformance");
+
+								if(companySecurity)
+								{
+									ArrayList<Performance.PerformanceEvent> performanceEvents = p.getEventSequence();
+									for(Performance.PerformanceEvent seq : performanceEvents)
+									{
+										ComplexEntityScheduleEvent sub = 
+												new ComplexEntityScheduleEvent( seq.getDescription(), seq.getStartDate(), seq.getEndDate(), false);
+										sub.setBackingEntity(seq);
+										sub.setStyleClass("eventPerformanceLocked");
+										prepare.addEvent(sub);
+									}								
+								}
+//									else
+//									{
+//										ComplexEntityScheduleEvent perf = new ComplexEntityScheduleEvent(p.getDescription(), p.getStartDate(), p.getEndDate(), false);
+//										perf.setStyleClass(styleClass)
+//										scheduleModel.addEvent(;
+//									}
+							}
+							else
+							{
+								if(e.isCast() && !e.isCrew())
+									se.setStyleClass("eventScheduleCast");
+								if(!e.isCast() && e.isCrew())
+									se.setStyleClass("eventScheduleCrew");
+								if(e.isCast() && e.isCrew())
+									se.setStyleClass("eventSchedule");
+								if(!e.isCast() && !e.isCrew())
+									se.setStyleClass("eventSchedule");
 							}
 
+							prepare.addEvent(se);
 						}
-						else
-						{
-							if(e.isCast() && !e.isCrew())
-								se.setStyleClass("eventScheduleCast");
-							if(!e.isCast() && e.isCrew())
-								se.setStyleClass("eventScheduleCrew");
-							if(e.isCast() && e.isCrew())
-								se.setStyleClass("eventSchedule");
-							if(!e.isCast() && !e.isCrew())
-								se.setStyleClass("eventSchedule");// FIXME hrm... does this make sense?
-						}
-
-						scheduleModel.addEvent(se);
 					}
 				}
+				scheduleModel = prepare;
 			}
-		}
+			catch (Exception e)
+			{
+				modelLock.unlock();
+				e.printStackTrace();
+				throw new RuntimeException(e.getMessage(), e);
+			}
+			finally
+			{
+				if(modelLock.isLocked())
+					modelLock.unlock();
+			}
 
-		return scheduleModel;
+			return getScheduleModel();
+		}
 	}
 
 	/**
@@ -358,11 +427,6 @@ public class ScheduleBean implements Serializable
 	public TimeUI getTimeUi()
 	{
 		return timeUi;
-	}
-
-	public TimeZone getTimeZone()
-	{
-		return timeZone;
 	}
 
 	public Long getTmpSeason()
@@ -446,42 +510,40 @@ public class ScheduleBean implements Serializable
 	{
 		virtualEvent = false;// Allow Selection
 		Date selection = selectEvent.getDate();
-		Date utcAdjusted = changeClientDateToUTC(selection);
-		performanceUi = new PerformanceUI(utcAdjusted, null);
+		performanceUi = new PerformanceUI(selection, null);
 
 		if(selectEvent != null)// Debugging what is passed as far as "date"
 		{
 			SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss Z");
-			FacesMessage error = new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Information",
-					"Date selection " + df.format(utcAdjusted) + " <br /> @Raw(" + df.format(selection) + ")");
+			FacesMessage error = new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Information", "@Raw(" + df.format(selection) + ")");
 			addMessage(error);
 		}
 
-		if(!getCalendarDao().dayExists(utcAdjusted, selectedSeason))
+		if(!getCalendarDao().dayExists(selection, selectedSeason))
 		{
-			selectedEvent = new ComplexEntityScheduleEvent("[NO DESCRIPTION]", utcAdjusted, utcAdjusted,
+			selectedEvent = new ComplexEntityScheduleEvent("[NO DESCRIPTION]", selection, selection,
 					true);
 			Day unsavedDay = new Day();
-			unsavedDay.setDate(utcAdjusted);
+			unsavedDay.setDate(selection);
 			selectedEvent.setBackingEntity(unsavedDay);// This must be saved when confirmed.
 			day = unsavedDay;
 			dayUi = new DayUI(day);
 		}
 		else
 		{
-			selectedEvent = new ComplexEntityScheduleEvent("[NO DESCRIPTION]", utcAdjusted, utcAdjusted,
+			selectedEvent = new ComplexEntityScheduleEvent("[NO DESCRIPTION]", selection, selection,
 					false);
 			Event unsavedEvent = new Event();
 
 			// by definition this day exists
-			Day backingDay = getCalendarDao().getOrCreateDay(utcAdjusted, selectedSeason);
+			Day backingDay = getCalendarDao().getOrCreateDay(selection, selectedSeason);
 			unsavedEvent.setDay(backingDay);
 
 			selectedEvent.setBackingEntity(unsavedEvent);
 			eventEntity = unsavedEvent;
 
 			Calendar tmp = Calendar.getInstance();
-			tmp.setTime(utcAdjusted);
+			tmp.setTime(selection);
 
 			if(tmp.get(Calendar.HOUR_OF_DAY) == 0)
 			{
@@ -523,7 +585,7 @@ public class ScheduleBean implements Serializable
 		if(selectedEvent.getBackingEntity() instanceof Event)
 		{
 			eventEntity = (Event) selectedEvent.getBackingEntity();
-			timeUi = new TimeUI(eventEntity.getUtcStart(), eventEntity.getUtcEnd());
+			timeUi = new TimeUI(eventEntity.getStartDate(), eventEntity.getEndDate());
 		}
 
 		else
@@ -533,9 +595,9 @@ public class ScheduleBean implements Serializable
 				eventEntity = p;
 
 				if(p.getId() == null)
-					performanceUi = new PerformanceUI(p.getUtcStart(), null);
+					performanceUi = new PerformanceUI(p.getStartDate(), null);
 				else
-					performanceUi = new PerformanceUI(p.getUtcStart(), p);
+					performanceUi = new PerformanceUI(p.getStartDate(), p);
 
 				performanceUi.setCrewCall(p.isCrewCall());
 				performanceUi.setFightCall(p.isFightCall());
@@ -557,37 +619,40 @@ public class ScheduleBean implements Serializable
 
 	public void removeDay(ActionEvent evt)
 	{
-		if(evt != null)
+		if(!Utility.getBean(LoginBean.class).isScheduler())
 		{
 			getCalendarDao().removeItem(day);
 			scheduleModel = null;
 			day = new Day();
-			eventEntity = new Event();
+			eventEntity = new Event();				
 		}
 	}
 
 	public void removeEvent(ActionEvent evt)
 	{
-		if(evt != null)
+		if(!Utility.getBean(LoginBean.class).isScheduler())
 		{
 			getCalendarDao().removeItem(eventEntity);
 			scheduleModel = null;
 			day = new Day();
-			eventEntity = new Event();
+			eventEntity = new Event();				
 		}
 	}
 
 	public void removePerformance(ActionEvent evt)
 	{
-		getCalendarDao().removeItem(eventEntity);
-		scheduleModel = null;
-		day = new Day();
-		eventEntity = new Event();
+		if(!Utility.getBean(LoginBean.class).isScheduler())
+		{
+			getCalendarDao().removeItem(eventEntity);
+			scheduleModel = null;
+			day = new Day();
+			eventEntity = new Event();			
+		}
 	}
 
 	public void saveDay(ActionEvent evt)
 	{
-		if(evt != null && day != null && day.getDate() != null)
+		if(evt != null && day != null && day.getDate() != null && Utility.getBean(LoginBean.class).isScheduler())
 		{
 			Date date = selectedEvent.getStartDate();
 			Week week = getCalendarDao().getOrCreateWeek(date, selectedSeason);
@@ -629,19 +694,19 @@ public class ScheduleBean implements Serializable
 
 	public void saveEvent(ActionEvent evt)
 	{
-		if(eventEntity != null)
+		if(eventEntity != null && Utility.getBean(LoginBean.class).isScheduler())
 		{
 			// Date date = selectedEvent.getStartDate();//BUG - > Use the hard reference
 			EventMapping tmpEvent = (EventMapping) selectedEvent.getBackingEntity();
 			Day assignedDay = tmpEvent.getDay();
 			Date date = assignedDay.getDate();// == null? selectedEvent.getStartDate() :
-																				// assignedDay.getDate();
+			// assignedDay.getDate();
 
 			if(date == null)// (!calendarDao.dayExists(date, selectedProduction))
 			{
 				FacesMessage error = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Failed to Save Event",
 						"There is no day registered for '" + date
-								+ "' please create the day, then save an event.");
+						+ "' please create the day, then save an event.");
 				addMessage(error);
 				return;
 			}
@@ -653,10 +718,10 @@ public class ScheduleBean implements Serializable
 			eventEntity.setStart(timeUi.getStartTime(assignedDay.getDate()));
 			Date endTime = timeUi.getEndTime(assignedDay.getDate());
 
-			if(endTime.before(eventEntity.getUtcStart()))
+			if(endTime.before(eventEntity.getStartDate()))
 			{
 				Calendar tmpCal = Calendar.getInstance();
-				tmpCal.setTime(eventEntity.getUtcStart());
+				tmpCal.setTime(eventEntity.getStartDate());
 
 				if(tmpCal.get(Calendar.HOUR) > 22)
 					tmpCal.add(Calendar.HOUR, 2);
@@ -684,7 +749,7 @@ public class ScheduleBean implements Serializable
 
 	public void savePerformance(ActionEvent evt)
 	{
-		if(eventEntity != null)
+		if(eventEntity != null && Utility.getBean(LoginBean.class).isScheduler())
 		{
 			Performance tmpPerf;
 			PerformanceSchedule schedule = getCalendarDao().getPerformanceSchedule(
@@ -697,11 +762,9 @@ public class ScheduleBean implements Serializable
 				tmpPerf = new Performance();
 				Event tmpEvent = (Event) selectedEvent.getBackingEntity();
 				tmpPerf.setDay(tmpEvent.getDay());
-				tmpPerf.setStart(tmpEvent.getStart());
 				tmpPerf.setCast(true);
 				tmpPerf.setCrew(true);
 				tmpPerf.setDescription(schedule.getName());
-				tmpPerf.setEnd(tmpEvent.getEnd());
 				tmpPerf.setPerformanceSchedule(schedule);
 			}
 
@@ -711,7 +774,7 @@ public class ScheduleBean implements Serializable
 			{
 				FacesMessage error = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Failed to Save Event",
 						"There is no day registered for '" + assignedDay
-								+ "' please create the day, then save an event.");
+						+ "' please create the day, then save an event.");
 				addMessage(error);
 				return;
 			}
@@ -772,69 +835,6 @@ public class ScheduleBean implements Serializable
 		FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 
-	private Date changeClientDateToUTC(Date date)
-	{
-		setUserDaylightSavings();
-
-		if(date == null)
-			return null;
-
-		TimeZone client = getClientTimeZone();
-		int offset = client.getOffset(loginDate.getTime());
-
-		// String start = "\n\t@Client->UTC [offset: " + offset/60/1000 + "]\n\t\t";
-		if(userInDaylightSavings)
-		{
-			if(!client.inDaylightTime(date))
-				offset += userDaylightSavingsOffset * 60 * 1000;
-		}
-		else
-		{
-			if(client.inDaylightTime(date))
-				offset -= userDaylightSavingsOffset * 60 * 1000;
-		}
-
-		Calendar newDate = Calendar.getInstance();
-		newDate.setTime(date);
-		newDate.add(Calendar.MILLISECOND, offset);
-		Date adjusted = newDate.getTime();
-		// System.out.println(start + date + "\n\t\t" + adjusted + "\n\t\t" + offset/60/1000 + " | " +
-		// userDaylightSavingsOffset + " | " + userInDaylightSavings);
-		return adjusted;
-	}
-
-	private Date changeUtcToClientDate(Date date)
-	{
-		setUserDaylightSavings();
-
-		if(date == null)
-			return null;
-
-		TimeZone client = getClientTimeZone();
-		int offset = client.getOffset(loginDate.getTime());
-
-		if(userInDaylightSavings)
-		{
-			if(!client.inDaylightTime(date))
-				offset += userDaylightSavingsOffset * 60 * 1000;
-		}
-		else
-		{
-			if(client.inDaylightTime(date))
-				offset -= userDaylightSavingsOffset * 60 * 1000;
-		}
-
-		offset = -offset;// int offset = -getClientTimeZone().getRawOffset();//negative
-		Calendar newDate = Calendar.getInstance();
-		newDate.setTime(date);
-		newDate.add(Calendar.MILLISECOND, offset);
-		Date adjusted = newDate.getTime();
-
-		// System.out.println("\n\t@UTC->Client \n\t\tConverted:\n\t\t" + date + "\n\t\t" + adjusted +
-		// "\n\t\t" + offset/60/1000);
-		return adjusted;
-	}
-
 	private CalendarDaoRemote getCalendarDao()
 	{
 		if(calendarDao == null)
@@ -867,25 +867,69 @@ public class ScheduleBean implements Serializable
 		return venueDao;
 	}
 
-	/**
-	 * A simple initializer to get the values out of the loginBean and store them
-	 * 
-	 * @See {@link code#spaghetti}
-	 */
-	private void setUserDaylightSavings()
+	@Data
+	@EqualsAndHashCode(callSuper = false)
+	public class CalendarPrintController extends AbstractPrintController
 	{
-		if(userInDaylightSavings == null)
+		private Date startDate;
+		private Date endDate;
+		private boolean printAll = true;
+		private boolean cast = true;
+		private boolean crew = true;
+		private boolean details = true;
+		
+		public CalendarPrintController()
 		{
-			LoginBean login = Utility.getBean(LoginBean.class);
-			userDaylightSavingsOffset = Integer.valueOf(login.getTimeZoneDaylightOffset());
-			int tmpDstActive = Integer.valueOf(login.getTimeZoneDaylightActive());
-			if(tmpDstActive != 0)
-				userInDaylightSavings = true;
-			else
-				userInDaylightSavings = false;
+			super("schedules", "sub");
 		}
-	}
 
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		protected Collection<Week> getData()
+		{
+			ArrayList<Week> weeks = null;
+			Season season = Utility.getBean(ScheduleBean.class).getSelectedSeason();
+
+			if(printAll || startDate == null || endDate == null)
+				weeks = getCalendarDao().getAllWeeks(season);
+			else
+				weeks = getCalendarDao().getWeeksInRange(startDate, endDate, season);
+			
+			return weeks;
+		}
+
+		@Override
+		protected Map<String, Object> getParameters()
+		{
+			HashMap<String, Object> params = new HashMap<String, Object>();
+
+			File root = new File(Utility.getBean(AdministrationBean.class).getReportingDocumentRoot());
+			//@formatter:off
+			String path = new File(
+						root.getAbsoluteFile() 
+						+ File.separator 
+						+ "schedules"
+						+ File.separator
+					).getAbsolutePath() + File.separator;
+			//@formatter:on
+			params.put("FILE_PATH", path);
+			params.put("SUBREPORT_DIR", path);
+			params.put("PRINT_CAST", new Boolean(cast));
+			params.put("PRINT_CREW", new Boolean(crew));
+			params.put("PRINT_DETAILS", new Boolean(details));
+			
+			return params;
+		}
+
+		@Override
+		protected String getReportName()
+		{
+			SimpleDateFormat df = new SimpleDateFormat("MM-dd-yy");
+			return "Weekly-" + df.format(new Date()) ;
+		}
+		
+	}
 	public class ComplexEntityScheduleEvent extends DefaultScheduleEvent implements Serializable
 	{
 		private static final long serialVersionUID = 3L;
@@ -907,6 +951,7 @@ public class ScheduleBean implements Serializable
 		}
 	}
 
+	@Data
 	public class DayUI implements Serializable
 	{
 		private static final long serialVersionUID = 3L;
@@ -918,6 +963,9 @@ public class ScheduleBean implements Serializable
 		private ArrayList<SelectItem> crewHotels;
 		private boolean showCastHotel;
 		private boolean showCrewHotel;
+
+		private UIComponent bindingCrewHotels;
+		private UIComponent bindingCastHotels;
 
 		public DayUI(Day day)
 		{
@@ -945,16 +993,6 @@ public class ScheduleBean implements Serializable
 
 		}
 
-		public Long getCastCity()
-		{
-			return castCity;
-		}
-
-		public Long getCastHotel()
-		{
-			return castHotel;
-		}
-
 		public ArrayList<SelectItem> getCastHotels()
 		{
 			if(castHotels == null)
@@ -972,16 +1010,6 @@ public class ScheduleBean implements Serializable
 			return castHotels;
 		}
 
-		public Long getCrewCity()
-		{
-			return crewCity;
-		}
-
-		public Long getCrewHotel()
-		{
-			return crewHotel;
-		}
-
 		public ArrayList<SelectItem> getCrewHotels()
 		{
 			if(crewHotels == null)
@@ -997,16 +1025,6 @@ public class ScheduleBean implements Serializable
 					crewHotels = new ArrayList<SelectItem>();
 
 			return crewHotels;
-		}
-
-		public boolean isShowCastHotel()
-		{
-			return showCastHotel;
-		}
-
-		public boolean isShowCrewHotel()
-		{
-			return showCrewHotel;
 		}
 
 		public void onSelectShowCastHotels()
@@ -1032,41 +1050,13 @@ public class ScheduleBean implements Serializable
 		public void selectCastCity(ValueChangeEvent evt)
 		{
 			castCity = (Long) evt.getNewValue();
+			castHotels = null;
 		}
 
 		public void selectCrewCity(ValueChangeEvent evt)
 		{
 			crewCity = (Long) evt.getNewValue();
-		}
-
-		public void setCastCity(Long castCity)
-		{
-			this.castCity = castCity;
-		}
-
-		public void setCastHotel(Long castHotel)
-		{
-			this.castHotel = castHotel;
-		}
-
-		public void setCrewCity(Long crewCity)
-		{
-			this.crewCity = crewCity;
-		}
-
-		public void setCrewHotel(Long crewHotel)
-		{
-			this.crewHotel = crewHotel;
-		}
-
-		public void setShowCastHotel(boolean showCastHotel)
-		{
-			this.showCastHotel = showCastHotel;
-		}
-
-		public void setShowCrewHotel(boolean showCrewHotel)
-		{
-			this.showCrewHotel = showCrewHotel;
+			crewHotels = null;
 		}
 	}
 
@@ -1079,6 +1069,13 @@ public class ScheduleBean implements Serializable
 
 		public void createPerformance(ActionEvent evt)
 		{
+			if(!Utility.getBean(LoginBean.class).isScheduler())
+			{
+				Utility.raiseWarning("Access Denied",
+						"You lack the proper permissions");
+				return;
+			}
+
 			getCalendarDao().savePerformanceSchedule(wrapper);
 			Utility.raiseInfo("Performance Updated",
 					"A performance schedule was created for " + wrapper.getName());
@@ -1164,6 +1161,14 @@ public class ScheduleBean implements Serializable
 						"You must have a venue selected to create an advance.");
 				return;
 			}
+
+			if(!Utility.getBean(LoginBean.class).isScheduler())
+			{
+				Utility.raiseWarning("Access Denied",
+						"You lack the proper permissions");
+				return;
+			}
+
 			getCalendarDao().createPerformanceAdvance(performance);
 			Utility.raiseInfo("Advance Created", "Advances are updated via the Venue module");
 			refreshModel(evt);
@@ -1179,6 +1184,13 @@ public class ScheduleBean implements Serializable
 			if(advance == null)
 			{
 				Utility.raiseError("Null Pointer", "The performance advance is null, can not save");
+				return;
+			}
+
+			if(!Utility.getBean(LoginBean.class).isScheduler())
+			{
+				Utility.raiseWarning("Access Denied",
+						"You lack the proper permissions");
 				return;
 			}
 

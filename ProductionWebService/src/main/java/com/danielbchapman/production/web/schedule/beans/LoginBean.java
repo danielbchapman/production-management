@@ -3,6 +3,7 @@ package com.danielbchapman.production.web.schedule.beans;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -24,6 +25,10 @@ import com.danielbchapman.jboss.login.Role;
 import com.danielbchapman.jboss.login.Roles;
 import com.danielbchapman.jboss.login.User;
 import com.danielbchapman.production.Utility;
+import com.danielbchapman.production.web.production.beans.BudgetBean;
+import com.danielbchapman.production.web.production.beans.ContactBean;
+import com.danielbchapman.production.web.production.beans.DepartmentBean;
+import com.danielbchapman.production.web.production.beans.SeasonBean;
 
 @SessionScoped
 public class LoginBean implements Serializable
@@ -137,7 +142,8 @@ public class LoginBean implements Serializable
 		if(zone == null)
 			return "No Time Zone";
 
-		return "GMT " + zone.getRawOffset() / 60 / 60 / 1000;
+		return "GMT " + zone.getOffset(new Date().getTime()) / 60/ 60 / 1000;
+//		return "GMT " + zone.getRawOffset() / 60 / 60 / 1000;
 	}
 
 	public String getTimeSelection()
@@ -287,6 +293,11 @@ public class LoginBean implements Serializable
 	{
 		return isUserInRole(Roles.INVENTORY_LIGHTING);
 	}
+	
+	public boolean isCompanyMember()
+	{
+		return isUserInRole(Roles.COMPANY_MEMBER);
+	}
 
 	public boolean isInventoryProps()
 	{
@@ -336,7 +347,7 @@ public class LoginBean implements Serializable
 	{
 		return getUserPrinciple() != null || username != null;
 	}
-
+	
 	/**
 	 * Log into the database via a user session. This will do 
 	 * a manual calculation of roles.
@@ -357,14 +368,37 @@ public class LoginBean implements Serializable
 				
 			Utility.login();
 			username = authUser;
-			authUser = null;
+//			authUser = null; /*Leave this reference */
 			authPass = null;
-			Utility.redirect(Utility.getSession().getServletContext().getContextPath() + "/index.xhtml");
+			cleanBeans();
+			//Utility.redirect(Utility.getSession().getServletContext().getContextPath() + "/index.xhtml");
 		}
-		
+
 		authPass = null;
 	}
 
+	/**
+	 * A method to destroy the current objects backing a view.
+	 */
+	protected synchronized void cleanBeans()
+	{
+		Class<?>[] classes = new Class<?>[]{
+			ScheduleBean.class,
+			VenueBean.class,
+			SeasonBean.class,
+			DepartmentBean.class,
+			BudgetBean.class,
+			ContactBean.class
+		};
+		
+		for(Class<?> c : classes)
+			Utility.clearBean(c);
+	}
+	public void doSessionLogout(ActionEvent evt)
+	{
+		Utility.logOut();
+		//Utility.redirect(Utility.getSession().getServletContext().getContextPath() + "/index.xhtml");
+	}
 	public void selectZone(ActionEvent evt)
 	{
 		if(evt != null)

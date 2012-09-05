@@ -17,6 +17,7 @@ import org.primefaces.model.StreamedContent;
 import com.danielbchapman.production.JasperUtility;
 import com.danielbchapman.production.Utility;
 import com.danielbchapman.production.beans.CalendarDaoRemote;
+import com.danielbchapman.production.entity.Day;
 import com.danielbchapman.production.entity.Season;
 import com.danielbchapman.production.entity.Week;
 import com.danielbchapman.production.web.production.beans.AdministrationBean;
@@ -86,7 +87,12 @@ public class PrintScheduleBean implements Serializable
 	{
 		if(elements == null)
 		{
-			File root = new File(Utility.getBean(AdministrationBean.class).getReportingDocumentRoot());
+			String rootString = Utility.getBean(AdministrationBean.class).getReportingDocumentRoot();
+			
+			if(rootString == null || rootString.isEmpty())
+				return new ArrayList<PrintElement>();
+			
+			File root = new File(rootString);
 			File base = new File(root.getAbsoluteFile() + File.separator + reportingDirectory);
 			elements = new ArrayList<PrintElement>();
 			ArrayList<File> reports = JasperUtility.listPossibleReports(base, "_");
@@ -290,6 +296,13 @@ public class PrintScheduleBean implements Serializable
 			params.put("PRINT_CREW", new Boolean(crew));
 			params.put("PRINT_DETAILS", new Boolean(details));
 
+			for(Week w : weeks)
+				for(Day d : w.getDays())
+				{
+					System.out.println(d.getCastLocation());
+					System.out.println(d.getCrewLocation());
+				}
+			
 			byte[] print = JasperUtility.printReportAsPDF(file, params, weeks);
 
 			return print;

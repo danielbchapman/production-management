@@ -84,10 +84,11 @@ public class AdministrationBean implements Serializable
 
 	public String getReportingDocumentRoot()
 	{
-		if(reportingDocumentRoot == null)
-			reportingDocumentRoot = getOptionsBean().getOptions() != null ? getOptionsBean().getOptions()
-					.getReportingRoot() : "none";
-		return reportingDocumentRoot;
+		return Utility.getSession().getServletContext().getRealPath("/reports/");
+//		if(reportingDocumentRoot == null)
+//			reportingDocumentRoot = getOptionsBean().getOptions() != null ? getOptionsBean().getOptions()
+//					.getReportingRoot() : "none";
+//		return reportingDocumentRoot;
 	}
 
 	public String getRole()

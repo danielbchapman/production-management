@@ -27,6 +27,7 @@ import com.danielbchapman.production.AbstractPrintController;
 import com.danielbchapman.production.Utility;
 import com.danielbchapman.production.beans.CalendarDaoRemote;
 import com.danielbchapman.production.beans.OptionsDaoRemote;
+import com.danielbchapman.production.beans.SettingsDaoRemote;
 import com.danielbchapman.production.beans.VenueDaoRemote;
 import com.danielbchapman.production.dto.AdvanceSheetDto;
 import com.danielbchapman.production.entity.City;
@@ -40,13 +41,14 @@ import com.danielbchapman.production.entity.VenueLog;
 public class VenueBean implements Serializable
 {
 	private static final long serialVersionUID = 3L;
-
+	private final static String GOOGLE_DOCS_ROOT = "google_docs_venues";
+	
 	private FileModel attachments;
 
 	private Long cityId;
 
 	private String department;
-
+	
 	private SelectItem[] departments = new SelectItem[] {
 			new SelectItem(VenueDaoRemote.GENERAL_DOCUMENTS),
 			new SelectItem(VenueDaoRemote.ELECTRICS_DOCUMENTS),
@@ -74,6 +76,7 @@ public class VenueBean implements Serializable
 	private Venue venue = new Venue();
 	private VenueDaoRemote venueDao;
 	private CalendarDaoRemote calendarDao;
+	private SettingsDaoRemote settingsDao;
 	private String venueHours;
 	private ArrayList<SelectItem> venueItems;
 	private ArrayList<VenueLog> venueLogs;
@@ -82,7 +85,22 @@ public class VenueBean implements Serializable
 	private String venueName;
 	private boolean venueSelect = false;
 	private Advance advance;
-
+	private String googleDocsRoot;
+	
+	/**
+	 * @return a link to GoogeDocs
+	 */
+	public String getGoogleDocsRoot()
+	{
+		if(googleDocsRoot == null)
+		{
+			String val = getSettingsDao().get(GOOGLE_DOCS_ROOT);
+			googleDocsRoot = val == null ? "Not Set Up" : val;
+		}
+		
+		return googleDocsRoot;
+	}
+	
 	public void addVenue(ActionEvent evt)
 	{
 		if(evt != null)
@@ -173,7 +191,8 @@ public class VenueBean implements Serializable
 	public String getLogUser()
 	{
 		if(logUser == null)
-			logUser = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal().getName();
+			return Utility.getBean(LoginBean.class).getUserPrinciple();
+		
 		return logUser;
 	}
 
@@ -499,6 +518,13 @@ public class VenueBean implements Serializable
 		if(venueDao == null)
 			venueDao = Utility.getObjectFromContext(VenueDaoRemote.class, Utility.Namespace.PRODUCTION);
 		return venueDao;
+	}
+	
+	private SettingsDaoRemote getSettingsDao()
+	{
+		if(settingsDao == null)
+			settingsDao = Utility.getObjectFromContext(SettingsDaoRemote.class, Utility.Namespace.PRODUCTION);
+		return settingsDao;
 	}
 
 	private void mkDirs(File f)
