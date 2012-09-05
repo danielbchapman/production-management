@@ -92,6 +92,10 @@ public abstract class AbstractEntityInstance
 		return t;
 	}
 
+	public <T extends Indentifiable> ArrayList<T> getAll(Class<T> clazz)
+	{
+		return getResultList("SELECT all FROM " + clazz.getSimpleName() + " all;", clazz);
+	}
 	/**
 	 * @return a link to the current instance of this EntityInstance subclass
 	 */
