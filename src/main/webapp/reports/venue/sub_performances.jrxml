@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sub_performances" pageWidth="266" pageHeight="802" columnWidth="266" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sub_performances" pageWidth="266" pageHeight="802" columnWidth="266" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="44abcf02-e102-47b0-84a1-a2ab48e30191">
 	<property name="ireport.zoom" value="2.357947691000002"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -30,6 +30,9 @@
 	<field name="end" class="java.util.Date">
 		<fieldDescription><![CDATA[end]]></fieldDescription>
 	</field>
+	<field name="endDate" class="java.util.Date">
+		<fieldDescription><![CDATA[endDate]]></fieldDescription>
+	</field>
 	<field name="eventSequence" class="java.util.ArrayList">
 		<fieldDescription><![CDATA[eventSequence]]></fieldDescription>
 	</field>
@@ -48,20 +51,20 @@
 	<field name="persisted" class="java.lang.Boolean">
 		<fieldDescription><![CDATA[persisted]]></fieldDescription>
 	</field>
+	<field name="publicEvent" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[publicEvent]]></fieldDescription>
+	</field>
 	<field name="start" class="java.util.Date">
 		<fieldDescription><![CDATA[start]]></fieldDescription>
+	</field>
+	<field name="startDate" class="java.util.Date">
+		<fieldDescription><![CDATA[startDate]]></fieldDescription>
 	</field>
 	<field name="strike" class="java.lang.Boolean">
 		<fieldDescription><![CDATA[strike]]></fieldDescription>
 	</field>
 	<field name="talkback" class="java.lang.Boolean">
 		<fieldDescription><![CDATA[talkback]]></fieldDescription>
-	</field>
-	<field name="utcEnd" class="java.util.Date">
-		<fieldDescription><![CDATA[utcEnd]]></fieldDescription>
-	</field>
-	<field name="utcStart" class="java.util.Date">
-		<fieldDescription><![CDATA[utcStart]]></fieldDescription>
 	</field>
 	<field name="venue" class="com.danielbchapman.production.entity.Venue">
 		<fieldDescription><![CDATA[venue]]></fieldDescription>
@@ -72,39 +75,39 @@
 	<columnHeader>
 		<band height="20" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="100" height="20"/>
+				<reportElement uuid="1e85a434-1445-4ec7-a756-aa358a424cec" x="0" y="0" width="100" height="20"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Performance]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="114" y="0" width="100" height="20"/>
+				<reportElement uuid="c4905468-19a3-4387-9ff7-144b4d611bbb" x="114" y="0" width="100" height="20"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Time]]></text>
 			</staticText>
 			<line>
-				<reportElement x="0" y="15" width="266" height="1"/>
+				<reportElement uuid="9e720c44-464e-4195-b2e8-8d9af6b346fc" x="0" y="15" width="266" height="1"/>
 			</line>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="15" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="100" height="15"/>
+				<reportElement uuid="7d596078-e81e-420a-a16c-0d70cf1ab340" x="0" y="0" width="100" height="15"/>
 				<textElement>
 					<font isBold="false" isItalic="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="MM/dd EEEEE - HH:mm">
-				<reportElement x="114" y="0" width="152" height="15"/>
+				<reportElement uuid="a4819da6-8b71-47fd-9147-c5298ff18268" x="114" y="0" width="152" height="15"/>
 				<textElement>
 					<font size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{utcStart}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{startDate}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

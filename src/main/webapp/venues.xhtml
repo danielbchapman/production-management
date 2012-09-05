@@ -64,6 +64,13 @@
 	<!-- START VENUES -->
 	<h:form id="editVenue" prependId="false">
 		<p:panel id="venueInformation" header="#{venueBean.venue.name}" rendered="#{venueBean.canHasVenue}">
+			<h:panelGroup layout="span">
+				<h:outputLink value="#{venueBean.googleDocsRoot}" styleClass="btn btn-small">
+					https://GoogleDocs/
+				</h:outputLink>
+				#{venueBean.venue.name} [#{venueBean.venue.id}]
+			</h:panelGroup>
+			
 			<p:tabView id="tabs">
 				<p:tab title="Advance">
 					<p:dataTable var="wrapper" value="#{venueBean.advance.advances}">
@@ -90,6 +97,8 @@
 							<p:commandButton
 								value="Archive"
 								update=":venueFiles:editVenue,:venueFiles:messages"
+								actionListener="#{wrapper.doArchiveAdvance}"
+								rendered="#{loginBean.admin}"
 							/>
 							
 							<p:commandButton

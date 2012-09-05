@@ -3,11 +3,6 @@
  xmlns:xi="http://www.w3.org/2001/XInclude"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
  <managed-bean>
-  <managed-bean-name>scheduleBean</managed-bean-name>
-  <managed-bean-class>com.danielbchapman.production.web.schedule.beans.ScheduleBean</managed-bean-class>
-  <managed-bean-scope>view</managed-bean-scope>
- </managed-bean>
- <managed-bean>
   <managed-bean-name>loginBean</managed-bean-name>
   <managed-bean-class>com.danielbchapman.production.web.schedule.beans.LoginBean</managed-bean-class>
   <managed-bean-scope>session</managed-bean-scope>
@@ -23,6 +18,11 @@
   <managed-bean-scope>view</managed-bean-scope>
  </managed-bean>
  <managed-bean>
+  <managed-bean-name>scheduleBean</managed-bean-name>
+  <managed-bean-class>com.danielbchapman.production.web.schedule.beans.ScheduleBean</managed-bean-class>
+  <managed-bean-scope>view</managed-bean-scope>
+ </managed-bean> 
+ <managed-bean>
   <managed-bean-name>menuBean</managed-bean-name>
   <managed-bean-class>com.danielbchapman.production.web.schedule.beans.MenuBean</managed-bean-class>
   <managed-bean-scope>session</managed-bean-scope>
@@ -30,11 +30,6 @@
  <managed-bean>
   <managed-bean-name>inventoryBean</managed-bean-name>
   <managed-bean-class>com.danielbchapman.production.web.schedule.beans.InventoryBean</managed-bean-class>
-  <managed-bean-scope>view</managed-bean-scope>
- </managed-bean>
- <managed-bean>
-  <managed-bean-name>vendorBean</managed-bean-name>
-  <managed-bean-class>com.danielbchapman.production.web.production.beans.VendorBean</managed-bean-class>
   <managed-bean-scope>view</managed-bean-scope>
  </managed-bean>
  <managed-bean>
@@ -51,11 +46,6 @@
   <managed-bean-name>administrationBean</managed-bean-name>
   <managed-bean-class>com.danielbchapman.production.web.production.beans.AdministrationBean</managed-bean-class>
   <managed-bean-scope>session</managed-bean-scope>
- </managed-bean>
- <managed-bean>
-  <managed-bean-name>taskBean</managed-bean-name>
-  <managed-bean-class>com.danielbchapman.production.web.production.beans.TaskBean</managed-bean-class>
-  <managed-bean-scope>view</managed-bean-scope>
  </managed-bean>
  <managed-bean>
   <managed-bean-name>budgetBean</managed-bean-name>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html 	lang="en"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:p="http://primefaces.org/ui"
+		xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+		xmlns:tac="http://java.sun.com/jsf/composite/composite"
+>
+<body>
+<ui:composition template="/template/template.xhtml">
+<ui:define name="content">
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span3">
+				<ui:insert name="left">
+					LEFT
+				</ui:insert>
+			</div>
+			
+			<div class="span3 offset1">
+				<ui:insert name="center">
+					CENTER
+				</ui:insert>
+			</div>
+			
+			<div class="span3 offset1">
+				<ui:insert name="right">
+					RIGHT
+				</ui:insert>
+			</div>
+		</div>
+	</div>
+</ui:define>
+</ui:composition>
+</body>
+</html>

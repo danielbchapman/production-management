@@ -6,6 +6,7 @@
 		xmlns:p="http://primefaces.org/ui"
 		xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
 		xmlns:tac="http://java.sun.com/jsf/composite/composite"
+		xmlns:core="http://java.sun.com/jsf/composite/core"
 >
 <body>
 <ui:composition template="/template/templateLeftRight.xhtml">
@@ -40,6 +41,32 @@
 				
 				<p:panel rendered="#{loginBean.companyMember}">
 					<h:form id="print">
+						<legend>Printing</legend>
+						<label>From</label>
+						<p:calendar 
+							value="#{scheduleBean.calendarPrintController.startDate}"
+							styleClass="input-small"
+						/>
+						<label>To</label>
+						<p:calendar 
+							value="#{scheduleBean.calendarPrintController.endDate}"
+							styleClass="input-small"
+						/>
+						<core:checkbox 
+							name="Print All" 
+							value="#{scheduleBean.calendarPrintController.printAll}" 
+						/>
+						<core:checkbox 
+							name="Cast Events" 
+							value="#{scheduleBean.calendarPrintController.cast}" 
+						/>
+						<core:checkbox 
+							name="Crew Events" 
+							value="#{scheduleBean.calendarPrintController.crew}" 
+						/>
+						<hr />
+						<core:reports value="#{scheduleBean.calendarPrintController}" name="Prints"/>
+						<hr />
 						<h4>
 							<h:outputText value="Range"/>
 						</h4>
@@ -118,16 +145,7 @@
 				<h3>
 					<h:outputText value="#{scheduleBean.selectedSeason}" id="productionName" />
 				</h3>	
-				<p:ajaxStatus style="display:inline-block;width:16px;height:16px;margin-left:8px;">
-			    <f:facet name="start">  
-	      		 <h:graphicImage value="ajax-loader.gif" style="display:inline;"/>  
-	 			  </f:facet>  
-	     
-			    <f:facet name="complete">  
-						<h:outputText value="" />  
-		    	</f:facet>  
-				</p:ajaxStatus>
-	
+				
 				<p:dialog header="PrintSchedule" widgetVar="printDialog"
 					showEffect="growl" hideEffect="growl">
 					<h:outputText value="Download Report (PDF):"
@@ -138,7 +156,31 @@
 				</p:dialog>
 				
 				<p:panel>
+					<p:blockUI 
+						block="#{scheduleBean.scheduleBinding.id}"  
+						widgetVar="blockCalendar"
+					>  
+				        LOADING<br />  
+				        <p:graphicImage value="ajax-loader-large.gif"/>  
+				    </p:blockUI>  
+				    
+					<p:ajaxStatus 
+						style="display:inline-block;width:16px;height:16px;margin-left:8px;"
+						id="scheduleLoader"
+						onstart="blockCalendar.show();"
+						oncomplete="blockCalendar.hide();"
+						>
+				    	<f:facet name="start">  
+							<h:graphicImage value="ajax-loader.gif" style="display:inline;"/>  
+						</f:facet>  
+		     
+					    <f:facet name="complete">  
+							<h:outputText value="" />  
+				    	</f:facet>  
+					</p:ajaxStatus>
+									
 					<p:schedule 
+						binding="#{scheduleBean.scheduleBinding}"
 						value="#{scheduleBean.scheduleModel}" 
 						widgetVar="eventSchedule" 
 						resizable="false"

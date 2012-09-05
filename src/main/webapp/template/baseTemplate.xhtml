@@ -8,11 +8,11 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:core="http://java.sun.com/jsf/composite/core"
 >
-	<h:head>
+	<h:head>	
 	  	<f:facet name="first">
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 	    	<script src="./bootstrap/js/bootstrap.js"></script>
-	  	</f:facet>
+	  	</f:facet>	  	
 	    <meta charset="utf-8"></meta>
 	    <title><ui:insert name="title">Production Database</ui:insert></title>
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
@@ -21,27 +21,8 @@
 	
 	    <!-- Le styles -->
 	    <link href="./bootstrap/css/bootstrap.css" rel="stylesheet"></link>
-	    <link href="./bootstrap/css/bootstrap-responsive.css" rel="stylesheet"></link>
-	
-	    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-	    <!--[if lt IE 9]>
-	      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-	    <![endif]-->
-	
-	    <!-- Le fav and touch icons -->
-	    <link rel="shortcut icon" href="../assets/ico/favicon.ico"></link>
-	    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png"></link>
-	    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png"></link>
-	    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png"></link>
-	    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png"></link>
-	    <h:outputStylesheet name="production.css" library="css" />
-	    
-	    <style type="text/css">
-			body {
-			  padding-top: 60px;
-			  padding-bottom: 40px;
-			}
-	      
+
+		<style type="text/css">	      
 			.ui-growl {
 				position: fixed;
 				top: 80px;
@@ -63,15 +44,136 @@
 			.ui50 {
 				width: 50px;
 			}
+			
+			.navbar-inverse .navbar-inner, .navbar .btn-navbar{
+				background: #600015; /* Old browsers */
+				/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+				background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzYwMDAxNSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjQ0JSIgc3RvcC1jb2xvcj0iIzUyMDAxMiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMzZTAwMGQiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+				background: -moz-linear-gradient(top,  #600015 0%, #520012 44%, #3e000d 100%); /* FF3.6+ */
+				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#600015), color-stop(44%,#520012), color-stop(100%,#3e000d)); /* Chrome,Safari4+ */
+				background: -webkit-linear-gradient(top,  #600015 0%,#520012 44%,#3e000d 100%); /* Chrome10+,Safari5.1+ */
+				background: -o-linear-gradient(top,  #600015 0%,#520012 44%,#3e000d 100%); /* Opera 11.10+ */
+				background: -ms-linear-gradient(top,  #600015 0%,#520012 44%,#3e000d 100%); /* IE10+ */
+				background: linear-gradient(to bottom,  #600015 0%,#520012 44%,#3e000d 100%); /* W3C */
+				filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#600015', endColorstr='#3e000d',GradientType=0 ); /* IE6-8 */
+			}
+			
+			.navbar .divider-vertical {
+			    background-color: #c79810;
+			    border-right: 1px solid #eab92d;
+			}
+			
+			body {
+				padding-top: 60px;
+				padding-bottom: 40px;
+			}
+			
+			##############################
+			# Full Calendar Overrides
+			##############################
+			.eventPerformance
+			{
+				color:#fff;
+				background-color:green;
+			}
+			
+			.eventPerformance a
+			{
+				color:#fff;
+				background-color:green;
+			}
+			
+			.eventSchedule
+			{
+				color:#fff;
+			}
+			
+			.eventSchedule a
+			{
+				color:#fff;
+			}
+			
+			.eventScheduleCrew
+			{
+				color:#fff;
+				background-color:#e9604a;
+			}
+			
+			.eventScheduleCrew a
+			{
+				color:#fff;
+				background-color:#e9604a;
+			}
+			
+			.eventScheduleCrew a:before
+			{
+				color:#fff;
+				content:"[crew]";
+			}
+			
+			.eventScheduleCast
+			{
+				color:#fff;
+				background-color:#20646a;
+			}
+			
+			.eventScheduleCast a
+			{
+				color:#fff;
+				background-color:#20646a;
+			}
+			
+			.eventScheduleCast a:before
+			{
+				color:#fff;
+				content:"[cast]";
+			}
+			
+			.eventPerformanceLocked
+			{
+				color:#fff;
+				background-color:#62ed62;
+			}
+			
+			.eventPerformanceLocked a
+			{
+				color:#fff;
+				background-color:#62ed62;
+			}
+			
+			.eventDay
+			{
+				color:#fff;
+				background-color:purple;
+			}
+			
+			.fc eventDay a
+			{
+				color:#fff;
+				background-color:purple;
+			}			
+			
 	    </style>
+	    
+	    <link href="./bootstrap/css/bootstrap-responsive.css" rel="stylesheet"></link>	    	
+	    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+	    <!--[if lt IE 9]>
+	      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	    <![endif]-->
+	
+	    <!-- Le fav and touch icons -->
+	    <link rel="shortcut icon" href="../assets/ico/favicon.ico"></link>
+	    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png"></link>
+	    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png"></link>
+	    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png"></link>
+	    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png"></link>
+	    <h:outputStylesheet name="production.css" library="css" />
 	</h:head>
  
     <h:body>
-	<div id="header">
-		<ui:insert name="header">
-			<ui:include src="/template/menus.xhtml" />
-		</ui:insert>
-	</div>
+	<ui:insert name="header">
+		<ui:include src="/template/menus.xhtml" />
+	</ui:insert>
 	
 	<ui:insert name="base">
 		<div class="container">

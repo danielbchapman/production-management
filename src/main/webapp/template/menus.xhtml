@@ -13,7 +13,7 @@
 	
   	<f:view contentType="text/html">
 	  	<!-- Navigation -->
-	    <div class="navbar navbar-inverse navbar-fixed-top">
+	    <div class="navbar navbar-fixed-top navbar-inverse">
 	      <div class="navbar-inner">
 	        <div class="container">
 	          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -24,11 +24,8 @@
 	          <a class="brand" href="./index.xhtml">Production</a>
 	          <div class="nav-collapse collapse">
 	          	<!-- Dynamic Portion -->
-				<h:form prependId="false">
+				<h:form prependId="false" style="display:inline;">
 					<ul class="nav">
-						<li class="active">
-							<a href="https://www.danielbchapman.com/production/">Live</a>
-						</li>
 						<ui:repeat value="#{bootstrapMenuBean.items}" var="item">
 							<h:panelGroup rendered="#{item.renderedViaRole}" layout="span">
 								<li class="dropdown">

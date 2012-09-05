@@ -7,10 +7,49 @@
 	xmlns:core="http://java.sun.com/jsf/composite/core"
 >
   <h:body>
- 	<ui:composition template="/template/template.xhtml">
- 		<ui:define name="footer">
- 			My Footer
- 		</ui:define>
+ 	<ui:composition template="/template/templateResponsive.xhtml">
+		<ui:define name="title">Production Database</ui:define>
+		
+		<ui:define name="main">
+			<h1>Touring Database</h1>
+			<p>
+			This is the production and touring database for <a href="http://www.theactingcompany.org">The Acting Company</a>. 
+			The website is designed to provide touring information in a digital format so that it
+			can be easily accessed from the road. As we all know, things can change rapidly so hopefully
+			this will help keep us all in one place.
+			</p>
+			<p>
+			Please remember that our company managers (Joseph and Ken) are the final authority on 
+			scheduling and this website might be slightly out of date. If you require a logon or 
+			have a suggestion to improve this site please contact 
+			<a href="mailto:dchapman@theactingcompany.org">Daniel Chapman</a>.
+			</p>
+		</ui:define>
+		
+		<ui:define name="left">
+			<h2>Current Season</h2>
+			<ul>
+				<li>Of Mice and Men</li>
+				<li>As You Like It</li>
+			</ul>
+		</ui:define>
+		
+		<ui:define name="center">
+			<h2>Useful Links</h2>
+			<ul>
+				<li><a href="http://www.google.com">Google Docs - PDFs</a></li>
+				<li><a href="calendar.xhtml">Calendar</a></li>
+			</ul>
+		</ui:define>
+		
+		<ui:define name="right">
+			<h2>Known Bugs</h2>
+			<ul>
+				<li><em>Venues</em> Documents are not integrated into the file-system. Currently they are 
+				hosted on Google-Docs and are under a "manual" version control. Please be careful
+				</li>
+			</ul>
+		</ui:define>
  	</ui:composition> 	
   </h:body>
 </html>
