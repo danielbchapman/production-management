@@ -45,7 +45,7 @@ public abstract class AbstractPrintController implements Serializable
 	 */
 	public void init()
 	{
-		String root = Utility.getBean(AdministrationBean.class).getReportingDocumentRoot();
+		String root = Utility.getSession().getServletContext().getRealPath("/reports/");//Utility.getBean(AdministrationBean.class).getReportingDocumentRoot();
 		baseDir = new File(root + File.separator + reportingDirectoryName + File.separator);
 		ArrayList<File> jrxmls = JasperUtility.listPossibleReports(baseDir, exclusions);
 		elements = new ArrayList<PrintElement>();
@@ -83,6 +83,10 @@ public abstract class AbstractPrintController implements Serializable
 			this.file = file;
 		}
 
+		public String getFileNameShort()
+		{
+			return file.getName();
+		}
 		public String getFileName()
 		{
 			return "./" + reportingDirectoryName + "/" + file.getName();

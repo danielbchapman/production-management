@@ -77,6 +77,14 @@ public class RoleManager implements Serializable
     
   }  
   
+  public boolean isCompanyMember()
+  {
+  	if(isScheduler())
+  		return true;
+  	
+  	return isUserInRole(Roles.COMPANY_MEMBER);
+  }
+  
   public boolean isInventoryAdmin()
   {
     if(isUser())

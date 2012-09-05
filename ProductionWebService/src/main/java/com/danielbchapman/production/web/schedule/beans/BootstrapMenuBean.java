@@ -15,16 +15,11 @@ import com.danielbchapman.production.Utility;
 import com.danielbchapman.production.web.production.beans.SeasonBean;
 
 @SessionScoped
-public class MenuBean implements Serializable
+public class BootstrapMenuBean implements Serializable
 {
 	private static final long serialVersionUID = 3L;
 	private MenuItem[] items;
-	private MenuItem[] allButHomeItems;
 	private MenuItem selectedItem = new MenuItem("Null", "./");
-
-	public MenuBean()
-	{
-	}
 
 	public ActionMenuItem<Object> createActionMenuItem(String name, String beanBinding,
 			String voidMethodName)
@@ -43,69 +38,48 @@ public class MenuBean implements Serializable
 			throw new RuntimeException(e.getMessage(), e);
 		}
 	}
-	public MenuItem[] getAllButHome()
-	{
-		getItems();
-		if(allButHomeItems != null)
-			return allButHomeItems;
-		
-		allButHomeItems = new MenuItem[items.length - 2];
-		for(int i = 0; i < allButHomeItems.length; i++)
-			allButHomeItems[i] = items[i + 1];
-		
-		return allButHomeItems;
-	}
 	public MenuItem[] getItems()
 	{
 		if(items == null)
 		{
 			MenuItem production = new MenuItem("Production", "season.xhtml", Roles.USER);
-			production.addMenuItem(new SeasonMenuItem("season.xhtml", Roles.USER,
-					SeasonBean.Selection.SUMMARY));
-			production.addMenuItem(new SeasonMenuItem("season.xhtml", Roles.USER,
-					SeasonBean.Selection.BUDGET));
-			production.addMenuItem(new SeasonMenuItem("season.xhtml", Roles.USER,
-					SeasonBean.Selection.DEPARTMENTS));
-			production.addMenuItem(new SeasonMenuItem("season.xhtml", Roles.USER,
-					SeasonBean.Selection.PETTY_CASH));
-			production.addMenuItem(new SeasonMenuItem("season.xhtml", Roles.USER,
-					SeasonBean.Selection.REPORTS));
-			production.addMenuItem(new SeasonMenuItem("season.xhtml", Roles.USER,
-					SeasonBean.Selection.CONTACTS));
-			production.addMenuItem(createActionMenuItem("Change Season", "seasonBean", "nullifySeason"));
+			production
+					//.add(new SeasonMenuItem("season.xhtml", Roles.USER, SeasonBean.Selection.SUMMARY))
+					.add(new SeasonMenuItem("season_budget.xhtml", Roles.USER, SeasonBean.Selection.BUDGET))
+					.add(new SeasonMenuItem("season_departments.xhtml", Roles.USER, SeasonBean.Selection.DEPARTMENTS))
+					.add(new SeasonMenuItem("season_petty.xhtml", Roles.USER, SeasonBean.Selection.PETTY_CASH))
+					.add(new SeasonMenuItem("season_contacts.xhtml", Roles.USER, SeasonBean.Selection.CONTACTS))
+					.add(new SeasonMenuItem("setSeason.xhtml", Roles.USER, SeasonBean.Selection.SUMMARY));
 
 			MenuItem inventory = new MenuItem("Inventory", "inventory.xhtml", Roles.GUEST);
-			inventory.addMenuItem(new InventoryMenuItem("inventory.xhtml", Roles.GUEST,
-					InventoryBean.Selection.GENERAL));
-			inventory.addMenuItem(new InventoryMenuItem("inventory.xhtml", Roles.GUEST,
-					InventoryBean.Selection.LIGHTING));
-			inventory.addMenuItem(new InventoryMenuItem("inventory.xhtml", Roles.GUEST,
-					InventoryBean.Selection.PROPS));
-			inventory.addMenuItem(new InventoryMenuItem("inventory.xhtml", Roles.GUEST,
-					InventoryBean.Selection.SCENIC));
-			inventory.addMenuItem(new InventoryMenuItem("inventory.xhtml", Roles.GUEST,
-					InventoryBean.Selection.SOUND));
-			inventory.addMenuItem(new InventoryMenuItem("inventory.xhtml", Roles.GUEST,
-					InventoryBean.Selection.STAGE_MANAGEMENT));
-			inventory.addMenuItem(new InventoryMenuItem("inventory.xhtml", Roles.GUEST,
-					InventoryBean.Selection.WARDROBE));
-			inventory.addMenuItem(new InventoryMenuItem("inventory.xhtml", Roles.INVENTORY_ADMIN,
-					InventoryBean.Selection.PROBLEMS));
+			inventory
+				.add(new InventoryMenuItem("inventory.xhtml", Roles.GUEST, InventoryBean.Selection.GENERAL))
+				.add(new InventoryMenuItem("inventory.xhtml", Roles.GUEST, InventoryBean.Selection.LIGHTING))
+				.add(new InventoryMenuItem("inventory.xhtml", Roles.GUEST, InventoryBean.Selection.PROPS))
+				.add(new InventoryMenuItem("inventory.xhtml", Roles.GUEST, InventoryBean.Selection.SCENIC))
+				.add(new InventoryMenuItem("inventory.xhtml", Roles.GUEST, InventoryBean.Selection.SOUND))
+				.add(new InventoryMenuItem("inventory.xhtml", Roles.GUEST, InventoryBean.Selection.STAGE_MANAGEMENT))
+				.add(new InventoryMenuItem("inventory.xhtml", Roles.GUEST, InventoryBean.Selection.WARDROBE))
+				.add(new InventoryMenuItem("inventory.xhtml", Roles.INVENTORY_ADMIN, InventoryBean.Selection.PROBLEMS));
 
-			MenuItem schedule = new MenuItem("Scheduling", "setTimeZone.xhtml", Roles.GUEST);
-			schedule.addMenuItem(new ScheduleMenuItem("setTimeZone.xhtml", Roles.GUEST,
-					ScheduleBean.Selection.CALENDAR));
-			schedule.addMenuItem(new ScheduleMenuItem("setTimeZone.xhtml", Roles.SCHEDULER,
-					ScheduleBean.Selection.CITY));
-			schedule.addMenuItem(new ScheduleMenuItem("setTimeZone.xhtml", Roles.SCHEDULER,
-					ScheduleBean.Selection.PERFORMANCES));
+			MenuItem schedule = new MenuItem("Scheduling", "schedule.xhtml", Roles.GUEST);
+			schedule
+				.add(new ScheduleMenuItem("calendar.xhtml", Roles.GUEST, ScheduleBean.Selection.CALENDAR))
+				.add(new ScheduleMenuItem("city.xhtml", Roles.SCHEDULER, ScheduleBean.Selection.CITY))
+				.add(new ScheduleMenuItem("performances.xhtml", Roles.SCHEDULER, ScheduleBean.Selection.PERFORMANCES));
 
 			MenuItem settings = new MenuItem("Settings", "settings.xhtml", Roles.ADMIN);
-			settings.addMenuItem(new MenuItem("Error Page", "errorPage.xhtml", Roles.ADMIN));
+			settings.add(new MenuItem("Error Page", "errorPage.xhtml", Roles.ADMIN));
 
-			items = new MenuItem[] { new MenuItem("Home", "index.xhtml"), production, schedule,
-					new MenuItem("Venues", "venues.xhtml", Roles.SCHEDULER), inventory, settings,
-					new MenuItem("Logout", "logoutbasic.jsp") };
+			items = new MenuItem[] { 
+//					new MenuItem("Home", "index.xhtml"), 
+					production, 
+					schedule,
+					new MenuItem("Venues", "venues.xhtml", Roles.SCHEDULER), 
+//					inventory, 
+					settings 
+					};
+			
 			items[0].setSelected(true);
 		}
 		return items;
@@ -326,9 +300,11 @@ public class MenuBean implements Serializable
 			selected = false;
 		}
 
-		public void addMenuItem(MenuItem item)
+		@SuppressWarnings("unchecked")
+		public <T extends MenuItem> T add(MenuItem item)
 		{
 			subItems.add(item);
+			return (T) this;
 		}
 
 		public void fireRedirect(ActionEvent evt)
@@ -428,7 +404,7 @@ public class MenuBean implements Serializable
 					{
 						item.setSelected(true);
 						selected = item;
-						MenuBean.this.selectedItem = this;
+						BootstrapMenuBean.this.selectedItem = this;
 					}
 					else
 						item.setSelected(false);

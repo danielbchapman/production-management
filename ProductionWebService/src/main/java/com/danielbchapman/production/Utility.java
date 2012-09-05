@@ -29,6 +29,7 @@ import javax.servlet.http.HttpSession;
 
 import org.theactingcompany.security.SecurityFilter;
 
+import com.danielbchapman.jboss.login.LoginBean;
 import com.danielbchapman.jboss.login.Roles;
 
 public class Utility
@@ -222,6 +223,19 @@ public class Utility
 				.getValue(FacesContext.getCurrentInstance().getELContext(), null, name);
 	}
 
+	public static void clearBean(String name)
+	{
+		FacesContext.getCurrentInstance().getELContext().getELResolver()
+		.setValue(
+				FacesContext.getCurrentInstance().getELContext(), null, name, null);
+	}
+	
+	public static void clearBean(Class<?> clazz)
+	{
+		char[] characters = clazz.getSimpleName().toCharArray();
+		characters[0] = Character.toLowerCase(characters[0]);
+		clearBean(new String(characters));
+	}
 	/**
 	 * @return a reference to the EL Context
 	 */
@@ -625,11 +639,16 @@ public class Utility
 	public enum Namespace
 	{
 		//@formatter:off
-		PRODUCTION("Production/ProductionEJB.jar", "ProductionEE6/ProductionEJB" ), 
-		INVENTORY("Production/InventoryEJB.jar", "ProductionEE6/InventoryEJB"), 
-		LOGIN("Production/GenericLoginEJB.jar", "ProductionEE6/GenericLoginEJB"), 
-		BUGS("Production/BugsEJB.jar", "ProductionEE6/BugsEJB"), 
-		HELP("Production/HelpEJB.jar", "ProductionEE6/HelpEJB");
+		PRODUCTION("Production/ProductionEJB.jar", "ProductionEE6/ProductionEJB" ),
+		INVENTORY("Production/ProductionEJB.jar", "ProductionEE6/ProductionEJB" ),
+		LOGIN("Production/ProductionEJB.jar", "ProductionEE6/ProductionEJB" ),
+		BUGS("Production/ProductionEJB.jar", "ProductionEE6/ProductionEJB" ),
+		HELP("Production/ProductionEJB.jar", "ProductionEE6/ProductionEJB" );
+		
+//		INVENTORY("Production/InventoryEJB.jar", "ProductionEE6/InventoryEJB"), 
+//		LOGIN("Production/GenericLoginEJB.jar", "ProductionEE6/GenericLoginEJB"), 
+//		BUGS("Production/BugsEJB.jar", "ProductionEE6/BugsEJB"), 
+//		HELP("Production/HelpEJB.jar", "ProductionEE6/HelpEJB");
 		//@formatter:on
 		String ee5;
 		String ee6;
