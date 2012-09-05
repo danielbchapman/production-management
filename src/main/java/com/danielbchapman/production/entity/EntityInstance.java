@@ -18,6 +18,16 @@ public class EntityInstance
 	private static DelegateInstance DELEGATE;
 
 	/**
+	 * @param clazz
+	 * @return
+	 * @see org.theactingcompany.persistence.AbstractEntityInstance#getAll(java.lang.Class)
+	 */
+	public static <T extends Indentifiable> ArrayList<T> getAll(Class<T> clazz)
+	{
+		return getDelegate().getAll(clazz);
+	}
+
+	/**
 	 * @param obj
 	 * @see org.theactingcompany.persistence.AbstractEntityInstance#deleteObject(org.theactingcompany.persistence.Indentifiable)
 	 */
@@ -106,7 +116,7 @@ public class EntityInstance
 	 */
 	public static <T> T getSingleResult(String query, Class<T> clazz)
 	{
-		return DELEGATE.getSingleResult(query, clazz);
+		return getDelegate().getSingleResult(query, clazz);
 	}
 
 	/**
@@ -117,7 +127,7 @@ public class EntityInstance
 	 */
 	public static <T> T getSingleResult(String query, Class<T> clazz, Object... parameters)
 	{
-		return DELEGATE.getSingleResult(query, clazz, parameters);
+		return getDelegate().getSingleResult(query, clazz, parameters);
 	}
 
 	/**
@@ -145,7 +155,7 @@ public class EntityInstance
 	 */
 	public static <T> ArrayList<T> detatch(ArrayList<T> list)
 	{
-		return DELEGATE.detatch(list);
+		return getDelegate().detatch(list);
 	}
 
 	/**
@@ -155,7 +165,7 @@ public class EntityInstance
 	 */
 	public static <T> T detatch(T t)
 	{
-		return DELEGATE.detatch(t);
+		return getDelegate().detatch(t);
 	}
 
 	/**
@@ -165,6 +175,6 @@ public class EntityInstance
 	 */
 	public static <T> T[] detatch(T... objects)
 	{
-		return DELEGATE.detatch(objects);
+		return getDelegate().detatch(objects);
 	}
 }
