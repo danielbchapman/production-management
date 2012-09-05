@@ -68,10 +68,17 @@
 
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+
+			<!-- 
+			<property name="javax.persistence.jdbc.user" value="sa"/>
+			<property name="javax.persistence.jdbc.password" value="acting_co"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/C:\Database\Data\production;"/>
+			 -->
+			    
 			<property name="javax.persistence.jdbc.user" value="b1cc11382e6b32"/>
 			<property name="javax.persistence.jdbc.password" value="3e9fc147"/>
-			<!-- jdbc:mysql://us-cdbr-east.cleardb.com/af_2bbc968cb42f0b0 -->
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://us-cdbr-east.cleardb.com/af_2bbc968cb42f0b0"/> 
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://us-cdbr-east.cleardb.com/af_2bbc968cb42f0b0"/>
+			
 			<property name="eclipselink.ddl-generation" value="create-tables"/>
 			<property name="eclipselink.ddl-generation.output-mode" value="both"/>
 			<property name="eclipselink.target-database" value="MySQL"/>
