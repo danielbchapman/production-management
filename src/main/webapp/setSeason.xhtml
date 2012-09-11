@@ -19,8 +19,13 @@
 		<p:panel>
 			<h3>Select a Season</h3>
 		
-			<h:selectOneMenu valueChangeListener="#{seasonBean.selectSeason}">
-				<f:selectItems value="#{seasonBean.seasons}"/>		
+			<h:selectOneMenu value="#{seasonBean.selectedSeason}">
+				<f:selectItems 
+					value="#{seasonBean.seasons}"
+					var="season"
+					itemLabel="#{season.name}"
+					itemValue="#{season.id}"
+				 />		
 			</h:selectOneMenu>
 			<p:commandButton 
 				value="Confirm Season" 
@@ -46,6 +51,20 @@
 				value="Save Season"
 				actionListener="#{seasonBean.createSeason}" 
 				update="setProductionForm:mainMessages,setProductionForm"
+				/>
+		</p:panel>
+		
+		<p:panel rendered="#{loginBean.admin}">
+			<h2>Set Default Season</h2>
+			<p>
+				This option sets the current season #{seasonBean.season.name} to 
+				the default for the application. Do you want to assign the season 
+				#{seasonBean.season.name} as the default? 
+			</p>
+			<p:commandButton
+				actionListener="#{seasonBean.doMakeDefault}"
+				value="Make #{seasonBean.season.name} the Default" 
+				ajax="false" 
 				/>
 		</p:panel>
 	</h:form>

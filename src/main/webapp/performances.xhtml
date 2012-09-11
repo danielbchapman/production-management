@@ -21,7 +21,7 @@
 
 <ui:define name="center">
 	<br />
-	<f:view contentType="text/html"  beforePhase="#{seasonBean.phaseInitializeSeasons}">
+	<f:view contentType="text/html"  beforePhase="#{loginBean.phaseSecurePage}">
 		<f:subview id="addPerformances" rendered="#{menuBean.scheduler}">
 			<p:growl id="messages" showDetail="true" />
 		
@@ -51,7 +51,7 @@
 <ui:define name="right">
 	<br />
 	<f:view>
-		<f:subview id="insertPerformances">
+		<f:subview id="insertPerformances" rendered="#{loginBean.scheduler}">
 			<p:growl id="messages" showDetail="true" />
 		    
 			<p:panel>

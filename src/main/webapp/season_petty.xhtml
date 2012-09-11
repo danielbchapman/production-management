@@ -10,27 +10,39 @@
 <body>
 <ui:composition template="/template/templateResponsive.xhtml">
 <ui:define name="main">
-<f:view contentType="text/html"  beforePhase="#{seasonBean.phaseInitializeSeasons}">
-	<h2>Petty Cash</h2>
-	<p>The petty cash system is not implemented yet, please be patient!</p>
+<f:view contentType="text/html" beforePhase="#{loginBean.phaseSecurePageSeasonCheck}">
+	<f:subview rendered="#{loginBean.user}">
+		<h1>Petty Cash</h1>
+		<p>Not implemented!</p>
+	</f:subview>
+	<f:subview rendered="#{not loginBean.user}">
+		<h1>NOT AUTHORIZED</h1>
+		<p>You are not authorized to view this page</p>
+	</f:subview>
 </f:view>
 </ui:define>
 
 <ui:define name="left">
 <f:view contentType="text/html"  beforePhase="#{seasonBean.phaseInitializeSeasons}">
-	<p>Under Construction!</p>
+	<f:subview rendered="#{loginBean.user}">
+		<p>Under Construction!</p>
+	</f:subview>
 </f:view>
 </ui:define>
 
 <ui:define name="right">
 <f:view contentType="text/html"  beforePhase="#{seasonBean.phaseInitializeSeasons}">
-	<p>Under Construction!</p>
+	<f:subview rendered="#{loginBean.user}">
+		<p>Under Construction!</p>
+	</f:subview>
 </f:view>
 </ui:define>
 
 <ui:define name="center">
 <f:view contentType="text/html"  beforePhase="#{seasonBean.phaseInitializeSeasons}">
-	<p>Under Construction!</p>
+	<f:subview rendered="#{loginBean.user}">
+		<p>Under Construction!</p>
+	</f:subview>
 </f:view>
 </ui:define>
 

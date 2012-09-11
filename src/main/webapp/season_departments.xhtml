@@ -10,7 +10,7 @@
 <body>
 <ui:composition template="/template/template.xhtml">
 <ui:define name="content">
-<f:view contentType="text/html"  beforePhase="#{seasonBean.phaseInitializeSeasons}">
+<f:view contentType="text/html" beforePhase="#{loginBean.phaseSecurePageSeasonCheck}">
 <f:subview id="departments" contentType="text/html">	
 		<p:growl id="messages" showDetail="true" showSummary="true"/>
 		<br />

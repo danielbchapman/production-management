@@ -11,11 +11,10 @@
 <ui:composition template="/template/template.xhtml">
 <ui:define name="content">
 <f:view contentType="text/html"  beforePhase="#{seasonBean.phaseInitializeSeasons}">
-	<h1 style="color:#fff">
-		<h:outputText value="#{seasonBean.season.name}"/>
-		 &gt;&gt;
-		<h:outputText value="#{seasonBean.selection.mode.label}"/>
-	</h1>
+	<div class="hero-unit">
+		<h1>#{seasonBean.season.name}</h1>
+		<p>Information and links TBD!</p>
+	</div>
 </f:view>	
 </ui:define>
 </ui:composition>

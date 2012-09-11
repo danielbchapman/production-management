@@ -248,7 +248,7 @@ new net.sf.jasperreports.engine.JREmptyDataSource()
 			<printWhenExpression><![CDATA[$F{tuesday} != null
 && $F{tuesday}.getEvents() != null
 && !$F{tuesday}.getEvents().isEmpty()]]></printWhenExpression>
-			<textField pattern="EEEEE M/d">
+			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement uuid="2ca3e321-b2be-4275-b9b0-ddb56c7259be" x="23" y="0" width="166" height="18"/>
 				<textElement>
 					<font isBold="false" isItalic="false"/>
@@ -335,7 +335,7 @@ new net.sf.jasperreports.engine.JREmptyDataSource()
 			<printWhenExpression><![CDATA[$F{wednesday} != null
 && $F{wednesday}.getEvents() != null
 && !$F{wednesday}.getEvents().isEmpty()]]></printWhenExpression>
-			<textField pattern="EEEEE M/d">
+			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement uuid="b8f55817-cc10-4e5e-a1e8-f6577df64e8c" x="23" y="0" width="166" height="18"/>
 				<textElement>
 					<font isBold="false" isItalic="false"/>
@@ -422,7 +422,7 @@ new net.sf.jasperreports.engine.JREmptyDataSource()
 			<printWhenExpression><![CDATA[$F{thursday} != null
 && $F{thursday}.getEvents() != null
 && !$F{thursday}.getEvents().isEmpty()]]></printWhenExpression>
-			<textField pattern="EEEEE M/d">
+			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement uuid="fd03e180-5973-45ae-8306-dd64f46c709e" x="23" y="0" width="166" height="18"/>
 				<textElement>
 					<font isBold="false" isItalic="false"/>
@@ -509,7 +509,7 @@ new net.sf.jasperreports.engine.JREmptyDataSource()
 			<printWhenExpression><![CDATA[$F{friday} != null
 && $F{friday}.getEvents() != null
 && !$F{friday}.getEvents().isEmpty()]]></printWhenExpression>
-			<textField pattern="EEEEE M/d">
+			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement uuid="0f0e2748-e77c-4219-9df1-91ca51a176dc" x="23" y="0" width="166" height="18"/>
 				<textElement>
 					<font isBold="false" isItalic="false"/>
@@ -596,7 +596,7 @@ new net.sf.jasperreports.engine.JREmptyDataSource()
 			<printWhenExpression><![CDATA[$F{saturday} != null
 && $F{saturday}.getEvents() != null
 && !$F{saturday}.getEvents().isEmpty()]]></printWhenExpression>
-			<textField pattern="EEEEE M/d">
+			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement uuid="97ebec20-7016-420c-8ede-eaa3508a9c58" x="23" y="0" width="166" height="18"/>
 				<textElement>
 					<font isBold="false" isItalic="false"/>
@@ -683,7 +683,7 @@ new net.sf.jasperreports.engine.JREmptyDataSource()
 			<printWhenExpression><![CDATA[$F{sunday} != null
 && $F{sunday}.getEvents() != null
 && !$F{sunday}.getEvents().isEmpty()]]></printWhenExpression>
-			<textField pattern="EEEEE M/d">
+			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement uuid="74ea3986-e9e2-4878-82f8-b308598d66ea" x="23" y="0" width="166" height="18"/>
 				<textElement>
 					<font isBold="false" isItalic="false"/>

@@ -115,6 +115,27 @@
 		  </h:form>
 		</p:tab>
 		
+		<p:tab title="Keys">
+			<p:panel>
+				<h:form styleClass="form-horizontal">
+					<legend>Database Keys</legend>
+					
+					<ui:repeat var="kv" value="#{administrationBean.settings}">
+						<admin:keyValue 
+							value="#{kv}" 
+							saveListener="#{kv.save}"
+							deleteListener="#{kv.delete}" 
+						/>
+					</ui:repeat>
+					<legend>Add Key</legend>
+					<admin:keyValue 
+						value="#{administrationBean.newKey}" 
+						saveListener="#{administrationBean.saveNewKey}"
+					>
+					</admin:keyValue>				
+				</h:form>
+			</p:panel>			
+		</p:tab>
 		<br />
 		
 		<p:tab title="Stress Tests">

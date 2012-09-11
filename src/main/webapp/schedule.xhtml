@@ -10,13 +10,13 @@
 <body>
 <ui:composition template="/template/templateResponsive.xhtml">
 <ui:define name="main">
-<f:view contentType="text/html"  beforePhase="#{seasonBean.phaseInitializeSeasons}">
+<f:view contentType="text/html" beforePhase="#{loginBean.phaseSecurePage}">
 	<h1>Schedule Module</h1>
 </f:view>
 </ui:define>
 
 <ui:define name="left">
-<f:view contentType="text/html"  beforePhase="#{seasonBean.phaseInitializeSeasons}">
+<f:view contentType="text/html"  beforePhase="#{loginBean.phaseSecurePage}">
 	<h2>City Management</h2>
 	<p>
 	The <a href="city.xhtml">CITY MANGMENT</a> provides an interface for managing information
@@ -44,7 +44,7 @@
 	<p>
 	<a href="performances.xhtml">PERFORMANCES</a> provides an interface for managing the length and
 	properties of a performance. This allows the calendar to be rapidly updated to adjust for increased
-	call times or other various time factors. Generally speaking it is used to esablish an estimated strike
+	call times or other various time factors. Generally speaking it is used to establish an estimated strike
 	in and out time.
 	</p> 
 	

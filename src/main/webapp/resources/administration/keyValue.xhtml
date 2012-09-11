@@ -1,0 +1,48 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"	
+	xmlns:p="http://primefaces.org/ui">
+	<composite:interface>
+		<composite:attribute name="value" type="com.danielbchapman.production.IKeyValue"/>
+		<composite:attribute 
+			name="saveListener" 
+			method-signature="void actionListener(javax.faces.event.ActionEvent)"
+		/>
+		<composite:attribute 
+			name="deleteListener" 
+			method-signature="void actionListener(javax.faces.event.ActionEvent)"
+		/>
+	</composite:interface>
+	
+	<composite:implementation>
+		<div class="control-group">
+			<p:inputText 
+				id="kv_key"
+				value="#{cc.attrs.value.key}"
+			/>
+			<p:inputText 
+				id="kv_value"
+				value="#{cc.attrs.value.value}"
+			/>
+			<p:watermark value="Value..." for="#{cc.attrs.id}:kv_value"/>
+			<p:watermark value="Key..." for="#{cc.attrs.id}:kv_key"/>
+			
+			<p:commandButton 
+				value="Update"
+				actionListener="#{cc.attrs.saveListener}"
+				update="@form"
+				rendered="#{cc.attrs.saveListener ne null}"
+			/>
+			
+			<p:commandButton 
+				value="Delete"
+				actionListener="#{cc.attrs.deleteListener}"
+				update="@form"
+				rendered="#{cc.attrs.deleteListener ne null}"
+			/>
+		</div>
+		
+	</composite:implementation>
+</html>
