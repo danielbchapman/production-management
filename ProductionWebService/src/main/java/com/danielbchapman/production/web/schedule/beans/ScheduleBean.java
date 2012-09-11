@@ -8,9 +8,11 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
+import java.util.TreeMap;
 import java.util.concurrent.locks.ReentrantLock;
 
 import javax.faces.application.FacesMessage;
@@ -51,6 +53,7 @@ import com.danielbchapman.production.entity.PerformanceSchedule;
 import com.danielbchapman.production.entity.Season;
 import com.danielbchapman.production.entity.Venue;
 import com.danielbchapman.production.entity.Week;
+import com.danielbchapman.production.entity.Performance.PerformanceEvent;
 import com.danielbchapman.production.web.production.beans.AdministrationBean;
 import com.danielbchapman.production.web.production.beans.SeasonBean;
 import com.danielbchapman.production.web.schedule.beans.LocationBean.HotelWrapper;
@@ -76,7 +79,9 @@ public class ScheduleBean implements Serializable
 	private Selection currentSelection = Selection.CALENDAR;
 	private Day day;
 	private DayUI dayUi = new DayUI(new Day());
-	private EventMapping eventEntity;
+	private String eventEntityId;
+	private EventMapping eventEntityRef;
+	private HashMap<Long, HashSet<String>> tracking = new HashMap<Long, HashSet<String>>();
 
 	private ReentrantLock modelLock = new ReentrantLock();
 	//@formatter:off
@@ -120,8 +125,9 @@ public class ScheduleBean implements Serializable
 
 	private PerformanceUI performanceUi = new PerformanceUI(new Date(), null);
 
-	private ScheduleModel scheduleModel;
+	private ScheduleModel scheduleModelRef;
 	private ArrayList<Week> scheduleModelWeeks; // This is a hook for debuging
+
 	private SeasonDaoRemote seasonDao;
 
 	private ComplexEntityScheduleEvent selectedEvent;
@@ -165,7 +171,7 @@ public class ScheduleBean implements Serializable
 	public void cancel(ActionEvent evt)
 	{
 		day = new Day();
-		eventEntity = new Event();
+		eventSelect(new Event(), null);
 	}
 
 	public void confirmSeason(ActionEvent evt)
@@ -173,7 +179,7 @@ public class ScheduleBean implements Serializable
 		if(tmpSeason != null)
 		{
 			selectedSeason = getSeasonDao().getSeason(tmpSeason);
-			scheduleModel = null;
+			scheduleModelRef = null;
 			performanceSchedules = null;
 		}
 	}
@@ -230,7 +236,7 @@ public class ScheduleBean implements Serializable
 
 	public EventMapping getEventEntity()
 	{
-		return eventEntity;
+		return eventEntityRef;
 	}
 
 	public SelectItem[] getHourItems()
@@ -297,13 +303,17 @@ public class ScheduleBean implements Serializable
 
 	public synchronized ScheduleModel getScheduleModel()
 	{
-		if(scheduleModel != null)
-			return scheduleModel;
 		
+		System.out.println("--Model method called");
+		if(scheduleModelRef != null)
+			return scheduleModelRef;
+		
+//		long start = System.currentTimeMillis();
+//		System.out.println("--FULL MODEL REFRESH: ");
 //		synchronized(ScheduleBean.this)
 //		{
 //			modelLock.lock();
-			ScheduleModel prepare = new DefaultScheduleModel();	
+			ScheduleModel prepareRef = new DefaultScheduleModel();	
 			
 			try
 			{
@@ -313,83 +323,30 @@ public class ScheduleBean implements Serializable
 				for(Week w : scheduleModelWeeks)
 				{
 					ArrayList<Day> days = getCalendarDao().getActiveDaysForWeek(w);
-					for(Day d : days)
+					for(Day day : days)
 					{
-						//@formatter:off
-						ComplexEntityScheduleEvent dayEvent =
-								new ComplexEntityScheduleEvent(
-										"CAST: " + d.getCastLocation() 
-										+ " CREW: " + d.getCrewLocation(),
-										d.getDate(), 
-										d.getDate(),
-										true
-										);
-						//@formatter:on					
-						dayEvent.setBackingEntity(d);
-						dayEvent.setStyleClass("eventDay");
+						renderDay(day, prepareRef);
 
-						prepare.addEvent(dayEvent);
-						ArrayList<EventMapping> events = getCalendarDao().getEventsAndPerformancesForDay(d);
+						ArrayList<EventMapping> events = getCalendarDao().getEventsAndPerformancesForDay(day);
 						for(EventMapping e : events)
 						{
 							if(!companySecurity)
 								if(!e.isPublicEvent() && !e.isPerformance())
 									continue;
-
-							ComplexEntityScheduleEvent se;
-							if(e.getEnd() == null)
-							{
-								Calendar c = Calendar.getInstance();
-								c.setTime(e.getStartDate());
-								c.add(Calendar.HOUR, 2);
-								se = new ComplexEntityScheduleEvent(e.getDescription(), e.getStartDate(), c.getTime(), false);							
-							}
-							else
-								se = new ComplexEntityScheduleEvent(e.getDescription(), e.getStartDate(), e.getEndDate(), false);
-
-							se.setBackingEntity(e);
-
+							
 							if(e instanceof Performance)
-							{
-								Performance p = (Performance) e;
-								se.setStyleClass("eventPerformance");
-
-								if(companySecurity)
-								{
-									ArrayList<Performance.PerformanceEvent> performanceEvents = p.getEventSequence();
-									for(Performance.PerformanceEvent seq : performanceEvents)
-									{
-										ComplexEntityScheduleEvent sub = 
-												new ComplexEntityScheduleEvent( seq.getDescription(), seq.getStartDate(), seq.getEndDate(), false);
-										sub.setBackingEntity(seq);
-										sub.setStyleClass("eventPerformanceLocked");
-										prepare.addEvent(sub);
-									}								
-								}
-//									else
-//									{
-//										ComplexEntityScheduleEvent perf = new ComplexEntityScheduleEvent(p.getDescription(), p.getStartDate(), p.getEndDate(), false);
-//										perf.setStyleClass(styleClass)
-//										scheduleModel.addEvent(;
-//									}
-							}
+								renderPerformance(day, (Performance) e, prepareRef, companySecurity);
 							else
 							{
-								if(e.isCast() && !e.isCrew())
-									se.setStyleClass("eventScheduleCast");
-								if(!e.isCast() && e.isCrew())
-									se.setStyleClass("eventScheduleCrew");
-								if(e.isCast() && e.isCrew())
-									se.setStyleClass("eventSchedule");
-								if(!e.isCast() && !e.isCrew())
-									se.setStyleClass("eventSchedule");
+								ComplexEntityScheduleEvent se = createEvent(e);
+						
+								
+								renderEvent(day, se, prepareRef);
 							}
-
-							prepare.addEvent(se);
 						}
 					}
 				}
-				scheduleModel = prepare;
+				scheduleModelRef = prepareRef;
 			}
 			catch (Exception e)
 			{
@@ -403,6 +360,7 @@ public class ScheduleBean implements Serializable
 //					modelLock.unlock();
 //			}
 
+//			System.out.println("--FULL? MODEL REFRESH: " + ((System.currentTimeMillis() - start )/ 1000) + " seconds");
 			return getScheduleModel();
 //		}
 	}
@@ -477,7 +435,7 @@ public class ScheduleBean implements Serializable
 
 	public boolean isExistingEvent()
 	{
-		if(eventEntity == null || eventEntity.getId() == null)
+		if(eventEntityRef == null || eventEntityRef.getId() == null)
 			return false;
 		return true;
 	}
@@ -547,7 +505,7 @@ public class ScheduleBean implements Serializable
 			unsavedEvent.setDay(backingDay);
 
 			selectedEvent.setBackingEntity(unsavedEvent);
-			eventEntity = unsavedEvent;
+			eventSelect(unsavedEvent, selectedEvent.getId());
 
 			Calendar tmp = Calendar.getInstance();
 			tmp.setTime(selection);
@@ -591,15 +549,16 @@ public class ScheduleBean implements Serializable
 
 		if(selectedEvent.getBackingEntity() instanceof Event)
 		{
-			eventEntity = (Event) selectedEvent.getBackingEntity();
-			timeUi = new TimeUI(eventEntity.getStartDate(), eventEntity.getEndDate());
+			eventSelect((Event) selectedEvent.getBackingEntity(), selectedEvent.getId());
+			eventSelect(selectedEvent);
+			timeUi = new TimeUI(eventEntityRef.getStartDate(), eventEntityRef.getEndDate());
 		}
 
 		else
 			if(selectedEvent.getBackingEntity() instanceof Performance)
 			{
+				eventSelect(selectedEvent);
 				Performance p = (Performance) selectedEvent.getBackingEntity();
-				eventEntity = p;
 
 				if(p.getId() == null)
 					performanceUi = new PerformanceUI(p.getStartDate(), null);
@@ -618,20 +577,17 @@ public class ScheduleBean implements Serializable
 			}
 	}
 
-	public void refreshModel(ActionEvent evt)
-	{
-		if(evt != null)
-			scheduleModel = null;
-	}
-
 	public void removeDay(ActionEvent evt)
 	{
 		if(Utility.getBean(LoginBean.class).isScheduler())
 		{
+			Long id = day.getId().longValue();
 			getCalendarDao().removeItem(day);
-			scheduleModel = null;
+			
+			deleteEvents(id, getScheduleModel());
+					
 			day = new Day();
-			eventEntity = new Event();				
+			eventSelectClear();				
 		}
 	}
 
@@ -639,10 +595,15 @@ public class ScheduleBean implements Serializable
 	{
 		if(Utility.getBean(LoginBean.class).isScheduler())
 		{
-			getCalendarDao().removeItem(eventEntity);
-			scheduleModel = null;
+			Long id = eventEntityRef.getDay().getId();
+			getCalendarDao().removeItem(eventEntityRef);
+			
+			HashSet<String> ids = tracking.get(id);
+			ids.remove(eventEntityId);
+			tracking.put(id, ids);
+			
 			day = new Day();
-			eventEntity = new Event();				
+			eventSelectClear();
 		}
 	}
 
@@ -650,10 +611,25 @@ public class ScheduleBean implements Serializable
 	{
 		if(Utility.getBean(LoginBean.class).isScheduler())
 		{
-			getCalendarDao().removeItem(eventEntity);
-			scheduleModel = null;
+			
+			Long dayId = eventEntityRef.getDay().getId();
+			getCalendarDao().removeItem(eventEntityRef);
+			
+			HashSet<String> events = tracking.get(dayId);
+			ScheduleModel local = getScheduleModel();
+			for(String id : events)
+			{
+				ComplexEntityScheduleEvent ref = (ComplexEntityScheduleEvent) local.getEvent(id);
+				Object ent = ref.getBackingEntity();
+				if(ent instanceof Performance || ent instanceof PerformanceEvent)
+				{
+					local.deleteEvent(ref);
+					events.remove(id);
+				}
+			}
+
 			day = new Day();
-			eventEntity = new Event();			
+			eventSelectClear();			
 		}
 	}
 
@@ -691,17 +667,17 @@ public class ScheduleBean implements Serializable
 				ref.setCrewHotel(null);
 
 			getCalendarDao().saveDay(ref);
-
-			scheduleModel = null;
+			
+			renderDay(ref, getScheduleModel());
 			day = new Day();
 			dayUi = new DayUI(day);
-			eventEntity = new Event();
+			eventSelectClear();
 		}
 	}
 
 	public void saveEvent(ActionEvent evt)
 	{
-		if(eventEntity != null && Utility.getBean(LoginBean.class).isScheduler())
+		if(eventEntityRef != null && Utility.getBean(LoginBean.class).isScheduler())
 		{
 			// Date date = selectedEvent.getStartDate();//BUG - > Use the hard reference
 			EventMapping tmpEvent = (EventMapping) selectedEvent.getBackingEntity();
@@ -721,14 +697,14 @@ public class ScheduleBean implements Serializable
 			// Week week = calendarDao.getOrCreateWeek(date, selectedProduction);
 			// Day d = calendarDao.getOrCreateDay(date, week);
 
-			eventEntity.setDay(assignedDay);
-			eventEntity.setStart(timeUi.getStartTime(assignedDay.getDate()));
+			eventEntityRef.setDay(assignedDay);
+			eventEntityRef.setStart(timeUi.getStartTime(assignedDay.getDate()));
 			Date endTime = timeUi.getEndTime(assignedDay.getDate());
 
-			if(endTime.before(eventEntity.getStartDate()))
+			if(endTime.before(eventEntityRef.getStartDate()))
 			{
 				Calendar tmpCal = Calendar.getInstance();
-				tmpCal.setTime(eventEntity.getStartDate());
+				tmpCal.setTime(eventEntityRef.getStartDate());
 
 				if(tmpCal.get(Calendar.HOUR) > 22)
 					tmpCal.add(Calendar.HOUR, 2);
@@ -741,22 +717,22 @@ public class ScheduleBean implements Serializable
 				endTime = tmpCal.getTime();
 			}
 
-			eventEntity.setEnd(endTime);
+			eventEntityRef.setEnd(endTime);
 			selectedEvent.setEndDate(endTime);
-			eventEntity.setDay(assignedDay);
-			getCalendarDao().saveEvent(eventEntity);
-			Utility.raiseInfo("Event Updated", eventEntity.getDescription());
+			eventEntityRef.setDay(assignedDay);
+			getCalendarDao().saveEvent(eventEntityRef);
+			Utility.raiseInfo("Event Updated", eventEntityRef.getDescription());
+			
+			renderEvent(assignedDay, createEvent(eventEntityRef), getScheduleModel(), null);
 		}
 
-		scheduleModel = null;
-		scheduleModel = getScheduleModel();
 		day = new Day();
-		eventEntity = new Event();
+		eventSelectClear();
 	}
 
 	public void savePerformance(ActionEvent evt)
 	{
-		if(eventEntity != null && Utility.getBean(LoginBean.class).isScheduler())
+		if(eventEntityRef != null && Utility.getBean(LoginBean.class).isScheduler())
 		{
 			Performance tmpPerf;
 			PerformanceSchedule schedule = getCalendarDao().getPerformanceSchedule(
@@ -804,12 +780,12 @@ public class ScheduleBean implements Serializable
 
 			getCalendarDao().savePerformance(tmpPerf);
 			Utility.raiseInfo("Performance Saved", tmpPerf.getDescription());
+			
+			renderPerformance(assignedDay, tmpPerf, getScheduleModel(), true);
 		}
 
-		scheduleModel = null;
-		scheduleModel = getScheduleModel();
 		day = new Day();
-		eventEntity = new Event();
+		eventSelectClear();
 	}
 
 	public void setDay(Day day)
@@ -819,7 +795,7 @@ public class ScheduleBean implements Serializable
 
 	public void setEventEntity(Event event)
 	{
-		this.eventEntity = event;
+		this.eventEntityRef = event;
 	}
 
 	public void setSelectedEvent(ScheduleEvent selectedEvent)
@@ -837,6 +813,146 @@ public class ScheduleBean implements Serializable
 		this.tmpSeason = tmpSeason;
 	}
 
+	private ComplexEntityScheduleEvent createEvent(EventMapping mapping)
+	{
+		ComplexEntityScheduleEvent se;
+		if(mapping.getEnd() == null)
+		{
+			Calendar c = Calendar.getInstance();
+			c.setTime(mapping.getStartDate());
+			c.add(Calendar.HOUR, 2);
+			se = new ComplexEntityScheduleEvent(
+					mapping.getDescription(), 
+					mapping.getStartDate(), 
+					c.getTime(), 
+					false);							
+		}
+		else
+			se = new ComplexEntityScheduleEvent(
+					mapping.getDescription(), 
+					mapping.getStartDate(), 
+					mapping.getEndDate(), 
+					false);
+
+		se.setBackingEntity(mapping);
+		
+		return se;
+	}
+	private void renderPerformance(Day day, Performance perf, ScheduleModel model, boolean all)
+	{
+		ComplexEntityScheduleEvent se = createEvent(perf);
+
+//		se.setStyleClass("eventPerformance");
+
+		if(all)
+		{
+			ArrayList<Performance.PerformanceEvent> performanceEvents = perf.getEventSequence();
+			for(Performance.PerformanceEvent seq : performanceEvents)
+			{
+				ComplexEntityScheduleEvent sub = 
+						new ComplexEntityScheduleEvent( 
+								seq.getDescription(), 
+								seq.getStartDate(), 
+								seq.getEndDate(), 
+								false);
+				
+				sub.setBackingEntity(seq);
+				renderEvent(day, sub, model, "eventPerformanceLocked");
+			}				
+		}
+
+		renderEvent(day, se, model, "eventPerformance");					
+	}
+	
+	private void renderEvent(Day day, ComplexEntityScheduleEvent event, ScheduleModel model)
+	{
+		renderEvent(day, event, model, null);
+	}
+	
+	private void renderEvent(Day day, ComplexEntityScheduleEvent event, ScheduleModel model, String styleClass)
+	{
+		if(styleClass == null)
+		{
+			styleClass = "none";
+			
+			if(event.getBackingEntity() instanceof EventMapping)
+			{
+				EventMapping map = (EventMapping) event.getBackingEntity();
+				if(map.isCast() && !map.isCrew())
+					styleClass = "eventScheduleCast";
+				
+				if(!map.isCast() && map.isCrew())
+					styleClass = "eventScheduleCrew";
+				
+				if(map.isCast() && map.isCrew())
+					styleClass = "eventSchedule";
+				
+				if(!map.isCast() && !map.isCrew())
+					styleClass = "eventSchedule";	
+			}
+			
+		}
+		
+		if(tracking.get(day.getId()) == null)
+				tracking.put(day.getId(), new HashSet<String>());
+		
+		tracking.get(day.getId()).add(event.getId());
+		event.setStyleClass(styleClass);
+		model.addEvent(event);
+	}
+	
+	private void renderDay(Day day, ScheduleModel model)
+	{
+		ComplexEntityScheduleEvent dayEvent =
+				new ComplexEntityScheduleEvent(
+						"CAST: " + day.getCastLocation() 
+						+ " CREW: " + day.getCrewLocation(),
+						day.getDate(), 
+						day.getDate(),
+						true
+						);
+
+		dayEvent.setBackingEntity(day);
+
+		HashSet<String> track = new HashSet<String>();
+		track.add(dayEvent.getId());
+		tracking.put(day.getId(), track);
+		renderEvent(day, dayEvent, model, "eventDay");
+	}
+	
+	private void deleteEvents(Long dayId, ScheduleModel model)
+	{
+		HashSet<String> events = tracking.get(dayId);
+		if(events != null)
+			for(String id : events)
+				model.deleteEvent(model.getEvent(id));
+		
+		tracking.remove(dayId);
+	}
+	
+	private void eventSelect(ComplexEntityScheduleEvent event)
+	{
+		if(event.getBackingEntity() instanceof Day)
+		{
+			Utility.raiseError("Unable to select Day" , "The method 'eventSelect' is valid only for EventMappings");
+			return;
+		}
+			
+		eventSelect((EventMapping) event.getBackingEntity(), event.getId());
+	}
+	
+	private void eventSelect(EventMapping map, String id)
+	{
+		eventEntityRef = map;
+		eventEntityId = id;
+	}
+	
+	private void eventSelectClear()
+	{
+		eventEntityRef = new Event();
+		eventEntityId = null;
+	}
+	
 	private void addMessage(FacesMessage message)
 	{
 		FacesContext.getCurrentInstance().addMessage(null, message);
@@ -937,6 +1053,9 @@ public class ScheduleBean implements Serializable
 		}
 		
 	}
+	
+	@Data
+	@EqualsAndHashCode(callSuper=false)
 	public class ComplexEntityScheduleEvent extends DefaultScheduleEvent implements Serializable
 	{
 		private static final long serialVersionUID = 3L;
@@ -945,16 +1064,6 @@ public class ScheduleBean implements Serializable
 		public ComplexEntityScheduleEvent(String title, Date start, Date end, boolean allDay)
 		{
 			super(title, start, end, allDay);
-		}
-
-		public Object getBackingEntity()
-		{
-			return backingEntity;
-		}
-
-		public void setBackingEntity(Object backingEntity)
-		{
-			this.backingEntity = backingEntity;
 		}
 	}
 
@@ -1178,7 +1287,7 @@ public class ScheduleBean implements Serializable
 
 			getCalendarDao().createPerformanceAdvance(performance);
 			Utility.raiseInfo("Advance Created", "Advances are updated via the Venue module");
-			refreshModel(evt);
+			//refreshModel(evt);
 		}
 
 		/**
