@@ -378,6 +378,30 @@ public class LoginBean implements Serializable
 	}
 
 	/**
+	 * A simple check to make sure this page should be displayed.
+	 */
+	public void phaseSecurePage(PhaseEvent evt)
+	{
+		if(!isCompanyMember())
+			Utility.redirect("not_authorized.xhtml");
+	}
+	
+	/**
+	 * A simple security check that then passes to Initialize seasons
+	 * if failed.
+	 */
+	public void phaseSecurePageSeasonCheck(PhaseEvent evt)
+	{
+		if(!isCompanyMember())
+		{
+			Utility.redirect("not_authorized.xhtml");
+			return;
+		}
+			
+		Utility.getBean(SeasonBean.class).phaseInitializeSeasons(evt);
+	}
+	
+	/**
 	 * A method to destroy the current objects backing a view.
 	 */
 	protected synchronized void cleanBeans()

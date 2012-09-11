@@ -670,4 +670,39 @@ public class Utility
 			return ee5;
 		}
 	}
+	
+	public static Integer safeInteger(String val)
+	{
+		try
+		{
+			return Integer.valueOf(val);
+		}
+		catch (Exception e)
+		{
+			return null;
+		}
+	}
+	
+	public static Long safeLong(String val)
+	{
+		try
+		{
+			return Long.valueOf(val);
+		}
+		catch (Exception e)
+		{
+			return null;
+		}
+	}
+	
+	public static boolean minimum(String key, int length)
+	{
+		if(key == null)
+			return false;
+		
+		if(key.length() >= length)
+			return true;
+		return false;
+	}
+	
 }
