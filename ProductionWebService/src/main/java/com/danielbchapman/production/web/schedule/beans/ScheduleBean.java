@@ -300,7 +300,6 @@ public class ScheduleBean implements Serializable
 		if(scheduleModel != null)
 			return scheduleModel;
 		
-		System.out.println("Calling model " + Thread.currentThread().toString());
 //		synchronized(ScheduleBean.this)
 //		{
 //			modelLock.lock();
