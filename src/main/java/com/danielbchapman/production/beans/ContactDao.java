@@ -255,7 +255,7 @@ public class ContactDao implements ContactDaoRemote
 	{
 		/* @formatter:off*/
 		String sql = 
-						"SELECT \"id\" FROM (SELECT " +
+						"SELECT id FROM (SELECT " +
 						"  sc.id AS \"id\", " +
 						"  g.name AS \"name\", " +
 						"  c.subGroup AS \"subGroup\", " +
@@ -300,7 +300,8 @@ public class ContactDao implements ContactDaoRemote
 						"  \"subGroup\", " +
 						"  \"lastName\", " +
 						"  \"firstName\" " +
-						"  ) as DerivedForMySql " ;	
+						"  ) as DerivedForMySql " ;
+		
 		/*@formatter:on*/
 
 		List<Long> ids = null;

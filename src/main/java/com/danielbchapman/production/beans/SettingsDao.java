@@ -23,12 +23,11 @@ public class SettingsDao implements SettingsDaoRemote
 	@Override
 	public String get(String key)
 	{
-		Settings value = EntityInstance.getSingleResult("SELECT s FROM Settings s WHERE s.key = ?1", Settings.class, key);
-		
-		if(value == null)
+		Settings entity = getEntity(key);
+		if(entity == null)
 			return null;
 		else
-			return value.getValue();
+			return entity.getValue();
 	}
 
 	/* (non-Javadoc)
@@ -37,9 +36,11 @@ public class SettingsDao implements SettingsDaoRemote
 	@Override
 	public void put(String key, String value)
 	{
-		Settings entity = EntityInstance.getSingleResult("SELECT s FROM Settings s WHERE s.key = ?1", Settings.class, key);
+		Settings entity = getEntity(key);
 		if(entity == null)
 			entity = new Settings(key, value);
+		else
+			entity.setValue(value);
 		
 		EntityInstance.saveObject(entity);
 	}
@@ -53,4 +54,16 @@ public class SettingsDao implements SettingsDaoRemote
 		return EntityInstance.getResultList("SELECT s FROM Settings s ORDER BY s.key", Settings.class);
 	}
 
+	@Override
+	public void delete(String key)
+	{
+		Settings s = getEntity(key);
+		if(s != null)
+			EntityInstance.deleteObject(s);
+	}
+
+	private Settings getEntity(String key)
+	{
+		return EntityInstance.getSingleResult("SELECT s FROM Settings s WHERE s.key = ?1", Settings.class, key);
+	}
 }

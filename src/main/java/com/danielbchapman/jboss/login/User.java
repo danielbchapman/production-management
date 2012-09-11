@@ -7,18 +7,20 @@ import java.security.NoSuchAlgorithmException;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import lombok.Data;
 
 @Entity
 @Data
+@Table(name="jpa_user")
 public class User implements Serializable
 {
   private static final long serialVersionUID = 1L;
   @Id
-  @Column(length=80, name="user")
+  @Column(length=80, name="jpa_user")
   private String user;
-  @Column(length=256, name="password")
+  @Column(length=256, name="jpa_password")
   private String password;
   
   public User()
