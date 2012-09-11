@@ -67,24 +67,37 @@
 		<shared-cache-mode>NONE</shared-cache-mode>
 
 		<properties>
-			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+			
 
+			<!-- Postgres -->
+			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+			<property name="javax.persistence.jdbc.user" value="tac"/>
+			<property name="javax.persistence.jdbc.password" value="acting_co2013sql"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://66.225.201.150/production"/>			
+			<property name="eclipselink.jdbc.uppercase-columns" value="true" />
+			<property name="eclipselink.target-database" value="PostgreSQL"/>
+			<property name="eclipselink.platform.class.name" value="org.eclipse.persistence.platform.database.PostgreSQLPlatform" />			
+			
 			<!-- 
 			<property name="javax.persistence.jdbc.user" value="sa"/>
 			<property name="javax.persistence.jdbc.password" value="acting_co"/>
 			<property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/C:\Database\Data\production;"/>
 			 -->
-			    
+			 
+			<!-- 			    
 			<property name="javax.persistence.jdbc.user" value="b1cc11382e6b32"/>
 			<property name="javax.persistence.jdbc.password" value="3e9fc147"/>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://us-cdbr-east.cleardb.com/af_2bbc968cb42f0b0"/>
-			
+			<property name="eclipselink.target-database" value="MySQL"/>
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+			<property name="eclipselink.platform.class.name" value="org.eclipse.persistence.platform.database.MySQLPlatform" />			
+			 -->
 			<property name="eclipselink.ddl-generation" value="create-tables"/>
 			<property name="eclipselink.ddl-generation.output-mode" value="both"/>
-			<property name="eclipselink.target-database" value="MySQL"/>
+			
 			<property name="eclipselink.weaving" value="false" />
 			<property name="eclipselink.logging.level" value="WARNING"/>
-			<property name="eclipselink.platform.class.name" value="org.eclipse.persistence.platform.database.MySQLPlatform" />
+
 		</properties>				
 	</persistence-unit>
 </persistence>

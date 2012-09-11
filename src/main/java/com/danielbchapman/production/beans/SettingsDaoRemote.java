@@ -43,4 +43,9 @@ public interface SettingsDaoRemote
 	 * @param value the value to assign to this key
 	 */
 	public void put(String key, String value);
+	
+	/**
+	 * @param key the key to remove from the database
+	 */
+	public void delete(String key);
 }

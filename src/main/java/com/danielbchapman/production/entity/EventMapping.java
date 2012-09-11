@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
@@ -23,12 +24,16 @@ public class EventMapping extends BaseEntity implements Comparable<EventMapping>
 	@Lob
 	private String description = "";
 	@Temporal(value = TemporalType.TIME)
+	@Column(name="time_start")
 	private Date start;
 	@Temporal(TemporalType.TIME)
+	@Column(name="time_end")
 	private Date end;
 	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH })
 	private Day day;
+	@Column(name="cast_event")
 	private boolean cast;
+	@Column(name="crew_event")
 	private boolean crew;
 	@Getter
 	@Setter
