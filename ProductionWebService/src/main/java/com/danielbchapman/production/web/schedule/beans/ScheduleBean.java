@@ -52,6 +52,7 @@ import com.danielbchapman.production.entity.Season;
 import com.danielbchapman.production.entity.Venue;
 import com.danielbchapman.production.entity.Week;
 import com.danielbchapman.production.web.production.beans.AdministrationBean;
+import com.danielbchapman.production.web.production.beans.SeasonBean;
 import com.danielbchapman.production.web.schedule.beans.LocationBean.HotelWrapper;
 
 /**
@@ -204,7 +205,7 @@ public class ScheduleBean implements Serializable
 
 			if(tmpSeasons != null && tmpSeasons.size() > 0)
 			{
-				selectedSeason = tmpSeasons.get(tmpSeasons.size() - 1);// Select most recent production
+				selectedSeason = Utility.getBean(SeasonBean.class).getSeason();
 				tmpSeason = selectedSeason.getId();
 			}
 
@@ -299,9 +300,10 @@ public class ScheduleBean implements Serializable
 		if(scheduleModel != null)
 			return scheduleModel;
 		
-		synchronized(ScheduleBean.this)
-		{
-			modelLock.lock();
+		System.out.println("Calling model " + Thread.currentThread().toString());
+//		synchronized(ScheduleBean.this)
+//		{
+//			modelLock.lock();
 			ScheduleModel prepare = new DefaultScheduleModel();	
 			
 			try
@@ -392,18 +394,18 @@ public class ScheduleBean implements Serializable
 			}
 			catch (Exception e)
 			{
-				modelLock.unlock();
+//				modelLock.unlock();
 				e.printStackTrace();
 				throw new RuntimeException(e.getMessage(), e);
 			}
-			finally
-			{
-				if(modelLock.isLocked())
-					modelLock.unlock();
-			}
+//			finally
+//			{
+//				if(modelLock.isLocked())
+//					modelLock.unlock();
+//			}
 
 			return getScheduleModel();
-		}
+//		}
 	}
 
 	/**
@@ -421,6 +423,12 @@ public class ScheduleBean implements Serializable
 
 	public Season getSelectedSeason()
 	{
+		if(selectedSeason == null)
+			selectedSeason = Utility.getBean(SeasonBean.class).getSeason();
+		
+		if(selectedSeason == null)
+			selectedSeason = Utility.getBean(SeasonBean.class).getDefaultSeason();
+		
 		return selectedSeason;
 	}
 
@@ -619,7 +627,7 @@ public class ScheduleBean implements Serializable
 
 	public void removeDay(ActionEvent evt)
 	{
-		if(!Utility.getBean(LoginBean.class).isScheduler())
+		if(Utility.getBean(LoginBean.class).isScheduler())
 		{
 			getCalendarDao().removeItem(day);
 			scheduleModel = null;
@@ -630,7 +638,7 @@ public class ScheduleBean implements Serializable
 
 	public void removeEvent(ActionEvent evt)
 	{
-		if(!Utility.getBean(LoginBean.class).isScheduler())
+		if(Utility.getBean(LoginBean.class).isScheduler())
 		{
 			getCalendarDao().removeItem(eventEntity);
 			scheduleModel = null;
@@ -641,7 +649,7 @@ public class ScheduleBean implements Serializable
 
 	public void removePerformance(ActionEvent evt)
 	{
-		if(!Utility.getBean(LoginBean.class).isScheduler())
+		if(Utility.getBean(LoginBean.class).isScheduler())
 		{
 			getCalendarDao().removeItem(eventEntity);
 			scheduleModel = null;

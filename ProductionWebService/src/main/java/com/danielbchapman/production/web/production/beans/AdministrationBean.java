@@ -8,13 +8,18 @@ import javax.faces.model.SelectItem;
 
 import lombok.Data;
 import lombok.Getter;
+import lombok.Setter;
 
 import com.danielbchapman.composite.RoleSelection;
 import com.danielbchapman.jboss.login.LoginBeanRemote;
 import com.danielbchapman.jboss.login.Roles;
 import com.danielbchapman.jboss.login.User;
+import com.danielbchapman.production.IKeyValue;
 import com.danielbchapman.production.Utility;
 import com.danielbchapman.production.beans.OptionsDaoRemote;
+import com.danielbchapman.production.beans.SettingsDaoRemote;
+import com.danielbchapman.production.entity.Settings;
+import com.danielbchapman.production.web.schedule.beans.LoginBean;
 
 public class AdministrationBean implements Serializable
 {
@@ -24,10 +29,31 @@ public class AdministrationBean implements Serializable
 	private String editableUserName;
 	private LoginBeanRemote login;
 	private OptionsDaoRemote options;
+	private SettingsDaoRemote settingsDao;
 	private String password;
 	private String reportingDocumentRoot;
 	private String role;
 	private String user;
+	@Getter
+	@Setter
+	private SettingsWrapper newKey = new SettingsWrapper(null, null);
+	
+	public void saveNewKey(ActionEvent evt)
+	{
+		if(Utility.minimum(newKey.key, 5))
+		{
+			newKey.save(evt);
+			newKey = new SettingsWrapper(null, null);
+			settings = null;
+		}
+		else
+		{
+			Utility.raiseError(
+					"Unable to save", 
+					"The key {0}was not of valid length (5)"
+						.replaceAll("{0}", newKey.key));
+		}
+	}
 	
 	private UserAdd userAdd = new UserAdd();
 	@Getter
@@ -36,6 +62,7 @@ public class AdministrationBean implements Serializable
 	private ArrayList<SelectItem> users;
 
 	private String venueDocumentRoot;
+	private ArrayList<SettingsWrapper> settings;
 
 	public void clearFields(ActionEvent evt)
 	{
@@ -80,6 +107,29 @@ public class AdministrationBean implements Serializable
 	public String getPassword()
 	{
 		return password;
+	}
+	
+	public String getSetting(String key)
+	{
+		return getSettingsDao().get(key);
+	}
+	
+	public void setSetting(String key, String value)
+	{
+		getSettingsDao().put(key, value);
+		settings = null;
+	}
+	
+	public ArrayList<SettingsWrapper> getSettings()
+	{
+		if(settings == null)
+		{
+			settings = new ArrayList<SettingsWrapper>();
+			for(Settings s : getSettingsDao().getSettings())
+				settings.add(new SettingsWrapper(s.getKey(), s.getValue()));
+		}
+		
+		return settings;
 	}
 
 	public String getReportingDocumentRoot()
@@ -239,6 +289,13 @@ public class AdministrationBean implements Serializable
 			options = Utility.getObjectFromContext(OptionsDaoRemote.class, Utility.Namespace.PRODUCTION);
 		return options;
 	}
+
+	private SettingsDaoRemote getSettingsDao()
+	{
+		if(settingsDao == null)
+			settingsDao = Utility.getObjectFromContext(SettingsDaoRemote.class, Utility.Namespace.PRODUCTION);
+		return settingsDao;
+	}
 	
 	@Data
 	public class UserAdd implements Serializable
@@ -258,6 +315,58 @@ public class AdministrationBean implements Serializable
 		public UserAdd()
 		{
 			roleSelection = new RoleSelection();
+		}
+	}
+	
+	@Data
+	public class SettingsWrapper implements IKeyValue
+	{
+		private static final long serialVersionUID = 1L;
+		private String key;
+		private String value;
+		
+		public SettingsWrapper(String key, String value)
+		{
+			set(key, value);
+		}
+		
+		public void save(ActionEvent evt)
+		{
+			if(!Utility.getBean(LoginBean.class).isAdmin())
+			{
+				Utility.raiseError("NOT AUTHORIZED", "You are not authorized to alter settings");
+				return;
+			}
+			
+			getSettingsDao().put(key, value);
+			Utility.raiseInfo("Setting Updated", 
+						"The value " + key + " was set to " + value);
+		}
+		
+		public void delete(ActionEvent evt)
+		{
+			if(!Utility.getBean(LoginBean.class).isAdmin())
+			{
+				Utility.raiseError("NOT AUTHORIZED", "You are not authorized to alter settings");
+				return;
+			}
+			if(key != null)
+			{
+				getSettingsDao().delete(key);
+				AdministrationBean.this.settings = null;
+			}
+			
+		}
+		@Override
+		public String get(String key)
+		{
+			return value;
+		}
+		@Override
+		public void set(String key, String value)
+		{
+			this.key = key;
+			this.value = value;
 		}
 	}
 

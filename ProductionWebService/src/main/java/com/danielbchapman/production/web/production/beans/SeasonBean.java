@@ -8,9 +8,15 @@ import javax.faces.event.PhaseEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
+import lombok.Getter;
+import lombok.Setter;
+
+import org.eclipse.persistence.descriptors.SelectedFieldsLockingPolicy;
+
 import com.danielbchapman.production.Utility;
 import com.danielbchapman.production.beans.SeasonDaoRemote;
 import com.danielbchapman.production.entity.Season;
+import com.danielbchapman.production.web.schedule.beans.LoginBean;
 
 /**
  * Revamp of the season bean for managing seasons. This works off a phase event rather than some
@@ -25,21 +31,38 @@ import com.danielbchapman.production.entity.Season;
 public class SeasonBean implements Serializable
 {
 	private static final long serialVersionUID = 3L;
+	public final static String DEFAULT_SEAON_ID = "DefaultSeason";
 	private Season newSeason = new Season();
 	private Season season;
 	private Long seasonCount;;
 	private SeasonDaoRemote seasonDao;
 	private ArrayList<SelectItem> seasons;
+	@Getter
+	@Setter
+	private Long selectedSeason;
+	@Getter
 	private SeasonSelection selection = new SeasonSelection();
 
+	public Season getDefaultSeason()
+	{
+		Long id = Utility.safeLong(
+				Utility
+					.getBean(AdministrationBean.class)
+					.getSetting(DEFAULT_SEAON_ID));
+		
+		if(id != null)
+			return getSeasonDao().getSeason(id);
+		else
+			return null;
+	}
 	public void confirmSeason(ActionEvent evt)
 	{
+		season = getSeasonDao().getSeason(selectedSeason);
 		if(season != null)
 		{
 			getSelection().selectSummary(evt);
 			Utility.redirect("season.xhtml");
 		}
-
 		else
 			Utility.raiseWarning("No Season Selected",
 					"Please select or create a season from the menu below");
@@ -66,32 +89,33 @@ public class SeasonBean implements Serializable
 
 	public Season getSeason()
 	{
+		if(season == null)
+			season = getDefaultSeason();
+		
 		return season;
 	}
 
-	public ArrayList<SelectItem> getSeasons()
+	public synchronized ArrayList<SelectItem> getSeasons()
 	{
 		if(seasons == null)
 		{
 			seasons = new ArrayList<SelectItem>();
+			season = getDefaultSeason();
 			ArrayList<Season> tmp = getSeasonDao().getSeasons();
 			if(tmp != null)
 				for(int i = 0; i < tmp.size(); i++)
 					if(i == 0)
 					{
 						season = tmp.get(i);
+							
 						seasons.add(new SelectItem(tmp.get(i).getId(), tmp.get(i).getName()));
 					}
 					else
 						seasons.add(new SelectItem(tmp.get(i).getId(), tmp.get(i).getName()));
+			
 
 		}
 		return seasons;
-	}
-
-	public SeasonSelection getSelection()
-	{
-		return selection;
 	}
 
 	/**
@@ -104,6 +128,15 @@ public class SeasonBean implements Serializable
 		return false;
 	}
 
+	public void doMakeDefault(ActionEvent evt)
+	{
+		if(Utility.getBean(LoginBean.class).isAdmin())
+			if(season != null)
+			{				
+				Utility.getBean(AdministrationBean.class).setSetting(DEFAULT_SEAON_ID, season.getId().toString());
+				Utility.raiseInfo("Setting System Property", "Key " + DEFAULT_SEAON_ID + " Value" + season.getId().toString());
+			}
+	}
 	/**
 	 * @return true if there is at least one active production, else false
 	 */
@@ -128,7 +161,12 @@ public class SeasonBean implements Serializable
 	{
 		if(seasonCount == null && evt != null)
 			if(season == null || !isSeasonCountMoreThanZero())
-				Utility.redirect("setSeason.xhtml");
+			{
+				season = getDefaultSeason();
+				if(season == null)
+					Utility.redirect("setSeason.xhtml");
+			}
+				
 	}
 
 	public String refreshSeasonList()
