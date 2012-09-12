@@ -74,8 +74,8 @@ public class Performance extends EventMapping
 		events.add(getEvent("House Open", performanceSchedule.getHouseCall(),
 				performanceSchedule.getHouseCall(), true, true, true));
 
-		events.add(getEvent(getDescription(), 0, performanceSchedule.getPerformanceLength(), true,
-				true, true));
+//		events.add(getEvent(getDescription(), 0, performanceSchedule.getPerformanceLength(), true,
+//				true, true));
 
 		if(talkback)
 		{
