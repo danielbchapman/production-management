@@ -71,7 +71,7 @@
 				#{venueBean.venue.name} [#{venueBean.venue.id}]
 			</h:panelGroup>
 			
-			<p:tabView id="tabs">
+			<p:tabView id="tabs" cache="false" dynamic="true">
 				<p:tab title="Advance">
 					<p:dataTable var="wrapper" value="#{venueBean.advance.advances}">
 						<p:column>

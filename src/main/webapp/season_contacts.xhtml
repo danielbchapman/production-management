@@ -15,18 +15,8 @@
 <f:subview id="contacts" contentType="text/html" rendered="#{loginBean.user}">
 		<p:growl id="messages" showDetail="true" showSummary="true"/>
 		<br />
-		
-    <div class="help" style="width:100%;text-align:right;margin-left:auto;">
-      <p:lightBox iframe="true" width="80%" height="80%">  
-        <h:outputLink 
-          value="help.xhtml?lookupString=contacts" 
-          title="Help" 
-        >  
-          <span class="ui-icon ui-icon-info" style="display:inline-block;"></span>
-          <h:outputText value="Help"/>  
-        </h:outputLink>  
-       </p:lightBox>      
-    </div>		
+				
+    	<h2>#{seasonBean.season.name}</h2>
 		
 		<p:panel rendered="#{loginBean.user}">
 		
