@@ -318,9 +318,7 @@ public class ContactBean implements Serializable
 
 		private Contact contact;
 		private Long newLinkedGroupId;
-
 		private String newLinkSubGroup;
-
 		private String newLinkPosition;
 		private Long contactGroupId;
 		private ContactAddressWrapper newAddress;
@@ -342,6 +340,11 @@ public class ContactBean implements Serializable
 
 		}
 
+		public String getMassFilter()
+		{
+			return contact == null ? "" : contact.toString();
+		}
+		
 		public void doSaveNewLink(ActionEvent evt)
 		{
 			LinkedContact save = getContactDao().addLinkedContact(newLinkPosition, newLinkedGroupId,

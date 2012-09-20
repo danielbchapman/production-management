@@ -34,6 +34,8 @@ public class AdministrationBean implements Serializable
 	private String reportingDocumentRoot;
 	private String role;
 	private String user;
+	private String version;
+	public static String PRODUCTION_DATABASE_VERSION = "PRODUCTION_DATABASE_VERSION";
 	@Getter
 	@Setter
 	private SettingsWrapper newKey = new SettingsWrapper(null, null);
@@ -53,6 +55,21 @@ public class AdministrationBean implements Serializable
 					"The key {0}was not of valid length (5)"
 						.replaceAll("{0}", newKey.key));
 		}
+	}
+	
+	/**
+	 * @return the version for this system
+	 */
+	public String getVersion()
+	{
+		if(version == null)
+		{
+			version = getSetting(PRODUCTION_DATABASE_VERSION);
+			if(version == null)
+				version = "3.0.0-Alpha";
+		}
+		
+		return version;
 	}
 	
 	private UserAdd userAdd = new UserAdd();

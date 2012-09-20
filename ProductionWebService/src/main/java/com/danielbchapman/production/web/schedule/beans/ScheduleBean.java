@@ -44,6 +44,7 @@ import com.danielbchapman.production.Utility;
 import com.danielbchapman.production.beans.CalendarDaoRemote;
 import com.danielbchapman.production.beans.SeasonDaoRemote;
 import com.danielbchapman.production.beans.VenueDaoRemote;
+import com.danielbchapman.production.dto.MonthDto;
 import com.danielbchapman.production.entity.Day;
 import com.danielbchapman.production.entity.Event;
 import com.danielbchapman.production.entity.EventMapping;
@@ -157,7 +158,9 @@ public class ScheduleBean implements Serializable
 	@Getter
 	@Setter
 	private CalendarPrintController calendarPrintController = new CalendarPrintController();
-
+	@Getter
+	@Setter
+	private MonthPrintController monthController = new MonthPrintController();
 	public TimeZone getServerTimezone()
 	{
 		//Hooked
@@ -812,6 +815,24 @@ public class ScheduleBean implements Serializable
 	{
 		this.tmpSeason = tmpSeason;
 	}
+	
+	public void testMonths(ActionEvent evt)
+	{
+		Calendar cStart = Calendar.getInstance();
+		Calendar cEnd = Calendar.getInstance();
+		cStart.setTime(new Date());
+		cEnd.setTime(new Date());
+		cStart.set(Calendar.MONTH, 7);
+		cEnd.set(Calendar.MONTH, 11);
+		ArrayList<MonthDto> months = getCalendarDao().getMonths(
+				cStart.getTime(), 
+				cEnd.getTime(),
+				Utility.getBean(SeasonBean.class).getSeason());
+		
+		System.out.println("Start " + cStart.getTime() + " End " + cEnd.getTime());
+		for(MonthDto dto : months)
+			System.out.println(dto);
+	}
 
 	private ComplexEntityScheduleEvent createEvent(EventMapping mapping)
 	{
@@ -992,6 +1013,64 @@ public class ScheduleBean implements Serializable
 
 	@Data
 	@EqualsAndHashCode(callSuper = false)
+	public class MonthPrintController extends AbstractPrintController
+	{
+		private Date startDate;
+		private Date endDate;
+		private boolean printAll = true;
+		private boolean cast = true;
+		private boolean crew = true;
+		private boolean details = true;
+		
+		public MonthPrintController()
+		{
+			super("schedules", "sub", "weekly");
+		}
+
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		protected Collection<MonthDto> getData()
+		{
+			Season season = Utility.getBean(ScheduleBean.class).getSelectedSeason();
+			
+			Collection<MonthDto> months = getCalendarDao().getMonths(startDate, endDate, season); 
+			return months;
+		}
+
+		@Override
+		protected Map<String, Object> getParameters()
+		{
+			HashMap<String, Object> params = new HashMap<String, Object>();
+
+			File root = new File(Utility.getBean(AdministrationBean.class).getReportingDocumentRoot());
+			//@formatter:off
+			String path = new File(
+						root.getAbsoluteFile() 
+						+ File.separator 
+						+ "schedules"
+						+ File.separator
+					).getAbsolutePath() + File.separator;
+			//@formatter:on
+			params.put("FILE_PATH", path);
+			params.put("SUBREPORT_DIR", path);
+			params.put("PRINT_CAST", new Boolean(cast));
+			params.put("PRINT_CREW", new Boolean(crew));
+			params.put("PRINT_DETAILS", new Boolean(details));
+			
+			return params;
+		}
+
+		@Override
+		protected String getReportName()
+		{
+			SimpleDateFormat df = new SimpleDateFormat("MM-dd-yy");
+			return "Monthy-" + df.format(new Date()) ;
+		}
+	}
+	
+	@Data
+	@EqualsAndHashCode(callSuper = false)
 	public class CalendarPrintController extends AbstractPrintController
 	{
 		private Date startDate;
@@ -1003,7 +1082,7 @@ public class ScheduleBean implements Serializable
 		
 		public CalendarPrintController()
 		{
-			super("schedules", "sub");
+			super("schedules", "sub", "_daily", "overview");
 		}
 
 		private static final long serialVersionUID = 1L;
@@ -1017,7 +1096,7 @@ public class ScheduleBean implements Serializable
 			if(printAll || startDate == null || endDate == null)
 				weeks = getCalendarDao().getAllWeeks(season);
 			else
-				weeks = getCalendarDao().getWeeksInRange(startDate, endDate, season);
+				weeks = getCalendarDao().getWeeksInRange(startDate, endDate, season, false);
 			
 			return weeks;
 		}
