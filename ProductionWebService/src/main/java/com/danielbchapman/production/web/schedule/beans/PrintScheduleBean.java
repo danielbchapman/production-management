@@ -277,7 +277,7 @@ public class PrintScheduleBean implements Serializable
 			if(printAll || startDate == null || endDate == null)
 				weeks = getCalendarDao().getAllWeeks(season);
 			else
-				weeks = getCalendarDao().getWeeksInRange(startDate, endDate, season);
+				weeks = getCalendarDao().getWeeksInRange(startDate, endDate, season, false);
 
 			HashMap<String, Object> params = new HashMap<String, Object>();
 
