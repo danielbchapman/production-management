@@ -129,7 +129,33 @@
 									</ui:repeat>
 								</tbody>
 							</table>
-						</h:panelGroup>					
+						</h:panelGroup>	
+						
+						<legend>Monthly</legend>
+						<label>From</label>
+						<p:calendar 
+							value="#{scheduleBean.monthController.startDate}"
+							styleClass="input-small"
+						/>
+						<label>To</label>
+						<p:calendar 
+							value="#{scheduleBean.monthController.endDate}"
+							styleClass="input-small"
+						/>
+						<core:checkbox 
+							name="Print All" 
+							value="#{scheduleBean.monthController.printAll}" 
+						/>
+						<core:checkbox 
+							name="Cast Events" 
+							value="#{scheduleBean.monthController.cast}" 
+						/>
+						<core:checkbox 
+							name="Crew Events" 
+							value="#{scheduleBean.monthController.crew}" 
+						/>
+						<hr />
+						<core:reports value="#{scheduleBean.monthController}" name="Monthy"/>										
 					</h:form>
 				</p:panel>		
 			</div>				

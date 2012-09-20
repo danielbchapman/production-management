@@ -39,7 +39,9 @@
 				
 				<h:outputText value="Notes" styleClass="information" />
 				<br />
-				<p:editor value="#{cc.attrs.value.wardrobeNotes}" />
+				<div>
+					<h:inputTextarea value="#{cc.attrs.value.wardrobeNotes}" />
+				</div>
 			</p:tab>
 			
 			<p:tab title="Lighting">
@@ -53,13 +55,17 @@
 				
 				<h:outputText value="Notes" styleClass="information" />
 				<br />
-				<p:editor value="#{cc.attrs.value.lightingNotes}" />
+				<div>
+					<h:inputTextarea value="#{cc.attrs.value.lightingNotes}" />
+				</div>
 			</p:tab>
 			
 			<p:tab title="Sound">
 				<h:outputText value="Notes" styleClass="information" />
 				<br />
-				<p:editor value="#{cc.attrs.value.soundNotes}" />
+				<div>
+					<h:inputTextarea value="#{cc.attrs.value.soundNotes}" />
+				</div>
 			</p:tab>
 			
 			<p:tab title="Scenery">
@@ -76,7 +82,9 @@
 				
 				<h:outputText value="Notes" styleClass="information" />
 				<br />
-				<p:editor value="#{cc.attrs.value.scenicNotes}" />
+				<div>
+					<h:inputTextarea value="#{cc.attrs.value.scenicNotes}" />
+				</div>
 			</p:tab>
 			
 			<p:tab title="Trucking">
@@ -92,7 +100,9 @@
 			<p:tab title="Notes">
 				<h:outputText value="Notes" styleClass="information" />
 				<br />
-				<p:editor value="#{cc.attrs.value.notes}" />
+				<div>
+					<h:inputTextarea value="#{cc.attrs.value.notes}" />
+				</div>
 			</p:tab>			
 		</p:tabView>
 	</composite:implementation>

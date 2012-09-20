@@ -191,9 +191,7 @@ $P{DAY}.getCrewLocation().getName()]]></textFieldExpression>
 			<elementGroup>
 				<textField isBlankWhenNull="true">
 					<reportElement uuid="ecac9fc6-2dae-4da3-8583-5800e81d42eb" x="42" y="1" width="57" height="11">
-						<printWhenExpression><![CDATA[$P{DAY}.getMilageInformation() != null
-&&
-!$P{DAY}.getMilageInformation().isEmpty()]]></printWhenExpression>
+						<printWhenExpression><![CDATA[$P{DAY}.getProbableVenue() != null]]></printWhenExpression>
 					</reportElement>
 					<textElement>
 						<font size="8"/>
@@ -202,9 +200,8 @@ $P{DAY}.getCrewLocation().getName()]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement uuid="b59e44a8-614e-4ae4-8491-e61cfaba76fc" x="2" y="1" width="40" height="11">
-						<printWhenExpression><![CDATA[$P{DAY}.getMilageInformation() != null
-&&
-!$P{DAY}.getMilageInformation().isEmpty()]]></printWhenExpression>
+						<printWhenExpression><![CDATA[$P{DAY}.getProbableVenue() != null &&
+$P{DAY}.getMilageInformation() != null]]></printWhenExpression>
 					</reportElement>
 					<textElement>
 						<font size="8" isBold="true"/>
