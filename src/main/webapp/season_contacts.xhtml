@@ -34,36 +34,74 @@
 							widgetVar="contactsTable"
 							emptyMessage="No contacts found..."
 						>
+							<f:facet name="header">  
+								<p:outputPanel styleClass="pull-left">
+								<h2>All Contacts</h2>
+								</p:outputPanel>
+					            <p:outputPanel styleClass="pull-right">  
+					            	<h:outputText value="Search: "/>
+					                <p:inputText id="globalFilter" styleClass="input-medium search-query" onkeyup="contactsTable.filter();">
+					                </p:inputText>
+					                <p:button value="Search" />
+					            </p:outputPanel>  
+							</f:facet>  
 							<p:column>
 								<p:rowToggler/>
 							</p:column>
 							
-							<p:column headerText="Name">
+							<p:column 
+								headerText="Name" 
+								filterMatchMode="contains"
+								filterBy="#{wrapper.contact.fullName}"
+								filterStyle="display:none;"
+								>
 								<h:outputText value="#{wrapper.contact.fullName}"/>
 								<br />
 								<h:outputText value="#{wrapper.contact.contactGroup.name}" style="font-style:italic;"/>
 							</p:column>
 							
-							<p:column headerText="Phone">
+							<p:column 
+								headerText="Phone"
+								filterMatchMode="contains"
+								filterBy="#{wrapper.contact.phone}"
+								filterStyle="display:none;" 
+							>
 								<h:outputText value="#{wrapper.contact.phone}" style="text-wrap: none;"/>
 							</p:column>
 							
-							<p:column headerText="Mobile">
+							<p:column 
+								headerText="Mobile"
+								filterMatchMode="contains"
+								filterBy="#{wrapper.contact.cell}"
+								filterStyle="display:none;" 
+							>
 								<h:outputText value="#{wrapper.contact.cell}"  style="text-wrap: none;"/>
 							</p:column>
 							
-							<p:column headerText="E-mail" style="text-wrap: none;">
+							<p:column 
+								headerText="E-mail" 
+								style="text-wrap: none;" 
+								filterMatchMode="contains"
+								filterBy="#{wrapper.contact.email}"
+								filterStyle="display:none;"								
+							>
 								<h:outputLink value="mailto:#{wrapper.contact.email}">
 									<h:outputText value="#{wrapper.contact.email}" />
 								</h:outputLink>
 							</p:column>			
 							
-							<p:column rendered="#{loginBean.user}">
+							<p:column rendered="#{loginBean.user}"
+								style="text-wrap: none;" 
+								filterMatchMode="contains"
+								filterBy="#{wrapper.contact.notes}"
+								filterStyle="display:none;"
+							>
 								<p:commandButton
 									actionListener="#{wrapper.delete}" 
-									image="ui-icon ui-icon-circle-close"
+									icon="ui-icon ui-icon-circle-close"
 									update=":contacts:messages, :contacts:tabs:contacts, :contacts:tabs:newContacts, :contacts:tabs:season"
 									value="Delete"
+									rendered="#{loginBean.admin}"
 								/>
 							</p:column>				
 							
@@ -82,7 +120,7 @@
 									
 										<p:commandButton 
 											value="Update" 
-											image="ui-icon ui-icon-circle-check"
+											icon="ui-icon ui-icon-circle-check"
 											actionListener="#{wrapper.save}"
 											update=":contacts:messages, :contacts:tabs:contacts, :contacts:tabs:newContacts"
 										/>	
@@ -125,7 +163,7 @@
 											<p:column>
 												<p:commandButton
 													actionListener="#{address.delete}"
-													image="ui-icon ui-icon-circle-close"
+													icon="ui-icon ui-icon-circle-close"
 													value="Delete"
 													update=":contacts:tabs:contacts, :contacts:messages"
 												/>
@@ -135,7 +173,7 @@
 												<p:panel style="text-align:left;">
 													<contacts:editContactAddress contactAddress="#{wrapper.newAddress.address}"/>
 													<p:commandButton
-														image="ui-icon ui-icon-circle-plus"
+														icon="ui-icon ui-icon-circle-plus"
 														actionListener="#{wrapper.newAddress.save}" 
 														value="Add"
 														update=":contacts:tabs:contacts, :contacts:messages" 
@@ -177,7 +215,7 @@
 											<p:column>
 												<p:commandButton 
 													value="Delete"
-													image="ui-icon ui-icon-circle-close"
+													icon="ui-icon ui-icon-circle-close"
 													actionListener="#{link.doDelete}"
 													update=":contacts:messages, :contacts:tabs:contacts"
 												/>
@@ -201,7 +239,7 @@
 										<p:commandButton 
 											actionListener="#{wrapper.doSaveNewLink}"
 											update=":contacts:tabs:contacts, :contacts:messages"
-											image="ui-icon ui-icon-circle-arrow-e"
+											icon="ui-icon ui-icon-circle-arrow-e"
 											value="Add Link"
 										/>
 									</p:panel>
@@ -223,21 +261,48 @@
 							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
 							rowsPerPageTemplate="5,10,15,25"											 				
 							var="contact"
+							widgetVar="remaining"
 							value="#{contactBean.seasonListStructure.source}"
 						>
-							<p:column headerText="Name">
+							<f:facet name="header">
+								<p:outputPanel styleClass="pull-right">  
+					            	<h:outputText value="Search: "/>
+					                <p:inputText id="globalFilter" styleClass="input-medium search-query" onkeyup="remaining.filter();">
+					                </p:inputText>
+					                <p:button value="Search" />
+					            </p:outputPanel>
+							</f:facet>
+							  
+							<p:column 
+								headerText="Name"
+								filterMatchMode="contains"
+								filterBy="#{contact.fullName}"
+								filterStyle="display:none;"
+							>
 								<h:outputText value="#{contact.fullName}"/>
 							</p:column>
 							
-							<p:column headerText="Group">
+							<p:column headerText="Group"
+								filterMatchMode="contains"
+								filterBy="#{contact.contactGroup.name}"
+								filterStyle="display:none;"
+							>
 								<h:outputText value="#{contact.contactGroup.name}"/>
 							</p:column>
 							
-							<p:column headerText="Sub Group">
+							<p:column headerText="Sub Group"
+								filterMatchMode="contains"
+								filterBy="#{contact.subGroup}"
+								filterStyle="display:none;"
+							>
 								<h:outputText value="#{contact.subGroup}"/>
 							</p:column>
 							
-							<p:column headerText="Position">
+							<p:column headerText="Position"
+								filterMatchMode="contains"
+								filterBy="#{contact.position}"
+								filterStyle="display:none;"
+							>
 								<h:outputText value="#{contact.position}"/>
 							</p:column>
 							
@@ -245,7 +310,7 @@
 								<p:commandButton
 									actionListener="#{contactBean.seasonListStructure.doAddContact}"
 									value="Add"
-									image="ui-icon ui-icon-circle-plus"
+									icon="ui-icon ui-icon-circle-plus"
 									update=":contacts:tabs:season, :contacts:messages" 
 								>
 									<f:attribute value="#{contact.id}" name="contactId"/>
@@ -260,22 +325,48 @@
 							rows="10"  
 							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
 							rowsPerPageTemplate="5,10,15,25"											 					 
-							var="contact" 
+							var="contact"
+							widgetVar="season" 
 							value="#{contactBean.seasonListStructure.target}"
 						>
-							<p:column headerText="Name">
+							<f:facet name="header">
+								<p:outputPanel styleClass="pull-right">  
+					            	<h:outputText value="Search: "/>
+					                <p:inputText id="globalFilter" styleClass="input-medium search-query" onkeyup="season.filter();">
+					                </p:inputText>
+					                <p:button value="Search" />
+					            </p:outputPanel>
+							</f:facet>						
+							<p:column 
+								headerText="Name"
+								filterMatchMode="contains"
+								filterBy="#{contact.fullName}"
+								filterStyle="display:none;"
+							>
 								<h:outputText value="#{contact.fullName}"/>
 							</p:column>
 							
-							<p:column headerText="Group">
+							<p:column headerText="Group"
+								filterMatchMode="contains"
+								filterBy="#{contact.contactGroup.name}"
+								filterStyle="display:none;"
+							>
 								<h:outputText value="#{contact.contactGroup.name}"/>
 							</p:column>
 							
-							<p:column headerText="Sub Group">
+							<p:column headerText="Sub Group"
+								filterMatchMode="contains"
+								filterBy="#{contact.subGroup}"
+								filterStyle="display:none;"
+							>
 								<h:outputText value="#{contact.subGroup}"/>
 							</p:column>
 							
-							<p:column headerText="Position">
+							<p:column headerText="Position"
+								filterMatchMode="contains"
+								filterBy="#{contact.position}"
+								filterStyle="display:none;"
+							>
 								<h:outputText value="#{contact.position}"/>
 							</p:column>
 							
@@ -283,7 +374,7 @@
 								<p:commandButton
 									actionListener="#{contactBean.seasonListStructure.doRemoveContact}"
 									value="Remove"
-									image="ui-icon ui-icon-circle-minus" 
+									icon="ui-icon ui-icon-circle-minus" 
 									update=":contacts:tabs:season, :contacts:messages" 
 								>
 									<f:attribute value="#{contact.id}" name="contactId"/>
@@ -303,7 +394,7 @@
 											id="downloadButton"
 											value="Download" 
 											ajax="false"
-											image="ui-icon ui-icon-circle-arrow-s"
+											icon="ui-icon ui-icon-circle-arrow-s"
 											update=":contacts:tabs:prints, :contacts:messages"
 											onclick="this.style='display: none;''"
 										> 
@@ -323,7 +414,7 @@
 						<hr />
 						<p:commandButton 
 							value="Save"
-							image="ui-icon ui-icon-disk"
+							icon="ui-icon ui-icon-disk"
 							actionListener="#{contactBean.newContact.saveContact}"
 							update=":contacts:messages, :contacts:tabs:contacts, :contacts:tabs:newContacts, :contacts:tabs:season"
 						/>
@@ -374,7 +465,7 @@
 								<f:facet name="footer">
 									<p:commandButton 
 										value="Save"
-										image="ui-icon ui-icon-disk"
+										icon="ui-icon ui-icon-disk"
 										actionListener="#{contactBean.newContactGroup.saveGroup}"
 										update=":contacts:messages, :contacts:tabs:newContacts, :contacts:tabs:groups, :contacts:tabs:contacts"
 									/>
@@ -399,7 +490,7 @@
 										<p:inputText value="#{group.group.rank}" styleClass="spaced"/>
 										<p:commandButton 
 											value="Save" 
-											image="ui-icon ui-icon-disk"
+											icon="ui-icon ui-icon-disk"
 											actionListener="#{group.save}"
 											update=":contacts:messages, :contacts:tabs:groups, :contacts:tabs:contacts, :contacts:tabs:newContacts"
 										/>									
