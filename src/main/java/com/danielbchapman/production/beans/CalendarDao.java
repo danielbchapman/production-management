@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.Vector;
 import java.util.logging.Logger;
 
@@ -15,8 +16,10 @@ import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
 
+import org.eclipse.persistence.descriptors.FieldsLockingPolicy;
 import org.theactingcompany.persistence.Indentifiable;
 
+import com.danielbchapman.production.dto.MonthDto;
 import com.danielbchapman.production.entity.City;
 import com.danielbchapman.production.entity.Day;
 import com.danielbchapman.production.entity.EntityInstance;
@@ -496,8 +499,11 @@ public class CalendarDao implements CalendarDaoRemote
 		return EntityInstance.find(Week.class, id);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.danielbchapman.production.beans.CalendarDaoRemote#getWeeksInRange(java.util.Date, java.util.Date, com.danielbchapman.production.entity.Season, boolean)
+	 */
 	@Override
-	public ArrayList<Week> getWeeksInRange(Date start, Date end, Season season)
+	public ArrayList<Week> getWeeksInRange(Date start, Date end, Season season, boolean fillHoles)
 	{
 		Date startMonday = findMonday(start);
 		Date endMonday = findMonday(end);
@@ -514,7 +520,44 @@ public class CalendarDao implements CalendarDaoRemote
 						"ORDER BY  \n" +
 						"  w.date \n" ;
 		//@formatter:on		
-		return EntityInstance.getResultList(query, Week.class, startMonday, endMonday, season);
+		ArrayList<Week> weeks = EntityInstance.getResultList(query, Week.class, startMonday, endMonday, season);
+		if(!fillHoles)
+			return weeks;
+		
+		Calendar weekCheck = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+		weekCheck.setTime(startMonday);
+		int startId = weekCheck.get(Calendar.WEEK_OF_YEAR);
+		weekCheck.setTime(endMonday);
+		int endId = weekCheck.get(Calendar.WEEK_OF_YEAR);
+		
+		if((endId - startId + 1) > weeks.size())
+		{
+			ArrayList<Week> newWeeks = new ArrayList<Week>();
+			int next = startId;
+			for(int i = 0; i < weeks.size(); i++)
+			{
+				Week current = weeks.get(i);
+				weekCheck.setTime(weeks.get(i).getDate());
+				int currentId = weekCheck.get(Calendar.WEEK_OF_YEAR); 
+				
+				while(next != currentId)
+				{
+					weekCheck.set(Calendar.WEEK_OF_YEAR, next);
+					Week tmp = new Week();
+					tmp.setSeason(season);
+					tmp.setDate(findMonday(weekCheck.getTime()));
+					newWeeks.add(tmp);
+					next = next == 52 ? 1 : next + 1;
+				}
+				
+				newWeeks.add(current);
+				next = next == 52 ? 1 : next + 1;
+			}
+			return newWeeks;
+		}
+		else
+			return weeks;
+		
 	}
 
 	/*
@@ -732,4 +775,116 @@ public class CalendarDao implements CalendarDaoRemote
 		builder.append(tag);
 		builder.append('>');
 	}
+
+	private final static Calendar utc(Date date)
+	{
+		Calendar ret = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+		ret.setTime(date);
+		return ret;
+	}
+	/* (non-Javadoc)
+	 * @see com.danielbchapman.production.beans.CalendarDaoRemote#getMonths(java.util.Date, java.util.Date, com.danielbchapman.production.entity.Season)
+	 */
+	@Override
+	public ArrayList<MonthDto> getMonths(Date start, Date end, Season season)
+	{
+		String query =
+						"SELECT \n" +
+						"  d \n" +
+						"FROM  \n" +
+						"  Day d \n" +
+						"WHERE  \n" +
+						"      d.date >= ?1 \n" +
+						"  AND d.date <= ?2 \n" +
+						"  AND d.week.season = ?3 \n" +
+						"ORDER BY \n" +
+						"  d.date \n" ;
+		
+			
+		ArrayList<Day> days = EntityInstance.getResultList(query, 
+				Day.class, 
+				start == null ? new Date(0L) : start, 
+				end == null ? new Date(Long.MAX_VALUE - 1) : end, 
+				season);
+		
+		if(days.size() == 0)
+			return new ArrayList<MonthDto>();
+		
+		if(start == null)
+			start = days.get(0).getDate();
+		
+		if(end == null)
+			end = days.get(days.size() - 1).getDate();
+		
+		Calendar cStart = utc(start);
+		Calendar cEnd = utc(end);
+		
+		int iStart = cStart.get(Calendar.DAY_OF_YEAR);
+		int iEnd = cEnd.get(Calendar.DAY_OF_YEAR);
+		int currentDay = iStart;
+		Calendar current = utc(start);
+		
+		if((iEnd - iStart +1) > days.size())
+		{
+			int nextDay = -1;
+			ArrayList<Day> filled = new ArrayList<Day>();
+			for(int i = 0; i < days.size(); i++)
+			{
+				Day day = days.get(i);
+				Calendar next = utc(day.getDate());
+
+				nextDay = next.get(Calendar.DAY_OF_YEAR);
+				for(;currentDay < nextDay;)
+				{
+					filled.add(Day.emptyDay(current.getTime()));
+					
+					currentDay++;
+					current.set(Calendar.DAY_OF_YEAR, currentDay);
+				}
+				
+				//Add this
+				currentDay++;
+				filled.add(day);
+			}
+			return MonthDto.createMonths(filled);
+		}
+		else
+			return MonthDto.createMonths(days);
+	}
+//		
+//		ArrayList<Week> weeks = getWeeksInRange(start, end, season, true);
+//		ArrayList<MonthDto> months = new ArrayList<MonthDto>();
+//		
+//		
+//		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+//		
+//		Date startDate = null;
+//		int monthId = -1;
+//		ArrayList<Week> month = null;
+//		for(Week week : weeks)
+//		{
+//			calendar.setTime(week.getDate());
+//			if(monthId != calendar.get(Calendar.MONTH))
+//			{
+//				if(month != null)
+//				{
+//					Week[] weekArray = new Week[month.size()];
+//					for(int i = 0; i < month.size(); i++)
+//						weekArray[i] = month.get(i);
+//					
+//					months.add(new MonthDto(startDate, weekArray));
+//					startDate = null;
+//					month = null;
+//				}
+//				
+//				month = new ArrayList<Week>();
+//				startDate = week.getDate();
+//				monthId = calendar.get(Calendar.MONTH);
+//			}
+//			
+//			month.add(week);
+//		}
+//		
+//		return months;
+//	}
 }

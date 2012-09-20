@@ -202,7 +202,7 @@ public class Week implements Indentifiable
 	 * @return the week date plus the day value eg Monday + X;
 	 */
 	@Transient
-	private Day getDay(int day)
+	public Day getDay(int day)
 	{
 		if(days == null)
 			return null;
@@ -219,5 +219,11 @@ public class Week implements Indentifiable
 			}
 
 		return null;
+	}
+	
+	@Transient
+	public Week getThis()
+	{
+		return this;
 	}
 }

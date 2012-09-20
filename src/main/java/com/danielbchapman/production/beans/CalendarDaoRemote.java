@@ -8,6 +8,7 @@ import javax.ejb.Remote;
 
 import org.theactingcompany.persistence.Indentifiable;
 
+import com.danielbchapman.production.dto.MonthDto;
 import com.danielbchapman.production.entity.City;
 import com.danielbchapman.production.entity.Day;
 import com.danielbchapman.production.entity.Event;
@@ -233,9 +234,11 @@ public interface CalendarDaoRemote extends Serializable
 	 *          the end week
 	 * @param season
 	 *          the season to print
+	 * @param fillHoles
+	 *          <b>true</b> add blank weeks <b>false</b> don't fill holes
 	 * @return a list of the weeks in this range.
 	 */
-	public abstract ArrayList<Week> getWeeksInRange(Date start, Date end, Season season);
+	public abstract ArrayList<Week> getWeeksInRange(Date start, Date end, Season season, boolean fillHoles);
 
 	/**
 	 * Removes an entity from the persistence layer
@@ -291,5 +294,13 @@ public interface CalendarDaoRemote extends Serializable
 	 * @param source
 	 */
 	public abstract void saveWeek(Week source);
-
+	
+	/**
+	 * 
+	 * @param start the start date
+	 * @param end the end date
+	 * @param season the season to search
+	 * @return the month DTOs for this calendar;
+	 */
+	public ArrayList<MonthDto> getMonths(Date start, Date end, Season season);
 }

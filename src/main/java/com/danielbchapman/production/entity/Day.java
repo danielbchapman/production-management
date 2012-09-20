@@ -1,9 +1,11 @@
 package com.danielbchapman.production.entity;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.TimeZone;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -29,10 +31,21 @@ import org.theactingcompany.persistence.Indentifiable;
  */
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "date", "week" }))
-public class Day implements Indentifiable
+public class Day implements Indentifiable, Comparable<Day>
 {
 	private static final long serialVersionUID = 1L;
-
+	
+	public static Day emptyDay(Date d)
+	{
+		Day day = new Day();
+		day.setDate(d);
+		day.empty = true;
+		return day;
+	}
+	
+	@Transient
+	private boolean empty;
+	
 	private Hotel castHotel;
 	private City castLocation;
 	@Column(length = 20)
@@ -66,6 +79,11 @@ public class Day implements Indentifiable
 		super();
 	}
 
+	@Transient
+	public boolean isEmpty()
+	{
+		return empty;
+	}
 	public Hotel getCastHotel()
 	{
 		return castHotel;
@@ -224,6 +242,9 @@ public class Day implements Indentifiable
 	 */
 	public ArrayList<EventMapping> getTimeline(boolean cast, boolean crew, boolean details)
 	{
+		if(isEmpty())
+			return new ArrayList<EventMapping>();
+		
 		ArrayList<EventMapping> ret = new ArrayList<EventMapping>();
 		if(crew && cast)
 			ret.addAll(getEvents());
@@ -371,10 +392,25 @@ public class Day implements Indentifiable
 	{
 		StringBuilder buf = new StringBuilder();
 
-		buf.append(super.toString());
+		buf.append("[Day] ");
 		buf.append("Date ");
 		buf.append(date);
 
 		return buf.toString();
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	@Override
+	public int compareTo(Day target)
+	{	
+		if(target == null)
+			return 1;
+		
+		if(date == null && target.getDate() == null)
+			return 0;
+		
+		return date.compareTo(target.date);
 	}
 }
