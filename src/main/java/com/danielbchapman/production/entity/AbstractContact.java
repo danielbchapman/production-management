@@ -11,6 +11,8 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
+import lombok.ToString;
+
 /**
  * The abstract contact is a class that provides implementation for
  * 
@@ -19,6 +21,11 @@ import javax.persistence.Transient;
  * @copyright The Acting Company Sep 13, 2011 @link www.theactingcompany.org
  */
 @MappedSuperclass
+@ToString(
+		callSuper = false, 
+		doNotUseGetters=true,
+		includeFieldNames=false, 
+		exclude={"contactGroup", "addresses", "addressOne", "addressTwo", "addressThree"})
 public class AbstractContact extends BaseEntity implements IContact
 {
 	private static final long serialVersionUID = 1L;
@@ -577,28 +584,28 @@ public class AbstractContact extends BaseEntity implements IContact
 		return builder.toString();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.danielbchapman.production.entity.BaseEntity#toString()
-	 */
-	@Override
-	public String toString()
-	{
-		StringBuilder builder = new StringBuilder();
-
-		builder.append(super.toString());
-		builder.append(" Id:'");
-		builder.append(getId());
-		builder.append("' ");
-		builder.append(" Name:'");
-		builder.append(getFirstName());
-		builder.append(" ");
-		builder.append(getLastName());
-		builder.append("'");
-
-		return builder.toString();
-	}
+//	/*
+//	 * (non-Javadoc)
+//	 * 
+//	 * @see com.danielbchapman.production.entity.BaseEntity#toString()
+//	 */
+//	@Override
+//	public String toString()
+//	{
+//		StringBuilder builder = new StringBuilder();
+//
+//		builder.append(super.toString());
+//		builder.append(" Id:'");
+//		builder.append(getId());
+//		builder.append("' ");
+//		builder.append(" Name:'");
+//		builder.append(getFirstName());
+//		builder.append(" ");
+//		builder.append(getLastName());
+//		builder.append("'");
+//
+//		return builder.toString();
+//	}
 
 	/**
 	 * @param address
