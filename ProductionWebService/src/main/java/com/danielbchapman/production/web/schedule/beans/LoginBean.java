@@ -66,6 +66,9 @@ public class LoginBean implements Serializable
 	private ArrayList<SelectItem> timeZones;
 	
 	private String username;
+	@Getter
+	@Setter
+	private boolean loginError;
 
 	public void confirmChangeZone(ActionEvent evt)
 	{
@@ -371,9 +374,12 @@ public class LoginBean implements Serializable
 //			authUser = null; /*Leave this reference */
 			authPass = null;
 			cleanBeans();
+			loginError = false;
 			//Utility.redirect(Utility.getSession().getServletContext().getContextPath() + "/index.xhtml");
 		}
-
+		else
+			loginError = true;
+		
 		authPass = null;
 	}
 

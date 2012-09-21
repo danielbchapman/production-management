@@ -29,7 +29,6 @@ import javax.servlet.http.HttpSession;
 
 import org.theactingcompany.security.SecurityFilter;
 
-import com.danielbchapman.jboss.login.LoginBean;
 import com.danielbchapman.jboss.login.Roles;
 
 public class Utility
@@ -497,6 +496,13 @@ public class Utility
 		return false;
 	}
 	
+	/**
+	 * @return the current time in 'MM-dd-yy' foramt
+	 */
+	public static String date()
+	{
+		return new SimpleDateFormat("MM-dd-yy").format(new Date());
+	}
 	/**
 	 * @param args an array of (T) types
 	 * @return the collection of the array by type

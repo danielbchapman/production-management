@@ -6,9 +6,11 @@ import java.io.File;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -20,6 +22,7 @@ import org.primefaces.model.StreamedContent;
 
 import com.danielbchapman.converter.AbstractConverter;
 import com.danielbchapman.converter.Pair;
+import com.danielbchapman.production.AbstractPrintController;
 import com.danielbchapman.production.JasperUtility;
 import com.danielbchapman.production.Utility;
 import com.danielbchapman.production.beans.ContactDaoRemote;
@@ -133,6 +136,15 @@ public class ContactBean implements Serializable
 		return newContactGroup;
 	}
 
+	private ContactPrintController contactPrintController;
+	public ContactPrintController getContactPrintController()
+	{
+		if(contactPrintController == null)
+		{
+			contactPrintController = new ContactPrintController();
+		}
+		return contactPrintController;
+	}
 	/**
 	 * @return the printingController
 	 */
@@ -977,6 +989,37 @@ public class ContactBean implements Serializable
 		}
 	}
 
+	public class ContactPrintController extends AbstractPrintController
+	{
+		public ContactPrintController()
+		{
+			super(reportingDirectory, "sub");
+		}
+
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		protected Collection<?> getData()
+		{
+			return
+					getContactDao().getContactSheetSeason(
+							Utility.getBean(SeasonBean.class).getSeason());
+		}
+
+		@Override
+		protected Map<String, Object> getParameters()
+		{
+			return new HashMap<String, Object>();
+		}
+
+		@Override
+		protected String getReportName()
+		{
+			Season season = Utility.getBean(SeasonBean.class).getSeason();
+			return season.getName().replaceAll(" ", "_") + "_contact_sheet_" + Utility.date() + ".pdf";
+		}
+		
+	}
 	public class SeasonPrintingController implements Serializable
 	{
 		private static final long serialVersionUID = 3L;
