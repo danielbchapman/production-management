@@ -19,7 +19,7 @@ import javax.persistence.UniqueConstraint;
  *************************************************************************** 
  */
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "name" }))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "name" , "stateOrTerritory"}))
 public class City extends BaseEntity implements Comparable<City>
 {
 	private static final long serialVersionUID = 1L;

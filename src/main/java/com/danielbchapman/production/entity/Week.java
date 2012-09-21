@@ -226,4 +226,15 @@ public class Week implements Indentifiable
 	{
 		return this;
 	}
+	
+	/**
+	 * @return <b> true </b> if this week contains no days <b> false </b> otherwise.
+	 */
+	public boolean isEmpty()
+	{
+		if(days == null || days.isEmpty())
+			return true;
+		else
+			return false;
+	}
 }
