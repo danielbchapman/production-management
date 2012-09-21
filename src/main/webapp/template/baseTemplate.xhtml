@@ -8,7 +8,8 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:core="http://java.sun.com/jsf/composite/core"
 >
-	<h:head>	
+	<h:head>
+		
 	  	<f:facet name="first">
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 	    	<script src="./bootstrap/js/bootstrap.js"></script>
@@ -18,7 +19,8 @@
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
 	    <meta name="description" content=""></meta>
 	    <meta name="author" content=""></meta>
-	
+		<meta http-equiv="refresh" content="#{session.maxInactiveInterval};url=index.xhtml" />
+			
 	    <!-- Le styles -->
 	    <link href="./bootstrap/css/bootstrap.css" rel="stylesheet"></link>
 
@@ -66,93 +68,94 @@
 			body {
 				padding-top: 60px;
 				padding-bottom: 40px;
+				background-image: url(#{facesContext.externalContext.requestContextPath}/resources/images/tac-watermark.png);
+				background-position: right bottom;
+				background-repeat: no-repeat;	
+				min-height: 600px;			
 			}
 			
-			##############################
-			# Full Calendar Overrides
-			##############################
-			.eventPerformance
-			{
+			.eventPerformance{
 				color:#fff;
-				background-color:green;
+				background-color: #C50202;
 			}
 			
-			.eventPerformance a
-			{
+			.eventPerformance a{
 				color:#fff;
-				background-color:green;
+				background-color: #C50202;
 			}
 			
-			.eventSchedule
-			{
+			.fc eventPerformance a{
 				color:#fff;
+				background-color: #C50202;
+			}
+						
+			.eventSchedule{
+				color:#fff;
+				background-color: #C50202;
 			}
 			
-			.eventSchedule a
-			{
+			.eventSchedule a{
 				color:#fff;
+				background-color: #C50202;
 			}
 			
-			.eventScheduleCrew
-			{
+			.eventScheduleCrew{
 				color:#fff;
-				background-color:#e9604a;
+				background-color:#ff5200;
 			}
 			
 			.eventScheduleCrew a
 			{
 				color:#fff;
-				background-color:#e9604a;
+				background-color:#ff5200;
 			}
 			
-			.eventScheduleCrew a:before
-			{
+			.eventScheduleCrew a:before{
 				color:#fff;
 				content:"[crew]";
 			}
 			
-			.eventScheduleCast
-			{
+			.eventScheduleCast{
 				color:#fff;
-				background-color:#20646a;
+				background-color: purple;
 			}
 			
-			.eventScheduleCast a
-			{
+			.eventScheduleCast a{
 				color:#fff;
-				background-color:#20646a;
+				background-color: purple;
 			}
 			
-			.eventScheduleCast a:before
-			{
+			.eventScheduleCast a:before{
 				color:#fff;
 				content:"[cast]";
 			}
 			
-			.eventPerformanceLocked
-			{
+			.eventPerformanceLocked{
 				color:#fff;
-				background-color:#62ed62;
+				background-color:#B8575B;
 			}
 			
-			.eventPerformanceLocked a
-			{
+			.eventPerformanceLocked a{
 				color:#fff;
-				background-color:#62ed62;
+				background-color:#B8575B;
 			}
 			
-			.eventDay
-			{
+			.eventDay{
 				color:#fff;
-				background-color:purple;
+				background-color: #811;
 			}
 			
-			.fc eventDay a
-			{
+			.fc eventDay{
 				color:#fff;
-				background-color:purple;
+				background-color: #811;
 			}			
 			
+			a link{
+				color:#08c;
+			}
+			a link:hover{
+				color:#005580;
+			}
 	    </style>
 	    
 	    <link href="./bootstrap/css/bootstrap-responsive.css" rel="stylesheet"></link>	    	

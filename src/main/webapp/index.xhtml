@@ -11,6 +11,20 @@
 		<ui:define name="title">Production Database</ui:define>
 		
 		<ui:define name="main">
+			<p:outputPanel rendered="#{param.reason == 'expired'}">
+				<div class="ui-messages-warn ui-corner-all">
+					<a href="#" class="ui-messages-close" onclick="$(this).parent().slideUp();return false;">
+						<span class="ui-icon ui-icon-close"></span>
+					</a>
+					<span class="ui-messages-warn-icon"></span>
+					<ul>
+						<li>
+							<span class="ui-messages-warn-summary">View Expired</span>
+							<span class="ui-messages-warn-detail">You were logged out of the system due to inactivity or a remote event.</span>
+						</li>
+					</ul>
+				</div>
+			</p:outputPanel>
 			<h1>Touring Database</h1>
 			<p>
 			This is the production and touring database for <a href="http://www.theactingcompany.org">The Acting Company</a>. 

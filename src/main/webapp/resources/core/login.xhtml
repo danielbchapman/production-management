@@ -7,6 +7,7 @@
 	<composite:interface>
 		<composite:attribute name="user" />
 		<composite:attribute name="pass" />
+		<composite:attribute name="error" />
 		<composite:attribute name="loggedIn" />
 		<composite:attribute 
 			name="loginAction" 
@@ -19,7 +20,7 @@
 	</composite:interface>
 	
 	<composite:implementation>
-		<h:form class="navbar-form pull-right" id="login" prependId="false">
+		<h:form class="navbar-form pull-right" id="login" prependId="false" rendered="#{not cc.attrs.error and !cc.attrs.loggedIn}">
 			<h:panelGroup rendered="#{!cc.attrs.loggedIn}" layout="span">
 				<h:inputHidden value="#{cc.attrs.user}" id="userText"/>
 				<h:inputHidden value="#{cc.attrs.pass}" id="passValue"/>
@@ -45,8 +46,40 @@
 					actionListener="#{cc.attrs.loginAction}"
 				/>
 			</h:panelGroup>
+		</h:form>
 		
-			<h:panelGroup rendered="#{cc.attrs.loggedIn}" class="span2" style="display: inline-block;">
+		<h:form class="navbar-form pull-right" id="login_error" prependId="false" rendered="#{cc.attrs.error and !cc.attrs.loggedIn}">
+			<h:panelGroup rendered="#{!cc.attrs.loggedIn}" layout="span" styleClass="control-group error" style="display:inline-block;">
+				<h:inputHidden value="#{cc.attrs.user}" id="userText_e"/>
+				<h:inputHidden value="#{cc.attrs.pass}" id="passValue_e"/>
+					
+				<input 
+					class="span2" 
+					type="text" 
+					placeholder="Username" 
+					onblur="document.getElementById('#{cc.attrs.id}:userText_e').value = this.value;"
+				>
+				</input>
+				<input 
+					class="span2" 
+					type="password" 
+					placeholder="Password"
+					onblur="document.getElementById('#{cc.attrs.id}:passValue_e').value = this.value;"
+				>
+				</input>
+				
+				<h:commandButton 
+					class="btn" 
+					value="Sign in"
+					actionListener="#{cc.attrs.loginAction}"
+				/>
+				<br />
+				<span style="color:orange;">Login failed: Invalid username or password</span>				
+			</h:panelGroup>
+		</h:form>
+		
+		<h:form class="navbar-form pull-right" rendered="#{cc.attrs.loggedIn}">	
+			<h:panelGroup class="span2" style="display: inline-block;">
 				<h:commandLink 
 					value="#{cc.attrs.user} | Sign Out" 
 					class="btn btn-primary"

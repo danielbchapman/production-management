@@ -123,6 +123,11 @@
     <error-code>404</error-code>
     <location>/error/404.xhtml</location>
 </error-page>
+
+<error-page>
+    <exception-type>javax.faces.application.ViewExpiredException</exception-type>
+    <location>/index.xhtml</location>
+</error-page>
   <security-role>
     <role-name>admin_authentication</role-name>
   </security-role>

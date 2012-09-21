@@ -16,18 +16,37 @@
 			<h3>Controls</h3>	
 			<div class="smaller">
 				<p:panel>
-					<h:form id="scheduleHeader">
-						<h4>Change Season</h4>	
-						<h:selectOneMenu value="#{scheduleBean.tmpSeason}" styleClass="ui150">
-							<f:selectItems value="#{scheduleBean.allSeasons}" />
-						</h:selectOneMenu>
-						<p:commandButton 
-							process="@all"
-							ajax="false"
-							value="Change Season" 
-							actionListener="#{scheduleBean.confirmSeason}" 
-							
-						/>
+					<h:form id="scheduleHeader" styleClass="form-horizontal">
+						<legend>Change Season</legend>
+						<div class="control-group">
+							<h:selectOneMenu value="#{scheduleBean.tmpSeason}" styleClass="ui150">
+								<f:selectItems value="#{scheduleBean.allSeasons}" />
+							</h:selectOneMenu>
+						</div>	
+						<div class="control-group">
+							<core:checkbox 
+								name="Cast" 
+								value="#{scheduleBean.seasonUi.cast}" 
+							/>
+							<core:checkbox 
+								name="Crew" 
+								value="#{scheduleBean.seasonUi.crew}" 
+							/>
+							<core:checkbox 
+								name="Details" 
+								value="#{scheduleBean.seasonUi.details}" 
+							/>
+						</div>
+						<div class="control-group">
+							<p:commandButton 
+								process="@all"
+								ajax="false"
+								value="Change Season" 
+								actionListener="#{scheduleBean.confirmSeason}" 
+								
+							/>
+						</div>
+						
 						<!--update=":insertSchedule:dialog, :insertSchedule:scheduleHeader, :insertSchedule:schedule, :insertSchedule:messages" -->
 						<!-- 
 						<br />
