@@ -42,14 +42,15 @@ public class BootstrapMenuBean implements Serializable
 	{
 		if(items == null)
 		{
-			MenuItem production = new MenuItem("Production", "season.xhtml", Roles.USER);
+			MenuItem production = new MenuItem("Production", "season.xhtml", Roles.GUEST);
 			production
+					.add(new MenuItem("Paperwork", "paperwork.xhtml", Roles.COMPANY_MEMBER))
 					//.add(new SeasonMenuItem("season.xhtml", Roles.USER, SeasonBean.Selection.SUMMARY))
 					.add(new SeasonMenuItem("season_budget.xhtml", Roles.USER, SeasonBean.Selection.BUDGET))
 					.add(new SeasonMenuItem("season_departments.xhtml", Roles.USER, SeasonBean.Selection.DEPARTMENTS))
 					.add(new SeasonMenuItem("season_petty.xhtml", Roles.USER, SeasonBean.Selection.PETTY_CASH))
 					.add(new SeasonMenuItem("season_contacts.xhtml", Roles.USER, SeasonBean.Selection.CONTACTS))
-					.add(new SeasonMenuItem("setSeason.xhtml", Roles.USER, SeasonBean.Selection.SUMMARY));
+					.add(new MenuItem("Change Season", "setSeason.xhtml", Roles.USER));
 
 			MenuItem inventory = new MenuItem("Inventory", "inventory.xhtml", Roles.GUEST);
 			inventory
@@ -367,25 +368,7 @@ public class BootstrapMenuBean implements Serializable
 
 		public boolean isRenderedViaRole()
 		{
-			if(role == null)
-				return false;
-
-			if(role == Roles.ADMIN)
-				return isAdmin();
-
-			if(role == Roles.USER)
-				return isUser();
-
-			if(role == Roles.GUEST)
-				return isGuest();
-
-			if(role == Roles.SCHEDULER)
-				return isScheduler();
-
-			if(role == Roles.INVENTORY_ADMIN)
-				return isInventoryAdmin();
-
-			return false;
+			return isUserInRole(role);
 		}
 
 		public boolean isSelected()
