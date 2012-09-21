@@ -648,7 +648,7 @@ public class CalendarDao implements CalendarDaoRemote
 	 * .entity.Day)
 	 */
 	@Override
-	public void saveDay(Day source)
+	public Day saveDay(Day source)
 	{
 		if(source.getWeek() == null)
 			throw new IllegalArgumentException("Days require a week to persist" + source);
@@ -658,14 +658,15 @@ public class CalendarDao implements CalendarDaoRemote
 			if(source.getWeek().getDays() == null)
 				source.getWeek().setDays(new Vector<Day>());
 
+			EntityInstance.saveObject(source);
 			source.getWeek().getDays().add(source);
 			saveWeek(source.getWeek());
+			return source;
 		}
 		else
 		{
-			EntityInstance.saveObject(source);
+			return EntityInstance.saveObject(source);
 		}
-
 	}
 
 	/*
@@ -676,7 +677,7 @@ public class CalendarDao implements CalendarDaoRemote
 	 * .entity.Event)
 	 */
 	@Override
-	public void saveEvent(EventMapping source)
+	public EventMapping saveEvent(EventMapping source)
 	{
 		if(source instanceof Event)
 		{
@@ -685,12 +686,13 @@ public class CalendarDao implements CalendarDaoRemote
 				if(source.getDay().getEvents() == null)
 					source.getDay().setEvents(new Vector<Event>());
 
+				EntityInstance.saveObject(source);
 				source.getDay().getEvents().add((Event) source);
 				saveDay(source.getDay());
+				return source;
 			}
 			else
-				EntityInstance.saveObject(source);
-			return;
+				return EntityInstance.saveObject(source);
 		}
 
 		if(source instanceof Performance)
@@ -700,14 +702,16 @@ public class CalendarDao implements CalendarDaoRemote
 				if(source.getDay().getPerformances() == null)
 					source.getDay().setPerformances(new Vector<Performance>());
 
+				EntityInstance.saveObject(source);
 				source.getDay().getPerformances().add((Performance) source);
 				saveDay(source.getDay());
+				return source;
 			}
 			else
-				EntityInstance.saveObject(source);
-			return;
+				return EntityInstance.saveObject(source);
 		}
-
+		
+		throw new RuntimeException("Unsupported class: " + source);
 	}
 
 	/*
@@ -718,15 +722,15 @@ public class CalendarDao implements CalendarDaoRemote
 	 * .entity.Performance)
 	 */
 	@Override
-	public void savePerformance(Performance performance)
+	public Performance savePerformance(Performance performance)
 	{
-		saveEvent(performance);
+		return (Performance) saveEvent(performance);
 	}
 
 	@Override
-	public void savePerformanceAdvance(PerformanceAdvance advance)
+	public PerformanceAdvance savePerformanceAdvance(PerformanceAdvance advance)
 	{
-		EntityInstance.saveObject(advance);
+		return EntityInstance.saveObject(advance);
 	}
 
 	@Override

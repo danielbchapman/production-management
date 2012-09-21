@@ -253,14 +253,14 @@ public interface CalendarDaoRemote extends Serializable
 	 * 
 	 * @param source
 	 */
-	public abstract void saveDay(Day source);
+	public abstract Day saveDay(Day source);
 
 	/**
 	 * Saves an event
 	 * 
 	 * @param source
 	 */
-	public abstract void saveEvent(EventMapping source);
+	public abstract EventMapping saveEvent(EventMapping source);
 
 	/**
 	 * Saves a performance
@@ -268,7 +268,7 @@ public interface CalendarDaoRemote extends Serializable
 	 * @param source
 	 * 
 	 */
-	public abstract void savePerformance(Performance source);
+	public abstract Performance savePerformance(Performance source);
 
 	/**
 	 * Saves or updates a PerformanceAdvance.
@@ -277,7 +277,7 @@ public interface CalendarDaoRemote extends Serializable
 	 *          the advance to save or update
 	 * 
 	 */
-	public abstract void savePerformanceAdvance(PerformanceAdvance advance);
+	public abstract PerformanceAdvance savePerformanceAdvance(PerformanceAdvance advance);
 
 	/**
 	 * Save or update a performance schedule in the database.
