@@ -144,8 +144,8 @@
 							<h:panelGrid columns="2">
 								<h:outputText value="Name" styleClass="information" />
 								<h:inputText value="#{venueBean.venueName}"/>						
-								<h:outputText value="City" styleClass="information" />
-								<h:selectOneMenu value="#{venueBean.cityId}" id="citySelect">
+								<h:outputText value="City" styleClass="information" rendered="#{loginBean.admin}"/>
+								<h:selectOneMenu value="#{venueBean.cityId}" id="citySelect" rendered="#{loginBean.admin}">
 								  <f:selectItems value="#{locationBean.cities}"/>
 								</h:selectOneMenu>                  
 							</h:panelGrid>
