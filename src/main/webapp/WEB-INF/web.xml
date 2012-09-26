@@ -11,6 +11,9 @@
       <param-value>c:\fileupload\tmp</param-value>
     </init-param>
   -->
+	<session-config>
+		<session-timeout>120</session-timeout>
+	</session-config>  
   <filter>
   	<filter-name>Production Security Filter v2</filter-name>
   	<filter-class>org.theactingcompany.security.SecurityFilter</filter-class>

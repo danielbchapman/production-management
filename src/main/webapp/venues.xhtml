@@ -65,7 +65,7 @@
 	<h:form id="editVenue" prependId="false">
 		<p:panel id="venueInformation" header="#{venueBean.venue.name}" rendered="#{venueBean.canHasVenue}">
 			<h:panelGroup layout="span">
-				<h:outputLink value="#{venueBean.googleDocsRoot}" styleClass="btn btn-small">
+				<h:outputLink value="#{venueBean.googleDocsRoot}" styleClass="btn btn-small" target="_blank">
 					https://GoogleDocs/
 				</h:outputLink>
 				#{venueBean.venue.name} [#{venueBean.venue.id}]
