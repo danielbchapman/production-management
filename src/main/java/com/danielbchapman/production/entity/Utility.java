@@ -93,9 +93,9 @@ public class Utility
 		}
 			
 		
-		int red = Integer.parseInt(new String(new char[] { colors[0], colors[1] }));
-		int green = Integer.parseInt(new String(new char[] { colors[2], colors[3] }));
-		int blue = Integer.parseInt(new String(new char[] { colors[4], colors[5] }));
+		int red = Integer.parseInt(new String(new char[] { colors[0], colors[1] }), 16);
+		int green = Integer.parseInt(new String(new char[] { colors[2], colors[3] }), 16);
+		int blue = Integer.parseInt(new String(new char[] { colors[4], colors[5] }), 16);
 		
 		//Intentional, do not optimize, this way the NFException will be thrown before setting values.
 		return new Color(red, green, blue, 255);
