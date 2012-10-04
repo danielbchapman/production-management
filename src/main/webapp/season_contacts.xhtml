@@ -463,11 +463,10 @@
 													
 							<p:column>								
 								<f:facet name="footer">
-									<p:commandButton 
+									<h:commandButton 
 										value="Save"
-										icon="ui-icon ui-icon-disk"
+										styleClass="btn btn-primary"
 										actionListener="#{contactBean.newContactGroup.saveGroup}"
-										update=":contacts:messages, :contacts:tabs:newContacts, :contacts:tabs:groups, :contacts:tabs:contacts"
 									/>
 								</f:facet>
 							</p:column>
