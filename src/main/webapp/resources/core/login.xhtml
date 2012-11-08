@@ -20,6 +20,17 @@
 	</composite:interface>
 	
 	<composite:implementation>
+		<script type="text/javascript">
+		function copyValue(sourceId, targetId){
+			var source = '#{cc.attrs.id}:' + sourceId;
+			var target = '#{cc.attrs.id}:' + targetId;
+			
+			var sourceEl = document.getElementById(source);
+			var targetEl = document.getElementById(target); 
+			
+			targetEl.value = sourceEl.value; 
+		};
+		</script>
 		<h:form class="navbar-form pull-right" id="login" prependId="false" rendered="#{not cc.attrs.error and !cc.attrs.loggedIn}">
 			<h:panelGroup rendered="#{!cc.attrs.loggedIn}" layout="span">
 				<h:inputHidden value="#{cc.attrs.user}" id="userText"/>
@@ -29,23 +40,24 @@
 					class="span2" 
 					type="text" 
 					placeholder="Username" 
-					onblur="document.getElementById('#{cc.attrs.id}:userText').value = this.value;"
+					id="#{cc.attrs.id}:userText_a"
 				>
 				</input>
 				<input 
 					class="span2" 
 					type="password" 
 					placeholder="Password"
-					onblur="document.getElementById('#{cc.attrs.id}:passValue').value = this.value;"
+					id="#{cc.attrs.id}:passValue_a"
 				>
 				</input>
 				
 				<h:commandButton 
 					class="btn" 
 					value="Sign in"
+					onclick="copyValue('userText_a', 'userText'); copyValue('passValue_a', 'passValue');"
 					actionListener="#{cc.attrs.loginAction}"
-					onclick="this.focus();"
 				/>
+				<!-- onblur="copyValue('userText_a', 'userText'); copyValue('passValue_a', passValue);" -->
 			</h:panelGroup>
 		</h:form>
 		
@@ -58,6 +70,7 @@
 					class="span2" 
 					type="text" 
 					placeholder="Username" 
+					id="#{cc.attrs.id}:userText_b"
 					onblur="document.getElementById('#{cc.attrs.id}:userText_e').value = this.value;"
 				>
 				</input>
@@ -65,6 +78,7 @@
 					class="span2" 
 					type="password" 
 					placeholder="Password"
+					id="#{cc.attrs.id}:passValue_b"
 					onblur="document.getElementById('#{cc.attrs.id}:passValue_e').value = this.value;"
 				>
 				</input>
@@ -73,7 +87,7 @@
 					class="btn" 
 					value="Sign in"
 					actionListener="#{cc.attrs.loginAction}"
-					onclick="this.focus();"
+					onclick="copyValue('userText_b', 'userText_e'); copyValue('passValue_b', 'passValue_e');"
 				/>
 				<br />
 				<span style="color:orange;">Login failed: Invalid username or password</span>				

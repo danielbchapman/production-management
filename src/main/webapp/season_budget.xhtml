@@ -136,7 +136,10 @@
 						
 						<f:facet name="footer">
 							<h:outputText value="Credit?" />
-							<h:selectBooleanCheckbox value="#{budgetBean.budgetEntryVariables.credit}"/>
+							<p:selectBooleanCheckbox 
+								value="#{budgetBean.budgetEntryVariables.credit}" 
+								immediate="true"
+							/>
 						</f:facet>										
 					</p:column>				
 					
@@ -149,7 +152,13 @@
 						
 						<f:facet name="footer">
 							<h:outputText value="Estimate" />
-							<h:selectBooleanCheckbox value="#{budgetBean.budgetEntryVariables.estimated}"/>
+							X
+							<!-- 
+							<p:selectBooleanCheckbox 
+								value="#{budgetBean.budgetEntryVariables.estimated}" 
+								immediate="true"
+							/>
+							 -->
 						</f:facet>											
 					</p:column>	
 					

@@ -12,13 +12,13 @@
 <ui:composition template="/template/template.xhtml">
 <ui:define name="content">
 <f:view contentType="text/html" beforePhase="#{loginBean.phaseSecurePageSeasonCheck}">
-<f:subview id="contacts" contentType="text/html" rendered="#{loginBean.user}">
+<f:subview id="contacts" contentType="text/html" rendered="#{loginBean.contactManager}">
 		<p:growl id="messages" showDetail="true" showSummary="true"/>
 		<br />
 				
     	<h2>#{seasonBean.season.name}</h2>
 		
-		<p:panel rendered="#{loginBean.user}">
+		<p:panel rendered="#{loginBean.contactManager}">
 		
 			<p:tabView id="tabs">
 				<p:tab title="Contacts">
@@ -90,7 +90,7 @@
 								</h:outputLink>
 							</p:column>			
 							
-							<p:column rendered="#{loginBean.user}"
+							<p:column rendered="#{loginBean.contactManager}"
 								style="text-wrap: none;" 
 								filterMatchMode="contains"
 								filterBy="#{wrapper.contact.notes}"

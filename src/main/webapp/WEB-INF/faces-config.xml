@@ -92,6 +92,11 @@
  	<managed-bean-class>com.danielbchapman.production.web.schedule.beans.BootstrapMenuBean</managed-bean-class>
  	<managed-bean-scope>session</managed-bean-scope>
  </managed-bean>
+ <managed-bean>
+ 	<managed-bean-name>accountBean</managed-bean-name>
+ 	<managed-bean-class>com.danielbchapman.production.web.production.beans.AccountBean</managed-bean-class>
+ 	<managed-bean-scope>view</managed-bean-scope>
+ </managed-bean>
  <navigation-rule>
   <from-view-id>/setTimeZoneOld.xhtml</from-view-id>
   <navigation-case>

@@ -28,9 +28,10 @@
 	<p:accordionPanel rendered="#{loginBean.admin}">
 		<p:tab title="User Management">
 		  <p:panel>
-				<h3>Current Users</h3>
-				<h:form id="editUser">
-					<h:panelGrid>
+				
+				<h:form id="editUser" class="form-horizontal">
+					<legend>Current Users</legend>
+					<div class="control-group">
 						<h:selectOneMenu value="#{administrationBean.editableUserName}">
 							<f:selectItems value="#{administrationBean.users}"/>
 						</h:selectOneMenu>
@@ -38,21 +39,40 @@
 							value="View" 
 							actionListener="#{administrationBean.doSelectUser}" 
 							update=":mainMessages, editUser"
-						/>	
-					</h:panelGrid>
+						/>
+					</div>
 					
 					<h:panelGroup rendered="#{administrationBean.canHasEditableUser}">
-						<h:panelGrid>
-							<h:outputText value="User" styleClass="information"/>
-							<h:inputText value="#{administrationBean.editableUser.user}" />
-							
-							<h:outputText value="Password" styleClass="information"/>
-							<h:inputText value="#{administrationBean.editableUser.password}" />
-							
-							<h:outputText value="Roles" styleClass="information"/>
-							<h:outputText value="NOT IMPLEMENTED" styleClass="error"/>							
-						</h:panelGrid>
+						<label>Change Password</label>
+						<div class="control-group">
+							<p:inputText value="#{administrationBean.changePassword}" />
+							<p:commandButton
+								actionListener="#{administrationBean.doChangePassword}"
+								update=":mainMessages, editUser"
+								value="Change Password" 
+							/>
+						</div>
+						<label>Alter Roles</label>
 						<admin:roles value="#{administrationBean.editable.roleSelection}" />
+						<p:commandButton
+								actionListener="#{administrationBean.doUpdateRoles}"
+								value="Alter Roles"
+								ajax="false" 
+							/>
+						<div class="control-group">
+							<label>Delete User</label>
+							<p:commandButton 
+								actionListener="#{administrationBean.doEnableDelete}"
+								value="Enable Delete"
+								update=":mainMessages, editUser"
+							/>
+							<p:commandButton 
+								rendered="#{administrationBean.enableDelete}"
+								actionListener="#{administrationBean.doDeleteUser}"
+								value="Delete User"
+								update=":mainMessages, editUser"
+							/>
+						</div>
 					</h:panelGroup>										
 				</h:form>
 			</p:panel>
