@@ -45,6 +45,23 @@ public interface LoginBeanRemote extends Serializable
   public void addUser(String username, String password, Collection<Roles> roles);
   
   /**
+   * @param user the user to change
+   * @param newPass the new password to use
+   */
+  public void changePassword(String username, String newPass);
+  
+  /**
+   * @param user the user to change
+   * @param role the role to add
+   */
+  public void addRoll(User user, Roles role);
+  
+  /**
+   * @param user the user to change
+   * @param role the role to remove
+   */
+  public void removeRoll(User user, Roles role);
+  /**
    *
    * @return a list of all the users in the system.  
    * 
@@ -52,4 +69,9 @@ public interface LoginBeanRemote extends Serializable
   public ArrayList<String> getUsers();
   
   public User getUser(String userName);
+  
+  /**
+   * @param user the user to delete
+   */
+  public void deleteUser(User user);
 }

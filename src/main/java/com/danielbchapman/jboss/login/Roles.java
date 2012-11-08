@@ -16,6 +16,7 @@ public enum Roles
 	USER("user_authentication", "User"), 
 	SCHEDULER("scheduler_authentication", "Scheduler"),
 	COMPANY_MEMBER("company_authentication", "Company"),
+	CONTACT_MANAGER("contact_authentication", "Contact"),
 	GUEST("guest_authentication", "Guest"),
 	INVENTORY_ADMIN("inventory_authentication", "Inventory Manager"),
 	INVENTORY_WARDROBE("wardrobe","Wardrobe Manager"),
