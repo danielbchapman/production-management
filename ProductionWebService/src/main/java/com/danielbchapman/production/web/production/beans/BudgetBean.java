@@ -12,6 +12,8 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 
+import lombok.Data;
+
 import org.primefaces.model.DefaultStreamedContent;
 
 import com.danielbchapman.production.AbstractPrintController;
@@ -58,10 +60,14 @@ public class BudgetBean implements Serializable
 			if(!Utility.validateLength(budgetEntryVariables.memo, 3, "Please enter a memo."))
 				return;
 
+			System.out.println(budgetEntryVariables);
+			boolean estimated = budgetEntryVariables.estimated;
+			double amount = budgetEntryVariables.credit == true ? budgetEntryVariables.amount : -budgetEntryVariables.amount;
 			getBudgetDao().saveEntry(
-					budgetEntryVariables.credit == true ? budgetEntryVariables.amount
-							: -budgetEntryVariables.amount, activeBudget, budgetEntryVariables.memo,
-					budgetEntryVariables.estimated);
+						amount, 
+						activeBudget, 
+						budgetEntryVariables.memo,
+						estimated);
 
 			Utility.raiseInfo("Entry Added", "An entry for $" + budgetEntryVariables.amount
 					+ " has been entered.");
@@ -428,11 +434,12 @@ public class BudgetBean implements Serializable
 		}
 	}
 
+	@Data
 	public class BudgetEntryVariables implements Serializable
 	{
 		private static final long serialVersionUID = 3L;
 		private Double amount = 0.00;
-		private boolean credit = false;;
+		private boolean credit = false;
 		private boolean estimated = true;
 		private String memo = "";
 

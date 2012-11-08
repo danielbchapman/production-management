@@ -85,6 +85,14 @@ public class RoleManager implements Serializable
   	return isUserInRole(Roles.COMPANY_MEMBER);
   }
   
+  public boolean isContactManager()
+  {
+  	if(isUser())
+  		return true;
+  	
+  	return isUserInRole(Roles.CONTACT_MANAGER);
+  }
+  
   public boolean isInventoryAdmin()
   {
     if(isUser())
@@ -153,7 +161,7 @@ public class RoleManager implements Serializable
   {
   	if(role.getRoleValue().equals(Roles.GUEST.getRoleValue()))
   		return true;
-  	
+
   	return roles.contains(role.getRoleValue());
 //    return FacesContext.getCurrentInstance().getExternalContext().isUserInRole(role.getRoleValue()); 
   }

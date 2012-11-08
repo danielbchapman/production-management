@@ -94,6 +94,17 @@ public class RoleSelection implements Serializable
 
 		return active;
 	}
+	
+	public ArrayList<Roles> getDeselectedRoles()
+	{
+		ArrayList<Roles> inactive = new ArrayList<Roles>();
+
+		for(RoleItem i : items)
+			if(!i.selected)
+				inactive.add(Roles.fromString(i.label));
+
+		return inactive;		
+	}
 
 
 	@Data

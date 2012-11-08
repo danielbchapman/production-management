@@ -35,6 +35,15 @@ public class AdministrationBean implements Serializable
 	private String role;
 	private String user;
 	private String version;
+	@Getter
+	@Setter
+	private String changePassword;
+	@Getter
+	@Setter
+	private String passwordMessage = "";
+	@Getter
+	@Setter
+	private boolean enableDelete;
 	public static String PRODUCTION_DATABASE_VERSION = "PRODUCTION_DATABASE_VERSION";
 	@Getter
 	@Setter
@@ -98,7 +107,53 @@ public class AdministrationBean implements Serializable
 		{
 			editableUser = getLoginBean().getUser(editableUserName);
 			editable = new UserAdd(getLoginBean().getUser(editableUserName));
+			enableDelete = false;
 		}
+	}
+	
+	public void doDeleteUser(ActionEvent evt)
+	{
+		if(enableDelete)
+		{
+			String name = editableUser.getUser();
+			getLoginBean().deleteUser(editableUser);
+			Utility.raiseInfo("User Removed", "The user " + name + " has been removed from the database.");
+		}
+	}
+	
+	public void doChangePassword(ActionEvent evt)
+	{
+		if(isCanHasEditableUser() && changePassword != null)
+		{
+			try
+			{
+				getLoginBean().changePassword(editableUser.getUser(), changePassword);
+				passwordMessage = "Password successfully updated.";
+				changePassword = "";
+			}
+			catch(Throwable e)
+			{
+				throw new RuntimeException(e.getMessage(), e);
+			}
+		}
+	}
+	
+	public void doUpdateRoles(ActionEvent evt)
+	{
+		if(isCanHasEditableUser())
+		{
+			for(Roles r : editable.roleSelection.getSelectedRoles())
+				getLoginBean().addRoll(editableUser, r);
+			
+			for(Roles r : editable.roleSelection.getDeselectedRoles())
+				getLoginBean().removeRoll(editableUser, r);
+		}
+	}
+	
+	public void doEnableDelete(ActionEvent evt)
+	{
+		enableDelete = true;
+		Utility.raiseWarning("WARNING", "Removing a user is now enabled");
 	}
 
 	public String getConnectionString()

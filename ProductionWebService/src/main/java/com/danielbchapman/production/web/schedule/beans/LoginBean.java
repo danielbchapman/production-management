@@ -301,6 +301,11 @@ public class LoginBean implements Serializable
 	{
 		return isUserInRole(Roles.COMPANY_MEMBER);
 	}
+	
+	public boolean isContactManager()
+	{
+		return isUserInRole(Roles.CONTACT_MANAGER);
+	}
 
 	public boolean isInventoryProps()
 	{
