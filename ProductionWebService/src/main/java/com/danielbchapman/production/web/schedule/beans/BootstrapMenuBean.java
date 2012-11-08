@@ -49,7 +49,7 @@ public class BootstrapMenuBean implements Serializable
 					.add(new SeasonMenuItem("season_budget.xhtml", Roles.USER, SeasonBean.Selection.BUDGET))
 					.add(new SeasonMenuItem("season_departments.xhtml", Roles.USER, SeasonBean.Selection.DEPARTMENTS))
 					.add(new SeasonMenuItem("season_petty.xhtml", Roles.USER, SeasonBean.Selection.PETTY_CASH))
-					.add(new SeasonMenuItem("season_contacts.xhtml", Roles.USER, SeasonBean.Selection.CONTACTS))
+					.add(new SeasonMenuItem("season_contacts.xhtml", Roles.CONTACT_MANAGER, SeasonBean.Selection.CONTACTS))
 					.add(new MenuItem("Change Season", "setSeason.xhtml", Roles.USER));
 
 			MenuItem inventory = new MenuItem("Inventory", "inventory.xhtml", Roles.GUEST);
@@ -69,7 +69,8 @@ public class BootstrapMenuBean implements Serializable
 				.add(new ScheduleMenuItem("city.xhtml", Roles.SCHEDULER, ScheduleBean.Selection.CITY))
 				.add(new ScheduleMenuItem("performances.xhtml", Roles.SCHEDULER, ScheduleBean.Selection.PERFORMANCES));
 
-			MenuItem settings = new MenuItem("Settings", "settings.xhtml", Roles.ADMIN);
+			MenuItem settings = new MenuItem("Accounts", "account.xhtml", Roles.COMPANY_MEMBER);
+			settings.add(new MenuItem("Settings", "settings.xhtml", Roles.ADMIN));
 			settings.add(new MenuItem("Error Page", "errorPage.xhtml", Roles.ADMIN));
 
 			items = new MenuItem[] { 
