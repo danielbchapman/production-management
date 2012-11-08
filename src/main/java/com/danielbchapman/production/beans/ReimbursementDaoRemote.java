@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import javax.ejb.Remote;
 
+import com.danielbchapman.production.entity.Budget;
 import com.danielbchapman.production.entity.Department;
 import com.danielbchapman.production.entity.Employee;
 import com.danielbchapman.production.entity.Reimbursement;
@@ -28,14 +29,14 @@ public interface ReimbursementDaoRemote extends Serializable
    * @param emplyoee <Return Description>  
    * 
    */
-  public void addReimbursement(double amount, Employee emplyoee, Department department, String description);
+  public void addReimbursement(double amount, String username, Department department, String description);
   
   /**
    * Report that reimbursements have been sent in.
-   * @param reimbursement <Return Description>  
-   * 
+   * @param reimbursement the reimbursement to confirm (finalize)
+   * @param budget the budget to assign this entry to.
    */
-  public void reportReimbursement(Reimbursement reimbursement);
+  public void confirmReimbursement(Reimbursement reimbursement, Budget budget);
   
   /**
    * @return a list of all active reimbursements  
@@ -47,5 +48,5 @@ public interface ReimbursementDaoRemote extends Serializable
    * @return a list of all reimbursements for an employee  
    * 
    */
-  public ArrayList<Reimbursement> getReimbursementsForEmployee(Employee employee);
+  public ArrayList<Reimbursement> getReimbursementsForUser(String username);
 }

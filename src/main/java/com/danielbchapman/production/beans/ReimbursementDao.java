@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.ejb.Stateless;
 
+import com.danielbchapman.production.entity.Budget;
 import com.danielbchapman.production.entity.BudgetEntry;
 import com.danielbchapman.production.entity.Department;
 import com.danielbchapman.production.entity.Employee;
@@ -30,10 +31,10 @@ public class ReimbursementDao implements ReimbursementDaoRemote
    * @see com.danielbchapman.production.beans.ReimbursementDaoRemote#addReimbursement(double, com.danielbchapman.production.entity.Employee)
    */
   @Override
-  public void addReimbursement(double amount, Employee employee, Department department, String description)
+  public void addReimbursement(double amount, String username, Department department, String description)
   {
-    if(employee == null)
-      throw new NullPointerException("Employee is required");
+    if(username == null)
+      throw new NullPointerException("Username is required");
     
     Reimbursement reimbursement = new Reimbursement();
     
@@ -41,7 +42,7 @@ public class ReimbursementDao implements ReimbursementDaoRemote
     entry.setDate(new Date());
     entry.setAmountInitial(amount);
     
-    reimbursement.setEmployee(employee);
+    reimbursement.setUser(username);
     reimbursement.setReported(false);
     
     EntityInstance.saveObjects(entry, reimbursement);
@@ -51,9 +52,11 @@ public class ReimbursementDao implements ReimbursementDaoRemote
    * @see com.danielbchapman.production.beans.ReimbursementDaoRemote#reportReimbursement(com.danielbchapman.production.entity.Reimbursement)
    */
   @Override
-  public void reportReimbursement(Reimbursement reimbursement)
+  public void confirmReimbursement(Reimbursement reimbursement, Budget budget)
   {
+  	reimbursement.getEntry().setBudget(budget);
     reimbursement.setReported(true);
+    EntityInstance.saveObject(reimbursement.getEntry());
     EntityInstance.saveObject(reimbursement);
   }
 
@@ -70,9 +73,9 @@ public class ReimbursementDao implements ReimbursementDaoRemote
    * @see com.danielbchapman.production.beans.ReimbursementDaoRemote#getReimbursementsForEmployee(com.danielbchapman.production.entity.Employee)
    */
   @Override
-  public ArrayList<Reimbursement> getReimbursementsForEmployee(Employee employee)
+  public ArrayList<Reimbursement> getReimbursementsForUser(String username)
   {
-  	return EntityInstance.getResultList("SELECT r FROM Reimbursement r WHERE r.employee = ?1", Reimbursement.class, employee);
+  	return EntityInstance.getResultList("SELECT r FROM Reimbursement r WHERE r.user = ?1", Reimbursement.class, username);
   }
 
 }

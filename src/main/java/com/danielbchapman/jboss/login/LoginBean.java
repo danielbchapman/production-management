@@ -171,4 +171,81 @@ public class LoginBean implements LoginBeanRemote
 	{
 		return asList(args);
 	}
+
+	@Override
+	public void changePassword(String username, String newPass)
+	{	
+		//ENFORCE PASSWORD POLICY HERE
+		if(newPass == null)
+			throw new IllegalArgumentException("Password does not meet minimum length. Password is null.");
+		if(newPass.length() < 6)
+			throw new IllegalArgumentException("Password does not meet minimum length. Password is less than six characters.");
+		
+		EntityManager em = EntityInstance.getEm();
+		em.getTransaction().begin();
+		User user = em.find(User.class, username);
+		user.setPassword(User.base64Hash(user.getUser(), newPass));
+		em.merge(user);
+		em.getTransaction().commit();
+		em.close();
+	}
+
+	@Override
+	public void addRoll(User user, Roles role)
+	{
+		ArrayList<Role> roles = getRolesForUser(user.getUser());
+		
+		boolean hasRole = false;
+		for(Role r : roles)
+			if(r.getRole().equals(role.getRoleValue()))
+			{
+				hasRole = true;
+				break;
+			}
+		
+		if(!hasRole)
+		{
+			EntityManager em = EntityInstance.getEm();
+			em.getTransaction().begin();
+			em.persist(new Role(user, role.getRoleValue()));
+			em.getTransaction().commit();
+			em.close();	
+		}
+	}
+
+	@Override
+	public void removeRoll(User user, Roles toRemove)
+	{
+		Role role = EntityInstance.getSingleResult(
+				"SELECT r FROM Role r WHERE r.user = ?1 AND r.role = ?2" , 
+				Role.class, 
+				user, 
+				toRemove.getRoleValue());
+		
+		if(role != null)
+		{
+			EntityManager em = EntityInstance.getEm();
+			em.getTransaction().begin();
+			role = em.merge(role);
+			em.remove(role);
+			em.getTransaction().commit();
+			em.close();
+		}
+	}
+
+	@Override
+	public void deleteUser(User user)
+	{ 
+		ArrayList<Role> roles = getRolesForUser(user.getUser());
+		
+		for(int i = 0; i < roles.size(); i++)
+			removeRoll(user, Roles.fromString(roles.get(i).getRole()));
+		
+		EntityManager em = EntityInstance.getEm();
+		em.getTransaction().begin();
+		user = em.merge(user);
+		em.remove(user);
+		em.getTransaction().commit();
+		em.close();
+	}
 }
