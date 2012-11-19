@@ -36,10 +36,10 @@ public class LoginBean implements Serializable
 	private static final long serialVersionUID = 3L;
 	@Getter
 	@Setter
-	private String authUser = "Daniel";
+	private String authUser = "";
 	@Getter
 	@Setter
-	private String authPass = "acting_co";
+	private String authPass = "";
 	private String value;
 	private TimeZone zone;
 	private HtmlOutputText timeZoneField;
