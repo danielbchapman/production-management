@@ -3,11 +3,15 @@ package com.danielbchapman.production.entity;
 import java.util.Collection;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * A city, like one that we live in.
@@ -37,6 +41,10 @@ public class City extends BaseEntity implements Comparable<City>
 	private String taxiServiceAddress = "";
 	private String taxiServiceName = "";
 	private String taxiServicePhone = "";
+	@Getter
+	@Setter
+	@Column(length=64)
+	private String timeZone = "Not Set";
 
 	/*
 	 * (non-Javadoc)
