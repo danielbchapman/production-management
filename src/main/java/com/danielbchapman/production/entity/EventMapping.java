@@ -50,16 +50,16 @@ public class EventMapping extends BaseEntity implements Comparable<EventMapping>
 		if(o == null)
 			return -1;
 
-		if(o.getStart() == null)
+		if(o.getStartDate() == null)
 			return -1;
 
-		if(getStart() == null)
+		if(getStartDate() == null)
 			return -1;
 
-		if(getStart().equals(o.getStart()))
+		if(getStartDate().equals(o.getStartDate()))
 			return 0;
 
-		if(getStart().after(o.getStart()))
+		if(getStartDate().after(o.getStartDate()))
 			return 1;
 
 		return -1;

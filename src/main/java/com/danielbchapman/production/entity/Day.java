@@ -269,7 +269,10 @@ public class Day implements Indentifiable, Comparable<Day>
 		if(details)
 		{
 			for(Performance p : getPerformances())
+			{
 				ret.addAll(p.getEventSequence());
+				ret.add(p);
+			}
 		}
 		else
 			ret.addAll(getPerformances());
