@@ -12,6 +12,8 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 
+import lombok.Getter;
+
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
@@ -48,6 +50,15 @@ public class LocationBean implements Serializable
 	private Hotel newHotel;
 	private ArrayList<PointOfInterestWrapper> pointsOfInterest;
 
+	//@formatter:off
+	@Getter
+	private SelectItem[] timeZones = {
+			new SelectItem("Not Set"),
+			new SelectItem("Eastern"),
+			new SelectItem("Central"),
+			new SelectItem("Mountain"),
+			new SelectItem("Pacific")
+	};	//@formatter:on
 	public void doAddHospital(ActionEvent evt)
 	{
 		if(newHospital.getName() == null || newHospital.getName().length() < 3)
