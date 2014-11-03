@@ -13,6 +13,8 @@ import com.danielbchapman.production.entity.Settings;
 @Stateless
 public class SettingsDao implements SettingsDaoRemote
 {
+	private static final long serialVersionUID = 1L;
+
 	public SettingsDao()
 	{
 	}

@@ -1,5 +1,6 @@
 package com.danielbchapman.production.beans;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.ejb.Remote;
@@ -25,7 +26,7 @@ import com.danielbchapman.production.entity.Settings;
  * @copyright The Acting Company Sep 4, 2012
  */
 @Remote
-public interface SettingsDaoRemote
+public interface SettingsDaoRemote extends Serializable
 {
 	
 	/**
