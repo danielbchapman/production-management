@@ -237,25 +237,22 @@
 							disabled="#{not loginBean.companyMember}"
 							event="dateSelect"
 							listener="#{scheduleBean.onDateSelect}"
-							update=":insertSchedule:dialog,:insertSchedule:messages"
+							update=":insertSchedule:schedule:dialog,:insertSchedule:messages"
 							oncomplete="eventDialog.show();"
 						/>
 						<p:ajax
 							disabled="#{not loginBean.companyMember}" 
 							event="eventSelect"
 							listener="#{scheduleBean.onEventSelect}"
-							update=":insertSchedule:dialog, :insertSchedule:messages"
+							update=":insertSchedule:schedule:dialog, :insertSchedule:messages"
 							oncomplete="eventDialog.show();"
 						/>
 					</p:schedule>
 				</p:panel>
 				<br />	
-			</h:form>
-			
-			
-			
-			<h:form id="dialog">
+
 				<p:dialog 
+					id="dialog"
 					widgetVar="eventDialog"
 					header="Event Details"  
 					showEffect="growl" 
