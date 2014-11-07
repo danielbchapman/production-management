@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt">
+	
+	<f:subview id="pettyCash" contentType="text/html">
+    <div class="help" style="width:100%;text-align:right;margin-left:auto;">
+      <p:lightBox iframe="true" width="80%" height="80%">  
+        <h:outputLink 
+          value="help.xhtml?lookupString=pettyCash" 
+          title="Help" 
+        >  
+          <span class="ui-icon ui-icon-info" style="display:inline-block;"></span>
+          <h:outputText value="Help"/>  
+        </h:outputLink>  
+       </p:lightBox>      
+    </div>	
+		<p:growl id="messages" showDetail="true" showSummary="true"/>
+		<br />
+		<p:panel id="vendorView">
+			<h3>Petty Cash</h3>
+		</p:panel>
+	</f:subview>
+</jsp:root>
+	

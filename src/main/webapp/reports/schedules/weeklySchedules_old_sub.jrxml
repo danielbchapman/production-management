@@ -1,0 +1,536 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="weeklySchedules" pageWidth="775" pageHeight="595" orientation="Landscape" whenNoDataType="NoDataSection" columnWidth="735" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.6934217901613382"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="colorOne" mode="Opaque" forecolor="#FFFFFF" backcolor="#990000"/>
+	<style name="colorTwo" mode="Opaque" forecolor="#FFFFFF" backcolor="#985858"/>
+	<style name="lines" forecolor="#990000" backcolor="#FFFFFF"/>
+	<style name="gray" mode="Opaque" backcolor="#F0EDED"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FILE_PATH" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["./"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PRINT_CAST" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[Boolean.FALSE]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PRINT_CREW" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[Boolean.FALSE]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PRINT_DETAILS" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[Boolean.FALSE]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="class" class="java.lang.Class">
+		<fieldDescription><![CDATA[class]]></fieldDescription>
+	</field>
+	<field name="date" class="java.util.Date">
+		<fieldDescription><![CDATA[date]]></fieldDescription>
+	</field>
+	<field name="days" class="java.util.Collection">
+		<fieldDescription><![CDATA[days]]></fieldDescription>
+	</field>
+	<field name="friday" class="com.danielbchapman.production.entity.Day">
+		<fieldDescription><![CDATA[friday]]></fieldDescription>
+	</field>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
+	<field name="lastUpdated" class="java.util.Date">
+		<fieldDescription><![CDATA[lastUpdated]]></fieldDescription>
+	</field>
+	<field name="monday" class="com.danielbchapman.production.entity.Day">
+		<fieldDescription><![CDATA[monday]]></fieldDescription>
+	</field>
+	<field name="saturday" class="com.danielbchapman.production.entity.Day">
+		<fieldDescription><![CDATA[saturday]]></fieldDescription>
+	</field>
+	<field name="season" class="com.danielbchapman.production.entity.Season">
+		<fieldDescription><![CDATA[season]]></fieldDescription>
+	</field>
+	<field name="sunday" class="com.danielbchapman.production.entity.Day">
+		<fieldDescription><![CDATA[sunday]]></fieldDescription>
+	</field>
+	<field name="thursday" class="com.danielbchapman.production.entity.Day">
+		<fieldDescription><![CDATA[thursday]]></fieldDescription>
+	</field>
+	<field name="tuesday" class="com.danielbchapman.production.entity.Day">
+		<fieldDescription><![CDATA[tuesday]]></fieldDescription>
+	</field>
+	<field name="wednesday" class="com.danielbchapman.production.entity.Day">
+		<fieldDescription><![CDATA[wednesday]]></fieldDescription>
+	</field>
+	<background>
+		<band height="555">
+			<image>
+				<reportElement x="398" y="0" width="337" height="269"/>
+				<imageExpression><![CDATA[$P{FILE_PATH} + "tac-watermark.png"]]></imageExpression>
+			</image>
+		</band>
+	</background>
+	<columnHeader>
+		<band height="63" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy" isBlankWhenNull="false">
+				<reportElement x="420" y="12" width="282" height="33"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="160" y="12" width="260" height="33"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Schedule for the week of]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="0" width="101" height="63"/>
+				<imageExpression><![CDATA[$P{FILE_PATH} + "tac-red.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="470" splitType="Stretch">
+			<rectangle>
+				<reportElement x="17" y="16" width="700" height="450" forecolor="#FFFFFF"/>
+			</rectangle>
+			<elementGroup>
+				<rectangle>
+					<reportElement style="gray" x="517" y="46" width="100" height="30"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement style="gray" x="417" y="76" width="100" height="80"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement style="gray" x="417" y="16" width="100" height="30"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement style="gray" x="517" y="156" width="100" height="311"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement style="gray" x="617" y="76" width="100" height="80"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement style="gray" x="617" y="16" width="100" height="30"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement style="gray" x="117" y="156" width="100" height="311"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement style="gray" x="17" y="16" width="100" height="30"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement style="colorTwo" x="17" y="0" width="100" height="16"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement style="colorOne" x="117" y="0" width="100" height="16"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement style="colorTwo" x="217" y="0" width="100" height="16"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement style="colorOne" x="317" y="0" width="100" height="16"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement style="colorTwo" x="417" y="0" width="100" height="16"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement style="colorOne" x="517" y="0" width="100" height="16"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement style="colorTwo" x="617" y="0" width="100" height="16"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement style="gray" x="17" y="76" width="100" height="80"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement style="gray" x="117" y="46" width="100" height="30"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement style="gray" x="217" y="16" width="100" height="30"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement style="gray" x="317" y="46" width="100" height="30"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement style="gray" x="317" y="156" width="100" height="311"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement style="gray" x="217" y="76" width="100" height="80"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<staticText>
+					<reportElement style="colorOne" mode="Opaque" x="0" y="76" width="16" height="80" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+						<font fontName="DejaVu Sans Mono" size="12" isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[LOCATION]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="colorTwo" mode="Opaque" x="0" y="156" width="16" height="292" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+						<font fontName="DejaVu Sans Mono" size="12" isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[S  C  H  E  D  U  L  E]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="colorOne" mode="Opaque" x="0" y="16" width="16" height="30"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+						<font fontName="DejaVu Sans Mono" size="11" isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[CAST]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="colorTwo" mode="Opaque" x="0" y="46" width="16" height="30"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+						<font fontName="DejaVu Sans Mono" size="11" isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[CREW]]></text>
+				</staticText>
+				<line direction="BottomUp">
+					<reportElement style="lines" x="16" y="466" width="701" height="1"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement style="lines" x="0" y="448" width="16" height="1"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement style="lines" x="717" y="0" width="1" height="467"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement style="lines" x="16" y="16" width="1" height="451"/>
+				</line>
+				<line>
+					<reportElement style="lines" x="17" y="0" width="1" height="16"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement style="lines" x="0" y="15" width="717" height="1"/>
+				</line>
+			</elementGroup>
+			<subreport>
+				<reportElement x="17" y="0" width="100" height="466"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DAY_OF_WEEK">
+					<subreportParameterExpression><![CDATA["MONDAY"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DAY">
+					<subreportParameterExpression><![CDATA[$F{monday}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_CAST">
+					<subreportParameterExpression><![CDATA[$P{PRINT_CAST}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_DETAILS">
+					<subreportParameterExpression><![CDATA[$P{PRINT_DETAILS}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DATE">
+					<subreportParameterExpression><![CDATA[com.danielbchapman.production.entity.Week.getDate(Integer.valueOf("0"), $F{date})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="FILE_PATH">
+					<subreportParameterExpression><![CDATA[$P{FILE_PATH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_CREW">
+					<subreportParameterExpression><![CDATA[$P{PRINT_CREW}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[$F{monday} == null ?
+new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(new ArrayList())
+:
+new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(
+    $F{monday}.getTimeline($P{PRINT_CAST}, $P{PRINT_CREW}, $P{PRINT_DETAILS})
+)]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "weeklySchedules_daily.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="117" y="0" width="100" height="466"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DAY_OF_WEEK">
+					<subreportParameterExpression><![CDATA["TUESDAY"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DAY">
+					<subreportParameterExpression><![CDATA[$F{tuesday}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_CAST">
+					<subreportParameterExpression><![CDATA[$P{PRINT_CAST}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_DETAILS">
+					<subreportParameterExpression><![CDATA[$P{PRINT_DETAILS}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DATE">
+					<subreportParameterExpression><![CDATA[com.danielbchapman.production.entity.Week.getDate(Integer.valueOf("1"), $F{date})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="FILE_PATH">
+					<subreportParameterExpression><![CDATA[$P{FILE_PATH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_CREW">
+					<subreportParameterExpression><![CDATA[$P{PRINT_CREW}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[$F{tuesday} == null ?
+new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(new ArrayList())
+:
+new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{tuesday}.getTimeline($P{PRINT_CAST}, $P{PRINT_CREW}, $P{PRINT_DETAILS}))]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "weeklySchedules_daily.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="217" y="0" width="100" height="466"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DAY_OF_WEEK">
+					<subreportParameterExpression><![CDATA["WEDNESDAY"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DAY">
+					<subreportParameterExpression><![CDATA[$F{wednesday}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_CAST">
+					<subreportParameterExpression><![CDATA[$P{PRINT_CAST}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_DETAILS">
+					<subreportParameterExpression><![CDATA[$P{PRINT_DETAILS}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DATE">
+					<subreportParameterExpression><![CDATA[com.danielbchapman.production.entity.Week.getDate(Integer.valueOf("2"), $F{date})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="FILE_PATH">
+					<subreportParameterExpression><![CDATA[$P{FILE_PATH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_CREW">
+					<subreportParameterExpression><![CDATA[$P{PRINT_CREW}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[$F{wednesday} == null ?
+new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(new ArrayList())
+:
+new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{wednesday}.getTimeline($P{PRINT_CAST}, $P{PRINT_CREW}, $P{PRINT_DETAILS}))]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "weeklySchedules_daily.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="317" y="0" width="100" height="466"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DAY_OF_WEEK">
+					<subreportParameterExpression><![CDATA["THURSDAY"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DAY">
+					<subreportParameterExpression><![CDATA[$F{thursday}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_CAST">
+					<subreportParameterExpression><![CDATA[$P{PRINT_CAST}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_DETAILS">
+					<subreportParameterExpression><![CDATA[$P{PRINT_DETAILS}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DATE">
+					<subreportParameterExpression><![CDATA[com.danielbchapman.production.entity.Week.getDate(Integer.valueOf("3"), $F{date})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="FILE_PATH">
+					<subreportParameterExpression><![CDATA[$P{FILE_PATH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_CREW">
+					<subreportParameterExpression><![CDATA[$P{PRINT_CREW}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[$F{thursday} == null ?
+new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(new ArrayList())
+:
+new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{thursday}.getTimeline($P{PRINT_CAST}, $P{PRINT_CREW}, $P{PRINT_DETAILS}))]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "weeklySchedules_daily.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="417" y="0" width="100" height="466"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DAY_OF_WEEK">
+					<subreportParameterExpression><![CDATA["FRIDAY"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DAY">
+					<subreportParameterExpression><![CDATA[$F{friday}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_CAST">
+					<subreportParameterExpression><![CDATA[$P{PRINT_CAST}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_DETAILS">
+					<subreportParameterExpression><![CDATA[$P{PRINT_DETAILS}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DATE">
+					<subreportParameterExpression><![CDATA[com.danielbchapman.production.entity.Week.getDate(Integer.valueOf("4"), $F{date})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="FILE_PATH">
+					<subreportParameterExpression><![CDATA[$P{FILE_PATH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_CREW">
+					<subreportParameterExpression><![CDATA[$P{PRINT_CREW}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[$F{friday} == null ?
+new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(new ArrayList())
+:
+new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{friday}.getTimeline($P{PRINT_CAST}, $P{PRINT_CREW}, $P{PRINT_DETAILS}))]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "weeklySchedules_daily.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="517" y="0" width="100" height="466"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DAY_OF_WEEK">
+					<subreportParameterExpression><![CDATA["SATURDAY"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DAY">
+					<subreportParameterExpression><![CDATA[$F{saturday}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_CAST">
+					<subreportParameterExpression><![CDATA[$P{PRINT_CAST}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_DETAILS">
+					<subreportParameterExpression><![CDATA[$P{PRINT_DETAILS}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DATE">
+					<subreportParameterExpression><![CDATA[com.danielbchapman.production.entity.Week.getDate(Integer.valueOf("5"), $F{date})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="FILE_PATH">
+					<subreportParameterExpression><![CDATA[$P{FILE_PATH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_CREW">
+					<subreportParameterExpression><![CDATA[$P{PRINT_CREW}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[$F{saturday} == null ?
+new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(new ArrayList())
+:
+new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{saturday}.getTimeline($P{PRINT_CAST}, $P{PRINT_CREW}, $P{PRINT_DETAILS}))]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "weeklySchedules_daily.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="617" y="0" width="100" height="466"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DAY_OF_WEEK">
+					<subreportParameterExpression><![CDATA["SUNDAY"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DAY">
+					<subreportParameterExpression><![CDATA[$F{sunday}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_CAST">
+					<subreportParameterExpression><![CDATA[$P{PRINT_CAST}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_DETAILS">
+					<subreportParameterExpression><![CDATA[$P{PRINT_DETAILS}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DATE">
+					<subreportParameterExpression><![CDATA[com.danielbchapman.production.entity.Week.getDate(Integer.valueOf("6"), $F{date})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="FILE_PATH">
+					<subreportParameterExpression><![CDATA[$P{FILE_PATH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PRINT_CREW">
+					<subreportParameterExpression><![CDATA[$P{PRINT_CREW}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[$F{sunday} == null ?
+new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(new ArrayList())
+:
+new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{sunday}.getTimeline($P{PRINT_CAST}, $P{PRINT_CREW}, $P{PRINT_DETAILS}))]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "weeklySchedules_daily.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="612" y="5" width="66" height="15"/>
+				<textElement textAlignment="Right">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="678" y="5" width="40" height="15"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="5" width="160" height="15"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="250" y="5" width="235" height="15"/>
+				<textElement textAlignment="Center">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Prepared by Daniel B. Chapman]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

@@ -1,0 +1,109 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:tac="http://java.sun.com/jsf/composite/composite"	
+	xmlns:p="http://primefaces.org/ui"
+>
+	<composite:interface>
+		<composite:attribute name="value" type="com.danielbchapman.production.entity.PerformanceAdvance"/>
+	</composite:interface>
+					
+	<composite:implementation>
+		<p:tabView>
+			<p:tab title="General">
+				<h:panelGrid columns="2" columnClasses="noBorders, noBorders">
+					<h:outputText value="Contact Information" styleClass="information" />
+					<h:inputText value="#{cc.attrs.value.contactInformation}"/>
+					
+					<h:outputText value="Ground Plans" styleClass="information" />
+					<h:inputText value="#{cc.attrs.value.groundPlan}"/>
+					
+					<h:outputText value="Hospitality" styleClass="information" />
+					<h:inputTextarea value="#{cc.attrs.value.hospitality}"/>
+				</h:panelGrid>
+			</p:tab>
+			
+			<p:tab title="Wardrobe">
+				<h:panelGrid columns="2" columnClasses="noBorders, noBorders">
+					<h:outputText value="Ironing Board" styleClass="information" />
+					<h:inputText value="#{cc.attrs.value.wardrobeIroningBoard}"/>
+					
+					<h:outputText value="Laundry Facilities" styleClass="information" />
+					<h:inputText value="#{cc.attrs.value.wardrobeLaundry}"/>
+					
+					<h:outputText value="Steamer" styleClass="information" />
+					<h:inputText value="#{cc.attrs.value.wardrobeSteamer}"/>	
+				</h:panelGrid>
+				
+				<h:outputText value="Notes" styleClass="information" />
+				<br />
+				<div>
+					<h:inputTextarea value="#{cc.attrs.value.wardrobeNotes}" />
+				</div>
+			</p:tab>
+			
+			<p:tab title="Lighting">
+				<h:panelGrid columns="2" columnClasses="noBorders, noBorders">
+					<h:outputText value="Lighting Plot" styleClass="information" />
+					<h:inputText value="#{cc.attrs.value.lightPlot}"/>
+					
+					<h:outputText value="Section" styleClass="information" />
+					<h:inputText value="#{cc.attrs.value.section}"/>
+				</h:panelGrid>
+				
+				<h:outputText value="Notes" styleClass="information" />
+				<br />
+				<div>
+					<h:inputTextarea value="#{cc.attrs.value.lightingNotes}" />
+				</div>
+			</p:tab>
+			
+			<p:tab title="Sound">
+				<h:outputText value="Notes" styleClass="information" />
+				<br />
+				<div>
+					<h:inputTextarea value="#{cc.attrs.value.soundNotes}" />
+				</div>
+			</p:tab>
+			
+			<p:tab title="Scenery">
+				<h:panelGrid columns="2" columnClasses="noBorders, noBorders">
+					<h:outputText value="Gaff Tape" styleClass="information" />
+					<h:inputText value="#{cc.attrs.value.gaffTape}"/>
+					
+					<h:outputText value="Masking Notes(short)" styleClass="information" />
+					<h:inputTextarea value="#{cc.attrs.value.maskingNotes}"/>
+					
+					<h:outputText value="Rigging (short)" styleClass="information" />
+					<h:inputTextarea value="#{cc.attrs.value.rigging}"/>
+				</h:panelGrid>
+				
+				<h:outputText value="Notes" styleClass="information" />
+				<br />
+				<div>
+					<h:inputTextarea value="#{cc.attrs.value.scenicNotes}" />
+				</div>
+			</p:tab>
+			
+			<p:tab title="Trucking">
+				<h:panelGrid columns="2" columnClasses="noBorders, noBorders">
+					<h:outputText value="Loading Dock" styleClass="information" />
+					<h:inputText value="#{cc.attrs.value.loadingDock}"/>
+					
+					<h:outputText value="Shore Power" styleClass="information" />
+					<h:inputText value="#{cc.attrs.value.shorePower}"/>
+				</h:panelGrid>
+			</p:tab>
+			
+			<p:tab title="Notes">
+				<h:outputText value="Notes" styleClass="information" />
+				<br />
+				<div>
+					<h:inputTextarea value="#{cc.attrs.value.notes}" />
+				</div>
+			</p:tab>			
+		</p:tabView>
+	</composite:implementation>
+</html>

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ContactSheet_SubReport" pageWidth="553" pageHeight="802" columnWidth="553" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="7e69b04b-e989-4970-9a00-fcaa82dfd017">
+	<property name="ireport.zoom" value="2.143588810000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="ireport.callouts" value="##Fri Sep 07 12:50:37 EDT 2012"/>
+	<style name="font-size8" fontSize="8" isBold="true"/>
+	<subDataset name="Table Dataset 1" uuid="532f814d-3da9-4b47-9831-26252e15f6dd">
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="city" class="java.lang.String">
+			<fieldDescription><![CDATA[city]]></fieldDescription>
+		</field>
+		<field name="class" class="java.lang.Class">
+			<fieldDescription><![CDATA[class]]></fieldDescription>
+		</field>
+		<field name="contact" class="com.danielbchapman.production.entity.Contact">
+			<fieldDescription><![CDATA[contact]]></fieldDescription>
+		</field>
+		<field name="formattedAddressTwoLineA" class="java.lang.String">
+			<fieldDescription><![CDATA[formattedAddressTwoLineA]]></fieldDescription>
+		</field>
+		<field name="formattedAddressTwoLineB" class="java.lang.String">
+			<fieldDescription><![CDATA[formattedAddressTwoLineB]]></fieldDescription>
+		</field>
+		<field name="id" class="java.lang.Long">
+			<fieldDescription><![CDATA[id]]></fieldDescription>
+		</field>
+		<field name="label" class="java.lang.String">
+			<fieldDescription><![CDATA[label]]></fieldDescription>
+		</field>
+		<field name="lineOne" class="java.lang.String">
+			<fieldDescription><![CDATA[lineOne]]></fieldDescription>
+		</field>
+		<field name="lineTwo" class="java.lang.String">
+			<fieldDescription><![CDATA[lineTwo]]></fieldDescription>
+		</field>
+		<field name="state" class="java.lang.String">
+			<fieldDescription><![CDATA[state]]></fieldDescription>
+		</field>
+		<field name="zip" class="java.lang.String">
+			<fieldDescription><![CDATA[zip]]></fieldDescription>
+		</field>
+	</subDataset>
+	<parameter name="FILE_PATH" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="addressOne" class="com.danielbchapman.production.entity.ContactAddress">
+		<fieldDescription><![CDATA[addressOne]]></fieldDescription>
+	</field>
+	<field name="addressThree" class="com.danielbchapman.production.entity.ContactAddress">
+		<fieldDescription><![CDATA[addressThree]]></fieldDescription>
+	</field>
+	<field name="addressTwo" class="com.danielbchapman.production.entity.ContactAddress">
+		<fieldDescription><![CDATA[addressTwo]]></fieldDescription>
+	</field>
+	<field name="addresses" class="java.util.Collection">
+		<fieldDescription><![CDATA[addresses]]></fieldDescription>
+	</field>
+	<field name="addressesToHtmlDiv" class="java.lang.String">
+		<fieldDescription><![CDATA[addressesToHtmlDiv]]></fieldDescription>
+	</field>
+	<field name="cell" class="java.lang.String">
+		<fieldDescription><![CDATA[cell]]></fieldDescription>
+	</field>
+	<field name="class" class="java.lang.Class">
+		<fieldDescription><![CDATA[class]]></fieldDescription>
+	</field>
+	<field name="contactGroup" class="com.danielbchapman.production.entity.ContactGroup">
+		<fieldDescription><![CDATA[contactGroup]]></fieldDescription>
+	</field>
+	<field name="contactInformationToHtmlDiv" class="java.lang.String">
+		<fieldDescription><![CDATA[contactInformationToHtmlDiv]]></fieldDescription>
+	</field>
+	<field name="email" class="java.lang.String">
+		<fieldDescription><![CDATA[email]]></fieldDescription>
+	</field>
+	<field name="fax" class="java.lang.String">
+		<fieldDescription><![CDATA[fax]]></fieldDescription>
+	</field>
+	<field name="firstName" class="java.lang.String">
+		<fieldDescription><![CDATA[firstName]]></fieldDescription>
+	</field>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
+	<field name="lastName" class="java.lang.String">
+		<fieldDescription><![CDATA[lastName]]></fieldDescription>
+	</field>
+	<field name="notes" class="java.lang.String">
+		<fieldDescription><![CDATA[notes]]></fieldDescription>
+	</field>
+	<field name="phone" class="java.lang.String">
+		<fieldDescription><![CDATA[phone]]></fieldDescription>
+	</field>
+	<field name="position" class="java.lang.String">
+		<fieldDescription><![CDATA[position]]></fieldDescription>
+	</field>
+	<field name="subGroup" class="java.lang.String">
+		<fieldDescription><![CDATA[subGroup]]></fieldDescription>
+	</field>
+	<group name="sunGroup">
+		<groupExpression><![CDATA[$F{subGroup}]]></groupExpression>
+		<groupHeader>
+			<band height="16">
+				<componentElement>
+					<reportElement uuid="f95014a6-8816-4b2e-8a50-8fb9c3e81bb4" stretchType="RelativeToBandHeight" x="0" y="0" width="553" height="16"/>
+					<hc:html xmlns:hc="http://jasperreports.sourceforge.net/htmlcomponent" xsi:schemaLocation="http://jasperreports.sourceforge.net/htmlcomponent http://jasperreports.sourceforge.net/xsd/htmlcomponent.xsd" scaleType="FillFrame" horizontalAlign="Left" verticalAlign="Middle">
+						<hc:htmlContentExpression><![CDATA["<html><body style=\"background-color:rgb(" +
+$F{contactGroup}.getRed() +
+", " +
+$F{contactGroup}.getGreen() +
+", " +
+$F{contactGroup}.getBlue() +
+")\"><div>&nbsp;</div></body></html>"]]></hc:htmlContentExpression>
+					</hc:html>
+				</componentElement>
+				<image scaleImage="FillFrame">
+					<reportElement uuid="a1c30cec-4d76-45db-8d83-d924df8bc44d" x="0" y="0" width="553" height="16"/>
+					<imageExpression><![CDATA[$P{FILE_PATH} + "gradient-gray-bottom-light.png"]]></imageExpression>
+				</image>
+				<textField>
+					<reportElement uuid="b11ee96e-f3dc-435b-b776-6a74d22a1b96" x="2" y="0" width="350" height="15" forecolor="#FFFFFF"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="DejaVu Sans" size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["- " + $F{subGroup}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement uuid="9b490c69-fda7-4f52-b080-9fe755f26b77" x="0" y="15" width="535" height="1" forecolor="#CCCCCC"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<detail>
+		<band height="13">
+			<line>
+				<reportElement uuid="e7b6dcf6-e677-414d-92f9-be1df7b055bd" x="2" y="11" width="551" height="1" forecolor="#999999"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="9022d37c-9c06-48c7-a4ce-b63fcf0bf651" x="2" y="0" width="100" height="11"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{firstName} + " " + $F{lastName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="82336940-ea25-4a61-be9b-5c2c186cdd4a" x="102" y="0" width="100" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{position}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="034aa763-f483-412c-98ed-dfcc17361d23" x="202" y="0" width="147" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9c27350a-6ba9-4de4-8c80-1765d73b938a" x="349" y="0" width="204" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($F{phone} == null || $F{phone}.isEmpty()) ? "" : "[p]" + $F{phone})
++
+(($F{cell} == null || $F{cell}.isEmpty()) ? "" : " [c]" + $F{cell})]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

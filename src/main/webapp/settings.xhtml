@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html 	lang="en"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:p="http://primefaces.org/ui"
+		xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+		xmlns:tac="http://java.sun.com/jsf/composite/composite"
+		xmlns:admin="http://java.sun.com/jsf/composite/administration"
+>
+<body>
+<ui:composition template="/template/template.xhtml">
+<ui:define name="content">
+<f:view id="settings" contentType="text/html">
+	<p:growl id="mainMessages" showDetail="true" />
+   <div class="help" style="width:100%;text-align:right;margin-left:auto;">
+     <p:lightBox iframe="true" width="80%" height="80%">  
+       <h:outputLink 
+         value="help.xhtml?lookupString=settings" 
+         title="Help" 
+       >  
+         <span class="ui-icon ui-icon-info" style="display:inline-block;"></span>
+         <h:outputText value="Help"/>  
+       </h:outputLink>  
+      </p:lightBox>      
+	</div>
+        							
+	<p:accordionPanel rendered="#{loginBean.admin}">
+		<p:tab title="User Management">
+		  <p:panel>
+				
+				<h:form id="editUser" class="form-horizontal">
+					<legend>Current Users</legend>
+					<div class="control-group">
+						<h:selectOneMenu value="#{administrationBean.editableUserName}">
+							<f:selectItems value="#{administrationBean.users}"/>
+						</h:selectOneMenu>
+						<p:commandButton 
+							value="View" 
+							actionListener="#{administrationBean.doSelectUser}" 
+							update=":mainMessages, editUser"
+						/>
+					</div>
+					
+					<h:panelGroup rendered="#{administrationBean.canHasEditableUser}">
+						<label>Change Password</label>
+						<div class="control-group">
+							<p:inputText value="#{administrationBean.changePassword}" />
+							<p:commandButton
+								actionListener="#{administrationBean.doChangePassword}"
+								update=":mainMessages, editUser"
+								value="Change Password" 
+							/>
+						</div>
+						<label>Alter Roles</label>
+						<admin:roles value="#{administrationBean.editable.roleSelection}" />
+						<p:commandButton
+								actionListener="#{administrationBean.doUpdateRoles}"
+								value="Alter Roles"
+								ajax="false" 
+							/>
+						<div class="control-group">
+							<label>Delete User</label>
+							<p:commandButton 
+								actionListener="#{administrationBean.doEnableDelete}"
+								value="Enable Delete"
+								update=":mainMessages, editUser"
+							/>
+							<p:commandButton 
+								rendered="#{administrationBean.enableDelete}"
+								actionListener="#{administrationBean.doDeleteUser}"
+								value="Delete User"
+								update=":mainMessages, editUser"
+							/>
+						</div>
+					</h:panelGroup>										
+				</h:form>
+			</p:panel>
+			
+			<br />
+			
+			<p:panel>
+              					<h3>Add User</h3>
+				<h:form id="newUser">
+					<h:panelGrid>
+						<h:outputText value="User" styleClass="information"/>
+						<h:inputText value="#{administrationBean.userAdd.username}" />
+						
+						<h:outputText value="Password" styleClass="information"/>
+						<h:inputText value="#{administrationBean.userAdd.password}" />
+						
+						<h:outputText value="Role" styleClass="information"/>
+					</h:panelGrid>													
+					<admin:roles value="#{administrationBean.userAdd.roleSelection}" />	
+					<p:commandButton 
+						value="Save" 
+						actionListener="#{administrationBean.saveUser}"
+						update="newUser,:mainMessages"
+					/>											
+				</h:form>
+			</p:panel>	
+		</p:tab>
+		
+		<br />
+		
+		<p:tab title="Options">
+		  <h:form id="options">
+			  <p:panel>
+			    <h:panelGrid columns="3">
+				<h:outputText value="Reporting Directory" styleClass="information" />
+				<h:inputText value="#{administrationBean.reportingDocumentRoot}"/>								    
+				<p:commandButton 
+				    value="Update" 
+				    actionListener="#{administrationBean.updateReportingDocumentRoot}" 
+				    ajax="false"
+				/>
+				
+				 <h:outputText value="Venue Document Uploads" styleClass="information" />
+				 <h:inputText value="#{administrationBean.venueDocumentRoot}"/>                    
+				 <p:commandButton 
+				   value="Update" 
+				   actionListener="#{administrationBean.updateVenueDocumentRoot}" 
+				   ajax="false"
+				 />
+				 
+				 <h:outputText value="SQL Connection String" styleClass="information" />
+				 <h:inputText value="#{administrationBean.connectionString}"/>                    
+				 <p:commandButton 
+				   value="Update" 
+				   actionListener="#{administrationBean.updateConnectionString}" 
+				   ajax="false"
+				 />                      	                    
+			    </h:panelGrid>
+			  </p:panel>
+		  </h:form>
+		</p:tab>
+		
+		<p:tab title="Keys">
+			<p:panel>
+				<h:form styleClass="form-horizontal">
+					<legend>Database Keys</legend>
+					
+					<ui:repeat var="kv" value="#{administrationBean.settings}">
+						<admin:keyValue 
+							value="#{kv}" 
+							saveListener="#{kv.save}"
+							deleteListener="#{kv.delete}" 
+						/>
+					</ui:repeat>
+					<legend>Add Key</legend>
+					<admin:keyValue 
+						value="#{administrationBean.newKey}" 
+						saveListener="#{administrationBean.saveNewKey}"
+					>
+					</admin:keyValue>				
+				</h:form>
+			</p:panel>			
+		</p:tab>
+		<br />
+		
+		<p:tab title="Stress Tests">
+			<h:form>
+				<p:commandButton value="Throw Exception Test" actionListener="#{exceptionBean.throwException}"/>
+			</h:form>
+		</p:tab>	
+									
+	</p:accordionPanel>	
+	
+	<h:panelGroup rendered="#{not loginBean.admin}">
+		<h:outputText value="You do not have administrative priviliages" styleClass="error"/>
+	</h:panelGroup>
+	
+</f:view>
+</ui:define>
+</ui:composition>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html 	lang="en"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:p="http://primefaces.org/ui"
+		xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+		xmlns:tac="http://java.sun.com/jsf/composite/composite"
+>
+<body>
+<ui:composition template="/template/template.xhtml">
+<ui:define name="content">
+<f:view id="setProduction" contentType="text/html">
+	<h:form id="setProductionForm">
+		<p:growl id="mainMessages" showDetail="true" />
+		
+		<br />
+		
+		<p:panel>
+			<h3>Select a Season</h3>
+		
+			<h:selectOneMenu value="#{seasonBean.selectedSeason}">
+				<f:selectItems 
+					value="#{seasonBean.seasons}"
+					var="season"
+					itemLabel="#{season.name}"
+					itemValue="#{season.id}"
+				 />		
+			</h:selectOneMenu>
+			<p:commandButton 
+				value="Confirm Season" 
+				actionListener="#{seasonBean.confirmSeason}"
+				update="setProductionForm:mainMessages,setProductionForm"
+				/>
+		</p:panel>
+		
+		<br />
+		
+		<p:panel rendered="#{loginBean.user}">
+			<h3>Create a Season</h3>
+			
+			<h:outputText value="Season Name" styleClass="information"/>
+			<br />
+			<p:inputText value="#{seasonBean.newSeason.name}"/>
+			<br />
+			<h:outputText value="Description" styleClass="information"/>
+			<br />
+			<p:editor value="#{seasonBean.newSeason.desriptionMarkup}"/>
+			
+			<p:commandButton 
+				value="Save Season"
+				actionListener="#{seasonBean.createSeason}" 
+				update="setProductionForm:mainMessages,setProductionForm"
+				/>
+		</p:panel>
+		
+		<p:panel rendered="#{loginBean.admin}">
+			<h2>Set Default Season</h2>
+			<p>
+				This option sets the current season #{seasonBean.season.name} to 
+				the default for the application. Do you want to assign the season 
+				#{seasonBean.season.name} as the default? 
+			</p>
+			<p:commandButton
+				actionListener="#{seasonBean.doMakeDefault}"
+				value="Make #{seasonBean.season.name} the Default" 
+				ajax="false" 
+				/>
+		</p:panel>
+	</h:form>
+	
+</f:view>
+</ui:define>
+</ui:composition>
+</body>
+</html>

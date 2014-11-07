@@ -1,0 +1,25 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"	
+	xmlns:p="http://primefaces.org/ui">
+	<composite:interface>
+		<composite:attribute name="value" type="com.danielbchapman.composite.RoleSelection"/>
+	</composite:interface>
+	
+	<composite:implementation>
+		<table>
+			<ui:repeat var="item" value="#{cc.attrs.value.items}">
+				<tr>
+					<td>
+						<h:outputText value="#{item.label}" />
+					</td>
+					<td>
+						<p:selectBooleanCheckbox value="#{item.selected}"/>
+					</td>
+				</tr>
+			</ui:repeat>
+		</table>
+	</composite:implementation>
+</html>

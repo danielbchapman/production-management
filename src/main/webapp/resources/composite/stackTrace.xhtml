@@ -1,0 +1,51 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"	
+	xmlns:p="http://primefaces.org/ui">
+	<composite:interface>
+		<composite:attribute name="exception" type="java.lang.Throwable"/>
+		<composite:attribute name="chain"/>
+	</composite:interface>
+	
+	<composite:implementation>
+		<p:panel style="width:900px;text-align:left;font-familiy:monospace;">
+			<h4 class="error">
+				<h:outputText value="Caused by: #{cc.attrs.exception.class.name}" />
+			</h4>
+			<h4 class="error">
+				<h:outputText value="Exception Description: #{cc.attrs.exception.message}" />
+			</h4>		
+			<div class="roundedBorderSmall" style="background-color:#fff;border-color:#fff;">
+				<ui:repeat var="throwable" value="#{cc.attrs.chain}">
+					<h:outputText value="Caused by:"/>
+					<h:outputText value="#{throwable}"/>
+					<br/>
+					<h:outputText value="Exception Message:"/>
+					<h:outputText value="#{throwable.message}"/>
+					<br />
+					
+					<ui:repeat var="stack" value="#{throwable.stackTrace}">
+						<span style="margin-left:15px;">
+							<h:outputText value="at "/>
+							<h:outputText value="#{stack.className}"/>
+							<h:outputText value="."/>
+							<h:outputText value="#{stack.methodName}"/>
+							<span style="text-decoration:underline; color:#53f;">
+								<h:outputText value=" ("/>
+								<h:outputText value="#{stack.fileName}"/>
+								<h:outputText value=":"/>
+								<h:outputText value="#{stack.lineNumber}"/>
+								<h:outputText value=" )"/>															
+							</span>
+						</span>		
+						<br/>															
+					</ui:repeat>
+					
+					<hr />	
+				</ui:repeat>
+			</div>	
+		</p:panel>	
+	</composite:implementation>
+</html>

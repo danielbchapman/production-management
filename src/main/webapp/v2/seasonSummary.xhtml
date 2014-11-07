@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:tac="http://java.sun.com/jsf/composite/composite"
+>
+	
+	<f:subview id="summary" contentType="text/html">
+		<p:growl id="messages" showDetail="true" showSummary="true"/>
+		<br />
+		<tac:help lookupString="seasonHelp" />	
+		<p:panel id="vendorView">  
+			<h3>Season Summary</h3>
+		</p:panel>
+	</f:subview>
+</jsp:root>
+	

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:core="http://java.sun.com/jsf/composite/core"
+>
+  <h:body>
+ 	<ui:composition template="/template/templateResponsive.xhtml">
+		<ui:define name="title">Production Database</ui:define>
+		
+		<ui:define name="main">
+			<p:outputPanel rendered="#{param.reason == 'expired'}">
+				<div class="ui-messages-warn ui-corner-all">
+					<a href="#" class="ui-messages-close" onclick="$(this).parent().slideUp();return false;">
+						<span class="ui-icon ui-icon-close"></span>
+					</a>
+					<span class="ui-messages-warn-icon"></span>
+					<ul>
+						<li>
+							<span class="ui-messages-warn-summary">View Expired</span>
+							<span class="ui-messages-warn-detail">You were logged out of the system due to inactivity or a remote event.</span>
+						</li>
+					</ul>
+				</div>
+			</p:outputPanel>
+			<h1>Touring Database</h1>
+			<p>
+			This is the production and touring database for <a href="http://www.theactingcompany.org">The Acting Company</a>. 
+			The website is designed to provide touring information in a digital format so that it
+			can be easily accessed from the road. As we all know, things can change rapidly so hopefully
+			this will help keep us all in one place.
+			</p>
+			<p>
+			Please remember that our company managers (Joseph and Ken) are the final authority on 
+			scheduling and this website might be slightly out of date. If you require a logon or 
+			have a suggestion to improve this site please contact 
+			<a href="mailto:dchapman@theactingcompany.org">Daniel Chapman</a>.
+			</p>
+		</ui:define>
+		
+		<ui:define name="left">
+			<h3>Current Season</h3>
+			<ul>
+				<li>Of Mice and Men</li>
+				<li>As You Like It</li>
+			</ul>
+		</ui:define>
+		
+		<ui:define name="center">
+			<h3>Useful Links</h3>
+			<ul>
+				<li><a href="http://www.google.com">Google Docs - PDFs</a></li>
+				<li><a href="calendar.xhtml">Calendar</a></li>
+			</ul>
+		</ui:define>
+		
+		<ui:define name="right">
+			<h3>Updates 3.1.0</h3>
+			<h3>New Features/Fixes</h3>
+			<ul>
+				<li>
+					<em>New Feature</em>
+					You can change your password under <code>Settings::Accounts</code> 
+				</li>
+				<li>
+					<em>New Feature</em>
+					Added a horde of administration 
+				</li>
+				<li>	
+					<em>Bug Fix</em>
+					Fixed a bug with the login where mobile browsers 
+					(Chrome/iOS) were not able to log in with 
+					saved passwords.
+				</li>
+				<li>
+					<em>Bug Fix</em>
+					Added a <code>Contact Manager</code> role to separate contact sheets from budgets
+				</li>
+				<li>
+					<em>Bug Fix</em>
+					Increased session time-out to (2) hours so you won't be quickly logged out! 
+				</li>
+			</ul>	
+			<h3>Known Bugs</h3>
+			<ul>
+				<li>
+					<em>Budgets</em>
+					The check box for <code>Estimated</code> is not functioning properly with the
+					new build of Primefaces.	
+				</li>
+				<li>
+					<em>Contacts</em>
+					The in-place editor for changing a contact group is not functioning properly. Linking
+					or recreating the base contact is the best work-around.	
+				</li>
+				<li>
+					<em>Calendar</em>
+					The calendar has a severe load time and a couple bugs when removing performances/events. 
+					A reload of the schedule will fix this, the logic works on the back-end.	
+				</li>
+				<li>
+					<em>Help has been disabled</em>
+					The help system is currently disabled.	
+				</li>
+			</ul>			
+			<h3>Updates 3.0.1-Stable</h3>
+			<h3>New Features</h3>
+			<ul>
+				<li>
+					<em>Venues</em>
+					Documents are not integrated into the file-system. Currently they are 
+					hosted on Google-Docs and are under a "manual" version control. Please be careful
+				</li>
+				<li>
+					<em>Contacts</em>
+					Contacts can now be searched via the table for quick location and editing. The page
+					still has a very long load time and this is being investigated. 						
+				</li>
+			</ul>			
+		</ui:define>
+ 	</ui:composition> 	
+  </h:body>
+</html>

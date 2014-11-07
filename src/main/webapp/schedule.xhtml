@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html 	lang="en"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:p="http://primefaces.org/ui"
+		xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+		xmlns:tac="http://java.sun.com/jsf/composite/composite"
+>
+<body>
+<ui:composition template="/template/templateResponsive.xhtml">
+<ui:define name="main">
+<f:view contentType="text/html" beforePhase="#{loginBean.phaseSecurePage}">
+	<h1>Schedule Module</h1>
+</f:view>
+</ui:define>
+
+<ui:define name="left">
+<f:view contentType="text/html"  beforePhase="#{loginBean.phaseSecurePage}">
+	<h2>City Management</h2>
+	<p>
+	The <a href="city.xhtml">CITY MANGMENT</a> provides an interface for managing information
+	about cities including the hotels, hospitals, points of interest and other basic
+	information. This is related to the <a href="calendar.xhtml">CALENDAR</a> as it will
+	be updated with the information in this interface.
+	</p> 
+</f:view>
+</ui:define>
+
+<ui:define name="center">
+<f:view contentType="text/html"  beforePhase="#{seasonBean.phaseInitializeSeasons}">
+	<h2>Calendar</h2>
+	<p>
+	The <a href="calendar.xhtml">CALENDAR</a> provides an interface for managing the
+	entire tour schedule including the venue, hotel and call time for various events. 
+	It also allows the generation of a PDF so that it can be easily distributed.
+	</p> 
+</f:view>
+</ui:define>
+
+<ui:define name="right">
+<f:view contentType="text/html"  beforePhase="#{seasonBean.phaseInitializeSeasons}">
+	<h2>Performances</h2>
+	<p>
+	<a href="performances.xhtml">PERFORMANCES</a> provides an interface for managing the length and
+	properties of a performance. This allows the calendar to be rapidly updated to adjust for increased
+	call times or other various time factors. Generally speaking it is used to establish an estimated strike
+	in and out time.
+	</p> 	
+</f:view>
+</ui:define>
+</ui:composition>
+</body>
+</html>

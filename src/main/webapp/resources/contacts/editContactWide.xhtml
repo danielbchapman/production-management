@@ -1,0 +1,53 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"	
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:tac="http://java.sun.com/jsf/composite/composite"
+>
+	<composite:interface>
+		<composite:attribute name="contact" type="com.danielbchapman.production.entity.Contact"/>
+		<composite:attribute name="converter" type="com.danielbchapman.converter.AbstractConverter"/>
+		<composite:attribute name="groupId"/>
+	</composite:interface>
+	
+	<composite:implementation>
+		<h:panelGrid
+			styleClass="noBorders"
+			columns="4" 
+			columnClasses="noBorders, noBorders, noBorders, noBorders"
+		>
+			<h:outputText value="First" styleClass="information" />
+			<h:outputText value="Last" styleClass="information" />
+			<h:outputText value=""/>
+			<h:outputText value=""/>
+			
+			<p:inputText value="#{cc.attrs.contact.firstName}"/>
+			<p:inputText value="#{cc.attrs.contact.lastName}"/>
+			<h:outputText value=""/>
+			<h:outputText value=""/>
+				
+			<h:outputText value="Group" styleClass="information" />
+			<h:outputText value="Sub Group" styleClass="information" />
+			<h:outputText value="Position/Title" styleClass="information" />
+			<h:outputText value=""/>
+			
+			<tac:inplaceCombo converter="#{cc.attrs.converter}" />
+			<p:inputText value="#{cc.attrs.contact.subGroup}"/>
+			<p:inputText value="#{cc.attrs.contact.position}"/>
+			<h:outputText value=""/>			
+			
+			<h:outputText value="Phone" styleClass="information" />
+			<h:outputText value="Mobile" styleClass="information" />
+			<h:outputText value="E-mail" styleClass="information" />
+			<h:outputText value="Fax" styleClass="information" />
+			
+			<tac:phone value="#{cc.attrs.contact.phone}"/>
+			<tac:phone value="#{cc.attrs.contact.cell}"/>
+			<p:inputText value="#{cc.attrs.contact.email}"/>
+			<tac:phone value="#{cc.attrs.contact.fax}"/>
+			
+		</h:panelGrid>
+	</composite:implementation>
+</html>

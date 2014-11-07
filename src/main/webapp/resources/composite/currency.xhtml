@@ -1,0 +1,28 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"	
+	xmlns:p="http://primefaces.org/ui">
+	<composite:interface>
+		<composite:attribute name="value" />
+		<composite:attribute name="styleClass" />
+		<composite:attribute name="style" />
+	</composite:interface>
+	
+	<composite:implementation>
+		<h:inputText 
+			value="#{cc.attrs.value}" 
+			styleClass="#{cc.attrs.styleClass}" 
+			style="#{cc.attrs.style}"
+			onblur="this.value = '$' + this.value.replace(/[^0-9.]/gi, '');"
+			immediate="true"
+		>
+			<f:convertNumber 
+				currencySymbol="$"
+				type="currency"
+				pattern="$0.00"
+			/>
+		</h:inputText>	
+	</composite:implementation>
+</html>
