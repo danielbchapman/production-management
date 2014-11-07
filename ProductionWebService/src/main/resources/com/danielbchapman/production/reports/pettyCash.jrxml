@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="pettyCash" pageWidth="760" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="720" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.2100000000000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="CASH_ID" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PETTY_CASH_NAME" class="java.lang.String">
+		<defaultValueExpression><![CDATA["INVALID REQUEST"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+  (
+  SELECT
+    SUM(sub.Amount)
+  FROM
+    BudgetAdjustingEntry sub
+  WHERE
+    BudgetEntry.Id = sub.BudgetEntry_Id
+  ) AS "ADJUSTMENTS",
+  PettyCash.AMOUNT AS PETTYCASH_AMOUNT,
+  PettyCash.NAME AS PETTYCASH_NAME,
+  BudgetEntry.AMOUNTINITIAL AS BUDGETENTRY_AMOUNTINITIAL,
+  BudgetEntry.DATE AS BUDGETENTRY_DATE,
+  BudgetEntry.NOTE AS BUDGETENTRY_NOTE,
+  Budget.NAME AS BUDGET_NAME,
+  BudgetAdjustingEntry.AMOUNT AS BUDGETADJUSTINGENTRY_AMOUNT,
+  BudgetAdjustingEntry.DATE AS BUDGETADJUSTINGENTRY_DATE,
+  BudgetAdjustingEntry.NOTE AS BUDGETADJUSTINGENTRY_NOTE
+FROM
+  PettyCash PettyCash
+  LEFT OUTER JOIN PettyCashEntry PettyCashEntry
+    ON PettyCash.ID = PettyCashEntry.PettyCash_Id
+  INNER JOIN BudgetEntry BudgetEntry
+    ON PettyCashEntry.BudgetEntry_Id = BudgetEntry.Id
+  INNER JOIN Budget Budget
+    ON BudgetEntry.Budget_Id = Budget.Id
+  LEFT OUTER JOIN BudgetAdjustingEntry BudgetAdjustingEntry
+    ON BudgetEntry.ID = BudgetAdjustingEntry.BudgetEntry_Id
+WHERE
+  PettyCash_Id = $P{CASH_ID}]]>
+	</queryString>
+	<field name="ADJUSTMENTS" class="java.lang.Double"/>
+	<field name="PETTYCASH_AMOUNT" class="java.lang.Double"/>
+	<field name="PETTYCASH_NAME" class="java.lang.String"/>
+	<field name="BUDGETENTRY_AMOUNTINITIAL" class="java.lang.Double"/>
+	<field name="BUDGETENTRY_DATE" class="java.sql.Timestamp"/>
+	<field name="BUDGETENTRY_NOTE" class="java.lang.String"/>
+	<field name="BUDGET_NAME" class="java.lang.String"/>
+	<field name="BUDGETADJUSTINGENTRY_AMOUNT" class="java.lang.Double"/>
+	<field name="BUDGETADJUSTINGENTRY_DATE" class="java.sql.Timestamp"/>
+	<field name="BUDGETADJUSTINGENTRY_NOTE" class="java.lang.String"/>
+	<variable name="ADJUSTMENTS_1" class="java.lang.Double" resetType="Page" calculation="Sum">
+		<variableExpression><![CDATA[$F{ADJUSTMENTS}]]></variableExpression>
+	</variable>
+	<variable name="BUDGETENTRY_AMOUNTINITIAL_1" class="java.lang.Double" resetType="Page" calculation="Sum">
+		<variableExpression><![CDATA[$F{BUDGETENTRY_AMOUNTINITIAL}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="83" splitType="Stretch">
+			<staticText>
+				<reportElement x="251" y="10" width="183" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans" size="14"/>
+				</textElement>
+				<text><![CDATA[Petty Cash Reconciliation]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="266" y="30" width="168" height="15"/>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans" size="12" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Production Budgets]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00" isBlankWhenNull="true">
+				<reportElement x="658" y="10" width="62" height="15"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{PETTYCASH_AMOUNT}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Page" pattern="¤ #,##0.00" isBlankWhenNull="true">
+				<reportElement x="658" y="40" width="62" height="15"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$V{ADJUSTMENTS_1} + $V{BUDGETENTRY_AMOUNTINITIAL_1} + $F{PETTYCASH_AMOUNT}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Page" pattern="¤ #,##0.00" isBlankWhenNull="true">
+				<reportElement x="658" y="25" width="62" height="15"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$V{BUDGETENTRY_AMOUNTINITIAL_1} + $V{ADJUSTMENTS_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="566" y="10" width="77" height="15"/>
+				<textElement>
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Initial Issuance]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="566" y="25" width="77" height="15"/>
+				<textElement>
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Expenses Adj.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="566" y="40" width="77" height="15"/>
+				<textElement>
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Remaining]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="0" width="147" height="75"/>
+				<imageExpression class="java.lang.String"><![CDATA["com\\danielbchapman\\production\\reports\\tac_logo.jpg"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="236" y="45" width="198" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{PETTY_CASH_NAME}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="15" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="720" height="15" backcolor="#CC0000"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="620" y="0" width="100" height="13" forecolor="#FFFFFF"/>
+				<textElement>
+					<font isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Entry Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="445" y="0" width="175" height="13" forecolor="#FFFFFF"/>
+				<textElement>
+					<font isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Budget ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="72" height="13" forecolor="#FFFFFF"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Amount Adj.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="92" y="0" width="43" height="13" forecolor="#FFFFFF"/>
+				<textElement>
+					<font isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Memo]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="13" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="720" height="13" backcolor="#EEEDED">
+					<printWhenExpression><![CDATA[$V{REPORT_COUNT} % 2 == 0]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="445" y="0" width="175" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{BUDGET_NAME}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="0" y="0" width="50" height="13"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{BUDGETENTRY_AMOUNTINITIAL} + ($F{ADJUSTMENTS} == null ? 0.00 : $F{ADJUSTMENTS})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="92" y="0" width="342" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{BUDGETENTRY_NOTE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd-MMM-yy">
+				<reportElement x="620" y="0" width="100" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{BUDGETENTRY_DATE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="46" splitType="Stretch">
+			<staticText>
+				<reportElement x="277" y="26" width="164" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Prepared by Daniel B. Chapman]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="599" y="26" width="80" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="679" y="26" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="26" width="211" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="68">
+			<textField pattern="¤ #,##0.00" isBlankWhenNull="true">
+				<reportElement x="107" y="19" width="62" height="15"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{PETTYCASH_AMOUNT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="15" y="49" width="77" height="15"/>
+				<textElement>
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Remaining]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="19" width="77" height="15"/>
+				<textElement>
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Initial Issuance]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="34" width="77" height="15"/>
+				<textElement>
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Expenses Adj.]]></text>
+			</staticText>
+			<textField evaluationTime="Page" pattern="¤ #,##0.00" isBlankWhenNull="true">
+				<reportElement x="107" y="49" width="62" height="15"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$V{ADJUSTMENTS_1} + $V{BUDGETENTRY_AMOUNTINITIAL_1} + $F{PETTYCASH_AMOUNT}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Page" pattern="¤ #,##0.00" isBlankWhenNull="true">
+				<reportElement x="107" y="34" width="62" height="15"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$V{BUDGETENTRY_AMOUNTINITIAL_1} + $V{ADJUSTMENTS_1}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="8" width="719" height="1"/>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

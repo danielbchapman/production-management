@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="weeklySchedules" pageWidth="595" pageHeight="775" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.2100000000000146"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="6"/>
+	<style name="colorOne" mode="Opaque" forecolor="#FFFFFF" backcolor="#FAA637"/>
+	<style name="colorTwo" mode="Opaque" forecolor="#FFFFFF" backcolor="#F6C789"/>
+	<style name="lines" forecolor="#FAA637" backcolor="#FFFFFF"/>
+	<style name="gray" mode="Opaque" backcolor="#F0EDED"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATE_BEGIN" class="java.util.Date"/>
+	<parameter name="DATE_END" class="java.util.Date"/>
+	<queryString>
+		<![CDATA[SELECT
+     DAY."CREWTRAVEL" AS DAY_CREWTRAVEL,
+     DAY."THEATERINFORMATION" AS DAY_THEATERINFORMATION,
+     DAY."CASTLOCATION" AS DAY_CASTLOCATION,
+     DAY."CASTTRAVEL" AS DAY_CASTTRAVEL,
+     DAY."CREWLOCATION" AS DAY_CREWLOCATION,
+     DAY."NOTES" AS DAY_NOTES,
+     DAY."DATE" AS DAY_DATE,
+     EVENT."TIME" AS EVENT_TIME,
+     EVENT."DESCRIPTION" AS EVENT_DESCRIPTION,
+     EVENT."DEPARTMENT" AS EVENT_DEPARTMENT,
+     DAY."MILAGEINFORMATION" AS DAY_MILAGEINFORMATION
+FROM
+     "PUBLIC"."DAY" DAY INNER JOIN "PUBLIC"."EVENT" EVENT ON DAY."ID" = EVENT."DAY_ID"
+WHERE
+  DAY.Date >= $P{DATE_BEGIN}
+  AND DAY.Date <= $P{DATE_END}
+ORDER BY
+  DAY.Date,
+  EVENT.Time]]>
+	</queryString>
+	<field name="DAY_CREWTRAVEL" class="java.lang.String"/>
+	<field name="DAY_THEATERINFORMATION" class="java.lang.String"/>
+	<field name="DAY_CASTLOCATION" class="java.lang.String"/>
+	<field name="DAY_CASTTRAVEL" class="java.lang.String"/>
+	<field name="DAY_CREWLOCATION" class="java.lang.String"/>
+	<field name="DAY_NOTES" class="java.lang.String"/>
+	<field name="DAY_DATE" class="java.sql.Date"/>
+	<field name="EVENT_TIME" class="java.sql.Timestamp"/>
+	<field name="EVENT_DESCRIPTION" class="java.lang.String"/>
+	<field name="EVENT_DEPARTMENT" class="java.lang.String"/>
+	<field name="DAY_MILAGEINFORMATION" class="java.lang.String"/>
+	<group name="Day" keepTogether="true">
+		<groupExpression><![CDATA[$F{DAY_DATE}]]></groupExpression>
+		<groupHeader>
+			<band height="112">
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="colorOne" x="0" y="0" width="555" height="20"/>
+					<textElement textAlignment="Center">
+						<font fontName="DejaVu Serif" size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.util.Date"><![CDATA[$F{DAY_DATE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement stretchType="RelativeToBandHeight" x="268" y="20" width="287" height="92"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{DAY_NOTES}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<columnHeader>
+		<band height="48" splitType="Stretch">
+			<staticText>
+				<reportElement x="79" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[EVENT_TIME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="247" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[EVENT_DESCRIPTION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="58" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[EVENT_DEPARTMENT]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField pattern="h.mm a">
+				<reportElement x="15" y="0" width="85" height="15"/>
+				<textElement>
+					<font isBold="true" isItalic="true" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{EVENT_TIME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="455" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{EVENT_DESCRIPTION}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="449" y="7" width="66" height="15"/>
+				<textElement textAlignment="Right">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="515" y="7" width="40" height="15"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="7" width="160" height="15"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="160" y="7" width="235" height="15"/>
+				<textElement textAlignment="Center">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Prepared by Daniel B. Chapman]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

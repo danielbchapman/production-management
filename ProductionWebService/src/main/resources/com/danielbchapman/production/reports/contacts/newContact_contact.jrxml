@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="newContact_contact" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.4641000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="cell" class="java.lang.String">
+		<fieldDescription><![CDATA[cell]]></fieldDescription>
+	</field>
+	<field name="class" class="java.lang.Class">
+		<fieldDescription><![CDATA[class]]></fieldDescription>
+	</field>
+	<field name="contactGroup" class="com.danielbchapman.production.entity.ContactGroup">
+		<fieldDescription><![CDATA[contactGroup]]></fieldDescription>
+	</field>
+	<field name="email" class="java.lang.String">
+		<fieldDescription><![CDATA[email]]></fieldDescription>
+	</field>
+	<field name="fax" class="java.lang.String">
+		<fieldDescription><![CDATA[fax]]></fieldDescription>
+	</field>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
+	<field name="name" class="java.lang.String">
+		<fieldDescription><![CDATA[name]]></fieldDescription>
+	</field>
+	<field name="notes" class="java.lang.String">
+		<fieldDescription><![CDATA[notes]]></fieldDescription>
+	</field>
+	<field name="phone" class="java.lang.String">
+		<fieldDescription><![CDATA[phone]]></fieldDescription>
+	</field>
+	<field name="position" class="java.lang.String">
+		<fieldDescription><![CDATA[position]]></fieldDescription>
+	</field>
+	<field name="subGroup" class="java.lang.String">
+		<fieldDescription><![CDATA[subGroup]]></fieldDescription>
+	</field>
+	<group name="SubGroup">
+		<groupExpression><![CDATA[$F{subGroup}]]></groupExpression>
+		<groupHeader>
+			<band height="50">
+				<textField>
+					<reportElement x="11" y="30" width="341" height="20"/>
+					<textElement>
+						<font size="14" isBold="true" isItalic="true" isUnderline="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{subGroup}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="8"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement x="39" y="0" width="100" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{contactName}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="0" y="0" width="39" height="30"/>
+				<hc:html xmlns:hc="http://jasperreports.sourceforge.net/htmlcomponent" xsi:schemaLocation="http://jasperreports.sourceforge.net/htmlcomponent http://jasperreports.sourceforge.net/xsd/htmlcomponent.xsd" scaleType="FillFrame" horizontalAlign="Left" verticalAlign="Middle">
+					<hc:htmlContentExpression><![CDATA["<html><body style=\"background-color:rgb(" +
+$F{contactGroup}.getRed() +
+", " +
+$F{contactGroup}.getGreen() +
+", " +
+$F{contactGroup}.getBlue() +
+")\"><div>&nbsp;</div></body></html>"]]></hc:htmlContentExpression>
+				</hc:html>
+			</componentElement>
+			<staticText>
+				<reportElement x="338" y="0" width="100" height="15"/>
+				<textElement/>
+				<text><![CDATA[phone]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="438" y="0" width="100" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{phone}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="45">
+			<staticText>
+				<reportElement x="338" y="0" width="100" height="15"/>
+				<textElement/>
+				<text><![CDATA[cell]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="438" y="0" width="100" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{cell}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="0" y="0" width="39" height="45"/>
+				<hc:html xmlns:hc="http://jasperreports.sourceforge.net/htmlcomponent" xsi:schemaLocation="http://jasperreports.sourceforge.net/htmlcomponent http://jasperreports.sourceforge.net/xsd/htmlcomponent.xsd" scaleType="FillFrame" horizontalAlign="Left" verticalAlign="Middle">
+					<hc:htmlContentExpression><![CDATA["<html><body style=\"background-color:rgb(" +
+$F{contactGroup}.getRed() +
+", " +
+$F{contactGroup}.getGreen() +
+", " +
+$F{contactGroup}.getBlue() +
+")\"><div>&nbsp;</div></body></html>"]]></hc:htmlContentExpression>
+				</hc:html>
+			</componentElement>
+			<textField>
+				<reportElement x="39" y="0" width="100" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{contactName}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="15">
+			<staticText>
+				<reportElement x="338" y="0" width="100" height="15"/>
+				<textElement/>
+				<text><![CDATA[fax]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="438" y="0" width="100" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{fax}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="0" y="0" width="39" height="15"/>
+				<hc:html xmlns:hc="http://jasperreports.sourceforge.net/htmlcomponent" xsi:schemaLocation="http://jasperreports.sourceforge.net/htmlcomponent http://jasperreports.sourceforge.net/xsd/htmlcomponent.xsd" scaleType="FillFrame" horizontalAlign="Left" verticalAlign="Middle">
+					<hc:htmlContentExpression><![CDATA["<html><body style=\"background-color:rgb(" +
+$F{contactGroup}.getRed() +
+", " +
+$F{contactGroup}.getGreen() +
+", " +
+$F{contactGroup}.getBlue() +
+")\"><div>&nbsp;</div></body></html>"]]></hc:htmlContentExpression>
+				</hc:html>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>
