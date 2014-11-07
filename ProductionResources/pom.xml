@@ -10,7 +10,7 @@
 		<dependency>  
 		    <groupId>org.primefaces</groupId>  
 		    <artifactId>primefaces</artifactId>  
-		    <version>2.2</version>  
+		    <version>3.3.1</version>  
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -30,8 +30,8 @@
 		</repository>
 		<repository>
 			<id>prime-repo</id>
-			<name>Prime Technology Maven Repository</name>
-			<url>http://repository.prime.com.tr</url>
+			<name>PrimeFaces Maven Repository</name>
+			<url>http://repository.primefaces.org</url>
 			<layout>default</layout>
 		</repository>
 	</repositories>
@@ -43,8 +43,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.2</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.8</source>
+					<target>1.8</target>
 				</configuration>
 			</plugin>
 			<plugin>
