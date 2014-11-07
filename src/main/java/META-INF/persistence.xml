@@ -85,10 +85,15 @@
 			<property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/C:\Database\Data\production;"/>
 			 -->
 			 
-			<!-- My SQL --> 			    
+			<!-- My SQL --> 		
+			<!-- 	    
 			<property name="javax.persistence.jdbc.user" value="***REMOVED***"/>
 			<property name="javax.persistence.jdbc.password" value="***REMOVED***"/>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://us-cdbr-east.cleardb.com/***REMOVED***"/>
+			 -->
+			<property name="javax.persistence.jdbc.user" value="production"/>
+			<property name="javax.persistence.jdbc.password" value="wiudata"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/production"/>			 
 			<property name="eclipselink.target-database" value="MySQL"/>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
 			<property name="eclipselink.platform.class.name" value="org.eclipse.persistence.platform.database.MySQLPlatform" />			

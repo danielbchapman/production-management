@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 import javax.persistence.EntityManager;
 
-import org.jboss.com.sun.corba.se.spi.ior.Identifiable;
 import org.theactingcompany.persistence.Indentifiable;
+import com.danielbchapman.production.entity.DelegateInstance;
 
 /**
  * @author dchapman
