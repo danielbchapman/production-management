@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="ProductionEE6">
+        <wb-resource deploy-path="/" source-path="/EarContent"/>
+        <dependent-module archiveName="InventoryEJB.jar" deploy-path="/" handle="module:/resource/InventoryEJB/InventoryEJB">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="GenericLoginEJB.jar" deploy-path="/" handle="module:/resource/GenericLoginEJB/GenericLoginEJB">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="HelpEJB.jar" deploy-path="/" handle="module:/resource/HelpEJB/HelpEJB">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ProductionEJB.jar" deploy-path="/" handle="module:/resource/ProductionEJB/ProductionEJB">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="JpaFramework.jar" deploy-path="/lib" handle="module:/resource/JpaFramework/JpaFramework">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ProductionResources.war" deploy-path="/" handle="module:/resource/ProductionResources/ProductionResources">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ProductionSchedule.war" deploy-path="/" handle="module:/resource/ProductionSchedule/ProductionSchedule">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="BugsEJB.jar" deploy-path="/" handle="module:/resource/BugsEJB/BugsEJB">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="CustomJaasRealm.jar" deploy-path="/lib" handle="module:/resource/CustomJaasRealm/CustomJaasRealm">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+    </wb-module>
+</project-modules>
