@@ -1,0 +1,67 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:tac="http://java.sun.com/jsf/composite/composite"
+	xmlns:inventory="http://java.sun.com/jsf/composite/inventory"	
+	xmlns:p="http://primefaces.org/ui"
+>
+	<composite:interface>
+		<composite:attribute name="elementWrapper" type="com.danielbchapman.production.web.schedule.beans.InventoryBean$InventoryElementSet$InventoryElementWrapper"/>
+		<composite:attribute name="update" type="java.lang.String" />
+	</composite:interface>
+	
+	<composite:implementation>
+		<p:panel style="padding:5px;">
+			<h:outputText value="Add Keywords/Notes" styleClass="information"/>
+			<h:inputTextarea value="#{cc.attrs.elementWrapper.userNotes}" style="width:90%;"/>
+			<br />
+			<p:panel rendered="#{cc.attrs.elementWrapper.canHasSpecificProblem}">
+				<h3 class="error">Problem Resolution</h3>
+				<h:outputText value="#{cc.attrs.elementWrapper.activeProblemDescription}" styleClass="error"/>
+				<br/>
+				<p:commandButton 
+					value="Mark Resolved"
+					actionListener="#{cc.attrs.elementWrapper.resolveActiveProblem}"
+					ajax="false"
+					styleClass="error"
+					/>
+			</p:panel>
+			<br />
+			<p:commandButton 
+				value="Add to Notes" 
+				actionListener="#{cc.attrs.elementWrapper.appendUserNotes}"
+				update="#{cc.attrs.update}"
+			/>
+			
+			<p:panel toggleable="true" collapsed="true" header="Report a problem">
+			
+				<h:outputText value="Problem:" styleClass="information"/>
+				<p:inputText value="#{cc.attrs.elementWrapper.problem.description}" style="width:95%;"/>
+				
+				<p:separator />
+				<h:outputText value="Name:" styleClass="information" />
+				<p:inputText value="#{cc.attrs.elementWrapper.problem.name}"/>
+				
+				<p:separator/>
+				
+				<h:outputText value="Contact Me:" styleClass="information"/>
+				<h:selectBooleanCheckbox value="#{cc.attrs.elementWrapper.problem.contactMe}" />
+				<h:outputText value="Phone " styleClass="information"/>
+				<p:inputMask mask="(999)-999-9999" value="#{cc.attrs.elementWrapper.problem.phoneContact}"/>
+				<h:outputText value="Email " styleClass="information"/>
+				<p:inputText value="#{cc.attrs.elementWrapper.problem.emailContact}" />
+				
+				<p:separator />
+																																				
+				<p:commandButton 
+					value="Report"
+					actionListener="#{cc.attrs.elementWrapper.saveProblem}"
+					update="#{cc.attrs.update}" 
+				/>
+			</p:panel>
+		</p:panel>
+		
+	</composite:implementation>
+</html>

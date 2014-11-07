@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf13433291566950" configfile="/tac/src/main/webapp/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="setTimeZoneOld.xhtml" x="122" y="178" id="pf13436818530880" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf13436818530881" path="/setTimeZoneOld.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="index.xhtml" x="338" y="178" id="pf13436818530882" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf13436818530881" path="/index.xhtml"/>
+  <links id="pf13436818530881" target="pf13436818530882" source="pf13436818530880" outcome="confirmTimeZone"/>
+</pageflow:Pageflow>

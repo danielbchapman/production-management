@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html 	lang="en"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:p="http://primefaces.org/ui"
+		xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+		xmlns:tac="http://java.sun.com/jsf/composite/composite"
+		xmlns:admin="http://java.sun.com/jsf/composite/administration"
+>
+<body>
+<ui:composition template="/template/templateLeftCenterRight.xhtml">
+	<ui:define name="left">
+		<f:view contentType="text/html" beforePhase="#{loginBean.phaseSecurePage}">
+			<h2>Account Management</h2>
+			<p>The <a href="account.xhtml">ACCOUNT</a> page is the central place to manage
+			your account. This can mean changing your password, updating notifications (when they 
+			are implemented) or reporting bugs/requesting features. If you need to manage another
+			user's account information and have administrative privileges that page can be found as
+			<a href="settings.xhtml">SETTINGS</a>. 
+			</p>  
+		</f:view>
+	</ui:define>
+	
+	<ui:define name="center">
+		<f:view contentType="text/html" beforePhase="#{loginBean.phaseSecurePage}">			
+			<h:form id="changePassword">
+				<legend>Change Password</legend>
+				
+				<label class="control-label" >Current Password</label>
+				<h:inputSecret value="#{accountBean.oldPass}" id="old" />
+				<p:watermark value="Current Password" for="old" />
+
+			    <label class="control-label" >New Password</label>
+			    <p:password value="#{accountBean.password}" feedback="true" id="password" />
+			    <p:watermark value="New Password" for="password" />
+			    <p:password value="#{accountBean.passwordConfirm}" id="confirm" />
+			    <p:watermark value="Confirm Password" for="confirm" />
+				
+				<p class="text-error">
+					<h:outputText value="#{accountBean.errorMessage}"/>
+				</p>
+				
+				<p class="text-success">
+					<h:outputText 
+						value="Your password was successfully changed!" 
+						rendered="#{accountBean.success}"
+						escape="false"
+						
+					/>
+				</p>
+				<p:commandButton 
+					value="Change Password"
+					process="@form"
+					actionListener="#{accountBean.changePass}"
+					update="changePassword"
+					/>
+			</h:form>
+		</f:view>
+	</ui:define>
+	
+	<ui:define name="right">
+		<f:view contentType="text/html" beforePhase="#{loginBean.phaseSecurePage}">
+			<h2>Notification Settings</h2>
+			<p class="error"> Under construction </p>
+		</f:view>
+	</ui:define>
+</ui:composition>
+</body>
+</html>

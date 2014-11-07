@@ -1,0 +1,24 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"	
+	xmlns:p="http://primefaces.org/ui">
+	<composite:interface>
+		<composite:attribute name="lookupString" type="java.lang.String"/>
+	</composite:interface>
+	
+	<composite:implementation>
+    <div class="help" style="width:100%;text-align:right;margin-left:auto;">
+      <p:lightBox iframe="true" width="80%" height="80%">  
+        <h:outputLink 
+          value="help.xhtml?lookupString=#{cc.attrs.lookupString}" 
+          title="Help" 
+        >  
+          <span class="ui-icon ui-icon-info" style="display:inline-block;"></span>
+          <h:outputText value="Help"/>  
+        </h:outputLink>  
+       </p:lightBox>      
+    </div>
+	</composite:implementation>
+</html>

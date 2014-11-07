@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="masterBudgetListing_entryListing_adjustments" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="792" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="BUDGET_ENTRY_ID" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[SELECT
+     BUDGETADJUSTINGENTRY."AMOUNT" AS BUDGETADJUSTINGENTRY_AMOUNT,
+     BUDGETADJUSTINGENTRY."DATE" AS BUDGETADJUSTINGENTRY_DATE,
+     BUDGETADJUSTINGENTRY."NOTE" AS BUDGETADJUSTINGENTRY_NOTE
+FROM
+     "PUBLIC"."BUDGETADJUSTINGENTRY" BUDGETADJUSTINGENTRY
+WHERE
+  BudgetAdjustingEntry.BudgetEntry_ID = $P{BUDGET_ENTRY_ID}]]>
+	</queryString>
+	<field name="BUDGETADJUSTINGENTRY_AMOUNT" class="java.lang.Double"/>
+	<field name="BUDGETADJUSTINGENTRY_DATE" class="java.sql.Timestamp"/>
+	<field name="BUDGETADJUSTINGENTRY_NOTE" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="5">
+			<rectangle radius="5">
+				<reportElement x="51" y="0" width="705" height="3"/>
+			</rectangle>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="224" y="0" width="104" height="15"/>
+				<textElement>
+					<font isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{BUDGETADJUSTINGENTRY_AMOUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="124" y="0" width="100" height="15"/>
+				<textElement>
+					<font isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{BUDGETADJUSTINGENTRY_DATE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="424" y="0" width="332" height="15"/>
+				<textElement>
+					<font isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{BUDGETADJUSTINGENTRY_NOTE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="83" y="0" width="29" height="15"/>
+				<textElement>
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Adj >>]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="5">
+			<rectangle radius="5">
+				<reportElement x="51" y="0" width="705" height="3"/>
+			</rectangle>
+		</band>
+	</columnFooter>
+</jasperReport>

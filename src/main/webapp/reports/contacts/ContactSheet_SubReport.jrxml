@@ -1,0 +1,543 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ContactSheet_SubReport" pageWidth="535" pageHeight="802" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="1a80c7f8-b143-41db-b6f7-3e6513a6450b">
+	<property name="ireport.zoom" value="2.143588810000002"/>
+	<property name="ireport.x" value="476"/>
+	<property name="ireport.y" value="0"/>
+	<property name="ireport.callouts" value="##Wed Aug 31 16:38:20 EDT 2011\ncallouts.4.text=Alternative Format - Fax or multiple addresses\ncallouts.3.text=Expanded Phone/Cell/Email Single\ncallouts.4.bounds=532,91,188,55\ncallouts.2.text=Compressed Format\nPhone-E-mail / Single Address\ncallouts.1.text=Compressed Format\nCell-Email / Single Address\n\ncallouts.3.bounds=533,56,211,40\ncallouts.2.bounds=532,27,181,48\ncallouts.1.bounds=532,2,176,47"/>
+	<style name="font-size8" fontSize="8" isBold="true"/>
+	<subDataset name="Table Dataset 1" uuid="fd001ddd-21c0-4cfa-8fd7-c5de15beb8db">
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="city" class="java.lang.String">
+			<fieldDescription><![CDATA[city]]></fieldDescription>
+		</field>
+		<field name="class" class="java.lang.Class">
+			<fieldDescription><![CDATA[class]]></fieldDescription>
+		</field>
+		<field name="contact" class="com.danielbchapman.production.entity.Contact">
+			<fieldDescription><![CDATA[contact]]></fieldDescription>
+		</field>
+		<field name="formattedAddressTwoLineA" class="java.lang.String">
+			<fieldDescription><![CDATA[formattedAddressTwoLineA]]></fieldDescription>
+		</field>
+		<field name="formattedAddressTwoLineB" class="java.lang.String">
+			<fieldDescription><![CDATA[formattedAddressTwoLineB]]></fieldDescription>
+		</field>
+		<field name="id" class="java.lang.Long">
+			<fieldDescription><![CDATA[id]]></fieldDescription>
+		</field>
+		<field name="label" class="java.lang.String">
+			<fieldDescription><![CDATA[label]]></fieldDescription>
+		</field>
+		<field name="lineOne" class="java.lang.String">
+			<fieldDescription><![CDATA[lineOne]]></fieldDescription>
+		</field>
+		<field name="lineTwo" class="java.lang.String">
+			<fieldDescription><![CDATA[lineTwo]]></fieldDescription>
+		</field>
+		<field name="state" class="java.lang.String">
+			<fieldDescription><![CDATA[state]]></fieldDescription>
+		</field>
+		<field name="zip" class="java.lang.String">
+			<fieldDescription><![CDATA[zip]]></fieldDescription>
+		</field>
+	</subDataset>
+	<parameter name="FILE_PATH" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="addressOne" class="com.danielbchapman.production.entity.ContactAddress">
+		<fieldDescription><![CDATA[addressOne]]></fieldDescription>
+	</field>
+	<field name="addressThree" class="com.danielbchapman.production.entity.ContactAddress">
+		<fieldDescription><![CDATA[addressThree]]></fieldDescription>
+	</field>
+	<field name="addressTwo" class="com.danielbchapman.production.entity.ContactAddress">
+		<fieldDescription><![CDATA[addressTwo]]></fieldDescription>
+	</field>
+	<field name="addresses" class="java.util.Collection">
+		<fieldDescription><![CDATA[addresses]]></fieldDescription>
+	</field>
+	<field name="addressesToHtmlDiv" class="java.lang.String">
+		<fieldDescription><![CDATA[addressesToHtmlDiv]]></fieldDescription>
+	</field>
+	<field name="cell" class="java.lang.String">
+		<fieldDescription><![CDATA[cell]]></fieldDescription>
+	</field>
+	<field name="class" class="java.lang.Class">
+		<fieldDescription><![CDATA[class]]></fieldDescription>
+	</field>
+	<field name="contactGroup" class="com.danielbchapman.production.entity.ContactGroup">
+		<fieldDescription><![CDATA[contactGroup]]></fieldDescription>
+	</field>
+	<field name="contactInformationToHtmlDiv" class="java.lang.String">
+		<fieldDescription><![CDATA[contactInformationToHtmlDiv]]></fieldDescription>
+	</field>
+	<field name="email" class="java.lang.String">
+		<fieldDescription><![CDATA[email]]></fieldDescription>
+	</field>
+	<field name="fax" class="java.lang.String">
+		<fieldDescription><![CDATA[fax]]></fieldDescription>
+	</field>
+	<field name="firstName" class="java.lang.String">
+		<fieldDescription><![CDATA[firstName]]></fieldDescription>
+	</field>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
+	<field name="lastName" class="java.lang.String">
+		<fieldDescription><![CDATA[lastName]]></fieldDescription>
+	</field>
+	<field name="notes" class="java.lang.String">
+		<fieldDescription><![CDATA[notes]]></fieldDescription>
+	</field>
+	<field name="phone" class="java.lang.String">
+		<fieldDescription><![CDATA[phone]]></fieldDescription>
+	</field>
+	<field name="position" class="java.lang.String">
+		<fieldDescription><![CDATA[position]]></fieldDescription>
+	</field>
+	<field name="subGroup" class="java.lang.String">
+		<fieldDescription><![CDATA[subGroup]]></fieldDescription>
+	</field>
+	<group name="sunGroup">
+		<groupExpression><![CDATA[$F{subGroup}]]></groupExpression>
+		<groupHeader>
+			<band height="16">
+				<componentElement>
+					<reportElement uuid="4a15e3d0-0aff-4875-bbe8-a007fcda50e6" stretchType="RelativeToBandHeight" x="0" y="0" width="535" height="16"/>
+					<hc:html xmlns:hc="http://jasperreports.sourceforge.net/htmlcomponent" xsi:schemaLocation="http://jasperreports.sourceforge.net/htmlcomponent http://jasperreports.sourceforge.net/xsd/htmlcomponent.xsd" scaleType="FillFrame" horizontalAlign="Left" verticalAlign="Middle">
+						<hc:htmlContentExpression><![CDATA["<html><body style=\"background-color:rgb(" +
+$F{contactGroup}.getRed() +
+", " +
+$F{contactGroup}.getGreen() +
+", " +
+$F{contactGroup}.getBlue() +
+")\"><div>&nbsp;</div></body></html>"]]></hc:htmlContentExpression>
+					</hc:html>
+				</componentElement>
+				<image scaleImage="FillFrame">
+					<reportElement uuid="9bef1339-2a5a-492c-b434-01c5b6c1885d" x="0" y="0" width="535" height="16"/>
+					<imageExpression><![CDATA[$P{FILE_PATH} + "gradient-gray-bottom-light.png"]]></imageExpression>
+				</image>
+				<textField>
+					<reportElement uuid="9c438e10-9bf1-4f1a-b9fe-a6c2ce35fada" x="2" y="0" width="350" height="15" forecolor="#FFFFFF"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="DejaVu Sans" size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{subGroup}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement uuid="3a663abd-0ba1-4946-9053-286e50ebdd7a" x="0" y="15" width="535" height="1" forecolor="#CCCCCC"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="4"/>
+		</groupFooter>
+	</group>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<printWhenExpression><![CDATA[(
+    ($F{cell} != null && !$F{cell}.isEmpty())
+    &&
+    ($F{phone} == null || $F{phone}.isEmpty())
+    &&
+    ($F{addressTwo} == null)
+    &&
+    ($F{fax} == null || $F{fax}.isEmpty())
+    &&
+    ($F{notes} == null || $F{notes}.isEmpty())
+)
+||
+(
+    ($F{cell} == null || $F{cell}.isEmpty())
+    &&
+    ($F{phone} == null || $F{phone}.isEmpty())
+    &&
+    ($F{fax} == null || $F{fax}.isEmpty())
+    &&
+    ($F{addressTwo} == null)
+)]]></printWhenExpression>
+			<textField>
+				<reportElement uuid="68115a1f-d1cf-4fcc-b339-bce5564cef9c" x="97" y="1" width="75" height="11" forecolor="#666666"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="7" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{addressOne} == null ? "" : $F{addressOne}.getLabel()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="838f61a5-0f3d-4722-be43-6bf376971767" x="2" y="1" width="139" height="11"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{firstName} + " " + $F{lastName}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="f8fc984f-7ea6-4924-ba6b-16ce8d66fa38" x="2" y="12" width="139" height="11"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{position}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="727e1b01-1528-4a9f-a847-41dd0484f73c" x="398" y="12" width="137" height="11"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="2391bfad-7b9b-4a08-b578-1862999012a9" x="398" y="1" width="137" height="11"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cell}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="bae34bca-56a0-4da9-904b-a9074c3d9cfc" x="370" y="12" width="24" height="11" forecolor="#666666">
+					<printWhenExpression><![CDATA[$F{email} != null && !$F{email}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="7" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[e-mail]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2e3ca51a-e6f8-4791-b814-f762792a83ca" x="370" y="1" width="24" height="11" forecolor="#666666">
+					<printWhenExpression><![CDATA[$F{cell} != null && !$F{cell}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="7" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[cell]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="fac7a178-af87-4b96-b6d3-fdd1c225aeb8" x="177" y="12" width="196" height="11"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{addressOne} == null ? "" : $F{addressOne}.getFormattedAddressTwoLineB()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="be7ede49-84f6-47a9-831c-88216b005215" x="177" y="1" width="196" height="11"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{addressOne} == null ? "" : $F{addressOne}.getFormattedAddressTwoLineA()]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="23">
+			<printWhenExpression><![CDATA[(($F{cell} == null) || ($F{cell}.isEmpty()))
+&&
+(($F{phone} != null) && (!$F{phone}.isEmpty()))
+&&
+($F{addressTwo} == null)
+&&
+($F{fax} == null || $F{fax}.isEmpty())
+&&
+($F{notes} == null || $F{notes}.isEmpty())]]></printWhenExpression>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="43269db4-034a-46e8-aa61-0e9ede41816c" x="2" y="11" width="139" height="11"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{position}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="644caebd-31a1-43e9-9764-d4f445fbc4a6" x="398" y="11" width="137" height="11"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="589f3a43-7108-4bdc-800d-78338b581ebc" x="2" y="0" width="139" height="11"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{firstName} + " " + $F{lastName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="57398271-0f07-48d7-ab60-f848e78f27df" x="398" y="0" width="137" height="11"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{phone}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="759da0fe-9a7e-4c1d-a6b7-ac4bd8e018b5" x="370" y="11" width="24" height="11" forecolor="#666666">
+					<printWhenExpression><![CDATA[$F{email} != null && !$F{email}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="7" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[e-mail]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7ff1811e-589c-44fc-9cc8-4bbba34157b1" x="370" y="0" width="24" height="11" forecolor="#666666">
+					<printWhenExpression><![CDATA[$F{phone} != null && !$F{phone}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="7" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[phone]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="0fd0d492-378c-45c1-9c93-3ce0d92bbfae" x="97" y="0" width="75" height="11" forecolor="#666666"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="7" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{addressOne} == null ? "" : $F{addressOne}.getLabel()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="333a508a-d575-482b-bac4-964d67e9e018" x="177" y="11" width="196" height="11"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{addressOne} == null ? "" : $F{addressOne}.getFormattedAddressTwoLineB()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="929371d2-801a-434c-be8c-c7c993cc42bf" x="177" y="0" width="196" height="11"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{addressOne} == null ? "" : $F{addressOne}.getFormattedAddressTwoLineA()]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="34">
+			<printWhenExpression><![CDATA[($F{cell} != null && !$F{cell}.isEmpty())
+&&
+($F{phone} != null && !$F{phone}.isEmpty())
+&&
+$F{addressTwo} == null
+&&
+($F{fax} == null || $F{fax}.isEmpty())
+&&
+($F{notes} == null || $F{notes}.isEmpty())]]></printWhenExpression>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="0921f744-26cb-494d-972a-4eafbeef70b9" x="2" y="0" width="139" height="11"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{firstName} + " " + $F{lastName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="70381e47-888c-471b-8f4d-4c13a8d6c6f2" x="398" y="22" width="137" height="11"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="2bfb9ed2-3a6e-44b9-8fb3-b46425a6d501" x="97" y="0" width="75" height="11" forecolor="#666666"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="7" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{addressOne} == null ? "" : $F{addressOne}.getLabel()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="3183b730-530f-4b24-a2b7-c2c73f009d2d" x="2" y="11" width="139" height="11"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{position}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="36052f81-bba0-42c5-b27b-fd5ec664c957" x="398" y="11" width="137" height="11"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cell}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="effdfeca-19fc-4e18-b2ce-39c933b850cb" x="398" y="0" width="137" height="11"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{phone}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="df156680-c0b7-427a-a2ea-19f2a36927da" x="370" y="11" width="24" height="11" forecolor="#666666">
+					<printWhenExpression><![CDATA[$F{cell} != null && !$F{cell}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="7" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[cell]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1885e71c-f97c-4596-99e7-5bcc1173074c" x="370" y="22" width="24" height="11" forecolor="#666666">
+					<printWhenExpression><![CDATA[$F{email} != null && !$F{email}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="7" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[e-mail]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7c908232-a9b2-4b49-9f94-f8c0140dbe42" x="370" y="0" width="24" height="11" forecolor="#666666">
+					<printWhenExpression><![CDATA[$F{phone} != null && !$F{phone}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="7" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[phone]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="162ae865-88fd-47da-b0ce-9d280d90abfa" x="177" y="11" width="196" height="11"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{addressOne} == null ? "" : $F{addressOne}.getFormattedAddressTwoLineB()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f0e143d6-d120-42f1-bd69-566d545a16d8" x="177" y="0" width="196" height="11"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{addressOne} == null ? "" : $F{addressOne}.getFormattedAddressTwoLineA()]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="45">
+			<printWhenExpression><![CDATA[$F{addressTwo} != null
+||
+($F{fax} != null && !$F{fax}.isEmpty())
+||
+($F{notes} != null && !$F{notes}.isEmpty())]]></printWhenExpression>
+			<textField>
+				<reportElement uuid="3656701e-fa6c-4c74-b6a0-53a527b46f6b" x="177" y="0" width="196" height="11"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{addressOne} == null ? "" : $F{addressOne}.getFormattedAddressTwoLineA()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="be97f33e-de73-446b-b604-9800797364dc" x="2" y="0" width="139" height="11"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{firstName} + " " + $F{lastName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="37dfd8a9-f72d-4eb8-bf00-4532672131a6" x="177" y="11" width="196" height="11"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{addressOne} == null ? "" : $F{addressOne}.getFormattedAddressTwoLineB()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="2dd02b6b-ecc7-48dd-acd3-7924ef1c0d0c" x="370" y="0" width="24" height="11" forecolor="#666666">
+					<printWhenExpression><![CDATA[$F{phone} != null && !$F{phone}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="7" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[phone]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="6a03e7ac-ef6a-486a-9d4e-ce0784eac7f7" x="97" y="0" width="75" height="11" forecolor="#666666"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="7" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{addressOne} == null ? "" : $F{addressOne}.getLabel()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="87c8e329-9677-484a-a8cc-c53a8eac41a6" x="398" y="0" width="137" height="11"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{phone}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="9229d970-3fda-425a-92da-8b46765beb15" x="2" y="11" width="139" height="11"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{position}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b468ebd9-f168-4e0e-8944-b73d51ba7378" x="398" y="22" width="137" height="11"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="8134e2e7-95c4-402f-83bb-0389c3f026a8" x="370" y="22" width="24" height="11" forecolor="#666666">
+					<printWhenExpression><![CDATA[$F{email} != null && !$F{email}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="7" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[e-mail]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a036aa45-c84c-4f85-8f33-c142772a5b40" x="370" y="11" width="24" height="11" forecolor="#666666">
+					<printWhenExpression><![CDATA[$F{cell} != null && !$F{cell}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="7" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[cell]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="7983156e-7a51-4bbf-8035-c02b95b39f37" x="398" y="11" width="137" height="11"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cell}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="dff59b28-b680-42ff-93c3-08d625097e42" x="370" y="33" width="24" height="11" forecolor="#666666">
+					<printWhenExpression><![CDATA[$F{fax} != null && !$F{fax}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="7" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[fax]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="d985d206-d12f-4fd9-970d-ff09bae860e5" x="398" y="33" width="137" height="11"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fax}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="206150a3-0b63-4e54-b556-9db08f814e1f" x="177" y="33" width="196" height="11"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{addressTwo} == null ? "" : $F{addressTwo}.getFormattedAddressTwoLineB()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="c75b6877-4931-4648-b554-cfe8eebc0f01" x="177" y="22" width="196" height="11"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{addressTwo} == null ? "" : $F{addressTwo}.getFormattedAddressTwoLineA()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="638bb57a-6748-4845-9517-10427d01c2da" x="97" y="23" width="75" height="11" forecolor="#666666"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="7" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{addressTwo} == null ? "" : $F{addressTwo}.getLabel()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="c707bcd5-9921-4439-8239-a8c288d2e42f" x="2" y="22" width="139" height="11" forecolor="#666666"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{notes}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="2">
+			<line>
+				<reportElement uuid="bbdd458c-ee9c-4980-96e6-4ce4c72fef2c" x="0" y="0" width="535" height="1" forecolor="#999999"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

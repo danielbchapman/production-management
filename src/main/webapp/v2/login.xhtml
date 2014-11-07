@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+ 	xmlns:jsp="http://java.sun.com/JSP/Page"	
+	xmlns:p="http://primefaces.org/ui"
+>
+	<head>
+	</head>
+	<body>
+		<f:view contentType="text/html">
+			<h:form id="login">
+				<h:panelGrid columns="2">
+					<h:outputLabel for="username" />
+					<p:inputText id="username" value="#{loginBean.authUser}" requiredMessage="required" />
+					
+					<h:outputLabel for="password" />
+					<p:password id="password" value="#{loginBean.authPass}" required="true" requiredMessage="required" />
+					<h:outputText />
+					<p:commandButton 
+						actionListener="#{loginBean.doSessionLogin}"
+						value="Login"
+					/>
+				</h:panelGrid>
+			</h:form>		
+		</f:view>
+	</body>
+</html>

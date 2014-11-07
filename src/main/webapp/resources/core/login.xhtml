@@ -1,0 +1,107 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"	
+>
+	<composite:interface>
+		<composite:attribute name="user" />
+		<composite:attribute name="pass" />
+		<composite:attribute name="error" />
+		<composite:attribute name="loggedIn" />
+		<composite:attribute 
+			name="loginAction" 
+			method-signature="void actionListener(javax.faces.event.ActionEvent)"
+		/>
+		<composite:attribute 
+			name="logoutAction" 
+			method-signature="void actionListener(javax.faces.event.ActionEvent)"
+		/>
+	</composite:interface>
+	
+	<composite:implementation>
+		<script type="text/javascript">
+		function copyValue(sourceId, targetId){
+			var source = '#{cc.attrs.id}:' + sourceId;
+			var target = '#{cc.attrs.id}:' + targetId;
+			
+			var sourceEl = document.getElementById(source);
+			var targetEl = document.getElementById(target); 
+			
+			targetEl.value = sourceEl.value; 
+		};
+		</script>
+		<h:form class="navbar-form pull-right" id="login" prependId="false" rendered="#{not cc.attrs.error and !cc.attrs.loggedIn}">
+			<h:panelGroup rendered="#{!cc.attrs.loggedIn}" layout="span">
+				<h:inputHidden value="#{cc.attrs.user}" id="userText"/>
+				<h:inputHidden value="#{cc.attrs.pass}" id="passValue"/>
+					
+				<input 
+					class="span2" 
+					type="text" 
+					placeholder="Username" 
+					id="#{cc.attrs.id}:userText_a"
+				>
+				</input>
+				<input 
+					class="span2" 
+					type="password" 
+					placeholder="Password"
+					id="#{cc.attrs.id}:passValue_a"
+				>
+				</input>
+				
+				<h:commandButton 
+					class="btn" 
+					value="Sign in"
+					onclick="copyValue('userText_a', 'userText'); copyValue('passValue_a', 'passValue');"
+					actionListener="#{cc.attrs.loginAction}"
+				/>
+				<!-- onblur="copyValue('userText_a', 'userText'); copyValue('passValue_a', passValue);" -->
+			</h:panelGroup>
+		</h:form>
+		
+		<h:form class="navbar-form pull-right" id="login_error" prependId="false" rendered="#{cc.attrs.error and !cc.attrs.loggedIn}">
+			<h:panelGroup rendered="#{!cc.attrs.loggedIn}" layout="span" styleClass="control-group error" style="display:inline-block;">
+				<h:inputHidden value="#{cc.attrs.user}" id="userText_e"/>
+				<h:inputHidden value="#{cc.attrs.pass}" id="passValue_e"/>
+					
+				<input 
+					class="span2" 
+					type="text" 
+					placeholder="Username" 
+					id="#{cc.attrs.id}:userText_b"
+					onblur="document.getElementById('#{cc.attrs.id}:userText_e').value = this.value;"
+				>
+				</input>
+				<input 
+					class="span2" 
+					type="password" 
+					placeholder="Password"
+					id="#{cc.attrs.id}:passValue_b"
+					onblur="document.getElementById('#{cc.attrs.id}:passValue_e').value = this.value;"
+				>
+				</input>
+				
+				<h:commandButton 
+					class="btn" 
+					value="Sign in"
+					actionListener="#{cc.attrs.loginAction}"
+					onclick="copyValue('userText_b', 'userText_e'); copyValue('passValue_b', 'passValue_e');"
+				/>
+				<br />
+				<span style="color:orange;">Login failed: Invalid username or password</span>				
+			</h:panelGroup>
+		</h:form>
+		
+		<h:form class="navbar-form pull-right" rendered="#{cc.attrs.loggedIn}">	
+			<h:panelGroup class="span2" style="display: inline-block;">
+				<h:commandLink 
+					value="#{cc.attrs.user} | Sign Out" 
+					class="btn btn-primary"
+					actionListener="#{cc.attrs.logoutAction}"
+				/>
+			</h:panelGroup>
+		</h:form>
+	</composite:implementation>
+</html>

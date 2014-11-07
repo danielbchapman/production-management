@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"	
+	xmlns:p="http://primefaces.org/ui">
+
+	<f:loadBundle var="msg" basename="com.danielbchapman.production.international"/>	
+	<h:head>
+		<h:outputStylesheet library="css" name="production.css"/>
+		<!-- for editor -->
+		<link rel="stylesheet" href="./resources/css/production.css" type="text/css"/>
+	    <title>
+				<ui:insert name="title">
+					<h:outputText value="#{msg.applicationTitle}"/>
+				</ui:insert>
+	    </title>   
+	</h:head>
+	
+	<h:outputScript type="text/javascript">
+		
+		function setTimeZoneOnClick()
+		{
+			var d = new Date();
+			d.getTimezoneOffset();
+			document.forms['timeZoneForm']['timeZoneForm:timeZoneField'].value= -d.getTimezoneOffset();
+		}
+				
+		function setDaylightSavingsOffset()
+		{
+			var july = new Date();
+			var jan = new Date();
+			jan.setMonth(0, 1);
+			july.setMonth(6,1);
+			
+			var dst = july.getTimezoneOffset() - jan.getTimezoneOffset();
+			document.forms['timeZoneForm']['timeZoneForm:timeZoneFieldDaylightOffset'].value= dst;
+		}
+		
+		function checkDaylightSavingsOffset()
+		{
+			var now = new Date();
+			var jan = new Date();
+			jan.setMonth(0, 1);
+			
+			var dst = now.getTimezoneOffset() - jan.getTimezoneOffset();
+			document.forms['timeZoneForm']['timeZoneForm:timeZoneFieldDaylightActive'].value= dst;		
+		}
+		
+		function writeZone()
+		{
+			var d = new Date();
+			var offset = d.getTimezoneOffset();
+			var zone = "GMT " + -offset;
+			
+			switch(offset)
+			{
+			  case 0:
+			    zone = "GMT 0 London";
+			  break;
+			  case 60:
+			    zone = "GMT -1 Azores Standard Time";
+			  break;
+			  case 120:
+			    zone = "GMT -2 Uruguay Summer Time";
+			  break;
+			  case 180:
+			    zone = "GMT -3 ADT";
+			  break;
+			  case 240:
+			    zone = "GMT -4 EDT/AST";
+			  break;
+			  case 300:
+			    zone = "GMT -5 EST/CDT";
+			  break;
+			  case 360:
+			    zone = "GMT -6 CST/MDT";
+			  break;
+			  case 420:
+			    zone = "GMT -7 MST/PDT/AZ";
+			  break;
+			  case 480:
+			    zone = "GMT -8 PST/Alaska DT";
+			  break;
+			  case 540:
+			    zone = "GMT -9 Hawaii DT/Alaska ST";
+			  break;
+			  case 600:
+			    zone = "GMT -10 Hawaii ST";
+			  break;		
+			  			  			
+			}
+
+			document.getElementById('output').innerHTML += zone;
+			//DST/ST
+			var now = new Date();
+			var jan = new Date();
+			jan.setMonth(0, 1);
+			
+			var dst = now.getTimezoneOffset() - jan.getTimezoneOffset();
+			
+			if(dst != 0)
+		 		document.getElementById('output').innerHTML += ' Daylight Savings[' + dst/60 + ']';
+			else
+				document.getElementById('output').innerHTML += " Standard Time";			
+		}
+	</h:outputScript>	
+		
+	<h:body class="center" style="zIndex:-3" onload="writeZone();setTimeZoneOnClick();setDaylightSavingsOffset();checkDaylightSavingsOffset();">
+	
+		<img src="floatingImage.png" style="zIndex:-2;position:absolute;left:0px;top:0px;" />
+		
+		<div class="center" style="zIndex:-1; position:relative;">
+			<div class="mainBody">
+				<img src="./resources/images/logo.jpg" width="880" height="142" style="margin-left:10px;"/>	
+				<div class="content" style="margin-top:-30px;">
+					<!-- HEADER -->
+					<f:view contentType="text/html">
+						<ui:include src="menu.xhtml"/>
+					</f:view>
+
+					<!-- CONTENT STARTS HERE -->
+					<f:view id="setTimeZone" contentType="text/html" beforePhase="#{loginBean.timeZonePhaseCheck}">
+
+						<p:growl id="mainMessages" showDetail="true" />
+						
+						<div class="roundedBottom" style="margin-top:6px;">			
+							<p:growl id="messages" showDetail="true" />
+							<f:view contentType="text/html">
+								<ui:include src="subMenu.xhtml"/>	
+							</f:view>	
+							<br />
+							<p:panel>					
+								<h3>
+									Time Zone Confirmation
+								</h3>		
+								<h:form id="timeZoneForm">
+									<h:inputHidden value="#{loginBean.timeZoneCalculated}" id="timeZoneField"/>
+									<h:inputHidden value="#{loginBean.timeZoneDaylightOffset}" id="timeZoneFieldDaylightOffset"/>
+									<h:inputHidden value="#{loginBean.timeZoneDaylightActive}" id="timeZoneFieldDaylightActive"/>
+									
+									<h:panelGrid columns="3">
+										<h:outputText value="Estimated Time Zone"/>
+										<div id="output"></div>
+										<p:commandButton actionListener="#{loginBean.confirmTimeZone}" action="confirmTimeZone" value="Confirm Time Zone" ajax="false"/>
+										
+										<h:outputText value="Select Time Zone" />
+										<h:selectOneMenu value="#{loginBean.timeSelection}">
+											<f:selectItems value="#{loginBean.timeZones}"/>
+										</h:selectOneMenu>
+										<p:commandButton value="Change Time Zone" ajax="false" actionListener="#{loginBean.confirmChangeZone}" action="confirmTimeZone"/>
+									</h:panelGrid>
+									<h:outputText value="Incorrect browser time zones will drastically effect the usability of the calendar." styleClass="error"/>			
+								</h:form>	
+							</p:panel>					
+						</div>
+					</f:view>
+					<!-- CONENT ENDS HERE -->
+					<ui:include src="footer.xhtml"/>
+				</div>
+				
+			</div>
+			<!-- END SHADER -->
+			
+			<div class="footerHeel">
+			  <img src="footerbackground.png" width="900" height="20" />
+			</div>
+		</div>
+	</h:body>    
+</html>

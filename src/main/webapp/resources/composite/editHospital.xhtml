@@ -1,0 +1,42 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"	
+	xmlns:p="http://primefaces.org/ui">
+	<composite:interface>
+		<composite:attribute name="hospital" type="com.danielbchapman.production.entity.Hospital"/>
+	</composite:interface>
+	
+	<composite:implementation>
+		<h:panelGrid columns="3">
+		  <h:outputText value="Name" styleClass="information"/>
+		  <h:outputText value="Phone" styleClass="information"/>
+		  <h:outputText value="Fax" styleClass="information"/>
+		              
+		  <h:inputText value="#{cc.attrs.hospital.name}"/>
+		  <p:inputMask mask="(999)999-9999" value="#{cc.attrs.hospital.phone}"/>
+		  <p:inputMask mask="(999)999-9999" value="#{cc.attrs.hospital.fax}"/>
+		  
+		  <h:outputText value="Address (1)" styleClass="information"/>
+		  <h:inputText value="#{cc.attrs.hospital.addressLineOne}"/>
+		  <h:outputText value="" />
+		  
+		  <h:outputText value="Address (2)" styleClass="information"/>
+		  <h:inputText value="#{cc.attrs.hospital.addressLineOne}"/>
+		  <h:outputText value="" />
+		  
+		  <h:outputText value="City" styleClass="information"/>
+		  <h:inputText value="#{cc.attrs.hospital.addressCity}"/>
+		  <h:outputText value="" />
+		  
+		  <h:outputText value="State" styleClass="information"/>
+		  <h:inputText value="#{cc.attrs.hospital.addressState}"/>
+		  <h:outputText value="" />
+		  
+		  <h:outputText value="Zip" styleClass="information"/>
+		  <h:inputText value="#{cc.attrs.hospital.addressZip}"/>
+		  <h:outputText value="" />
+		</h:panelGrid>
+	</composite:implementation>
+</html>

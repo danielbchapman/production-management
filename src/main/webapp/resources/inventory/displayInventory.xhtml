@@ -1,0 +1,87 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:tac="http://java.sun.com/jsf/composite/composite"
+	xmlns:inventory="http://java.sun.com/jsf/composite/inventory"	
+	xmlns:p="http://primefaces.org/ui"
+>
+	<composite:interface>
+		<composite:attribute name="elementWrapper" type="com.danielbchapman.production.web.schedule.beans.InventoryBean$InventoryElementSet$InventoryElementWrapper"/>
+		<composite:attribute name="update" type="java.lang.String"/>
+	</composite:interface>
+	
+	<composite:implementation>
+		<table style="border:0;">
+			<tr>
+				<td>
+					<a href=".#{cc.attrs.elementWrapper.urlParameters}" target="newWindow" style="border=2px solid black;">
+						<p:graphicImage value="#{cc.attrs.elementWrapper.urlParameters}" width="200px"/>
+					</a>
+					<br/>
+					<a href=".#{cc.attrs.elementWrapper.urlParameters}" target="newWindow">
+						<h:outputText value="Download Image" />
+					</a>
+				</td>
+				<td>
+					<p:panel styleClass="noBorders">
+
+						<h:panelGrid columns="6">
+					
+							<h:outputText value="Type" styleClass="information"/>
+							<h:outputText value="#{cc.attrs.elementWrapper.element.type}" styleClass="data"/>							
+
+							<h:outputText value="Sex" styleClass="information" rendered="#{cc.attrs.elementWrapper.element.wardrobe}"/>
+							<h:outputText value="#{cc.attrs.elementWrapper.element.sex}" rendered="#{cc.attrs.elementWrapper.element.wardrobe}"/>
+							
+							<h:outputText value="Period" styleClass="information" rendered="#{cc.attrs.elementWrapper.element.wardrobe}"/>
+							<h:outputText value="#{cc.attrs.elementWrapper.element.period}" rendered="#{cc.attrs.elementWrapper.element.wardrobe}"/>
+							
+							<h:outputText value="Condition" styleClass="information"/>
+							<h:outputText value="#{cc.attrs.elementWrapper.element.condition}"/>
+							
+							<h:outputText value="Location" styleClass="information"/>
+							<h:outputText value="#{cc.attrs.elementWrapper.element.location}"/>
+
+							<h:outputText value="Serial or ID" styleClass="information"/>
+							<h:outputText value="#{cc.attrs.elementWrapper.element.serialNumberOrId}"/>
+																													
+						</h:panelGrid>
+						
+						<h:panelGrid columns="2">
+
+							<h:outputText value="Production" styleClass="information"/>
+							<h:outputText value="#{cc.attrs.elementWrapper.element.production}"/>
+														
+							<h:outputText value="Description" styleClass="information"/>
+							<h:outputText value="#{cc.attrs.elementWrapper.element.description}"/>
+														
+							<h:outputText value="Colors" styleClass="information"/>
+							<h:outputText value="#{cc.attrs.elementWrapper.element.colors}"/>							
+							
+							<h:outputText value="Notes" styleClass="information"/>
+							<h:outputText value="#{cc.attrs.elementWrapper.element.notes}"/>
+							
+							<h:outputText value="User Notes" styleClass="information"/>
+							<h:outputText value="#{cc.attrs.elementWrapper.element.userNotes}"/>		
+							
+							<h:outputText value="Barcode #" styleClass="information"/>
+							<h:outputText value="#{cc.attrs.elementWrapper.element.barCode}"/>	
+							
+							<h:outputText value="Size" styleClass="information" rendered="#{cc.attrs.elementWrapper.element.wardrobe}"/>
+							<h:outputText value="#{cc.attrs.elementWrapper.element.size}" rendered="#{cc.attrs.elementWrapper.element.wardrobe}"/>  
+							
+							<h:outputText value="Number" styleClass="information"/>
+							<h:outputText value="#{cc.attrs.elementWrapper.element.count}"/>                                  																				
+							
+						</h:panelGrid>
+						
+						<inventory:addNotes elementWrapper="#{cc.attrs.elementWrapper}" update="#{cc.attrs.update}"/>
+							
+					</p:panel>
+				</td>
+			</tr>
+		</table>
+	</composite:implementation>
+</html>

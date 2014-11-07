@@ -1,0 +1,37 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:tac="http://java.sun.com/jsf/composite/composite"	
+	xmlns:p="http://primefaces.org/ui"
+>
+	<composite:interface>
+		<composite:attribute name="hotel" type="com.danielbchapman.production.entity.Hotel"/>
+	</composite:interface>
+	
+	<composite:implementation>
+		<h:panelGrid columns="4">
+			<h:outputText value="Name" styleClass="information"/>
+			<h:outputText value="Phone" styleClass="information"/>
+			<h:outputText value="Fax" styleClass="information"/>
+			<h:outputText value="Website" styleClass="information"/>               
+			
+			<h:inputText value="#{cc.attrs.hotel.name}"/>
+			<p:inputMask mask="(999)999-9999" value="#{cc.attrs.hotel.phone}"/>
+			<p:inputMask mask="(999)999-9999" value="#{cc.attrs.hotel.fax}"/>
+			<h:inputText value="#{cc.attrs.hotel.website}"/>
+			
+			<h:outputText value="Single Rate" styleClass="information"/>
+			<h:outputText value="Double Rate" styleClass="information"/>
+			<h:outputText value="Tax Rate" styleClass="information"/>
+			<h:outputText value="Tax Additional" styleClass="information"/>
+			  
+			<tac:currency value="#{cc.attrs.hotel.rateSingle}" />
+			<tac:currency value="#{cc.attrs.hotel.rateDouble}" />
+			<tac:percentage value="#{cc.attrs.hotel.taxRate}" />
+			<tac:currency value="#{cc.attrs.hotel.taxAdditional}" />      
+    </h:panelGrid>
+		<tac:address address="#{cc.attrs.hotel}" />
+	</composite:implementation>
+</html>

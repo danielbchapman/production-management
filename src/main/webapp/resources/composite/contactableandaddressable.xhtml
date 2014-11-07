@@ -1,0 +1,62 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"	
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:tac="http://java.sun.com/jsf/composite/composite"
+>
+	<composite:interface>
+		<composite:attribute name="value" type="com.danielbchapman.production.entity.ContactableAndAddressable"/>
+	</composite:interface>
+	
+	<composite:implementation>
+		<div style="clear:both;" />
+			<div style="position: relative; float: left;">
+				<h:panelGrid columns="2">
+					<h:outputText value="Contact Name" styleClass="information"/>
+					<p:inputText value="#{cc.attrs.value.contactName}"/>
+					
+					<h:outputText value="Title/Position" styleClass="information"/>
+					<p:inputText value="#{cc.attrs.value.contactPosition}"/>
+				
+					<h:outputText value="E-mail" styleClass="information"/>
+					<p:inputText value="#{cc.attrs.value.email}"/>
+					
+					<h:outputText value="Phone" styleClass="information"/>
+					<tac:phone value="#{cc.attrs.value.phone}"/>
+					
+					<h:outputText value="Cell" styleClass="information"/>
+					<tac:phone value="#{cc.attrs.value.cell}"/>
+					
+					<h:outputText value="Fax" styleClass="information"/>
+					<tac:phone value="#{cc.attrs.value.fax}"/>
+					
+					<h:outputText value="Notes" styleClass="information"/>
+					<p:inputText value="#{cc.attrs.value.contactNotes}"/>
+				</h:panelGrid>				
+			</div>
+			<div style="position: relative; float: left; margin-left:25px;">
+				<h:panelGrid columns="2">
+					<h:outputText value="Address Contact" styleClass="information"/>
+					<p:inputText value="#{cc.attrs.value.contact}"/>
+								
+					<h:outputText value="Address (1)" styleClass="information"/>
+					<p:inputText value="#{cc.attrs.value.addressLineOne}"/>
+					
+					<h:outputText value="Address (2)" styleClass="information"/>
+					<p:inputText value="#{cc.attrs.value.addressLineTwo}"/>
+					
+					<h:outputText value="City" styleClass="information"/>
+					<p:inputText value="#{cc.attrs.value.addressCity}"/>
+					
+					<h:outputText value="State" styleClass="information"/>
+					<p:inputText value="#{cc.attrs.value.addressState}"/>
+					
+					<h:outputText value="Zip" styleClass="information"/>
+					<p:inputText value="#{cc.attrs.value.addressZip}"/>
+				</h:panelGrid>
+			</div>
+			<div style="clear:both" />
+	</composite:implementation>
+</html>

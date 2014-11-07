@@ -1,0 +1,7 @@
+<Context path="/production/">
+	<Manager
+		className="org.apache.catalina.session.StandardManager"
+		distributable="false"
+		pathname="" 
+	/>
+</Context>

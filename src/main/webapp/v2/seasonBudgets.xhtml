@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:tac="http://java.sun.com/jsf/composite/composite"
+>
+			
+	<f:subview id="budget" contentType="text/html" rendered="#{loginBean.user}">
+		<p:growl id="messages" showDetail="true" showSummary="true"/>
+		
+		<br />
+    <div class="help" style="width:100%;text-align:right;margin-left:auto;">
+      <p:lightBox iframe="true" width="80%" height="80%">  
+        <h:outputLink 
+          value="help.xhtml?lookupString=budgets" 
+          title="Help" 
+        >  
+          <span class="ui-icon ui-icon-info" style="display:inline-block;"></span>
+          <h:outputText value="Help"/>  
+        </h:outputLink>  
+       </p:lightBox>      
+    </div>		
+		<br />
+		
+		<p:panel>
+			
+				<div style="clear:both;"></div>
+				
+				<div style="position:relative;float: left;">
+					<h3>Budget Management</h3>
+					<h:form id="change">
+						<h:panelGrid columns="2">
+							<h:outputText value="Select Budget" styleClass="information"/>
+							<h:selectOneMenu value="#{budgetBean.budgetSelectionTarget}">
+								<f:selectItems value="#{budgetBean.budgets}"/>
+							</h:selectOneMenu>
+													
+							<h:outputText />
+							<p:commandButton
+								value="View Budget"
+								actionListener="#{budgetBean.selectBudget}"
+								update=":budget:messages, :budget:view, :budget:remove, :budget:reports" 
+								style="margin-left:5px;" />
+						</h:panelGrid>
+						
+					</h:form>
+				</div>
+				
+				<div style="position:relative;float: left;">
+					<h3>Season Reports</h3>
+					<h:form>
+						<tac:printElements value="#{budgetBean.printAll}"/>
+					</h:form>
+				</div> 
+				
+				<div style="clear:both;"></div>
+		</p:panel>
+		
+		<br />
+		
+		<h:form id="reports">
+			<p:outputPanel rendered="#{budgetBean.canHasABudget}" style="text-align:left;">
+				<p:panel>
+					<h3>
+						Budget Reports
+					</h3>
+					<tac:printElements value="#{budgetBean.printSingle}"/>
+				</p:panel>
+			</p:outputPanel>
+		</h:form> 
+		<br />
+		
+		<h:form id="view">
+			<p:outputPanel rendered="#{budgetBean.canHasABudget}" style="text-align:left;">
+				<p:panel>
+					<h3 style="display:inline-block;">
+						<h:outputText value="#{budgetBean.activeBudget.name}" />
+						<h:outputText
+							value="#{budgetBean.allocation + budgetBean.actualizedTotal + budgetBean.estimateTotal}" 
+							styleClass="#{(budgetBean.allocation + budgetBean.actualizedTotal + budgetBean.estimateTotal) gt -0.01 ? 'credit' : 'debit'}" 
+							style="margin-left:5px;"
+						>
+							<f:convertNumber  pattern="$#.00" type="currency"  />
+						</h:outputText>						
+					</h3>	
+				</p:panel>
+				<p:dataTable 
+					id="budgetTbl" 
+					var="wrapper" 
+					value="#{budgetBean.entries}" 
+					style="font-size:1em;"
+				>
+					
+					<p:column>
+						<f:facet name="header">
+							Adj.
+						</f:facet>
+						
+						<p:rowToggler />
+						
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							Amount	
+						</f:facet>
+						
+						<h:outputText value="#{wrapper.entry.calculatedAmount}" styleClass="#{wrapper.entry.calculatedAmount gt -.01 ? 'creditEstimate' : 'debitEstimate'}" rendered="#{wrapper.entry.estimated}">
+							<f:convertNumber pattern="#0.00" type="currency" currencySymbol="$"/>
+						</h:outputText>
+						<h:outputText value="Estimate" styleClass="estimate" rendered="#{wrapper.entry.estimated}"/>
+						<h:outputText value="#{wrapper.entry.calculatedAmount}" styleClass="#{wrapper.entry.calculatedAmount gt -.01 ? 'credit' : 'debit'}" rendered="#{not wrapper.entry.estimated}">
+							<f:convertNumber pattern="#0.00" type="currency" currencySymbol="$"/>
+						</h:outputText>
+						
+						<f:facet name="footer">
+							<tac:currency value="#{budgetBean.budgetEntryVariables.amount}" />
+						</f:facet>	
+											
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							Date	
+						</f:facet>
+						
+						<h:outputText value="#{wrapper.entry.date}">
+							<f:convertDateTime pattern="MM/dd/yyyy HH:mm"/>
+						</h:outputText>
+						
+						<f:facet name="footer">
+							<h:outputText value="Credit?" />
+							<h:selectBooleanCheckbox value="#{budgetBean.budgetEntryVariables.credit}"/>
+						</f:facet>										
+					</p:column>				
+					
+					<p:column>
+						<f:facet name="header">
+							Status
+						</f:facet>
+						<h:outputText value="Pending" styleClass="error" rendered="#{not wrapper.entry.confirmed}"/>
+						<h:outputText value="Confirmed" styleClass="information" rendered="#{not wrapper.entry.estimated and wrapper.entry.confirmed}"/>
+						
+						<f:facet name="footer">
+							<h:outputText value="Estimate" />
+							<h:selectBooleanCheckbox value="#{budgetBean.budgetEntryVariables.estimated}"/>
+						</f:facet>											
+					</p:column>	
+					
+					<p:column style="width:500px;">
+						<f:facet name="header">
+							Memo	
+						</f:facet>
+						
+						<h:outputText value="#{wrapper.entry.note}" />
+						
+						<f:facet name="footer">
+							<h:outputText value="Memo" />
+							<h:inputText value="#{budgetBean.budgetEntryVariables.memo}" style="width:300px;margin-left:5px;"/>
+							
+							<p:commandButton 
+								value="Add"
+								image="ui-icon ui-icon-circle-plus"
+								actionListener="#{budgetBean.doAddEntry}"
+								update=":budget:view, :budget:messages"
+							/>
+						</f:facet>						
+					</p:column>								
+
+					<p:rowExpansion>
+						<p:dataTable value="#{wrapper.adjustments}" var="adj">
+						
+							<f:facet name="header">
+								<h:outputText value="Initial Value: " />
+								<h:outputText 
+									value="#{wrapper.entry.amountInitial}" 
+									styleClass="#{wrapper.entry.amountInitial gt -.01 ? 'creditEstimate' : 'debitEstimate'}" 
+									rendered="#{wrapper.entry.estimated}"
+								>
+									<f:convertNumber pattern="#0.00" type="currency" currencySymbol="$"/>
+								</h:outputText>
+								<h:outputText 
+									value="#{wrapper.entry.amountInitial}" 
+									styleClass="#{wrapper.entry.amountInitial gt -.01 ? 'credit' : 'debit'}" 
+									rendered="#{not wrapper.entry.estimated}"
+								>
+									<f:convertNumber pattern="#0.00" type="currency" currencySymbol="$"/>
+								</h:outputText>
+							</f:facet>
+							
+							<p:column headerText="Amount">
+								<h:outputText 
+									value="#{adj.adjustment.amount}" 
+									styleClass="#{adj.adjustment.amount gt -.01 ? 'creditEstimate' : 'debitEstimate'}" 
+									rendered="#{wrapper.entry.estimated}"
+								>
+									<f:convertNumber pattern="#0.00" type="currency" currencySymbol="$"/>
+								</h:outputText>
+								<h:outputText 
+									value="Estimate" 
+									styleClass="estimate" 
+									rendered="#{wrapper.entry.estimated}"
+								/>
+								<h:outputText 
+									value="#{adj.adjustment.amount}" 
+									styleClass="#{adj.adjustment.amount gt -.01 ? 'credit' : 'debit'}" 
+									rendered="#{not wrapper.entry.estimated}"
+								>
+									<f:convertNumber pattern="#0.00" type="currency" currencySymbol="$"/>
+								</h:outputText>
+							</p:column>
+							
+							<p:column headerText="Date">
+								<h:outputText value="#{adj.adjustment.date}">
+									<f:convertDateTime pattern="MM/dd/yyyy HH:mm"/>
+								</h:outputText> 
+								<f:facet name="footer">
+									<h:outputText value="Add Adjustment: "/>
+									<tac:currency value="#{wrapper.adjustmentAmount}"/>
+								</f:facet>
+							</p:column>
+							
+							<p:column headerText="Status">
+								<h:outputText value="Pending" styleClass="error" rendered="#{not adj.adjustment.confirmed}"/>
+								<h:outputText value="Confirmed" styleClass="information" rendered="#{adj.adjustment.confirmed}"/>
+								<f:facet name="footer">
+									<h:outputText value="Credit?" />
+									<h:selectBooleanCheckbox value="#{wrapper.credit}"/>
+								</f:facet>
+							</p:column>
+							
+							<p:column headerText="Memo">
+								<h:outputText value="#{adj.adjustment.note}" />
+								<f:facet name="footer">
+									<h:inputText value="#{wrapper.adjustmentMemo}" style="width:95%;"/>
+								</f:facet>
+							</p:column>
+							
+							<p:column>
+								<h:panelGroup rendered="#{not adj.adjustment.confirmed}">
+									<p:commandButton 
+										value="Confirm"
+										image="ui-icon ui-icon-check"
+										actionListener="#{adj.doConfirmAdjustment}"
+										update=":budget:messages, :budget:view"
+									/>
+									<p:commandButton 
+										value="Cancel"
+										image="ui-icon ui-icon-cancel"
+										actionListener="#{adj.doCancelAdjustment}"
+										update=":budget:messages, :budget:view"
+									/>
+								</h:panelGroup>
+								<f:facet name="footer">
+									<p:commandButton
+										value="Adjust"
+										image="ui-icon ui-icon-circle-arrow-e" 
+										actionListener="#{wrapper.doAddAdjustment}"
+										update=":budget:messages, :budget:view"
+									/>
+								</f:facet>
+							</p:column>
+						</p:dataTable>
+						
+						<div style="width:100%;text-align:right;">
+							<p:commandButton 
+								value="Cancel Entry"
+								image="ui-icon ui-icon-cancel" 
+								actionListener="#{wrapper.doCancelEntry}"
+								rendered="#{not wrapper.entry.confirmed}"
+								update=":budget:view, :budget:messages"
+							/>
+							<p:commandButton 
+								value="Actualize"
+								image="ui-icon ui-icon-transferthink-e-w"
+								actionListener="#{wrapper.doActualize}" 
+								rendered="#{wrapper.entry.estimated}"
+								update=":budget:view, :budget:messages"
+							/>
+							<p:commandButton 
+								value="Confirm" 
+								image="ui-icon ui-icon-check"
+								actionListener="#{wrapper.doConfirmEntry}"
+								rendered="#{not wrapper.entry.confirmed and not wrapper.entry.estimated}"
+								update=":budget:view, :budget:messages"
+							/>
+						</div>
+						
+					</p:rowExpansion>
+				</p:dataTable>
+			</p:outputPanel>
+			
+			<br />		
+		</h:form>		
+		
+		<br />
+		
+		<h:form id="remove">
+			<p:outputPanel rendered="#{budgetBean.canHasABudget}" styleClass="ui-state-highlight">
+				<p:panel rendered="#{loginBean.admin}">
+					<h3>Administration: Edit Budget</h3>
+					<h:panelGrid columns="2">
+						<h:outputText value="Budget Allocation: $"/>
+						<h:outputText value="#{budgetBean.activeBudget.startingBudget}">
+							<f:convertNumber pattern="#0.00" type="currency"   />
+						</h:outputText>
+						<tac:currency value="#{budgetBean.activeBudget.startingBudget}"/>
+						
+						<h:outputText value="" />
+						<p:commandButton
+							actionListener="#{budgetBean.doEditBudget}"
+							value="Update Budget"
+							ajax="false"					
+						/>	
+					</h:panelGrid>
+					
+					<p:panel toggleable="true" collapsed="true" header="Delete Budget">
+						<p:commandButton 
+							value="Delete Budget"
+							actionListener="#{budgetBean.doDeleteActive}"
+							ajax="false" 
+						/>				
+					</p:panel>	
+				</p:panel>
+				
+				<br />	
+			</p:outputPanel>		
+		</h:form>
+		
+		<p:panel rendered="#{loginBean.admin}">
+			<h:form id="add">
+				<h3>Budget Creation</h3>
+				<div style="clear:both;"></div>
+				<div style="position:relative;float:left;">
+					<h:panelGrid columns="2">
+						<h:outputText value="Department" />
+						<h:selectOneMenu value="#{budgetBean.budgetCreationVariables.department}">
+							<f:selectItems value="#{departmentBean.departmentItems}"/>
+						</h:selectOneMenu>
+						
+						<h:outputText value="Initial Budget" />
+						<tac:currency value="#{budgetBean.budgetCreationVariables.amount}" />
+						
+						<h:outputText value="" />
+						<p:commandButton
+							value="Create Budget"
+							actionListener="#{budgetBean.doCreateBudget}"
+							update=":budget:messages, :budget:add, :budget:change, :budget:view, :budget:remove"
+						/>
+					</h:panelGrid>
+				</div>
+				<div style="position:relative;float:left; margin-left: 20px;">
+					<p class="information" style="width: 400px;">
+						Generating the budgets will manually create a series of 0.00 balance budgets with a standard
+						nomenclature. This is recommended and then altering further. If you need another budget you
+						probably need a separate production or department.
+					</p>
+					<p:commandButton 
+						value="Generate Budgets"
+						actionListener="#{budgetBean.doAutomatedCreateBudget}"
+						ajax="false"/>
+				</div>
+				<div style="clear:both;"></div>
+								
+			</h:form>
+		</p:panel>		
+	</f:subview>
+</jsp:root>
+	

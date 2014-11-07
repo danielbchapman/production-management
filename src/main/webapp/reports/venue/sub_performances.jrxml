@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sub_performances" pageWidth="266" pageHeight="802" columnWidth="266" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="44abcf02-e102-47b0-84a1-a2ab48e30191">
+	<property name="ireport.zoom" value="2.357947691000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="advance" class="com.danielbchapman.production.entity.PerformanceAdvance">
+		<fieldDescription><![CDATA[advance]]></fieldDescription>
+	</field>
+	<field name="cast" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[cast]]></fieldDescription>
+	</field>
+	<field name="class" class="java.lang.Class">
+		<fieldDescription><![CDATA[class]]></fieldDescription>
+	</field>
+	<field name="crew" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[crew]]></fieldDescription>
+	</field>
+	<field name="crewCall" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[crewCall]]></fieldDescription>
+	</field>
+	<field name="day" class="com.danielbchapman.production.entity.Day">
+		<fieldDescription><![CDATA[day]]></fieldDescription>
+	</field>
+	<field name="description" class="java.lang.String">
+		<fieldDescription><![CDATA[description]]></fieldDescription>
+	</field>
+	<field name="end" class="java.util.Date">
+		<fieldDescription><![CDATA[end]]></fieldDescription>
+	</field>
+	<field name="endDate" class="java.util.Date">
+		<fieldDescription><![CDATA[endDate]]></fieldDescription>
+	</field>
+	<field name="eventSequence" class="java.util.ArrayList">
+		<fieldDescription><![CDATA[eventSequence]]></fieldDescription>
+	</field>
+	<field name="fightCall" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[fightCall]]></fieldDescription>
+	</field>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
+	<field name="performance" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[performance]]></fieldDescription>
+	</field>
+	<field name="performanceSchedule" class="com.danielbchapman.production.entity.PerformanceSchedule">
+		<fieldDescription><![CDATA[performanceSchedule]]></fieldDescription>
+	</field>
+	<field name="persisted" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[persisted]]></fieldDescription>
+	</field>
+	<field name="publicEvent" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[publicEvent]]></fieldDescription>
+	</field>
+	<field name="start" class="java.util.Date">
+		<fieldDescription><![CDATA[start]]></fieldDescription>
+	</field>
+	<field name="startDate" class="java.util.Date">
+		<fieldDescription><![CDATA[startDate]]></fieldDescription>
+	</field>
+	<field name="strike" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[strike]]></fieldDescription>
+	</field>
+	<field name="talkback" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[talkback]]></fieldDescription>
+	</field>
+	<field name="venue" class="com.danielbchapman.production.entity.Venue">
+		<fieldDescription><![CDATA[venue]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="1e85a434-1445-4ec7-a756-aa358a424cec" x="0" y="0" width="100" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Performance]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c4905468-19a3-4387-9ff7-144b4d611bbb" x="114" y="0" width="100" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Time]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="9e720c44-464e-4195-b2e8-8d9af6b346fc" x="0" y="15" width="266" height="1"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement uuid="7d596078-e81e-420a-a16c-0d70cf1ab340" x="0" y="0" width="100" height="15"/>
+				<textElement>
+					<font isBold="false" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="MM/dd EEEEE - HH:mm">
+				<reportElement uuid="a4819da6-8b71-47fd-9147-c5298ff18268" x="114" y="0" width="152" height="15"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{startDate}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

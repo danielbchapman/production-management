@@ -1,0 +1,36 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"	
+	xmlns:p="http://primefaces.org/ui">
+	<composite:interface>
+		<composite:attribute name="converter" type="com.danielbchapman.converter.ISelectItemGenerator"/>
+		<composite:attribute name="comboRendered" type="java.lang.Boolean" default="false"/>
+	</composite:interface>
+	<!-- REQUIRES A FORM ATTRIBUTE -->
+	<composite:implementation>
+		<p:outputPanel id="inplaceCombo">
+			<p:commandLink 
+				rendered="#{not cc.attrs.comboRendered}" 
+				actionListener="#{inplaceCombo.onLinkSelect}"
+				update="#{cc.attrs.id}:inplaceCombo"
+			>
+				<h:outputText value="#{cc.attrs.converter.selectionLabel}"/>
+			</p:commandLink>
+			
+			<h:selectOneMenu 
+				rendered="#{cc.attrs.comboRendered}"
+				valueChangeListener="#{inplaceCombo.onComboChange}"
+			>
+				<f:selectItems value="#{cc.attrs.converter.selectItems}" />
+				<p:ajax 
+					event="change" 
+					update="#{cc.attrs.id}:inplaceCombo" 
+				/>
+			</h:selectOneMenu>
+			<h:outputText value="[#{cc.attrs.converter.selectionLabel}]"/>
+		</p:outputPanel>
+		
+	</composite:implementation>
+</html>

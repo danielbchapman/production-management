@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="weeklySchedules_daily" pageWidth="99" pageHeight="466" whenNoDataType="AllSectionsNoDetail" columnWidth="99" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="772f6335-df1f-4a03-848a-05fa587204bd">
+	<property name="ireport.zoom" value="3.4522712143931056"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="DAY" class="com.danielbchapman.production.entity.Day"/>
+	<parameter name="DAY_OF_WEEK" class="java.lang.String">
+		<defaultValueExpression><![CDATA[new String("ERROR")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PRINT_CAST" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[Boolean.TRUE]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PRINT_CREW" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[Boolean.TRUE]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PRINT_DETAILS" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[Boolean.TRUE]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATE" class="java.util.Date"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="cast" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[cast]]></fieldDescription>
+	</field>
+	<field name="class" class="java.lang.Class">
+		<fieldDescription><![CDATA[class]]></fieldDescription>
+	</field>
+	<field name="crew" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[crew]]></fieldDescription>
+	</field>
+	<field name="day" class="com.danielbchapman.production.entity.Day">
+		<fieldDescription><![CDATA[day]]></fieldDescription>
+	</field>
+	<field name="description" class="java.lang.String">
+		<fieldDescription><![CDATA[description]]></fieldDescription>
+	</field>
+	<field name="end" class="java.util.Date">
+		<fieldDescription><![CDATA[end]]></fieldDescription>
+	</field>
+	<field name="endDate" class="java.util.Date">
+		<fieldDescription><![CDATA[endDate]]></fieldDescription>
+	</field>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
+	<field name="performance" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[performance]]></fieldDescription>
+	</field>
+	<field name="persisted" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[persisted]]></fieldDescription>
+	</field>
+	<field name="publicEvent" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[publicEvent]]></fieldDescription>
+	</field>
+	<field name="start" class="java.util.Date">
+		<fieldDescription><![CDATA[start]]></fieldDescription>
+	</field>
+	<field name="startDate" class="java.util.Date">
+		<fieldDescription><![CDATA[startDate]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="16">
+			<textField pattern="EEEEE dd">
+				<reportElement uuid="65bc5df2-5f5b-4e29-8f8d-e97ebbc07786" x="0" y="0" width="100" height="16" forecolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="12" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DATE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="81" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="2a34d48b-d141-4c93-9c1a-c535427d5346" x="2" y="10" width="97" height="11"/>
+				<textElement>
+					<font size="7" isBold="false" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DAY}.getCastHotel() == null
+?
+  $P{DAY}.getCastTravel() != null
+  ?
+  ""
+  :
+  "unknown"
+:
+  !"Hotel".equalsIgnoreCase($P{DAY}.getCastTravel())
+  ?
+  ""
+  :
+  $P{DAY}.getCastHotel().getName()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="fef94419-dbe4-4c63-8d6b-864c187117ab" x="2" y="50" width="97" height="10"/>
+				<textElement>
+					<font size="7" isBold="false" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DAY}.getCrewHotel() == null ||
+!"Hotel".equalsIgnoreCase($P{DAY}.getCrewTravel())
+?
+  $P{DAY}.getCrewTravel() == null
+  ?
+  "unknown"
+  :
+  ""
+:
+$P{DAY}.getCrewHotel().getName()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="51723102-d02b-48a9-a867-289599033259" x="2" y="20" width="97" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DAY}.getCastHotel() == null ||
+!"Hotel".equalsIgnoreCase($P{DAY}.getCastTravel())
+?
+""
+:
+$P{DAY}.getCastHotel().getAddressCombinedLines()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="d5a7366a-a8b0-4ab9-b64a-315ad429a4ce" x="2" y="70" width="97" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(
+    $P{DAY}.getCrewHotel() == null ||
+    !"Hotel".equalsIgnoreCase($P{DAY}.getCrewTravel())
+)
+?
+""
+:
+$P{DAY}.getCrewHotel().getAddressCity() + " " +
+$P{DAY}.getCrewHotel().getAddressState() + " " +
+$P{DAY}.getCrewHotel().getAddressZip()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="d052ec9c-886d-4989-b8c5-c6183d11a316" x="2" y="30" width="97" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DAY}.getCastHotel() == null ||
+!"Hotel".equalsIgnoreCase($P{DAY}.getCastTravel())
+?
+""
+:
+$P{DAY}.getCastHotel().getAddressCity() + " " +
+$P{DAY}.getCastHotel().getAddressState() + " " +
+$P{DAY}.getCastHotel().getAddressZip()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="da45367d-375c-427c-8dec-347bd52ec518" x="2" y="60" width="97" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(
+    $P{DAY}.getCrewHotel() == null ||
+    !"Hotel".equalsIgnoreCase($P{DAY}.getCrewTravel())
+)
+?
+""
+:
+$P{DAY}.getCrewHotel().getAddressCombinedLines()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="2c309796-7f2b-4b07-9e9a-e707069c085e" x="3" y="0" width="97" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DAY}.getCastTravel() +
+": " +
+$P{DAY}.getCastLocation().getName()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="fbe119df-49c3-4d99-a5cb-0436966e3397" x="3" y="40" width="97" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DAY}.getCrewTravel() +
+": " +
+$P{DAY}.getCrewLocation().getName()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="80" splitType="Stretch">
+			<elementGroup>
+				<textField isBlankWhenNull="true">
+					<reportElement uuid="ecac9fc6-2dae-4da3-8583-5800e81d42eb" x="42" y="1" width="57" height="11">
+						<printWhenExpression><![CDATA[$P{DAY}.getProbableVenue() != null]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{DAY}.getMilageInformation()]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="b59e44a8-614e-4ae4-8491-e61cfaba76fc" x="2" y="1" width="40" height="11">
+						<printWhenExpression><![CDATA[$P{DAY}.getProbableVenue() != null &&
+$P{DAY}.getMilageInformation() != null]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Mileage:]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement uuid="db2b2a7c-252c-4921-b727-6310951b3597" x="2" y="39" width="96" height="11">
+						<printWhenExpression><![CDATA[$P{DAY}.getProbableVenue() != null]]></printWhenExpression>
+					</reportElement>
+					<textElement markup="none">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{DAY}.getProbableVenue() == null ? "" : $P{DAY}.getProbableVenue().getAddressCombinedCityStateZip()]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="aede60f2-a496-48e9-b1b9-489cf32e670a" x="2" y="54" width="40" height="11">
+						<printWhenExpression><![CDATA[$P{DAY}.getProbableVenue() != null &&
+$P{DAY}.getProbableVenue().getHouseCapacity() != null]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Capacity:]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement uuid="774bf88b-da95-4128-9887-2ec10e63e4ba" x="2" y="17" width="97" height="11">
+						<printWhenExpression><![CDATA[$P{DAY}.getProbableVenue() != null]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{DAY}.getProbableVenue().getName()]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement uuid="1910cacb-71dd-4241-9fe5-06141ab1480f" x="43" y="54" width="56" height="11">
+						<printWhenExpression><![CDATA[$P{DAY}.getProbableVenue() != null]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{DAY}.getProbableVenue().getHouseCapacity()]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement uuid="21da1b4f-14e1-4bdb-8e3d-f80eb23f6969" x="2" y="28" width="96" height="11">
+						<printWhenExpression><![CDATA[$P{DAY}.getProbableVenue() != null]]></printWhenExpression>
+					</reportElement>
+					<textElement markup="none">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{DAY}.getProbableVenue() == null ? "" : $P{DAY}.getProbableVenue().getAddressCombinedLines()]]></textFieldExpression>
+				</textField>
+			</elementGroup>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<printWhenExpression><![CDATA[$F{cast} && !$F{crew} && !$F{performance} && $P{PRINT_CAST}]]></printWhenExpression>
+			<textField pattern="h:mm a">
+				<reportElement uuid="8d7a7e4a-6406-4513-a67e-e6a26789ad93" x="2" y="0" width="97" height="11"/>
+				<textElement>
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("h:mm a").format($F{startDate}) + " [Cast]"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="6886e9bb-5c55-49de-b98e-221f9094bc6a" x="8" y="9" width="91" height="11" isPrintWhenDetailOverflows="true"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20">
+			<printWhenExpression><![CDATA[$F{crew} && !$F{performance} && !$F{cast} && $P{PRINT_CREW}]]></printWhenExpression>
+			<textField pattern="h:mm a">
+				<reportElement uuid="e08dfe9c-dc28-4fea-9bd3-de3accbda10f" x="2" y="0" width="96" height="11"/>
+				<textElement>
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("h:mm a").format($F{startDate}) + " [Crew]"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="57c640f6-f6c5-4a85-92f3-f60ba22f9586" x="8" y="9" width="91" height="11" isPrintWhenDetailOverflows="true"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20">
+			<printWhenExpression><![CDATA[!$F{performance}
+&&
+(
+    (!$F{cast} && !$F{crew})
+    ||
+    ($F{cast} && $F{crew})
+)]]></printWhenExpression>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="9c9111c1-b384-4ecc-9ba4-b59cd893a6d9" x="7" y="9" width="92" height="11" isPrintWhenDetailOverflows="true"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<textField pattern="h:mm a">
+				<reportElement uuid="f0d17593-3e4c-4a7c-a467-269864102cc8" x="2" y="0" width="97" height="11"/>
+				<textElement>
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{startDate}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20">
+			<printWhenExpression><![CDATA[$F{performance}]]></printWhenExpression>
+			<rectangle>
+				<reportElement uuid="b65b4aec-61d6-43a8-81fd-107c70fe9c1e" x="91" y="5" width="5" height="11" forecolor="#FFFFFF" backcolor="#00CC00"/>
+			</rectangle>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="9293912d-e5b4-49ba-94e5-96c93c58930d" x="7" y="9" width="92" height="11" isPrintWhenDetailOverflows="true"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<textField pattern="h:mm a">
+				<reportElement uuid="ec3fef02-6fb1-43b1-97a7-c7529827d470" x="2" y="0" width="97" height="11"/>
+				<textElement>
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{startDate}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="24" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="6faaaab2-9cf5-4bce-8dcb-8ccfdd19dc2d" x="2" y="11" width="97" height="11">
+					<printWhenExpression><![CDATA[$P{DAY}.getNotes().trim().length() > Integer.valueOf("0")]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DAY}.getNotes()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="79e58f8e-9230-465d-b6e5-bd150ff1cf16" x="2" y="2" width="96" height="11">
+					<printWhenExpression><![CDATA[$P{DAY}.getNotes().trim().length() > Integer.valueOf("0")]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Notes:]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

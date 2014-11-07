@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CitySheet_Sub_performances" pageWidth="200" pageHeight="802" columnWidth="200" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="2.357947691000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="advance" class="com.danielbchapman.production.entity.PerformanceAdvance">
+		<fieldDescription><![CDATA[advance]]></fieldDescription>
+	</field>
+	<field name="cast" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[cast]]></fieldDescription>
+	</field>
+	<field name="class" class="java.lang.Class">
+		<fieldDescription><![CDATA[class]]></fieldDescription>
+	</field>
+	<field name="crew" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[crew]]></fieldDescription>
+	</field>
+	<field name="crewCall" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[crewCall]]></fieldDescription>
+	</field>
+	<field name="day" class="com.danielbchapman.production.entity.Day">
+		<fieldDescription><![CDATA[day]]></fieldDescription>
+	</field>
+	<field name="description" class="java.lang.String">
+		<fieldDescription><![CDATA[description]]></fieldDescription>
+	</field>
+	<field name="end" class="java.util.Date">
+		<fieldDescription><![CDATA[end]]></fieldDescription>
+	</field>
+	<field name="eventSequence" class="java.util.ArrayList">
+		<fieldDescription><![CDATA[eventSequence]]></fieldDescription>
+	</field>
+	<field name="fightCall" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[fightCall]]></fieldDescription>
+	</field>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
+	<field name="performance" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[performance]]></fieldDescription>
+	</field>
+	<field name="performanceSchedule" class="com.danielbchapman.production.entity.PerformanceSchedule">
+		<fieldDescription><![CDATA[performanceSchedule]]></fieldDescription>
+	</field>
+	<field name="persisted" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[persisted]]></fieldDescription>
+	</field>
+	<field name="start" class="java.util.Date">
+		<fieldDescription><![CDATA[start]]></fieldDescription>
+	</field>
+	<field name="strike" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[strike]]></fieldDescription>
+	</field>
+	<field name="talkback" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[talkback]]></fieldDescription>
+	</field>
+	<field name="utcEnd" class="java.util.Date">
+		<fieldDescription><![CDATA[utcEnd]]></fieldDescription>
+	</field>
+	<field name="utcStart" class="java.util.Date">
+		<fieldDescription><![CDATA[utcStart]]></fieldDescription>
+	</field>
+	<field name="venue" class="com.danielbchapman.production.entity.Venue">
+		<fieldDescription><![CDATA[venue]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Description]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="100" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Time]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="19" width="200" height="1"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="15"/>
+				<textElement>
+					<font isBold="false" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="100" y="0" width="100" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{start}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

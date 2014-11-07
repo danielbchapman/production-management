@@ -1,0 +1,32 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"	
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:tac="http://java.sun.com/jsf/composite/composite"	
+>
+	<composite:interface>
+		<composite:attribute name="linkedContact" type="com.danielbchapman.production.entity.LinkedContact"/>
+	</composite:interface>
+	
+	<composite:implementation>
+		<h:panelGrid
+			styleClass="noBorders"
+			columns="4" 
+			columnClasses="noBorders, noBorders, noBorders, noBorders"
+		>
+			<h:outputText value="Name" styleClass="information" />
+			<h:outputText value="Group" styleClass="information" />
+			<h:outputText value="Sub Group" styleClass="information" />
+			<h:outputText value="Position/Title" styleClass="information" />
+			
+			<h:outputText value="#{cc.attrs.contact.firstName} #{cc.attrs.contact.lastName}"/>			
+			<h:selectOneMenu value="#{cc.attrs.groupId}">
+				<f:selectItems value="#{contactBean.contactGroupItems}"/>
+			</h:selectOneMenu>
+			<p:inputText value="#{cc.attrs.contact.subGroup}"/>
+			<p:inputText value="#{cc.attrs.contact.position}"/>			
+		</h:panelGrid>
+	</composite:implementation>
+</html>

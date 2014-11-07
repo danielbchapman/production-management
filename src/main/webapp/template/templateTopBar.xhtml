@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html 	lang="en"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:p="http://primefaces.org/ui"
+		xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+		xmlns:tac="http://java.sun.com/jsf/composite/composite"
+>
+<body>
+<ui:composition template="/template/baseTemplate.xhtml">
+<ui:define name="base">
+	<div class="container-fliud">
+		<div class="row-fluid" style="font-size: .8em;">
+			<div class="span2">
+				<ui:insert name="left">
+					<h2>Left!!!</h2>
+					<p>Hi I'm some stuff on the left</p>
+				</ui:insert>
+			</div>
+			
+			<div class="span9 offset1">
+				<ui:insert name="main">
+			        <h1>Main Area</h1>
+			        <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+			        <p><a class="btn btn-primary btn-large">Learn more...</a></p>			
+				</ui:insert>
+			</div>
+		</div>	
+	</div>
+</ui:define>
+</ui:composition>
+</body>
+</html>

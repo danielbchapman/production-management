@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html 	lang="en"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:p="http://primefaces.org/ui"
+		xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+		xmlns:tac="http://java.sun.com/jsf/composite/composite"
+		xmlns:core="http://java.sun.com/jsf/composite/core"
+>
+<body>
+<ui:composition template="/template/templateLeftCenterRight.xhtml">
+	<ui:define name="left">
+		<f:view contentType="text/html" beforePhase="#{loginBean.phaseSecurePageSeasonCheck}">
+			<h2>Paperwork - #{seasonBean.season.name}</h2>
+			<p>The <a href="paperwork.xhtml">PAPERWORK</a> module is a simple module to 
+			allow quick access to a variety of reports. Depending on your access level you
+			will be able to view a variety of information such as 
+			<a href="season_contacts.xhtml">CONTACT INFORMATION</a>. There are links to a variety of 
+			reports and views. For digital information you may be interested in
+			</p>  
+		</f:view>
+	</ui:define>
+	
+	<ui:define name="center">
+		<f:view contentType="text/html" beforePhase="#{loginBean.phaseSecurePageSeasonCheck}">
+			<h2>PDF - Downloads</h2>
+			
+			<h:form styleClass="form-horizontal">
+				<core:reportsLink value="#{scheduleBean.calendarPrintController}" name="Weekly Schedule"/>
+				<core:reportsLink value="#{scheduleBean.monthController}" name="Monthy Calendar"/>
+			</h:form>
+			
+			<h:form styleClass="form-horizontal">
+				<core:reportsLink 
+					value="#{contactBean.contactPrintController}" 
+					name="Contact Sheet"
+				/>
+			</h:form>
+			
+			<h3>General Paperwork</h3>
+			<p class="error">No Paperwork!!</p>
+		</f:view>
+	</ui:define>
+	
+	<ui:define name="right">
+		<f:view contentType="text/html" beforePhase="#{loginBean.phaseSecurePageSeasonCheck}">
+			<h2>HTML Documents</h2>
+			<p class="error"> Under construction </p>
+		</f:view>
+	</ui:define>
+</ui:composition>
+</body>
+</html>
