@@ -1,0 +1,19 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"	
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:pm="http://primefaces.prime.com.tr/mobile"
+	xmlns:tac="http://java.sun.com/jsf/composite/tac"
+	xmlns:mobile="http://java.sun.com/jsf/composite/mobile"
+>
+	<composite:interface>
+		<composite:attribute name="value" />
+	</composite:interface>
+	
+	<composite:implementation>
+		<h:outputLabel for="inputText" value="Demo Composite Component"/>
+		<h:inputText id="inputText" />
+	</composite:implementation>
+</html>
