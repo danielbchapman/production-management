@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /build
 .project
 /.settings
@@ -6,10 +5,8 @@
 .classpath
 .DS_Store
 /target
-=======
 ProductionWebService/.classpath
 ProductionWebService/.project
 ProductionWebService/.settings/org.eclipse.wst.common.component
 ProductionWebService/.settings/org.eclipse.wst.common.project.facet.core.xml
 ProductionWebService/.settings/org.eclipse.wst.validation.prefs
->>>>>>> 38cebac08204064a2c4194f89fe17444eefecbb5
