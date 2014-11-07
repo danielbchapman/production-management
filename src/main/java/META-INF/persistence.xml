@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence persistence_2_0.xsd">
+	<persistence-unit name="production" transaction-type="RESOURCE_LOCAL">
+ 
+ 		<!-- 
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		 --> 
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		 
+		 <!-- 
+		<non-jta-data-source>java:/ProductionDS</non-jta-data-source>
+		 -->
+		<class>com.danielbchapman.production.entity.Season</class>		 
+		<class>com.danielbchapman.production.entity.Week</class>
+		<class>com.danielbchapman.production.entity.VenueLog</class>
+		<class>com.danielbchapman.production.entity.Venue</class>
+		<class>com.danielbchapman.production.entity.Vendor</class>
+		<class>com.danielbchapman.production.entity.TaskStatusUpdate</class>
+		<class>com.danielbchapman.production.entity.Task</class>
+		<class>com.danielbchapman.production.entity.SeasonContact</class>
+		<class>com.danielbchapman.production.entity.PettyCashEntry</class>
+		<class>com.danielbchapman.production.entity.PettyCash</class>
+		<class>com.danielbchapman.production.entity.PerformanceSchedule</class>
+		<class>com.danielbchapman.production.entity.PerformanceAdvance</class>
+		<class>com.danielbchapman.production.entity.Performance</class>
+		<class>com.danielbchapman.production.entity.Options</class>
+		<class>com.danielbchapman.production.entity.LinkedContact</class>
+		<class>com.danielbchapman.production.entity.Hotel</class>
+		<class>com.danielbchapman.production.entity.Hospital</class>
+		<class>com.danielbchapman.production.entity.EventMapping</class>
+		<class>com.danielbchapman.production.entity.Event</class>
+		<class>com.danielbchapman.production.entity.EmbeddableContactInformation</class>
+		<class>com.danielbchapman.production.entity.Department</class>
+		<class>com.danielbchapman.production.entity.Day</class>
+		<class>com.danielbchapman.production.entity.ContactableAndAddressable</class>
+		<class>com.danielbchapman.production.entity.Contactable</class>
+		<class>com.danielbchapman.production.entity.ContactGroup</class>
+		<class>com.danielbchapman.production.entity.ContactAddress</class>
+		<class>com.danielbchapman.production.entity.Contact</class>
+		<class>com.danielbchapman.production.entity.City</class>
+		<class>com.danielbchapman.production.entity.BudgetEntry</class>
+		<class>com.danielbchapman.production.entity.BudgetAdjustingEntry</class>
+		<class>com.danielbchapman.production.entity.Budget</class>
+		<class>com.danielbchapman.production.entity.BaseEntity</class>
+		<class>com.danielbchapman.production.entity.Addressable</class>
+		<class>com.danielbchapman.production.entity.AbstractContact</class>
+		<class>com.danielbchapman.production.entity.PointOfInterest</class>
+		<class>com.danielbchapman.production.entity.Employee</class>
+		<class>com.danielbchapman.production.entity.Reimbursement</class>
+		<class>com.danielbchapman.jboss.login.Role</class>
+		<class>org.theactingcompany.inventory.entity.SoundElement</class>
+		<class>org.theactingcompany.inventory.entity.WardrobeElement</class>
+		<class>org.theactingcompany.inventory.entity.EmbeddableImage</class>
+		<class>org.theactingcompany.inventory.entity.PropsElement</class>
+		<class>org.theactingcompany.inventory.entity.ScenicElement</class>
+		<class>org.theactingcompany.inventory.entity.InventoryImage</class>
+		<class>org.theactingcompany.inventory.entity.LightingElement</class>
+		<class>org.theactingcompany.inventory.entity.InventoryProblem</class>
+		<class>org.theactingcompany.inventory.entity.BarCode</class>
+		<class>org.theactingcompany.inventory.entity.InventoryElement</class>
+		<class>org.theactingcompany.inventory.entity.GeneralElement</class>
+		<class>org.theactingcompany.help.entity.HelpPage</class>
+		<class>com.danielbchapman.jboss.login.User</class>
+		<class>org.theactingcompany.inventory.entity.StageManagementElement</class>
+		<class>org.theactingcompany.core.bugs.Bug</class>
+		<class>com.danielbchapman.production.entity.Settings</class>
+		<shared-cache-mode>NONE</shared-cache-mode>
+
+		<properties>
+			
+
+			<!-- Postgres 
+			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+			<property name="javax.persistence.jdbc.user" value="tac"/>
+			<property name="javax.persistence.jdbc.password" value="***REMOVED***"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://***REMOVED***/production"/>			
+			<property name="eclipselink.jdbc.uppercase-columns" value="true" />
+			<property name="eclipselink.target-database" value="PostgreSQL"/>
+			<property name="eclipselink.platform.class.name" value="org.eclipse.persistence.platform.database.PostgreSQLPlatform" />			
+			-->
+			
+			<!--  H2
+			<property name="javax.persistence.jdbc.user" value="sa"/>
+			<property name="javax.persistence.jdbc.password" value="***REMOVED***"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/C:\Database\Data\production;"/>
+			 -->
+			 
+			<!-- My SQL --> 		
+			<!-- 	    
+			<property name="javax.persistence.jdbc.user" value="***REMOVED***"/>
+			<property name="javax.persistence.jdbc.password" value="***REMOVED***"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://us-cdbr-east.cleardb.com/***REMOVED***"/>
+			 -->
+			<property name="javax.persistence.jdbc.user" value="production"/>
+			<property name="javax.persistence.jdbc.password" value="wiudata"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/production"/>			 
+			<property name="eclipselink.target-database" value="MySQL"/>
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+			<property name="eclipselink.platform.class.name" value="org.eclipse.persistence.platform.database.MySQLPlatform" />			
+			 
+			<property name="eclipselink.ddl-generation" value="create-tables"/>
+			<property name="eclipselink.ddl-generation.output-mode" value="both"/>
+			<property name="eclipselink.weaving" value="false" />
+			<property name="eclipselink.logging.level" value="WARNING"/>
+		</properties>				
+	</persistence-unit>
+</persistence>
