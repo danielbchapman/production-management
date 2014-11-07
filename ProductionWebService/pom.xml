@@ -1,11 +1,12 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.theactingcompany.production</groupId>
-  <artifactId>ProductionWebService</artifactId>
-  <version>2.3.0-EE6</version>
-  <name>ProducitonWebService</name>
-  <description>This project is the repository for all the web-related beans so that it can be shared by both the UI framework and the Mobile framework</description>
-  
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.theactingcompany.production</groupId>
+	<artifactId>ProductionWebService</artifactId>
+	<version>2.3.0-EE6</version>
+	<name>ProducitonWebService</name>
+	<description>This project is the repository for all the web-related beans so that it can be shared by both the UI framework and the Mobile framework</description>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.eclipse.persistence</groupId>
@@ -17,10 +18,10 @@
 			<artifactId>javax.persistence</artifactId>
 			<version>2.0.3</version>
 		</dependency>
-		<dependency>  
-		    <groupId>org.primefaces</groupId>  
-		    <artifactId>primefaces</artifactId>  
-		    <version>3.3.1</version>  
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>3.3.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -29,31 +30,38 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-       <groupId>net.sf.json-lib</groupId>
-       <artifactId>json-lib</artifactId>
-       <version>2.4</version>
-       <classifier>jdk15</classifier>
-    </dependency>
-		<dependency>
-		    <groupId>xom</groupId>
-		    <artifactId>xom</artifactId>
-		    <version>1.1</version>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-api</artifactId>
+			<version>2.2.8-02</version>
 		</dependency>
+		<dependency>
+			<groupId>net.sf.json-lib</groupId>
+			<artifactId>json-lib</artifactId>
+			<version>2.4</version>
+			<classifier>jdk15</classifier>
+		</dependency>
+		<dependency>
+			<groupId>xom</groupId>
+			<artifactId>xom</artifactId>
+			<version>1.1</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.theactingcompany.production</groupId>
 			<artifactId>ProductionEJB</artifactId>
 			<version>2.1.1</version>
 		</dependency>
 		<dependency>
-			<groupId>jasperreports</groupId>
-			<artifactId>jasperreports</artifactId>
-			<version>3.5.3</version>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.3</version>
 		</dependency>
 		<dependency>
-			<groupId>google-gson</groupId>
-			<artifactId>google-gson</artifactId>
-			<version>2.2.2</version>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>5.6.1</version>
 		</dependency>
+
 	</dependencies>
 	<repositories>
 		<repository>
@@ -63,18 +71,18 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
-		<repository>  
-		    <id>prime-repo</id>  
-		    <name>PrimeFaces Maven Repository</name>  
-		    <url>http://repository.primefaces.org</url>  
-		    <layout>default</layout>  
-		</repository> 
+		<repository>
+			<id>prime-repo</id>
+			<name>PrimeFaces Maven Repository</name>
+			<url>http://repository.primefaces.org</url>
+			<layout>default</layout>
+		</repository>
 		<repository>
 			<id>MVNRepository</id>
 			<name>Maven Repository</name>
 			<url>http://mvnrepository.com/</url>
 			<layout>default</layout>
-		</repository>		
+		</repository>
 	</repositories>
 
 	<build>
@@ -98,7 +106,7 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.1.1</version>
 			</plugin>
-			
+
 		</plugins>
 	</build>
 </project>
