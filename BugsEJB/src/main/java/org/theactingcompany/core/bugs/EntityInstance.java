@@ -31,7 +31,7 @@ public class EntityInstance
   public static Connection getConnection()
   {
     return ((EntityManager)getEm()).unwrap(java.sql.Connection.class);
-   // return DriverManager.getConnection(CONNECTION_STRING, "sa", "acting_co");
+   // return DriverManager.getConnection(CONNECTION_STRING, "sa", "***REMOVED***");
   }
   
   /**

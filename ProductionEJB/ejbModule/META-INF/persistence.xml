@@ -48,7 +48,7 @@
       -->		
 			<property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
 			<property name="javax.persistence.jdbc.user" value="sa"/>
-			<property name="javax.persistence.jdbc.password" value="acting_co"/>
+			<property name="javax.persistence.jdbc.password" value="***REMOVED***"/>
 			<property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/C:\Database\Data\production;"/>      
 			
 			<property name="eclipselink.target-server" value="JBoss"/> 
