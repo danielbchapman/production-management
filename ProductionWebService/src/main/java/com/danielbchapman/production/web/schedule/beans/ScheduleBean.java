@@ -176,6 +176,7 @@ public class ScheduleBean implements Serializable
 	
 	public void cancel(ActionEvent evt)
 	{
+		System.out.println("CANCELING...");
 		day = new Day();
 		eventSelect(new Event(), null);
 	}
@@ -637,8 +638,11 @@ public class ScheduleBean implements Serializable
 
 	public void saveDay(ActionEvent evt)
 	{
+		System.out.println("Save Day Called");
 		if(evt != null && day != null && day.getDate() != null && Utility.getBean(LoginBean.class).isScheduler())
 		{
+
+			System.out.println("Saving Day-> " + day + "\n\t ->" + dayUi);
 			Date date = selectedEvent.getStartDate();
 			Week week = getCalendarDao().getOrCreateWeek(date, selectedSeason);
 
@@ -675,10 +679,15 @@ public class ScheduleBean implements Serializable
 			dayUi = new DayUI(day);
 			eventSelectClear();
 		}
+		else
+		{
+			System.out.println("There was an issue saving the day-> " + day);
+		}
 	}
 
 	public void saveEvent(ActionEvent evt)
 	{
+		System.out.println("Save Event Called");
 		if(eventEntityRef != null && Utility.getBean(LoginBean.class).isScheduler())
 		{
 			// Date date = selectedEvent.getStartDate();//BUG - > Use the hard reference

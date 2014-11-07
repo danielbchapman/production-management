@@ -69,13 +69,18 @@ public class JasperUtility
 			{
 				try
 				{
-					report = JasperCompileManager.compileReport(new FileInputStream(file));
+					report = JasperCompileManager.compileReport(file.getAbsolutePath());
+					//report = JasperCompileManager.compileReportTo(new FileInputStream(file));
 				}
-				catch(FileNotFoundException e)
+//				catch(FileNotFoundException e)
+//				{
+//					throw new RuntimeException(e.getMessage(), e);
+//				}
+				catch(JRException e)
 				{
 					throw new RuntimeException(e.getMessage(), e);
 				}
-				catch(JRException e)
+				catch(Throwable e)
 				{
 					throw new RuntimeException(e.getMessage(), e);
 				}
