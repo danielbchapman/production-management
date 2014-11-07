@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 5.6.2.final using JasperReports Library version 5.6.1  -->
+<!-- 2014-11-07T14:08:15 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="weeklySchedules" pageWidth="595" pageHeight="775" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="05b70e9e-76c1-48e6-a768-8e36ed2ebbf1">
 	<property name="ireport.zoom" value="1.3995221406292053"/>
 	<property name="ireport.x" value="0"/>
@@ -132,7 +134,7 @@
 	<background>
 		<band height="555">
 			<image>
-				<reportElement uuid="e13f4c40-e2c1-477b-a5a1-b5bb98ba0978" x="217" y="286" width="337" height="269"/>
+				<reportElement x="217" y="286" width="337" height="269" uuid="e13f4c40-e2c1-477b-a5a1-b5bb98ba0978"/>
 				<imageExpression><![CDATA[$P{FILE_PATH} + "tac-watermark.png"]]></imageExpression>
 			</image>
 		</band>
@@ -140,11 +142,11 @@
 	<pageHeader>
 		<band height="71">
 			<image>
-				<reportElement uuid="c0cda9a5-c208-46ea-bc5b-8d9b9afb3423" x="0" y="0" width="101" height="63"/>
+				<reportElement x="0" y="0" width="101" height="63" uuid="c0cda9a5-c208-46ea-bc5b-8d9b9afb3423"/>
 				<imageExpression><![CDATA[$P{FILE_PATH} + "tac-red.jpg"]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement uuid="988cb905-8c57-4302-8f93-79548a3ff899" x="137" y="20" width="403" height="33"/>
+				<reportElement x="137" y="20" width="403" height="33" uuid="988cb905-8c57-4302-8f93-79548a3ff899"/>
 				<textElement markup="none">
 					<font fontName="DejaVu Sans" size="18" isBold="true"/>
 				</textElement>
@@ -157,11 +159,11 @@
 			<printWhenExpression><![CDATA[$F{days}.size() > Integer.valueOf("0")]]></printWhenExpression>
 			<elementGroup>
 				<line direction="BottomUp">
-					<reportElement uuid="36c1b4db-24dc-4d2c-9da6-49144d8b08f6" style="lines" x="23" y="32" width="531" height="1"/>
+					<reportElement style="lines" x="23" y="32" width="531" height="1" uuid="36c1b4db-24dc-4d2c-9da6-49144d8b08f6"/>
 				</line>
 			</elementGroup>
 			<textField>
-				<reportElement uuid="2179eb9d-e08f-4575-9194-e10785a93860" style="colorOne" mode="Opaque" x="0" y="0" width="556" height="16" forecolor="#FFFFFF"/>
+				<reportElement style="colorOne" mode="Opaque" x="0" y="0" width="556" height="16" forecolor="#FFFFFF" uuid="2179eb9d-e08f-4575-9194-e10785a93860"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
 					<font fontName="DejaVu Sans Mono" size="12" isBold="true" isItalic="false"/>
 					<paragraph leftIndent="10"/>
@@ -169,28 +171,28 @@
 				<textFieldExpression><![CDATA["The week of " + new SimpleDateFormat("EEEEE dd MMMMM yyyy").format($F{date})]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="112a6c61-60dd-4db0-bfe2-56107768b0bc" style="lines" x="23" y="19" width="100" height="15"/>
+				<reportElement style="lines" x="23" y="19" width="100" height="15" uuid="112a6c61-60dd-4db0-bfe2-56107768b0bc"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Date]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="f5dac4f6-475b-40be-8c22-75bdcf2fe8a8" style="lines" x="235" y="19" width="100" height="15"/>
+				<reportElement style="lines" x="235" y="19" width="100" height="15" uuid="f5dac4f6-475b-40be-8c22-75bdcf2fe8a8"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Venue]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="49c9115b-b312-4dee-8ea0-712721e634f6" style="lines" x="333" y="19" width="100" height="15"/>
+				<reportElement style="lines" x="333" y="19" width="100" height="15" uuid="49c9115b-b312-4dee-8ea0-712721e634f6"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Performances]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="e857b683-97ff-4803-bf5a-0a7977f98fc1" style="lines" x="123" y="19" width="112" height="15"/>
+				<reportElement style="lines" x="123" y="19" width="112" height="15" uuid="e857b683-97ff-4803-bf5a-0a7977f98fc1"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
@@ -200,14 +202,14 @@
 		<band height="18">
 			<printWhenExpression><![CDATA[$F{monday} != null]]></printWhenExpression>
 			<textField pattern="EEEEE M/d">
-				<reportElement uuid="02744405-32c5-4d1c-bbf9-7be8b3dfe31b" x="23" y="0" width="100" height="18"/>
+				<reportElement x="23" y="0" width="100" height="18" uuid="02744405-32c5-4d1c-bbf9-7be8b3dfe31b"/>
 				<textElement>
 					<font isBold="false" isItalic="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{monday}.getDate()]]></textFieldExpression>
 			</textField>
 			<componentElement>
-				<reportElement uuid="bc998c28-9eab-41fd-bd30-f1dda4f44aa7" mode="Transparent" x="335" y="0" width="219" height="18" isPrintWhenDetailOverflows="true"/>
+				<reportElement mode="Transparent" x="335" y="0" width="219" height="18" isPrintWhenDetailOverflows="true" uuid="bc998c28-9eab-41fd-bd30-f1dda4f44aa7"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="Performances" uuid="cc1de848-bb8c-41c7-ad51-ca73f3988a23">
 						<dataSourceExpression><![CDATA[$F{monday}.getPerformances() == null ?
@@ -215,12 +217,12 @@ new net.sf.jasperreports.engine.JREmptyDataSource()
   :
   new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{monday}.getPerformances())]]></dataSourceExpression>
 					</datasetRun>
-					<jr:column uuid="525dcafe-a648-4e0d-9f65-a050640f097d" width="62">
+					<jr:column width="62" uuid="525dcafe-a648-4e0d-9f65-a050640f097d">
 						<jr:tableHeader height="0" rowSpan="1"/>
 						<jr:tableFooter height="0" rowSpan="1"/>
 						<jr:columnHeader height="0" rowSpan="1">
 							<genericElement>
-								<reportElement uuid="6808afec-1cb4-49d4-938c-55bc4a09a99e" mode="Transparent" x="0" y="0" width="0" height="0">
+								<reportElement mode="Transparent" x="0" y="0" width="0" height="0" uuid="6808afec-1cb4-49d4-938c-55bc4a09a99e">
 									<property name="controlParameter" value="true"/>
 								</reportElement>
 								<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
@@ -241,18 +243,17 @@ new net.sf.jasperreports.engine.JREmptyDataSource()
 						<jr:columnFooter height="0" rowSpan="1"/>
 						<jr:detailCell height="20" rowSpan="1">
 							<textField pattern="h:mm a">
-								<reportElement uuid="959d1855-7cb7-45ab-9ef9-bbb06bffff46" x="0" y="0" width="62" height="20"/>
-								<textElement/>
+								<reportElement x="0" y="0" width="62" height="20" uuid="959d1855-7cb7-45ab-9ef9-bbb06bffff46"/>
 								<textFieldExpression><![CDATA[$F{startDate}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column uuid="1e170f8c-6298-4810-bf20-17885a04e19a" width="183">
+					<jr:column width="183" uuid="1e170f8c-6298-4810-bf20-17885a04e19a">
 						<jr:tableHeader height="0" rowSpan="1"/>
 						<jr:tableFooter height="0" rowSpan="1"/>
 						<jr:columnHeader height="0" rowSpan="1">
 							<genericElement>
-								<reportElement uuid="f466aec9-5583-4566-a72a-456016f5403a" mode="Transparent" x="0" y="0" width="0" height="0">
+								<reportElement mode="Transparent" x="0" y="0" width="0" height="0" uuid="f466aec9-5583-4566-a72a-456016f5403a">
 									<property name="controlParameter" value="true"/>
 								</reportElement>
 								<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
@@ -273,8 +274,7 @@ new net.sf.jasperreports.engine.JREmptyDataSource()
 						<jr:columnFooter height="0" rowSpan="1"/>
 						<jr:detailCell height="20" rowSpan="1">
 							<textField>
-								<reportElement uuid="6d610882-181b-4a4b-9f99-bb895778bf9f" x="0" y="0" width="183" height="20"/>
-								<textElement/>
+								<reportElement x="0" y="0" width="183" height="20" uuid="6d610882-181b-4a4b-9f99-bb895778bf9f"/>
 								<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
@@ -282,34 +282,30 @@ new net.sf.jasperreports.engine.JREmptyDataSource()
 				</jr:table>
 			</componentElement>
 			<textField>
-				<reportElement uuid="7c9067ad-8a74-4776-825d-67cc687d955c" x="235" y="0" width="100" height="18"/>
-				<textElement/>
+				<reportElement x="235" y="0" width="100" height="18" uuid="7c9067ad-8a74-4776-825d-67cc687d955c"/>
 				<textFieldExpression><![CDATA[$F{monday}.getProbableVenue() == null ?
   "" :
   $F{monday}.getProbableVenue().getName()]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd">
-				<reportElement uuid="be1f9948-0426-46eb-8c66-26753cf5902a" x="123" y="0" width="112" height="18"/>
-				<textElement/>
+				<reportElement x="123" y="0" width="112" height="18" uuid="be1f9948-0426-46eb-8c66-26753cf5902a"/>
 				<textFieldExpression><![CDATA[$F{monday}.getCastLocation().toStringDetailed()]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="18">
 			<printWhenExpression><![CDATA[$F{tuesday} != null]]></printWhenExpression>
 			<textField>
-				<reportElement uuid="1d7ed3b1-8890-448d-9868-16bb474338c2" x="235" y="0" width="100" height="18"/>
-				<textElement/>
+				<reportElement x="235" y="0" width="100" height="18" uuid="1d7ed3b1-8890-448d-9868-16bb474338c2"/>
 				<textFieldExpression><![CDATA[$F{tuesday}.getProbableVenue() == null ?
   "" :
   $F{tuesday}.getProbableVenue().getName()]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd">
-				<reportElement uuid="53e825c1-cd29-4467-b1cb-41792ad8880c" x="123" y="0" width="112" height="18"/>
-				<textElement/>
+				<reportElement x="123" y="0" width="112" height="18" uuid="53e825c1-cd29-4467-b1cb-41792ad8880c"/>
 				<textFieldExpression><![CDATA[$F{tuesday}.getCastLocation().toStringDetailed()]]></textFieldExpression>
 			</textField>
 			<componentElement>
-				<reportElement uuid="e4280681-dd3b-42f2-ad92-65277dc2e62b" mode="Transparent" x="335" y="0" width="219" height="18" isPrintWhenDetailOverflows="true"/>
+				<reportElement mode="Transparent" x="335" y="0" width="219" height="18" isPrintWhenDetailOverflows="true" uuid="e4280681-dd3b-42f2-ad92-65277dc2e62b"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="Performances" uuid="37f6fc6b-9399-40c9-8cbd-82cfd64540f7">
 						<dataSourceExpression><![CDATA[$F{tuesday}.getPerformances() == null ?
@@ -317,12 +313,12 @@ new net.sf.jasperreports.engine.JREmptyDataSource()
   :
   new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{tuesday}.getPerformances())]]></dataSourceExpression>
 					</datasetRun>
-					<jr:column uuid="f0071a68-bc67-46c8-8de7-b2d626e8723b" width="62">
+					<jr:column width="62" uuid="f0071a68-bc67-46c8-8de7-b2d626e8723b">
 						<jr:tableHeader height="0" rowSpan="1"/>
 						<jr:tableFooter height="0" rowSpan="1"/>
 						<jr:columnHeader height="0" rowSpan="1">
 							<genericElement>
-								<reportElement uuid="c051850e-a49b-484c-b888-b0a5598b744b" mode="Transparent" x="0" y="0" width="0" height="0">
+								<reportElement mode="Transparent" x="0" y="0" width="0" height="0" uuid="c051850e-a49b-484c-b888-b0a5598b744b">
 									<property name="controlParameter" value="true"/>
 								</reportElement>
 								<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
@@ -343,18 +339,17 @@ new net.sf.jasperreports.engine.JREmptyDataSource()
 						<jr:columnFooter height="0" rowSpan="1"/>
 						<jr:detailCell height="20" rowSpan="1">
 							<textField pattern="h:mm a">
-								<reportElement uuid="e9d07f2c-f5a1-4431-a553-3e8980a4a038" x="0" y="0" width="62" height="20"/>
-								<textElement/>
+								<reportElement x="0" y="0" width="62" height="20" uuid="e9d07f2c-f5a1-4431-a553-3e8980a4a038"/>
 								<textFieldExpression><![CDATA[$F{startDate}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column uuid="9fc50fed-cf6c-41a8-a455-314b59725c87" width="183">
+					<jr:column width="183" uuid="9fc50fed-cf6c-41a8-a455-314b59725c87">
 						<jr:tableHeader height="0" rowSpan="1"/>
 						<jr:tableFooter height="0" rowSpan="1"/>
 						<jr:columnHeader height="0" rowSpan="1">
 							<genericElement>
-								<reportElement uuid="390e3123-effc-4f05-8dbb-8f170eeaa0a5" mode="Transparent" x="0" y="0" width="0" height="0">
+								<reportElement mode="Transparent" x="0" y="0" width="0" height="0" uuid="390e3123-effc-4f05-8dbb-8f170eeaa0a5">
 									<property name="controlParameter" value="true"/>
 								</reportElement>
 								<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
@@ -375,8 +370,7 @@ new net.sf.jasperreports.engine.JREmptyDataSource()
 						<jr:columnFooter height="0" rowSpan="1"/>
 						<jr:detailCell height="20" rowSpan="1">
 							<textField>
-								<reportElement uuid="c5403ce7-e6b7-41b9-adf1-97ace5921edf" x="0" y="0" width="183" height="20"/>
-								<textElement/>
+								<reportElement x="0" y="0" width="183" height="20" uuid="c5403ce7-e6b7-41b9-adf1-97ace5921edf"/>
 								<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
@@ -384,7 +378,7 @@ new net.sf.jasperreports.engine.JREmptyDataSource()
 				</jr:table>
 			</componentElement>
 			<textField pattern="EEEEE M/d">
-				<reportElement uuid="6693b528-b60a-4896-a4c2-b6c06bf495ec" x="23" y="0" width="100" height="18"/>
+				<reportElement x="23" y="0" width="100" height="18" uuid="6693b528-b60a-4896-a4c2-b6c06bf495ec"/>
 				<textElement>
 					<font isBold="false" isItalic="false"/>
 				</textElement>
@@ -394,19 +388,17 @@ new net.sf.jasperreports.engine.JREmptyDataSource()
 		<band height="18">
 			<printWhenExpression><![CDATA[$F{wednesday} != null]]></printWhenExpression>
 			<textField>
-				<reportElement uuid="9c99c447-ac1b-4113-ac9a-4c379d03a808" x="235" y="0" width="100" height="18"/>
-				<textElement/>
+				<reportElement x="235" y="0" width="100" height="18" uuid="9c99c447-ac1b-4113-ac9a-4c379d03a808"/>
 				<textFieldExpression><![CDATA[$F{wednesday}.getProbableVenue() == null ?
   "" :
   $F{wednesday}.getProbableVenue().getName()]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd">
-				<reportElement uuid="0f482c44-a7cd-473b-b3c3-97cef6906d22" x="123" y="0" width="112" height="18"/>
-				<textElement/>
+				<reportElement x="123" y="0" width="112" height="18" uuid="0f482c44-a7cd-473b-b3c3-97cef6906d22"/>
 				<textFieldExpression><![CDATA[$F{wednesday}.getCastLocation().toStringDetailed()]]></textFieldExpression>
 			</textField>
 			<componentElement>
-				<reportElement uuid="2e1f9471-b276-4375-a37a-670b44df5cfd" mode="Transparent" x="335" y="0" width="219" height="18" isPrintWhenDetailOverflows="true"/>
+				<reportElement mode="Transparent" x="335" y="0" width="219" height="18" isPrintWhenDetailOverflows="true" uuid="2e1f9471-b276-4375-a37a-670b44df5cfd"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="Performances" uuid="956bb8a5-e918-45c3-b242-8c5ea5be540e">
 						<dataSourceExpression><![CDATA[$F{wednesday}.getPerformances() == null ?
@@ -414,12 +406,12 @@ new net.sf.jasperreports.engine.JREmptyDataSource()
   :
   new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{wednesday}.getPerformances())]]></dataSourceExpression>
 					</datasetRun>
-					<jr:column uuid="c5d346f1-24d8-4636-b634-18e8a6a4eccb" width="62">
+					<jr:column width="62" uuid="c5d346f1-24d8-4636-b634-18e8a6a4eccb">
 						<jr:tableHeader height="0" rowSpan="1"/>
 						<jr:tableFooter height="0" rowSpan="1"/>
 						<jr:columnHeader height="0" rowSpan="1">
 							<genericElement>
-								<reportElement uuid="d94b2b7c-7b82-4a96-bef0-630724d3b652" mode="Transparent" x="0" y="0" width="0" height="0">
+								<reportElement mode="Transparent" x="0" y="0" width="0" height="0" uuid="d94b2b7c-7b82-4a96-bef0-630724d3b652">
 									<property name="controlParameter" value="true"/>
 								</reportElement>
 								<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
@@ -440,18 +432,17 @@ new net.sf.jasperreports.engine.JREmptyDataSource()
 						<jr:columnFooter height="0" rowSpan="1"/>
 						<jr:detailCell height="20" rowSpan="1">
 							<textField pattern="h:mm a">
-								<reportElement uuid="55b7e385-51c0-4114-b0ad-c774320135f4" x="0" y="0" width="62" height="20"/>
-								<textElement/>
+								<reportElement x="0" y="0" width="62" height="20" uuid="55b7e385-51c0-4114-b0ad-c774320135f4"/>
 								<textFieldExpression><![CDATA[$F{startDate}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column uuid="3bafd269-80e2-455a-a3e8-57bec310b2ec" width="183">
+					<jr:column width="183" uuid="3bafd269-80e2-455a-a3e8-57bec310b2ec">
 						<jr:tableHeader height="0" rowSpan="1"/>
 						<jr:tableFooter height="0" rowSpan="1"/>
 						<jr:columnHeader height="0" rowSpan="1">
 							<genericElement>
-								<reportElement uuid="571b0978-4b32-40a7-8ab5-c70fc0f1e860" mode="Transparent" x="0" y="0" width="0" height="0">
+								<reportElement mode="Transparent" x="0" y="0" width="0" height="0" uuid="571b0978-4b32-40a7-8ab5-c70fc0f1e860">
 									<property name="controlParameter" value="true"/>
 								</reportElement>
 								<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
@@ -472,8 +463,7 @@ new net.sf.jasperreports.engine.JREmptyDataSource()
 						<jr:columnFooter height="0" rowSpan="1"/>
 						<jr:detailCell height="20" rowSpan="1">
 							<textField>
-								<reportElement uuid="dde741cf-7627-42bb-9f25-783da004773e" x="0" y="0" width="183" height="20"/>
-								<textElement/>
+								<reportElement x="0" y="0" width="183" height="20" uuid="dde741cf-7627-42bb-9f25-783da004773e"/>
 								<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
@@ -481,7 +471,7 @@ new net.sf.jasperreports.engine.JREmptyDataSource()
 				</jr:table>
 			</componentElement>
 			<textField pattern="EEEEE M/d">
-				<reportElement uuid="43eac083-b030-4448-ad19-d9257dd1d393" x="23" y="0" width="100" height="18"/>
+				<reportElement x="23" y="0" width="100" height="18" uuid="43eac083-b030-4448-ad19-d9257dd1d393"/>
 				<textElement>
 					<font isBold="false" isItalic="false"/>
 				</textElement>
@@ -491,7 +481,7 @@ new net.sf.jasperreports.engine.JREmptyDataSource()
 		<band height="18">
 			<printWhenExpression><![CDATA[$F{thursday} != null]]></printWhenExpression>
 			<componentElement>
-				<reportElement uuid="64bf6240-ac66-4dfe-9628-964fe2718b5b" mode="Transparent" x="336" y="0" width="219" height="18" isPrintWhenDetailOverflows="true"/>
+				<reportElement mode="Transparent" x="336" y="0" width="219" height="18" isPrintWhenDetailOverflows="true" uuid="64bf6240-ac66-4dfe-9628-964fe2718b5b"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="Performances" uuid="2cc4561d-40cb-454e-97f1-0aec87d909a6">
 						<dataSourceExpression><![CDATA[$F{thursday}.getPerformances() == null ?
@@ -499,12 +489,12 @@ new net.sf.jasperreports.engine.JREmptyDataSource()
   :
   new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{thursday}.getPerformances())]]></dataSourceExpression>
 					</datasetRun>
-					<jr:column uuid="be8d6c9f-4b41-4786-ac9f-897132764d59" width="62">
+					<jr:column width="62" uuid="be8d6c9f-4b41-4786-ac9f-897132764d59">
 						<jr:tableHeader height="0" rowSpan="1"/>
 						<jr:tableFooter height="0" rowSpan="1"/>
 						<jr:columnHeader height="0" rowSpan="1">
 							<genericElement>
-								<reportElement uuid="cd9b5fd6-f8c2-4e27-a96d-6943cc88a8ee" mode="Transparent" x="0" y="0" width="0" height="0">
+								<reportElement mode="Transparent" x="0" y="0" width="0" height="0" uuid="cd9b5fd6-f8c2-4e27-a96d-6943cc88a8ee">
 									<property name="controlParameter" value="true"/>
 								</reportElement>
 								<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
@@ -525,18 +515,17 @@ new net.sf.jasperreports.engine.JREmptyDataSource()
 						<jr:columnFooter height="0" rowSpan="1"/>
 						<jr:detailCell height="20" rowSpan="1">
 							<textField pattern="h:mm a">
-								<reportElement uuid="ca496b61-7325-4f9a-8d9e-0e5355d92a97" x="0" y="0" width="62" height="20"/>
-								<textElement/>
+								<reportElement x="0" y="0" width="62" height="20" uuid="ca496b61-7325-4f9a-8d9e-0e5355d92a97"/>
 								<textFieldExpression><![CDATA[$F{startDate}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column uuid="0cb32030-ac08-4959-93d6-bb312c782a2b" width="183">
+					<jr:column width="183" uuid="0cb32030-ac08-4959-93d6-bb312c782a2b">
 						<jr:tableHeader height="0" rowSpan="1"/>
 						<jr:tableFooter height="0" rowSpan="1"/>
 						<jr:columnHeader height="0" rowSpan="1">
 							<genericElement>
-								<reportElement uuid="08bc42b9-d238-4874-858a-274016f14baa" mode="Transparent" x="0" y="0" width="0" height="0">
+								<reportElement mode="Transparent" x="0" y="0" width="0" height="0" uuid="08bc42b9-d238-4874-858a-274016f14baa">
 									<property name="controlParameter" value="true"/>
 								</reportElement>
 								<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
@@ -557,8 +546,7 @@ new net.sf.jasperreports.engine.JREmptyDataSource()
 						<jr:columnFooter height="0" rowSpan="1"/>
 						<jr:detailCell height="20" rowSpan="1">
 							<textField>
-								<reportElement uuid="ea7db277-ef74-492f-ac5b-fdf609851f49" x="0" y="0" width="183" height="20"/>
-								<textElement/>
+								<reportElement x="0" y="0" width="183" height="20" uuid="ea7db277-ef74-492f-ac5b-fdf609851f49"/>
 								<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
@@ -566,20 +554,18 @@ new net.sf.jasperreports.engine.JREmptyDataSource()
 				</jr:table>
 			</componentElement>
 			<textField pattern="EEEEE M/d">
-				<reportElement uuid="ae43ce62-0b8f-4a48-9f72-d8aefedb61c7" x="23" y="0" width="100" height="18"/>
+				<reportElement x="23" y="0" width="100" height="18" uuid="ae43ce62-0b8f-4a48-9f72-d8aefedb61c7"/>
 				<textElement>
 					<font isBold="false" isItalic="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{thursday}.getDate()]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd">
-				<reportElement uuid="a5ced9cf-86df-4db3-ae1f-27dfd5cccd61" x="123" y="0" width="112" height="18"/>
-				<textElement/>
+				<reportElement x="123" y="0" width="112" height="18" uuid="a5ced9cf-86df-4db3-ae1f-27dfd5cccd61"/>
 				<textFieldExpression><![CDATA[$F{thursday}.getCastLocation().toStringDetailed()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="8f74902c-3b4e-4047-9c14-b578db5e3096" x="236" y="0" width="100" height="18"/>
-				<textElement/>
+				<reportElement x="236" y="0" width="100" height="18" uuid="8f74902c-3b4e-4047-9c14-b578db5e3096"/>
 				<textFieldExpression><![CDATA[$F{thursday}.getProbableVenue() == null ?
   "" :
   $F{thursday}.getProbableVenue().getName()]]></textFieldExpression>
@@ -588,7 +574,7 @@ new net.sf.jasperreports.engine.JREmptyDataSource()
 		<band height="18">
 			<printWhenExpression><![CDATA[$F{friday} != null]]></printWhenExpression>
 			<componentElement>
-				<reportElement uuid="391421ed-3860-41f1-b4aa-759cb70fb776" mode="Transparent" x="336" y="0" width="219" height="18" isPrintWhenDetailOverflows="true"/>
+				<reportElement mode="Transparent" x="336" y="0" width="219" height="18" isPrintWhenDetailOverflows="true" uuid="391421ed-3860-41f1-b4aa-759cb70fb776"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="Performances" uuid="86bfad25-49aa-44af-85b0-6f56efaf76c9">
 						<dataSourceExpression><![CDATA[$F{friday}.getPerformances() == null ?
@@ -596,12 +582,12 @@ new net.sf.jasperreports.engine.JREmptyDataSource()
   :
   new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{friday}.getPerformances())]]></dataSourceExpression>
 					</datasetRun>
-					<jr:column uuid="0a2dc95a-6bca-42fc-bb8a-e32ef0eea214" width="62">
+					<jr:column width="62" uuid="0a2dc95a-6bca-42fc-bb8a-e32ef0eea214">
 						<jr:tableHeader height="0" rowSpan="1"/>
 						<jr:tableFooter height="0" rowSpan="1"/>
 						<jr:columnHeader height="0" rowSpan="1">
 							<genericElement>
-								<reportElement uuid="6cbf76e3-5be8-4457-9a0f-3998a0177e6c" mode="Transparent" x="0" y="0" width="0" height="0">
+								<reportElement mode="Transparent" x="0" y="0" width="0" height="0" uuid="6cbf76e3-5be8-4457-9a0f-3998a0177e6c">
 									<property name="controlParameter" value="true"/>
 								</reportElement>
 								<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
@@ -622,18 +608,17 @@ new net.sf.jasperreports.engine.JREmptyDataSource()
 						<jr:columnFooter height="0" rowSpan="1"/>
 						<jr:detailCell height="20" rowSpan="1">
 							<textField pattern="h:mm a">
-								<reportElement uuid="82873387-efa0-4cd8-a070-2594af09f176" x="0" y="0" width="62" height="20"/>
-								<textElement/>
+								<reportElement x="0" y="0" width="62" height="20" uuid="82873387-efa0-4cd8-a070-2594af09f176"/>
 								<textFieldExpression><![CDATA[$F{startDate}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column uuid="7086233f-ae1e-445f-a976-bf634373e8fb" width="183">
+					<jr:column width="183" uuid="7086233f-ae1e-445f-a976-bf634373e8fb">
 						<jr:tableHeader height="0" rowSpan="1"/>
 						<jr:tableFooter height="0" rowSpan="1"/>
 						<jr:columnHeader height="0" rowSpan="1">
 							<genericElement>
-								<reportElement uuid="49c929cc-9c8e-4f1a-a91b-d2ee5239d417" mode="Transparent" x="0" y="0" width="0" height="0">
+								<reportElement mode="Transparent" x="0" y="0" width="0" height="0" uuid="49c929cc-9c8e-4f1a-a91b-d2ee5239d417">
 									<property name="controlParameter" value="true"/>
 								</reportElement>
 								<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
@@ -654,8 +639,7 @@ new net.sf.jasperreports.engine.JREmptyDataSource()
 						<jr:columnFooter height="0" rowSpan="1"/>
 						<jr:detailCell height="20" rowSpan="1">
 							<textField>
-								<reportElement uuid="c19b51d9-e3ac-477b-804b-66386d397a50" x="0" y="0" width="183" height="20"/>
-								<textElement/>
+								<reportElement x="0" y="0" width="183" height="20" uuid="c19b51d9-e3ac-477b-804b-66386d397a50"/>
 								<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
@@ -663,20 +647,18 @@ new net.sf.jasperreports.engine.JREmptyDataSource()
 				</jr:table>
 			</componentElement>
 			<textField pattern="EEEEE M/d">
-				<reportElement uuid="2d6d1b81-e6fd-4ec5-9817-31941283d556" x="23" y="0" width="100" height="18"/>
+				<reportElement x="23" y="0" width="100" height="18" uuid="2d6d1b81-e6fd-4ec5-9817-31941283d556"/>
 				<textElement>
 					<font isBold="false" isItalic="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{friday}.getDate()]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd">
-				<reportElement uuid="a12c1d19-8e6e-4bdd-96c7-afcb10009ff7" x="123" y="0" width="112" height="18"/>
-				<textElement/>
+				<reportElement x="123" y="0" width="112" height="18" uuid="a12c1d19-8e6e-4bdd-96c7-afcb10009ff7"/>
 				<textFieldExpression><![CDATA[$F{friday}.getCastLocation().toStringDetailed()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="f8643a3c-c81a-42a1-8d1a-83f2e0ffa424" x="235" y="0" width="100" height="18"/>
-				<textElement/>
+				<reportElement x="235" y="0" width="100" height="18" uuid="f8643a3c-c81a-42a1-8d1a-83f2e0ffa424"/>
 				<textFieldExpression><![CDATA[$F{friday}.getProbableVenue() == null ?
   "" :
   $F{friday}.getProbableVenue().getName()]]></textFieldExpression>
@@ -685,7 +667,7 @@ new net.sf.jasperreports.engine.JREmptyDataSource()
 		<band height="18">
 			<printWhenExpression><![CDATA[$F{saturday} != null]]></printWhenExpression>
 			<componentElement>
-				<reportElement uuid="952e8925-a1b2-43c0-93e9-b8a497645831" mode="Transparent" x="336" y="0" width="219" height="18" isPrintWhenDetailOverflows="true"/>
+				<reportElement mode="Transparent" x="336" y="0" width="219" height="18" isPrintWhenDetailOverflows="true" uuid="952e8925-a1b2-43c0-93e9-b8a497645831"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="Performances" uuid="70a787a2-0a09-4573-8b2f-4632c1d3a3d3">
 						<dataSourceExpression><![CDATA[$F{saturday}.getPerformances() == null ?
@@ -693,12 +675,12 @@ new net.sf.jasperreports.engine.JREmptyDataSource()
   :
   new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{saturday}.getPerformances())]]></dataSourceExpression>
 					</datasetRun>
-					<jr:column uuid="e83765da-19e4-4905-8c52-de1067602813" width="62">
+					<jr:column width="62" uuid="e83765da-19e4-4905-8c52-de1067602813">
 						<jr:tableHeader height="0" rowSpan="1"/>
 						<jr:tableFooter height="0" rowSpan="1"/>
 						<jr:columnHeader height="0" rowSpan="1">
 							<genericElement>
-								<reportElement uuid="758f735b-d7a6-4eca-a1e1-b9cf9bd8aa86" mode="Transparent" x="0" y="0" width="0" height="0">
+								<reportElement mode="Transparent" x="0" y="0" width="0" height="0" uuid="758f735b-d7a6-4eca-a1e1-b9cf9bd8aa86">
 									<property name="controlParameter" value="true"/>
 								</reportElement>
 								<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
@@ -719,18 +701,17 @@ new net.sf.jasperreports.engine.JREmptyDataSource()
 						<jr:columnFooter height="0" rowSpan="1"/>
 						<jr:detailCell height="20" rowSpan="1">
 							<textField pattern="h:mm a">
-								<reportElement uuid="89ca36b8-915e-448a-a9fb-a1635b6cb747" x="0" y="0" width="62" height="20"/>
-								<textElement/>
+								<reportElement x="0" y="0" width="62" height="20" uuid="89ca36b8-915e-448a-a9fb-a1635b6cb747"/>
 								<textFieldExpression><![CDATA[$F{startDate}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column uuid="eeb592a0-3256-4998-8f40-0e04e7e995bb" width="183">
+					<jr:column width="183" uuid="eeb592a0-3256-4998-8f40-0e04e7e995bb">
 						<jr:tableHeader height="0" rowSpan="1"/>
 						<jr:tableFooter height="0" rowSpan="1"/>
 						<jr:columnHeader height="0" rowSpan="1">
 							<genericElement>
-								<reportElement uuid="9311946a-2be6-4312-a308-8bb8ae8271de" mode="Transparent" x="0" y="0" width="0" height="0">
+								<reportElement mode="Transparent" x="0" y="0" width="0" height="0" uuid="9311946a-2be6-4312-a308-8bb8ae8271de">
 									<property name="controlParameter" value="true"/>
 								</reportElement>
 								<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
@@ -751,8 +732,7 @@ new net.sf.jasperreports.engine.JREmptyDataSource()
 						<jr:columnFooter height="0" rowSpan="1"/>
 						<jr:detailCell height="20" rowSpan="1">
 							<textField>
-								<reportElement uuid="4dd81eea-66d3-4d36-b4d8-d2d34daea0ac" x="0" y="0" width="183" height="20"/>
-								<textElement/>
+								<reportElement x="0" y="0" width="183" height="20" uuid="4dd81eea-66d3-4d36-b4d8-d2d34daea0ac"/>
 								<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
@@ -760,20 +740,18 @@ new net.sf.jasperreports.engine.JREmptyDataSource()
 				</jr:table>
 			</componentElement>
 			<textField pattern="EEEEE M/d">
-				<reportElement uuid="01d9026a-18bc-463c-92d4-345ddaad6343" x="23" y="0" width="100" height="18"/>
+				<reportElement x="23" y="0" width="100" height="18" uuid="01d9026a-18bc-463c-92d4-345ddaad6343"/>
 				<textElement>
 					<font isBold="false" isItalic="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{saturday}.getDate()]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd">
-				<reportElement uuid="a9aa5b2c-91be-4cb3-ba55-5d8ddf3fd9d4" x="123" y="0" width="112" height="18"/>
-				<textElement/>
+				<reportElement x="123" y="0" width="112" height="18" uuid="a9aa5b2c-91be-4cb3-ba55-5d8ddf3fd9d4"/>
 				<textFieldExpression><![CDATA[$F{saturday}.getCastLocation().toStringDetailed()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="c50fef22-ff55-465d-85a9-dcbdc529fc48" x="235" y="0" width="100" height="18"/>
-				<textElement/>
+				<reportElement x="235" y="0" width="100" height="18" uuid="c50fef22-ff55-465d-85a9-dcbdc529fc48"/>
 				<textFieldExpression><![CDATA[$F{saturday}.getProbableVenue() == null ?
   "" :
   $F{saturday}.getProbableVenue().getName()]]></textFieldExpression>
@@ -782,7 +760,7 @@ new net.sf.jasperreports.engine.JREmptyDataSource()
 		<band height="18">
 			<printWhenExpression><![CDATA[$F{sunday} != null]]></printWhenExpression>
 			<componentElement>
-				<reportElement uuid="fe9e92c1-a5d7-42c4-b96e-1f19a4709a32" mode="Transparent" x="336" y="0" width="219" height="18" isPrintWhenDetailOverflows="true"/>
+				<reportElement mode="Transparent" x="336" y="0" width="219" height="18" isPrintWhenDetailOverflows="true" uuid="fe9e92c1-a5d7-42c4-b96e-1f19a4709a32"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="Performances" uuid="dba749eb-9057-4e21-abdd-3c636553eff3">
 						<dataSourceExpression><![CDATA[$F{sunday}.getPerformances() == null ?
@@ -790,12 +768,12 @@ new net.sf.jasperreports.engine.JREmptyDataSource()
   :
   new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{sunday}.getPerformances())]]></dataSourceExpression>
 					</datasetRun>
-					<jr:column uuid="39071759-bd0d-4a8d-ab31-0b19e1433494" width="62">
+					<jr:column width="62" uuid="39071759-bd0d-4a8d-ab31-0b19e1433494">
 						<jr:tableHeader height="0" rowSpan="1"/>
 						<jr:tableFooter height="0" rowSpan="1"/>
 						<jr:columnHeader height="0" rowSpan="1">
 							<genericElement>
-								<reportElement uuid="5deac871-0f77-47b7-98b1-4ec7d1192949" mode="Transparent" x="0" y="0" width="0" height="0">
+								<reportElement mode="Transparent" x="0" y="0" width="0" height="0" uuid="5deac871-0f77-47b7-98b1-4ec7d1192949">
 									<property name="controlParameter" value="true"/>
 								</reportElement>
 								<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
@@ -816,18 +794,17 @@ new net.sf.jasperreports.engine.JREmptyDataSource()
 						<jr:columnFooter height="0" rowSpan="1"/>
 						<jr:detailCell height="20" rowSpan="1">
 							<textField pattern="h:mm a">
-								<reportElement uuid="f1e3b140-bc59-44ad-999b-ae3e43f95dec" x="0" y="0" width="62" height="20"/>
-								<textElement/>
+								<reportElement x="0" y="0" width="62" height="20" uuid="f1e3b140-bc59-44ad-999b-ae3e43f95dec"/>
 								<textFieldExpression><![CDATA[$F{startDate}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column uuid="41d85a12-5b16-445b-a537-c6478cf8464a" width="183">
+					<jr:column width="183" uuid="41d85a12-5b16-445b-a537-c6478cf8464a">
 						<jr:tableHeader height="0" rowSpan="1"/>
 						<jr:tableFooter height="0" rowSpan="1"/>
 						<jr:columnHeader height="0" rowSpan="1">
 							<genericElement>
-								<reportElement uuid="0c856d8a-6aa7-487f-8f0f-67bd86f77a37" mode="Transparent" x="0" y="0" width="0" height="0">
+								<reportElement mode="Transparent" x="0" y="0" width="0" height="0" uuid="0c856d8a-6aa7-487f-8f0f-67bd86f77a37">
 									<property name="controlParameter" value="true"/>
 								</reportElement>
 								<genericElementType namespace="http://jasperreports.sourceforge.net/jasperreports" name="sort"/>
@@ -848,8 +825,7 @@ new net.sf.jasperreports.engine.JREmptyDataSource()
 						<jr:columnFooter height="0" rowSpan="1"/>
 						<jr:detailCell height="20" rowSpan="1">
 							<textField>
-								<reportElement uuid="ff8320e0-062b-444a-83b4-88e06a379a06" x="0" y="0" width="183" height="20"/>
-								<textElement/>
+								<reportElement x="0" y="0" width="183" height="20" uuid="ff8320e0-062b-444a-83b4-88e06a379a06"/>
 								<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
@@ -857,20 +833,18 @@ new net.sf.jasperreports.engine.JREmptyDataSource()
 				</jr:table>
 			</componentElement>
 			<textField pattern="EEEEE M/d">
-				<reportElement uuid="35d9aa16-a4ce-4d54-b645-6f2a00cc3cde" x="23" y="0" width="100" height="18"/>
+				<reportElement x="23" y="0" width="100" height="18" uuid="35d9aa16-a4ce-4d54-b645-6f2a00cc3cde"/>
 				<textElement>
 					<font isBold="false" isItalic="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{sunday}.getDate()]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd">
-				<reportElement uuid="ba39bf9f-e276-4552-bf9b-1eb8852fe186" x="123" y="0" width="112" height="18"/>
-				<textElement/>
+				<reportElement x="123" y="0" width="112" height="18" uuid="ba39bf9f-e276-4552-bf9b-1eb8852fe186"/>
 				<textFieldExpression><![CDATA[$F{sunday}.getCastLocation().toStringDetailed()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="8a267ae8-25fd-47be-9d4e-b2a7fa74bc37" x="235" y="0" width="100" height="18"/>
-				<textElement/>
+				<reportElement x="235" y="0" width="100" height="18" uuid="8a267ae8-25fd-47be-9d4e-b2a7fa74bc37"/>
 				<textFieldExpression><![CDATA[$F{sunday}.getProbableVenue() == null ?
   "" :
   $F{sunday}.getProbableVenue().getName()]]></textFieldExpression>
@@ -880,28 +854,28 @@ new net.sf.jasperreports.engine.JREmptyDataSource()
 	<pageFooter>
 		<band height="22" splitType="Stretch">
 			<textField>
-				<reportElement uuid="66c126a8-94ed-4d46-b96f-92e0bc5fe4a7" x="449" y="5" width="66" height="15"/>
+				<reportElement x="449" y="5" width="66" height="15" uuid="66c126a8-94ed-4d46-b96f-92e0bc5fe4a7"/>
 				<textElement textAlignment="Right">
 					<font isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement uuid="458932e7-c5eb-46cc-a631-e3f574ac776f" x="515" y="5" width="40" height="15"/>
+				<reportElement x="515" y="5" width="40" height="15" uuid="458932e7-c5eb-46cc-a631-e3f574ac776f"/>
 				<textElement>
 					<font isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement uuid="dc1faad8-5703-4604-841b-a0cc0a6bea75" x="0" y="5" width="160" height="15"/>
+				<reportElement x="0" y="5" width="160" height="15" uuid="dc1faad8-5703-4604-841b-a0cc0a6bea75"/>
 				<textElement>
 					<font isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="09f10890-e7e1-4439-ae80-9ec26641190c" x="160" y="5" width="235" height="15"/>
+				<reportElement x="160" y="5" width="235" height="15" uuid="09f10890-e7e1-4439-ae80-9ec26641190c"/>
 				<textElement textAlignment="Center">
 					<font isBold="false"/>
 				</textElement>

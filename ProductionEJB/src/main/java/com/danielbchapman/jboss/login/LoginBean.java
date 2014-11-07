@@ -38,7 +38,7 @@ public class LoginBean implements LoginBeanRemote
 
 		if(getUsers().size() < 1)
 		{
-			addUser("Administrator", "***REMOVED***", asCollection(Roles.values()));
+			addUser("Administrator", "password", asCollection(Roles.values()));
 		}
 
 		// //@formatter:off
