@@ -1,0 +1,585 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Advance Sheet" pageWidth="595" pageHeight="788" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty">
+	<property name="ireport.zoom" value="1.4641000000000035"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="504"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#EFF7FF"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["./"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FILE_PATH" class="java.lang.String">
+		<defaultValueExpression><![CDATA["./"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="city" class="com.danielbchapman.production.entity.City">
+		<fieldDescription><![CDATA[city]]></fieldDescription>
+	</field>
+	<field name="class" class="java.lang.Class">
+		<fieldDescription><![CDATA[class]]></fieldDescription>
+	</field>
+	<field name="performanceAdvance" class="com.danielbchapman.production.entity.PerformanceAdvance">
+		<fieldDescription><![CDATA[performanceAdvance]]></fieldDescription>
+	</field>
+	<field name="performances" class="java.util.ArrayList">
+		<fieldDescription><![CDATA[performances]]></fieldDescription>
+	</field>
+	<field name="venue" class="com.danielbchapman.production.entity.Venue">
+		<fieldDescription><![CDATA[venue]]></fieldDescription>
+	</field>
+	<background>
+		<band height="748" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="60" height="40"/>
+				<imageExpression><![CDATA[$P{FILE_PATH} + "tac-red.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="151" y="382" width="404" height="366"/>
+				<imageExpression><![CDATA[$P{FILE_PATH} + "tac-watermark.png"]]></imageExpression>
+			</image>
+		</band>
+	</background>
+	<pageHeader>
+		<band height="41">
+			<textField>
+				<reportElement x="18" y="0" width="537" height="40"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom" markup="none">
+					<font fontName="Monospaced" size="20" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Venue Sheet - " + $F{venue}.getName()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="76">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="20" forecolor="#660000" backcolor="#660000"/>
+			</rectangle>
+			<image scaleImage="FillFrame">
+				<reportElement x="0" y="0" width="555" height="20"/>
+				<imageExpression><![CDATA[$P{FILE_PATH} + "gradient-gray-bottom.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="10" y="0" width="527" height="20" forecolor="#FFFFFF"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="DejaVu Sans" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Venue and Performances]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="10" y="24" width="265" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{venue}.getName()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="39" width="265" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{venue}.getAddressCombinedLines()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="54" width="265" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{venue}.getAddressCombinedCityStateZip()]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="289" y="24" width="266" height="30"/>
+				<dataSourceExpression><![CDATA[$F{performances} == null ?
+  new net.sf.jasperreports.engine.JREmptyDataSource()
+  : new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{performances})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "sub_performances.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="190">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="20" forecolor="#660000" backcolor="#660000"/>
+			</rectangle>
+			<image scaleImage="FillFrame">
+				<reportElement x="0" y="0" width="555" height="20"/>
+				<imageExpression><![CDATA[$P{FILE_PATH} + "gradient-gray-bottom.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="10" y="0" width="527" height="20" forecolor="#FFFFFF"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="DejaVu Sans" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[General Information]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="364" y="172" width="191" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{performanceAdvance}.getGaffTape()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="289" y="172" width="75" height="15"/>
+				<textElement>
+					<font isBold="false" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Gaff Tape:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="129" width="100" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[General]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="157" width="50" height="15"/>
+				<textElement>
+					<font isBold="false" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Hospitality]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="289" y="142" width="75" height="15"/>
+				<textElement>
+					<font isBold="false" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Shore Power:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="289" y="157" width="75" height="15"/>
+				<textElement>
+					<font isBold="false" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Loading Dock:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="60" y="157" width="215" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{performanceAdvance}.getHospitality()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="364" y="142" width="191" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{performanceAdvance}.getShorePower()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="364" y="157" width="191" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{performanceAdvance}.getLoadingDock()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="20" width="100" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Contact Information]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="10" y="35" width="265" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{venue}.getContactName() + " " + $F{venue}.getContactPosition()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="51" y="50" width="224" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{venue}.getPhone()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="50" width="41" height="15"/>
+				<textElement>
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Phone:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="51" y="80" width="224" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{venue}.getFax()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="51" y="65" width="224" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{venue}.getCell()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="80" width="41" height="15"/>
+				<textElement>
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Fax:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="65" width="41" height="15"/>
+				<textElement>
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Cell:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="51" y="95" width="224" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{venue}.getEmail()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="95" width="41" height="15"/>
+				<textElement>
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[E-mail:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="289" y="20" width="201" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[General Contacts]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="289" y="50" width="266" height="15"/>
+				<textElement markup="none"/>
+				<textFieldExpression><![CDATA[$F{venue}.getPresenter()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="289" y="35" width="100" height="15"/>
+				<textElement markup="none">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Presenter]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="289" y="65" width="100" height="15"/>
+				<textElement markup="none">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Venue PM/TD]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="289" y="80" width="266" height="15"/>
+				<textElement markup="none"/>
+				<textFieldExpression><![CDATA[$F{venue}.getTechicalOrProduction()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="172" width="50" height="15"/>
+				<textElement>
+					<font isBold="false" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Showers:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="60" y="172" width="215" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{venue}.getShowersForCrew()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="289" y="95" width="100" height="15"/>
+				<textElement markup="none">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Box Office]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="142" width="50" height="15"/>
+				<textElement>
+					<font isBold="false" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Capacity:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="60" y="142" width="215" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{venue}.getHouseCapacity()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="289" y="110" width="266" height="15"/>
+				<textElement markup="none"/>
+				<textFieldExpression><![CDATA[$F{venue}.getBoxOfficeContact() == null ?
+  ""
+  :
+  $F{venue}.getBoxOfficeContact()
++
+ $F{venue}.getBoxOffice() == null ?
+    ""
+    :
+     " | " + $F{venue}.getBoxOffice()]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="196">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="20" forecolor="#660000" backcolor="#660000"/>
+			</rectangle>
+			<image scaleImage="FillFrame">
+				<reportElement x="0" y="0" width="555" height="20"/>
+				<imageExpression><![CDATA[$P{FILE_PATH} + "gradient-gray-bottom.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="10" y="0" width="527" height="20" forecolor="#FFFFFF"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="DejaVu Sans" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Departments]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="191" y="100" width="174" height="18"/>
+				<textElement markup="html"/>
+				<textFieldExpression><![CDATA[$F{performanceAdvance}.getScenicNotes()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="191" y="55" width="174" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{performanceAdvance}.getMaskingNotes()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="191" y="40" width="174" height="15"/>
+				<textElement>
+					<font isBold="false" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Masking:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="191" y="85" width="174" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{performanceAdvance}.getRigging()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="191" y="70" width="174" height="15"/>
+				<textElement>
+					<font isBold="false" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Rigging:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="191" y="20" width="174" height="20" forecolor="#000000"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="DejaVu Sans" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Scenery]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="20" width="174" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Physical and Technical]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="40" width="174" height="15"/>
+				<textElement>
+					<font isBold="false" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Proscenium Width:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="70" width="174" height="15"/>
+				<textElement>
+					<font isBold="false" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Proscenium to Wall:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="100" width="174" height="15"/>
+				<textElement>
+					<font isBold="false" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Proscenium Height:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="10" y="85" width="174" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{venue}.getProsceniumToBackWall()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="55" width="174" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{venue}.getProsceniumWidth()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="115" width="174" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{venue}.getProsceniumHeight()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="130" width="174" height="15"/>
+				<textElement>
+					<font isBold="false" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Apron Width:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="10" y="145" width="174" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{venue}.getApronWidth()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="175" width="174" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{venue}.getProsceniumToApron()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="160" width="174" height="15"/>
+				<textElement>
+					<font isBold="false" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Apron to Proscenium]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="381" y="40" width="174" height="30"/>
+				<textElement markup="html"/>
+				<textFieldExpression><![CDATA[$F{performanceAdvance}.getLightingNotes()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="381" y="20" width="174" height="20" forecolor="#000000"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="DejaVu Sans" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lighting]]></text>
+			</staticText>
+		</band>
+		<band height="132">
+			<staticText>
+				<reportElement x="10" y="0" width="174" height="20" forecolor="#000000"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="DejaVu Sans" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Wardrobe]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="10" y="110" width="174" height="20"/>
+				<textElement markup="html"/>
+				<textFieldExpression><![CDATA[$F{performanceAdvance}.getWardrobeNotes()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="35" width="174" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{performanceAdvance}.getWardrobeLaundry()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="50" width="174" height="15"/>
+				<textElement>
+					<font isBold="false" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Steamer:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="10" y="65" width="174" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{performanceAdvance}.getRigging()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="20" width="174" height="15"/>
+				<textElement>
+					<font isBold="false" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Washer/Dryer:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="80" width="174" height="15"/>
+				<textElement>
+					<font isBold="false" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Ironing:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="10" y="95" width="174" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{performanceAdvance}.getWardrobeIroningBoard()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="191" y="0" width="174" height="20" forecolor="#000000"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="DejaVu Sans" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sound]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="191" y="20" width="174" height="30"/>
+				<textElement markup="html"/>
+				<textFieldExpression><![CDATA[$F{performanceAdvance}.getSoundNotes()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="381" y="0" width="174" height="20" forecolor="#000000"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="DejaVu Sans" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Advance Notes]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="381" y="20" width="174" height="18"/>
+				<textElement markup="html"/>
+				<textFieldExpression><![CDATA[$F{performanceAdvance}.getNotes()]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="5" width="60" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="60" y="5" width="40" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="191" y="5" width="173" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
+				<text><![CDATA[Prepared by: Daniel B. Chapman]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="400" y="5" width="155" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="50">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="20" forecolor="#660000" backcolor="#660000"/>
+			</rectangle>
+			<image scaleImage="FillFrame">
+				<reportElement x="0" y="0" width="555" height="20"/>
+				<imageExpression><![CDATA[$P{FILE_PATH} + "gradient-gray-bottom.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="10" y="0" width="527" height="20" forecolor="#FFFFFF"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="DejaVu Sans" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Venue Notes (Confidential: TAC ONLY)]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="10" y="20" width="527" height="30"/>
+				<textElement markup="html"/>
+				<textFieldExpression><![CDATA[$F{venue}.getNotes()]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CitySheet" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="2.143588810000003"/>
+	<property name="ireport.x" value="29"/>
+	<property name="ireport.y" value="1221"/>
+	<property name="ireport.callouts" value="##Tue Oct 18 15:03:22 EDT 2011\ncallouts.1.text=This needs to be updated to have data.\ncallouts.1.bounds=671,181,150,75"/>
+	<style name="Heading" forecolor="#000066" fontName="Constantia" fontSize="14" isBold="true" isUnderline="true"/>
+	<style name="Info" forecolor="#000000" fill="Solid" fontSize="10"/>
+	<subDataset name="performances">
+		<queryString language="SQL">
+			<![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{contacts})]]>
+		</queryString>
+	</subDataset>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\dchapman\\Documents\\git\\ProductionSchedule\\src\\main\\reports\\location\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="castArrive" class="java.util.Date">
+		<fieldDescription><![CDATA[castArrive]]></fieldDescription>
+	</field>
+	<field name="castLeave" class="java.util.Date">
+		<fieldDescription><![CDATA[castLeave]]></fieldDescription>
+	</field>
+	<field name="city" class="com.danielbchapman.production.entity.City">
+		<fieldDescription><![CDATA[city]]></fieldDescription>
+	</field>
+	<field name="class" class="java.lang.Class">
+		<fieldDescription><![CDATA[class]]></fieldDescription>
+	</field>
+	<field name="crewArrive" class="java.util.Date">
+		<fieldDescription><![CDATA[crewArrive]]></fieldDescription>
+	</field>
+	<field name="crewLeave" class="java.util.Date">
+		<fieldDescription><![CDATA[crewLeave]]></fieldDescription>
+	</field>
+	<field name="earliest" class="java.util.Date">
+		<fieldDescription><![CDATA[earliest]]></fieldDescription>
+	</field>
+	<field name="hospital" class="com.danielbchapman.production.entity.Hospital">
+		<fieldDescription><![CDATA[hospital]]></fieldDescription>
+	</field>
+	<field name="hotels" class="java.util.Collection">
+		<fieldDescription><![CDATA[hotels]]></fieldDescription>
+	</field>
+	<field name="latest" class="java.util.Date">
+		<fieldDescription><![CDATA[latest]]></fieldDescription>
+	</field>
+	<field name="performances" class="java.util.Collection">
+		<fieldDescription><![CDATA[performances]]></fieldDescription>
+	</field>
+	<field name="pointsOfInterest" class="java.util.Collection">
+		<fieldDescription><![CDATA[pointsOfInterest]]></fieldDescription>
+	</field>
+	<field name="season" class="com.danielbchapman.production.entity.Season">
+		<fieldDescription><![CDATA[season]]></fieldDescription>
+	</field>
+	<field name="venue" class="com.danielbchapman.production.entity.Venue">
+		<fieldDescription><![CDATA[venue]]></fieldDescription>
+	</field>
+	<pageHeader>
+		<band height="89" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement style="Heading" x="0" y="57" width="552" height="32"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="24"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{city}.getName() + ", " + $F{city}.getStateOrTerritory()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Heading" x="107" y="15" width="340" height="42"/>
+				<textElement textAlignment="Center">
+					<font size="26"/>
+				</textElement>
+				<text><![CDATA[2011-2012 Tour City Sheet]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="2" y="0" width="100" height="20"/>
+				<textElement>
+					<font isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{city}.getId()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="659" splitType="Stretch">
+			<staticText>
+				<reportElement x="101" y="0" width="100" height="20"/>
+				<textElement>
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Cast Arrive]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Heading" x="1" y="30" width="100" height="20"/>
+				<textElement verticalAlignment="Bottom"/>
+				<text><![CDATA[Venue]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="121" width="55" height="15"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Phone: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="4" y="97" width="245" height="15"/>
+				<textElement markup="none"/>
+				<textFieldExpression><![CDATA["Capacity:" + $F{venue}.getHouseCapacity()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="4" y="188" width="55" height="15"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Technical:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="137" width="55" height="15"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fax: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="204" width="55" height="15"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Education:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="173" width="55" height="15"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Presenter:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="346" width="12" height="20"/>
+				<textElement/>
+				<text><![CDATA[F:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="326" width="12" height="20"/>
+				<textElement/>
+				<text><![CDATA[P:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="306" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[CITY, ST ZIP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="286" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[ADDRESS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="266" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[NAME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Heading" x="286" y="30" width="200" height="20"/>
+				<textElement verticalAlignment="Bottom"/>
+				<text><![CDATA[Performance and Workshops]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Heading" x="1" y="246" width="100" height="20"/>
+				<textElement verticalAlignment="Bottom"/>
+				<text><![CDATA[Hotel]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="366" width="47" height="20"/>
+				<textElement/>
+				<text><![CDATA[Contact:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Heading" x="2" y="559" width="100" height="20"/>
+				<textElement verticalAlignment="Bottom"/>
+				<text><![CDATA[Medical]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="406" width="115" height="20"/>
+				<textElement/>
+				<text><![CDATA[Distance from Venue:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Heading" x="2" y="484" width="100" height="20"/>
+				<textElement verticalAlignment="Bottom"/>
+				<text><![CDATA[Taxi]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="386" width="33" height="20"/>
+				<textElement/>
+				<text><![CDATA[Rate:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Heading" x="2" y="444" width="100" height="20"/>
+				<textElement verticalAlignment="Bottom"/>
+				<text><![CDATA[At Hotel]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="426" width="299" height="20"/>
+				<textElement/>
+				<text><![CDATA[WWW.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="201" y="0" width="100" height="20"/>
+				<textElement>
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Cast Depart]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="401" y="0" width="100" height="20"/>
+				<textElement>
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Crew Depart]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd " isBlankWhenNull="true">
+				<reportElement x="301" y="20" width="100" height="20"/>
+				<textElement markup="none"/>
+				<textFieldExpression><![CDATA[$F{crewArrive}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd " isBlankWhenNull="true">
+				<reportElement x="201" y="20" width="100" height="20"/>
+				<textElement markup="none"/>
+				<textFieldExpression><![CDATA[$F{castLeave}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd " isBlankWhenNull="true">
+				<reportElement x="401" y="20" width="100" height="20"/>
+				<textElement markup="none"/>
+				<textFieldExpression><![CDATA[$F{crewLeave}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd " isBlankWhenNull="true">
+				<reportElement x="101" y="20" width="100" height="20"/>
+				<textElement markup="none"/>
+				<textFieldExpression><![CDATA[$F{castArrive}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="4" y="152" width="55" height="15"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Box Office:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="301" y="0" width="100" height="20"/>
+				<textElement>
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Crew Arrive]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="464" width="119" height="20"/>
+				<textElement/>
+				<text><![CDATA[CAST/CAST AND CREW]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="62" y="121" width="190" height="15"/>
+				<textElement markup="none"/>
+				<textFieldExpression><![CDATA[$F{venue}.getPhone()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="14" y="326" width="88" height="20"/>
+				<textElement/>
+				<text><![CDATA[PHONE NUMBER]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="346" width="88" height="20"/>
+				<textElement/>
+				<text><![CDATA[FAX NUMBER]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="4" y="65" width="245" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{venue}.getAddressCombinedLines()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="4" y="80" width="245" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{venue}.getAddressCombinedCityStateZip()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="62" y="152" width="190" height="15"/>
+				<textElement markup="none"/>
+				<textFieldExpression><![CDATA[$F{venue}.getBoxOfficeContact()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="62" y="136" width="190" height="15"/>
+				<textElement markup="none"/>
+				<textFieldExpression><![CDATA[$F{venue}.getFax()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="4" y="50" width="245" height="15"/>
+				<textElement>
+					<font isBold="true" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{venue}.getName()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="62" y="173" width="224" height="15"/>
+				<textElement markup="none"/>
+				<textFieldExpression><![CDATA[$F{venue}.getPresenter()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="62" y="188" width="224" height="15"/>
+				<textElement markup="none"/>
+				<textFieldExpression><![CDATA[$F{venue}.getTechicalOrProduction()]]></textFieldExpression>
+			</textField>
+			<subreport isUsingCache="false">
+				<reportElement x="286" y="50" width="266" height="196"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{performances})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "CitySheet_Sub_performances.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement x="62" y="204" width="224" height="15"/>
+				<textElement markup="none"/>
+				<textFieldExpression><![CDATA[$F{venue}.getEducation()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="4" y="580" width="197" height="15"/>
+				<textElement markup="none">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{hospital} == null ?
+  "No Medical Information"
+  :
+  $F{hospital}.getName()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="4" y="595" width="245" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{hospital} == null ?
+  null
+  :
+  $F{hospital}.getAddressCombinedLines()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="4" y="612" width="245" height="15"/>
+				<textElement markup="none"/>
+				<textFieldExpression><![CDATA[$F{hospital} == null ?
+  null
+  :
+  $F{hospital}.getAddressCombinedCityStateZip()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="4" y="627" width="55" height="15"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Phone: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="62" y="642" width="190" height="15"/>
+				<textElement markup="none"/>
+				<textFieldExpression><![CDATA[$F{hospital} == null ? null : $F{hospital}.getFax()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="62" y="627" width="190" height="15"/>
+				<textElement markup="none"/>
+				<textFieldExpression><![CDATA[$F{hospital} == null ? null : $F{hospital}.getPhone()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="4" y="643" width="55" height="15"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fax: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="5" y="504" width="245" height="15"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{city}.getTaxiServiceName()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="549" width="55" height="15"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Phone: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="5" y="519" width="190" height="30"/>
+				<textElement markup="none"/>
+				<textFieldExpression><![CDATA[$F{city}.getTaxiServiceAddress()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="60" y="549" width="190" height="15"/>
+				<textElement markup="none"/>
+				<textFieldExpression><![CDATA[$F{city}.getTaxiServicePhone()]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<staticText>
+				<reportElement x="78" y="0" width="398" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PLEASE SEE WEEKLY SCHEDULE FOR BUS CALLS AND ETA'S]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="1" y="34" width="80" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="81" y="34" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="418" y="34" width="134" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
