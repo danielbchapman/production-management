@@ -13,3 +13,4 @@ ProductionWebService/.settings/org.eclipse.wst.common.project.facet.core.xml
 ProductionWebService/.settings/org.eclipse.wst.validation.prefs
 .settings
 BugsEJB/target
+*.jasper
