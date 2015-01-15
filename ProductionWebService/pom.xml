@@ -73,6 +73,11 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>com.danielbchapman</groupId>
+			<artifactId>utilities</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 	</dependencies>
 	<repositories>
 		<repository>
