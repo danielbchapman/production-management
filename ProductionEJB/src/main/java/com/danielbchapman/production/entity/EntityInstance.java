@@ -33,7 +33,8 @@ public class EntityInstance
 	 */
 	public static void deleteObject(org.theactingcompany.persistence.Indentifiable obj)
 	{
-		getDelegate().deleteObject(obj);
+	  if(obj != null)
+	    getDelegate().deleteObject(obj);
 	}
 
 	/**

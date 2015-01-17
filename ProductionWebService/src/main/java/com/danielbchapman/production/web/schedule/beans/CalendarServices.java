@@ -30,9 +30,9 @@ public class CalendarServices
     {
       Calendar cal = Calendar.getInstance();
       cal.add(Calendar.DAY_OF_YEAR, i);
-      String title = "UPDATED[2] Test Event " + i;
+      String title = "[4] UPDATED Test Event " + i;
       boolean allDay = i % 2 == 0;
-      String description = "UPDATED[2] Event Description... " + i;
+      String description = "[4] UPDATED Event Description... " + i;
 
       if (allDay)
         description += " ALL DAY EVENT";

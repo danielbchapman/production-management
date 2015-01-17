@@ -40,6 +40,11 @@
 			<version>3.2</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.danielbchapman</groupId>
+			<artifactId>utilities</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 	</dependencies>
 	<repositories>
 		<repository>
