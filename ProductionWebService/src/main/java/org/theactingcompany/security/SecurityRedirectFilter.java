@@ -1,10 +1,8 @@
 package org.theactingcompany.security;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.HashSet;
 
-import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;

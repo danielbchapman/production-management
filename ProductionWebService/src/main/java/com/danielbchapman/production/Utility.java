@@ -507,7 +507,8 @@ public class Utility
 	 * @param args an array of (T) types
 	 * @return the collection of the array by type
 	 */
-	public static <T> Collection<T> asCollection(T ... args)
+	@SafeVarargs
+  public static <T> Collection<T> asCollection(T ... args)
 	{
 		return asList(args);
 	}
@@ -516,7 +517,8 @@ public class Utility
 	 * @param args an array of (T) types
 	 * @return an ArrayList of type (T)
 	 */
-	public static<T> ArrayList<T> asList(T ... args)
+	@SafeVarargs
+  public static<T> ArrayList<T> asList(T ... args)
 	{
 		if(args == null)
 			return new ArrayList<T>();
@@ -533,7 +535,8 @@ public class Utility
 	 * @param args an array of (T) types
 	 * @return a HashSet of type (T)
 	 */	
-	public static <T> HashSet<T> asSet(T ... args)
+	@SafeVarargs
+  public static <T> HashSet<T> asSet(T ... args)
 	{
 		if(args == null)
 			return new HashSet<T>();

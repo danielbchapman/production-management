@@ -13,8 +13,9 @@ import com.danielbchapman.production.entity.City;
  */
 public class CityConverter extends EntityConverter
 {
+  private static final long serialVersionUID = 1L;
 
-	/* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see com.danielbchapman.production.web.production.converters.EntityConverter#getEntityType()
 	 */
 	@Override

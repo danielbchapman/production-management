@@ -11,8 +11,6 @@ import javax.faces.model.SelectItem;
 import lombok.Getter;
 import lombok.Setter;
 
-import org.eclipse.persistence.descriptors.SelectedFieldsLockingPolicy;
-
 import com.danielbchapman.production.Utility;
 import com.danielbchapman.production.beans.SeasonDaoRemote;
 import com.danielbchapman.production.entity.Season;

@@ -12,7 +12,6 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
-import java.util.concurrent.locks.ReentrantLock;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -32,7 +31,6 @@ import org.primefaces.component.schedule.Schedule;
 import org.primefaces.event.DateSelectEvent;
 import org.primefaces.event.ScheduleEntrySelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
-import org.primefaces.model.DefaultScheduleModel;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 
@@ -46,12 +44,12 @@ import com.danielbchapman.production.entity.Day;
 import com.danielbchapman.production.entity.Event;
 import com.danielbchapman.production.entity.EventMapping;
 import com.danielbchapman.production.entity.Performance;
+import com.danielbchapman.production.entity.Performance.PerformanceEvent;
 import com.danielbchapman.production.entity.PerformanceAdvance;
 import com.danielbchapman.production.entity.PerformanceSchedule;
 import com.danielbchapman.production.entity.Season;
 import com.danielbchapman.production.entity.Venue;
 import com.danielbchapman.production.entity.Week;
-import com.danielbchapman.production.entity.Performance.PerformanceEvent;
 import com.danielbchapman.production.models.IndexedScheduleModel;
 import com.danielbchapman.production.web.production.beans.AdministrationBean;
 import com.danielbchapman.production.web.production.beans.SeasonBean;
@@ -82,7 +80,7 @@ public class ScheduleBean implements Serializable
 	private EventMapping eventEntityRef;
 	private HashMap<Long, HashSet<String>> tracking = new HashMap<Long, HashSet<String>>();
 
-	private ReentrantLock modelLock = new ReentrantLock();
+//	private ReentrantLock modelLock = new ReentrantLock();
 	//@formatter:off
 	private SelectItem[] hourItems = 
 			new SelectItem[] 
@@ -115,7 +113,7 @@ public class ScheduleBean implements Serializable
 	//@formatter:on
 
 	// private Logger log = Logger.getLogger(ScheduleBean.class);
-	private Date loginDate = new Date();
+//	private Date loginDate = new Date();
 	private SelectItem[] meridianItems = new SelectItem[] { new SelectItem("AM"),
 			new SelectItem("PM"), };
 	private SelectItem[] minuteItems = new SelectItem[] { new SelectItem(0, "00"),
@@ -149,7 +147,7 @@ public class ScheduleBean implements Serializable
 	@Getter 
 	private SeasonUI seasonUi = new SeasonUI();
 	
-	private Boolean userInDaylightSavings;
+//	private Boolean userInDaylightSavings;
 	private VenueDaoRemote venueDao;
 	@Getter
 	@Setter
@@ -1007,7 +1005,8 @@ public class ScheduleBean implements Serializable
 		return calendarDao;
 	}
 
-	private TimeZone getClientTimeZone()
+	@SuppressWarnings("unused")
+  private TimeZone getClientTimeZone()
 	{
 		LoginBean login = Utility.getBean(LoginBean.class);
 		TimeZone zone = login.getTimeZone();
