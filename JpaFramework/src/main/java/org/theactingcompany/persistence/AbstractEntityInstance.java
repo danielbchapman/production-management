@@ -3,8 +3,6 @@ package org.theactingcompany.persistence;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,7 +67,8 @@ public abstract class AbstractEntityInstance
 		return list;
 	}
 
-	public <T> T[] detatch(T... objects)
+	@SuppressWarnings("unchecked")
+  public <T> T[] detatch(T... objects)
 	{
 		if(objects.length > 0)
 		{
@@ -261,7 +260,8 @@ public abstract class AbstractEntityInstance
 	 *          the objects to save in order of a transaction
 	 * @return void
 	 */
-	public <T extends Indentifiable> void saveObjects(T... transaction)
+	@SuppressWarnings("unchecked")
+  public <T extends Indentifiable> void saveObjects(T... transaction)
 	{
 		EntityManager em = getEm();
 
