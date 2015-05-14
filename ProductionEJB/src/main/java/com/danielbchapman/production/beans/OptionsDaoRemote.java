@@ -2,7 +2,6 @@ package com.danielbchapman.production.beans;
 import java.io.Serializable;
 
 import javax.ejb.Remote;
-import javax.persistence.EntityManager;
 
 import com.danielbchapman.production.entity.Options;
 

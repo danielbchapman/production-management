@@ -9,12 +9,7 @@ import java.util.Map;
 
 import javax.ejb.Stateless;
 
-import com.danielbchapman.production.beans.ReportingBeanRemote.ReportingType;
-import com.danielbchapman.production.entity.Budget;
-import com.danielbchapman.production.entity.Day;
 import com.danielbchapman.production.entity.EntityInstance;
-import com.danielbchapman.production.entity.Season;
-import com.danielbchapman.production.entity.Week;
 
 /**
  * This bean is a giant security hole. It will only be allowed

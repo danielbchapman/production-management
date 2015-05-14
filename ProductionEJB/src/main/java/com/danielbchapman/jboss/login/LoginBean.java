@@ -149,7 +149,8 @@ public class LoginBean implements LoginBeanRemote
 	 *          an array of (T) types
 	 * @return an ArrayList of type (T)
 	 */
-	public static <T> ArrayList<T> asList(T... args)
+	@SafeVarargs
+  public static <T> ArrayList<T> asList(T... args)
 	{
 		if(args == null)
 			return new ArrayList<T>();
@@ -167,7 +168,8 @@ public class LoginBean implements LoginBeanRemote
 	 *          an array of (T) types
 	 * @return the collection of the array by type
 	 */
-	public static <T> Collection<T> asCollection(T... args)
+	@SafeVarargs
+  public static <T> Collection<T> asCollection(T... args)
 	{
 		return asList(args);
 	}

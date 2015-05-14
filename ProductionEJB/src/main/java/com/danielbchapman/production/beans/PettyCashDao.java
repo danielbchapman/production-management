@@ -2,11 +2,8 @@ package com.danielbchapman.production.beans;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
 import com.danielbchapman.production.entity.Budget;
 import com.danielbchapman.production.entity.BudgetEntry;
@@ -76,7 +73,6 @@ public class PettyCashDao implements PettyCashDaoRemote
   /* (non-Javadoc)
    * @see com.danielbchapman.production.beans.PettyCashDaoRemote#getPettyCashEntries(com.danielbchapman.production.entity.PettyCash)
    */
-  @SuppressWarnings("unchecked")
   public ArrayList<PettyCashEntry> getPettyCashEntries(PettyCash petty)
   {
   	return EntityInstance.getResultList("SELECT p FROM PettyCashEntry p WHERE p.pettyCash = ?1", PettyCashEntry.class, petty);

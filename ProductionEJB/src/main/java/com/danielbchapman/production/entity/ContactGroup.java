@@ -11,7 +11,7 @@ import javax.persistence.Transient;
  * 
  */
 @Entity
-public class ContactGroup extends BaseEntity implements Comparable
+public class ContactGroup extends BaseEntity implements Comparable<Object>
 {
 	private static final long serialVersionUID = 1L;
 	private int alpha = 255;

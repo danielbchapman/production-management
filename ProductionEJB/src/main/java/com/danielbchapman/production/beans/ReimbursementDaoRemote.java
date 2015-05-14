@@ -7,7 +7,6 @@ import javax.ejb.Remote;
 
 import com.danielbchapman.production.entity.Budget;
 import com.danielbchapman.production.entity.Department;
-import com.danielbchapman.production.entity.Employee;
 import com.danielbchapman.production.entity.Reimbursement;
 
 /**

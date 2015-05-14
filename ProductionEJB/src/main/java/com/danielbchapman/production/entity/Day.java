@@ -1,11 +1,9 @@
 package com.danielbchapman.production.entity;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
-import java.util.TimeZone;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;

@@ -1,7 +1,6 @@
 package com.danielbchapman.production.beans;
 
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
 
 import com.danielbchapman.production.entity.EntityInstance;
 import com.danielbchapman.production.entity.Options;

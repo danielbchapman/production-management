@@ -631,7 +631,8 @@ public class AbstractContact extends BaseEntity implements IContact
 			}
 	}
 
-	private String wrapViaTag(String value, String tag, StringBuilder builder)
+	@SuppressWarnings("unused")
+  private String wrapViaTag(String value, String tag, StringBuilder builder)
 	{
 		builder.append("<");
 		builder.append(tag);

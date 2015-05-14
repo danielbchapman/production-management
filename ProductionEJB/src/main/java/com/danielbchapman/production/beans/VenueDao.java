@@ -3,11 +3,8 @@ package com.danielbchapman.production.beans;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
 import com.danielbchapman.production.entity.City;
 import com.danielbchapman.production.entity.EntityInstance;

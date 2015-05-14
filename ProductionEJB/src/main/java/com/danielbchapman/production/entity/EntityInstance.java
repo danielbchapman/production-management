@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.persistence.EntityManager;
 
 import org.theactingcompany.persistence.Indentifiable;
+
 import com.danielbchapman.production.entity.DelegateInstance;
 
 /**
@@ -143,7 +144,8 @@ public class EntityInstance
 	 * @param transaction
 	 * @see org.theactingcompany.persistence.AbstractEntityInstance#saveObjects(T[])
 	 */
-	public static <T extends Indentifiable> void saveObjects(T... transaction)
+	@SafeVarargs
+  public static <T extends Indentifiable> void saveObjects(T... transaction)
 	{
 		DELEGATE.saveObjects(transaction);
 	}
@@ -173,7 +175,8 @@ public class EntityInstance
 	 * @return
 	 * @see org.theactingcompany.persistence.AbstractEntityInstance#detatch(T[])
 	 */
-	public static <T> T[] detatch(T... objects)
+	@SafeVarargs
+  public static <T> T[] detatch(T... objects)
 	{
 		return getDelegate().detatch(objects);
 	}

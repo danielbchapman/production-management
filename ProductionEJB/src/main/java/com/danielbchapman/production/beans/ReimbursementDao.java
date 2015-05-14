@@ -8,7 +8,6 @@ import javax.ejb.Stateless;
 import com.danielbchapman.production.entity.Budget;
 import com.danielbchapman.production.entity.BudgetEntry;
 import com.danielbchapman.production.entity.Department;
-import com.danielbchapman.production.entity.Employee;
 import com.danielbchapman.production.entity.EntityInstance;
 import com.danielbchapman.production.entity.Reimbursement;
 

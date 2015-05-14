@@ -1,11 +1,8 @@
 package com.danielbchapman.production.beans;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
 import com.danielbchapman.production.entity.EntityInstance;
 import com.danielbchapman.production.entity.Season;
@@ -36,7 +33,6 @@ public class SeasonDao implements SeasonDaoRemote
 	/* (non-Javadoc)
    * @see com.danielbchapman.production.beans.ProductionDaoRemote#getProductions()
    */
-	@SuppressWarnings("unchecked")
 	public ArrayList<Season> getSeasons()
 	{
 		return EntityInstance.getResultList("SELECT s FROM Season s ORDER BY s.name", Season.class);		

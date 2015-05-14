@@ -33,7 +33,8 @@ public class BackupBean implements BackupBeanRemote
 		return xml;
 	}
 
-	@Override
+	@SuppressWarnings("unchecked")
+  @Override
 	public String backupTables(Class<? extends Indentifiable>... args)
 	{
 		String[] names = new String[args.length];

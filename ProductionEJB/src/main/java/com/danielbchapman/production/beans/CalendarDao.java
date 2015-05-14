@@ -13,10 +13,8 @@ import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
 
-import org.eclipse.persistence.descriptors.FieldsLockingPolicy;
 import org.theactingcompany.persistence.Indentifiable;
 
 import com.danielbchapman.production.dto.MonthDto;
@@ -153,7 +151,6 @@ public class CalendarDao implements CalendarDaoRemote
 		return day != null;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<Day> getActiveDaysForWeek(Week week)
 	{
@@ -181,7 +178,6 @@ public class CalendarDao implements CalendarDaoRemote
 	 * .entity.Production)
 	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public ArrayList<Week> getAllWeeks(Season season)
 	{
 		return EntityInstance.getResultList("SELECT w FROM Week w WHERE w.season = ?1 ORDER BY w.date", Week.class, season);
@@ -207,7 +203,6 @@ public class CalendarDao implements CalendarDaoRemote
 	 * .entity.Day)
 	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public ArrayList<Event> getEvents(Day day)
 	{
 		return EntityInstance.getResultList("SELECT e FROM Event e WHERE e.day = ?1 ORDER BY e.start", Event.class, day);
@@ -237,7 +232,6 @@ public class CalendarDao implements CalendarDaoRemote
 		return ret;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<Event> getEventsForDay(Day day)
 	{
