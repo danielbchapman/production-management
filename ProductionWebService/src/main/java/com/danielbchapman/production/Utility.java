@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -712,6 +713,14 @@ public class Utility
 		if(key.length() >= length)
 			return true;
 		return false;
+	}
+	
+	public static Date addHour(Date date, int amount)
+	{
+	  Calendar cal = Calendar.getInstance();
+	  cal.setTime(date);
+	  cal.add(Calendar.HOUR_OF_DAY, amount);
+	  return cal.getTime();
 	}
 	
 }

@@ -330,11 +330,25 @@ public class ScheduleBean implements Serializable
 				ArrayList<Day> days = getCalendarDao().getActiveDaysForWeek(w);
 				for(Day day : days)
 				{
+				  //FIXME HACK
+				  //Update time by 12 hours
+				  day.setDate(Utility.addHour(day.getDate(), 12));
 					renderDay(day, prepareRef, null);
 
 					ArrayList<EventMapping> events = getCalendarDao().getEventsAndPerformancesForDay(day);
 					for(EventMapping e : events)
 					{
+					  //FIXME HACK
+					  Date start = e.getStart();
+					  Date end = e.getEnd();
+					  int offset = -4;
+					  
+					  if(e.getStart() != null)
+					    e.setStart(Utility.addHour(start, offset));
+					  
+            if(e.getEnd() != null)
+              e.setEnd(Utility.addHour(end, offset));
+            
 						if(!companySecurity)
 							if(!e.isPublicEvent() && !e.isPerformance())
 								continue;
@@ -471,6 +485,7 @@ public class ScheduleBean implements Serializable
 		selectedEvent = null;
 		virtualEvent = false;// Allow Selection
 		Date selection = selectEvent.getDate();
+		selection = Utility.addHour(selection, 4);
 		performanceUi = new PerformanceUI(selection, null);
 
 		if(selectEvent != null)// Debugging what is passed as far as "date"
